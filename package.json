@@ -2,25 +2,25 @@
   "name": "@ootidea/minrich",
   "version": "0.0.0",
   "description": "TypeScript utility library",
-  "main": "index.js",
-  "scripts": {
-    "format:package-json": "sort-package-json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "homepage": "https://github.com/ootidea/minrich#readme",
+  "bugs": {
+    "url": "https://github.com/ootidea/minrich/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ootidea/minrich.git"
   },
-  "author": "ootidea",
   "license": "CC0-1.0",
-  "bugs": {
-    "url": "https://github.com/ootidea/minrich/issues"
-  },
-  "homepage": "https://github.com/ootidea/minrich#readme",
-  "volta": {
-    "node": "18.12.1"
+  "author": "ootidea",
+  "main": "index.js",
+  "scripts": {
+    "format:package-json": "sort-package-json",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "sort-package-json": "^2.0.0"
+  },
+  "volta": {
+    "node": "18.12.1"
   }
 }
