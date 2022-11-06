@@ -1,0 +1,2 @@
+# minrich
+TypeScript utility library
