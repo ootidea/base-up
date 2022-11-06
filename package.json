@@ -18,5 +18,8 @@
   "homepage": "https://github.com/ootidea/minrich#readme",
   "volta": {
     "node": "18.12.1"
+  },
+  "devDependencies": {
+    "sort-package-json": "^2.0.0"
   }
 }
