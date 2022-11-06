@@ -17,7 +17,7 @@
     "format": "run-p format:*",
     "format:prettier": "prettier --write \"src/**/*\"",
     "format:package-json": "sort-package-json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^9.0.2",
