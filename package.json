@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ootidea/minrich/issues"
   },
-  "homepage": "https://github.com/ootidea/minrich#readme"
+  "homepage": "https://github.com/ootidea/minrich#readme",
+  "volta": {
+    "node": "18.12.1"
+  }
 }
