@@ -4,6 +4,7 @@
   "description": "TypeScript utility library",
   "main": "index.js",
   "scripts": {
+    "format:package-json": "sort-package-json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
