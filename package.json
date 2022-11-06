@@ -18,7 +18,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "sort-package-json": "^2.0.0"
+    "@rollup/plugin-typescript": "^9.0.2",
+    "rollup": "^3.2.5",
+    "sort-package-json": "^2.0.0",
+    "typescript": "^4.8.4"
   },
   "volta": {
     "node": "18.12.1"
