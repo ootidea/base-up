@@ -1,4 +1,4 @@
-import { fromEntries, keys } from './other'
+import { fromEntries, keys, numberKeys } from './other'
 
 test('keys', () => {
   expect(keys({ abc: 3, def: true })).toBe(['abc', 'def'])
@@ -16,4 +16,8 @@ test('fromEntries', () => {
   expect(object.abc).toBe(1)
   expect(object.def).toBe(2)
   expect(object[0]).toBe(3)
+})
+
+test('numberKeys', () => {
+  expect(numberKeys({ 10: [], 4: 'abc' })).toBe([10, 4])
 })
