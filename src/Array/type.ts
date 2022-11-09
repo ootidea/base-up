@@ -22,8 +22,25 @@ export type FixedLengthArray<
 
 export type Tail<T> = T extends [any, ...infer A] ? A : []
 
+export function isEmpty<T, E>(array: readonly T[]): array is readonly [] {
+  return array.length === 0
+}
+
+export function isNotEmpty<T, E>(array: readonly T[]): array is ReadonlyNonEmptyArray<T> {
+  return array.length > 0
+}
+
 export function assertNonEmpty<T, E>(array: readonly T[], throwee?: E): asserts array is ReadonlyNonEmptyArray<T> {
   if (array.length === 0) {
     throw throwee ?? new TypeError(`${array} is not empty.`)
   }
+}
+
+export function every<F extends (value: T) => value is U, T, U extends T>(
+  array: readonly T[],
+  f: F
+): array is readonly U[]
+export function every<F extends (value: T) => boolean, T>(array: readonly T[], f: F): boolean
+export function every<F extends (value: T) => boolean, T>(array: readonly T[], f: F): boolean {
+  return array.every(f)
 }
