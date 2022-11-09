@@ -1,14 +1,10 @@
 {
-  "name": "@ootidea/minrich",
+  "name": "@ootidea/base-up",
   "version": "0.0.0",
   "description": "TypeScript utility library",
-  "homepage": "https://github.com/ootidea/minrich#readme",
-  "bugs": {
-    "url": "https://github.com/ootidea/minrich/issues"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ootidea/minrich.git"
+    "url": "git+https://github.com/ootidea/base-up.git"
   },
   "license": "CC0-1.0",
   "author": "ootidea",
