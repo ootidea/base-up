@@ -1,7 +1,7 @@
-import { adtCaseFunction, adtConstructors, number, object } from './Adt'
+import { adtCaseFunction, adtConstructors, Fct } from './Adt'
 
 test('Adt', () => {
-  const adtSchema = object({ box: object({ value: number }), empty: object({}) })
+  const adtSchema = Fct.object({ box: Fct.object({ value: Fct.number }), empty: Fct.object({}) })
 
   const ctors = adtConstructors(adtSchema)
   expect(ctors.empty({})).toStrictEqual({ type: 'empty' })
