@@ -18,6 +18,8 @@ export function maxBy<T>(array: readonly T[], by: (element: T) => number): T | u
   return candidateElement
 }
 
+export function sortBy<T, U>(array: ReadonlyNonEmptyArray<T>, by: (_: T) => U): ReadonlyNonEmptyArray<T>
+export function sortBy<T, U>(array: readonly T[], by: (_: T) => U): readonly T[]
 export function sortBy<T, U>(array: readonly T[], by: (_: T) => U): readonly T[] {
   const cloned = array.slice()
   cloned.sort(ltoetToComparator((lhs, rhs) => lhs <= rhs))
