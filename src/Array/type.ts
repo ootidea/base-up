@@ -30,12 +30,6 @@ export function isNotEmpty<T, E>(array: readonly T[]): array is ReadonlyNonEmpty
   return array.length > 0
 }
 
-export function assertNonEmpty<T, E>(array: readonly T[], throwee?: E): asserts array is ReadonlyNonEmptyArray<T> {
-  if (array.length === 0) {
-    throw throwee ?? new TypeError(`${array} is not empty.`)
-  }
-}
-
 export function every<F extends (value: T) => value is U, T, U extends T>(
   array: readonly T[],
   f: F
