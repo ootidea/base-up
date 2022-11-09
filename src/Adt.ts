@@ -7,11 +7,19 @@
  */
 export type DiscriminatedUnion<T, K extends keyof T = keyof T> = K extends K ? { type: K } & T[K] : never
 
+type BooleanType = { type: 'boolean' }
+export const boolean: BooleanType = { type: 'boolean' }
+
 type NumberType = { type: 'number' }
 export const number: NumberType = { type: 'number' }
 
 type StringType = { type: 'string' }
 export const string: StringType = { type: 'string' }
+
+type LiteralType<T> = { type: 'literal'; value: T }
+export function literal<T extends null | undefined | boolean | number | string | symbol>(value: T): LiteralType<T> {
+  return { type: 'literal', value }
+}
 
 type ObjectType<T> = { type: 'object'; values: T }
 export function object<T>(values: T): ObjectType<T> {
@@ -24,10 +32,14 @@ export function object<T>(values: T): ObjectType<T> {
  * Infer<NumberType> is equivalent to number
  * Infer<typeof object({})> is equivalent to {}
  */
-export type Infer<T> = T extends NumberType
+export type Infer<T> = T extends BooleanType
+  ? boolean
+  : T extends NumberType
   ? number
   : T extends StringType
   ? string
+  : T extends LiteralType<infer L>
+  ? L
   : T extends ObjectType<infer O>
   ? InferEachValue<O>
   : never
