@@ -8,8 +8,8 @@ export function keys<K extends string | number>(record: Record<K, unknown>): Rea
 }
 
 /** Function with improved type of Object.fromEntries. */
-export function fromEntries<K extends keyof any, T>(entries: Iterable<readonly [K, T]>): Record<K, T> {
-  return Object.fromEntries(entries) as Record<K, T>
+export function fromEntries<T extends readonly [any, any]>(entries: Iterable<T>): Record<T[0], T[1]> {
+  return Object.fromEntries(entries) as any
 }
 
 /**
