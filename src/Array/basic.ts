@@ -1,4 +1,4 @@
-import { NonEmptyArray, ReadonlyNonEmptyArray } from './type'
+import { ReadonlyNonEmptyArray } from './type'
 
 export function first<T>(array: ReadonlyNonEmptyArray<T>): T
 export function first<T>(array: readonly T[]): T | undefined
@@ -12,6 +12,8 @@ export function last<T>(array: readonly T[]): T | undefined {
   return array[array.length - 1]
 }
 
-export function filterNonEmptyArray<T>(array: readonly Array<T>[]): readonly NonEmptyArray<T>[] {
-  return array.filter((value) => value.length > 0) as any
+export function filter<T, U extends T>(array: readonly T[], f: (_: T) => _ is U): readonly U[]
+export function filter<T>(array: readonly T[], f: (_: T) => boolean): readonly T[]
+export function filter<T>(array: readonly T[], f: (_: T) => boolean): readonly T[] {
+  return array.filter(f) as any
 }
