@@ -17,7 +17,9 @@ type StringType = { type: 'string' }
 export const string: StringType = { type: 'string' }
 
 type LiteralType<T> = { type: 'literal'; value: T }
-export function literal<T extends null | undefined | boolean | number | string | symbol>(value: T): LiteralType<T> {
+export function literal<T extends null | undefined | boolean | number | bigint | string | symbol>(
+  value: T
+): LiteralType<T> {
   return { type: 'literal', value }
 }
 
