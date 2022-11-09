@@ -17,7 +17,7 @@ export function assert<T>(value: T, predicate: (value: T) => boolean): void | ne
  * assert(n, isJust(123 as const)) will narrow the type of n to 123.
  */
 export const isJust =
-  <T, U extends T>(literal: U) =>
+  <T extends null | undefined | boolean | number | bigint | string | symbol | object, U extends T>(literal: U) =>
   (value: T): value is U =>
     value === literal
 
