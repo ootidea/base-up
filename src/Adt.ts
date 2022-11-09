@@ -29,6 +29,11 @@ export namespace Fct {
     return { type: 'object', values }
   }
 
+  export type UnionType<T extends readonly any[]> = { type: 'union'; values: T }
+  export function union<T extends readonly any[]>(...values: T): UnionType<T> {
+    return { type: 'union', values }
+  }
+
   /**
    * @example
    * Infer<typeof number> is equivalent to number
@@ -44,11 +49,16 @@ export namespace Fct {
     : T extends LiteralType<infer L>
     ? L
     : T extends ObjectType<infer O>
-    ? InferEachValue<O>
+    ? InferObjectType<O>
+    : T extends UnionType<infer A>
+    ? InferUnionType<A>
     : never
-  type InferEachValue<T> = {
+  type InferObjectType<T> = {
     [K in keyof T]: Infer<T[K]>
   }
+  type InferUnionType<T extends readonly any[]> = T extends readonly [infer H, ...infer R]
+    ? Infer<H> | InferUnionType<R>
+    : never
 }
 
 type AdtConstructors<T> = { [K in keyof T]: (_: T[K]) => { type: K } & T[K] }
