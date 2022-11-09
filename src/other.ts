@@ -18,6 +18,5 @@ export function assert<T>(value: T, predicate: (value: T) => boolean): void | ne
  */
 export const isJust =
   <T, U extends T>(literal: U) =>
-  (value: T): value is U => {
-    return value === literal
-  }
+  (value: T): value is U =>
+    value === literal
