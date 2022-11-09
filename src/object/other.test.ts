@@ -1,8 +1,8 @@
 import { fromEntries, keys, numberKeys } from './other'
 
 test('keys', () => {
-  expect(keys({ abc: 3, def: true })).toStrictEqual(['abc', 'def'])
-  expect(keys({ 0: '', 1: undefined, abc: null })).toStrictEqual(['0', '1', 'abc'])
+  expect(new Set(keys({ abc: 3, def: true }))).toStrictEqual(new Set(['abc', 'def']))
+  expect(new Set(keys({ 0: '', 1: undefined, abc: null }))).toStrictEqual(new Set(['0', '1', 'abc']))
 })
 
 test('fromEntries', () => {
@@ -19,5 +19,5 @@ test('fromEntries', () => {
 })
 
 test('numberKeys', () => {
-  expect(numberKeys({ 10: [], 4: 'abc' })).toStrictEqual([10, 4])
+  expect(new Set(numberKeys({ 10: [], 4: 'abc' }))).toStrictEqual(new Set([10, 4]))
 })
