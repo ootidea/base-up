@@ -34,6 +34,11 @@ export namespace Fct {
     return { type: 'union', values }
   }
 
+  export type IntersectionType<T extends readonly any[]> = { type: 'intersection'; values: T }
+  export function intersection<T extends readonly any[]>(...values: T): IntersectionType<T> {
+    return { type: 'intersection', values }
+  }
+
   /**
    * @example
    * Infer<typeof number> is equivalent to number
@@ -52,6 +57,8 @@ export namespace Fct {
     ? InferObjectType<O>
     : T extends UnionType<infer A>
     ? InferUnionType<A>
+    : T extends IntersectionType<infer A>
+    ? InferIntersectionType<A>
     : never
   type InferObjectType<T> = {
     [K in keyof T]: Infer<T[K]>
@@ -59,6 +66,9 @@ export namespace Fct {
   type InferUnionType<T extends readonly any[]> = T extends readonly [infer H, ...infer R]
     ? Infer<H> | InferUnionType<R>
     : never
+  type InferIntersectionType<T extends readonly any[]> = T extends readonly [infer H, ...infer R]
+    ? Infer<H> & InferUnionType<R>
+    : unknown
 }
 
 type AdtConstructors<T> = { [K in keyof T]: (_: T[K]) => { type: K } & T[K] }
