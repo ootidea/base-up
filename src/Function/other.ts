@@ -18,3 +18,7 @@ export function apply1<F extends (..._: any) => any>(
 export function call<T>(f: () => T): T {
   return f()
 }
+
+export function id<T>(value: T): T {
+  return value
+}
