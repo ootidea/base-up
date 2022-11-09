@@ -20,3 +20,15 @@ export const isJust =
   <T, U extends T>(literal: U) =>
   (value: T): value is U =>
     value === literal
+
+/** Convert Less-Than or Equal to (<= symbol) function to comparator. */
+export function ltoetToComparator<T>(ltoet: (lhs: T, rhs: T) => boolean): (lhs: T, rhs: T) => number {
+  return (lhs, rhs) => {
+    if (ltoet(lhs, rhs)) {
+      if (ltoet(rhs, lhs)) return 0
+
+      return -1
+    }
+    return 1
+  }
+}
