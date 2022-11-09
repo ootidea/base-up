@@ -22,7 +22,7 @@ export type FixedLengthArray<
 
 export type Tail<T> = T extends [any, ...infer A] ? A : []
 
-export function isEmpty<T, E>(array: readonly T[]): array is readonly [] {
+export function isEmpty<T, E>(array: readonly T[]): array is [] {
   return array.length === 0
 }
 
