@@ -6,7 +6,9 @@
     "noImplicitReturns": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "src",
+    "declaration": true
   },
   "include": ["src"]
 }
