@@ -1,5 +1,5 @@
 import { id } from '../Function/other'
-import { ltoetToComparator } from '../other'
+import { ltToComparator } from '../other'
 import { ReadonlyNonEmptyArray } from './type'
 
 export function maxBy<T>(array: ReadonlyNonEmptyArray<T>, by: (element: T) => number): T
@@ -29,6 +29,6 @@ export function sortBy<T, U>(array: ReadonlyNonEmptyArray<T>, by: (_: T) => U): 
 export function sortBy<T, U>(array: readonly T[], by: (_: T) => U): readonly T[]
 export function sortBy<T, U>(array: readonly T[], by: (_: T) => U): readonly T[] {
   const cloned = array.slice()
-  cloned.sort(ltoetToComparator((lhs, rhs) => by(lhs) <= by(rhs)))
+  cloned.sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs)))
   return cloned
 }
