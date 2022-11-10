@@ -1,13 +1,13 @@
 {
   "name": "vite-project",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "format:package-json": "sort-package-json"
+    "dev": "vite",
+    "format:package-json": "sort-package-json",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "sort-package-json": "^2.1.0",
