@@ -8,59 +8,59 @@
 export type DiscriminatedUnion<T, K extends keyof T = keyof T> = K extends K ? { type: K } & T[K] : never
 
 export namespace Fct {
-  export type UnknownType = { type: 'unknown' }
-  export const unknown: UnknownType = { type: 'unknown' }
+  export const unknown = { type: 'unknown' } as const
+  export type UnknownType = typeof unknown
 
-  export type AnyType = { type: 'any' }
-  export const any: AnyType = { type: 'any' }
+  export const any = { type: 'any' } as const
+  export type AnyType = typeof any
 
-  export type NeverType = { type: 'never' }
-  export const never: NeverType = { type: 'never' }
+  export const never = { type: 'never' } as const
+  export type NeverType = typeof never
 
-  export type VoidType = { type: 'void' }
-  export const void_: VoidType = { type: 'void' }
+  export const void_ = { type: 'void' } as const
+  export type VoidType = typeof void_
 
-  export type NullType = { type: 'null' }
-  export const null_: NullType = { type: 'null' }
+  export const null_ = { type: 'null' } as const
+  export type NullType = typeof null_
 
-  export type UndefinedType = { type: 'undefined' }
-  export const undefined: UndefinedType = { type: 'undefined' }
+  export const undefined = { type: 'undefined' } as const
+  export type UndefinedType = typeof undefined
 
-  export type BooleanType = { type: 'boolean' }
-  export const boolean: BooleanType = { type: 'boolean' }
+  export const boolean = { type: 'boolean' } as const
+  export type BooleanType = typeof boolean
 
-  export type NumberType = { type: 'number' }
-  export const number: NumberType = { type: 'number' }
+  export const number = { type: 'number' } as const
+  export type NumberType = typeof number
 
-  export type StringType = { type: 'string' }
-  export const string: StringType = { type: 'string' }
+  export const string = { type: 'string' } as const
+  export type StringType = typeof string
 
-  export type RecursionType<K extends keyof any> = { type: 'recursion'; key: K }
-  export function recursion<K extends keyof any>(key: K): RecursionType<K> {
-    return { type: 'recursion', key }
+  export function recursion<K extends keyof any>(key: K) {
+    return { type: 'recursion', key } as const
   }
+  export type RecursionType<K extends keyof any> = ReturnType<typeof recursion<K>>
 
-  export type LiteralType<T> = { type: 'literal'; value: T }
-  export function literal<T extends null | undefined | boolean | number | bigint | string | symbol>(
-    value: T
-  ): LiteralType<T> {
-    return { type: 'literal', value }
+  export function literal<T extends null | undefined | boolean | number | bigint | string | symbol>(value: T) {
+    return { type: 'literal', value } as const
   }
+  export type LiteralType<T extends null | undefined | boolean | number | bigint | string | symbol> = ReturnType<
+    typeof literal<T>
+  >
 
-  export type ObjectType<T extends object> = { type: 'object'; value: T }
-  export function object<T extends object>(value: T): ObjectType<T> {
-    return { type: 'object', value }
+  export function object<T extends object>(value: T) {
+    return { type: 'object', value } as const
   }
+  export type ObjectType<T extends object> = ReturnType<typeof object<T>>
 
-  export type UnionType<T extends readonly any[]> = { type: 'union'; parts: T }
-  export function union<T extends readonly any[]>(...parts: T): UnionType<T> {
-    return { type: 'union', parts }
+  export function union<T extends readonly any[]>(...parts: T) {
+    return { type: 'union', parts } as const
   }
+  export type UnionType<T extends readonly any[]> = ReturnType<typeof union<T>>
 
-  export type IntersectionType<T extends readonly any[]> = { type: 'intersection'; parts: T }
-  export function intersection<T extends readonly any[]>(...parts: T): IntersectionType<T> {
-    return { type: 'intersection', parts }
+  export function intersection<T extends readonly any[]>(...parts: T) {
+    return { type: 'intersection', parts } as const
   }
+  export type IntersectionType<T extends readonly any[]> = ReturnType<typeof intersection<T>>
 
   /**
    * @example
