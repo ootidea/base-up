@@ -32,7 +32,18 @@ export const isBigint = (value: unknown): value is bigint => typeof value === 'b
 export const isString = (value: unknown): value is string => typeof value === 'string'
 export const isSymbol = (value: unknown): value is symbol => typeof value === 'symbol'
 export const isFunction = (value: unknown): value is Function => typeof value === 'function'
-export const isObject = (value: unknown): value is object => typeof value === 'object' && value !== null
+export const isObject = (value: unknown): value is object => typeof value === 'object'
+
+export const isNotNull = <T>(value: T | null): value is T => value !== null
+export const isNotUndefined = <T>(value: T | undefined): value is T => value !== undefined
+export const isNotNullish = <T>(value: T | nullish): value is T => value !== null && value !== undefined
+export const isNotBoolean = <T>(value: T | boolean): value is T => typeof value !== 'boolean'
+export const isNotNumber = <T>(value: T | number): value is T => typeof value !== 'number'
+export const isNotBigint = <T>(value: T | bigint): value is T => typeof value !== 'bigint'
+export const isNotString = <T>(value: T | string): value is T => typeof value !== 'string'
+export const isNotSymbol = <T>(value: T | symbol): value is T => typeof value !== 'symbol'
+export const isNotFunction = <T>(value: T | Function): value is T => typeof value !== 'function'
+export const isNotObject = <T>(value: T | symbol): value is T => typeof value !== 'object'
 
 export function isInstanceOf<T extends abstract new (..._: any) => any>(
   ctor: T,
