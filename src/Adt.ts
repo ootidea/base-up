@@ -17,9 +17,9 @@ export namespace Fct {
   export type StringType = { type: 'string' }
   export const string: StringType = { type: 'string' }
 
-  export type RecursionType<T extends string> = { type: 'recursion'; value: T }
-  export function recursion<T extends string>(value: T): RecursionType<T> {
-    return { type: 'recursion', value }
+  export type RecursionType<K extends keyof any> = { type: 'recursion'; key: K }
+  export function recursion<K extends keyof any>(key: K): RecursionType<K> {
+    return { type: 'recursion', key }
   }
 
   export type LiteralType<T> = { type: 'literal'; value: T }
@@ -29,19 +29,19 @@ export namespace Fct {
     return { type: 'literal', value }
   }
 
-  export type ObjectType<T> = { type: 'object'; values: T }
-  export function object<T>(values: T): ObjectType<T> {
-    return { type: 'object', values }
+  export type ObjectType<T extends object> = { type: 'object'; value: T }
+  export function object<T extends object>(value: T): ObjectType<T> {
+    return { type: 'object', value }
   }
 
-  export type UnionType<T extends readonly any[]> = { type: 'union'; values: T }
-  export function union<T extends readonly any[]>(...values: T): UnionType<T> {
-    return { type: 'union', values }
+  export type UnionType<T extends readonly any[]> = { type: 'union'; parts: T }
+  export function union<T extends readonly any[]>(...parts: T): UnionType<T> {
+    return { type: 'union', parts }
   }
 
-  export type IntersectionType<T extends readonly any[]> = { type: 'intersection'; values: T }
-  export function intersection<T extends readonly any[]>(...values: T): IntersectionType<T> {
-    return { type: 'intersection', values }
+  export type IntersectionType<T extends readonly any[]> = { type: 'intersection'; parts: T }
+  export function intersection<T extends readonly any[]>(...parts: T): IntersectionType<T> {
+    return { type: 'intersection', parts }
   }
 
   /**
@@ -80,9 +80,11 @@ export namespace Fct {
 
 type AdtConstructors<T> = { [K in keyof T]: (_: T[K]) => { type: K } & T[K] }
 
-export function adtConstructors<T extends Fct.ObjectType<O>, O>(schema: T): AdtConstructors<Fct.Infer<T>> {
+export function adtConstructors<T extends Fct.ObjectType<O>, O extends object>(
+  schema: T
+): AdtConstructors<Fct.Infer<T>> {
   return Object.fromEntries(
-    Object.keys(schema.values as any).map((ctorName) => {
+    Object.keys(schema.value as any).map((ctorName) => {
       return [ctorName, (argPack: any) => ({ type: ctorName, ...argPack })]
     })
   ) as any
