@@ -8,6 +8,24 @@
 export type DiscriminatedUnion<T, K extends keyof T = keyof T> = K extends K ? { type: K } & T[K] : never
 
 export namespace Fct {
+  export type UnknownType = { type: 'unknown' }
+  export const unknown: UnknownType = { type: 'unknown' }
+
+  export type AnyType = { type: 'any' }
+  export const any: AnyType = { type: 'any' }
+
+  export type NeverType = { type: 'never' }
+  export const never: NeverType = { type: 'never' }
+
+  export type VoidType = { type: 'void' }
+  export const void_: VoidType = { type: 'void' }
+
+  export type NullType = { type: 'null' }
+  export const null_: NullType = { type: 'null' }
+
+  export type UndefinedType = { type: 'undefined' }
+  export const undefined: UndefinedType = { type: 'undefined' }
+
   export type BooleanType = { type: 'boolean' }
   export const boolean: BooleanType = { type: 'boolean' }
 
@@ -50,7 +68,19 @@ export namespace Fct {
    * Infer<NumberType> is equivalent to number
    * Infer<typeof object({})> is equivalent to {}
    */
-  export type Infer<T, Z = T> = T extends BooleanType
+  export type Infer<T, Z = T> = T extends UnknownType
+    ? unknown
+    : T extends AnyType
+    ? any
+    : T extends NeverType
+    ? never
+    : T extends VoidType
+    ? void
+    : T extends NullType
+    ? null
+    : T extends UndefinedType
+    ? undefined
+    : T extends BooleanType
     ? boolean
     : T extends NumberType
     ? number
