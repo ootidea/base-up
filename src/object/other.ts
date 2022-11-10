@@ -18,8 +18,8 @@ type Key<T extends keyof any> = T extends string ? T : T extends number ? `${T}`
  * values({ abc: 3, def: true }) results [3, true]
  * values({ abc: 3, def: true }) is typed as (number | boolean)[]
  * @example
- * values({ 0: null, 1: 'time' } as const) results [null, 'time']
- * values({ 0: null, 1: 'time' } as const) is typed as (null | 'time')[]
+ * values({ 0: false, 1: 'time' } as const) results [false, 'time']
+ * values({ 0: false, 1: 'time' } as const) is typed as (false | 'time')[]
  */
 export function values<T extends {}>(record: T): ReadonlyArray<T[keyof T]> {
   return Object.values(record) as any
