@@ -17,6 +17,11 @@ export namespace Fct {
   export type StringType = { type: 'string' }
   export const string: StringType = { type: 'string' }
 
+  export type RecursionType<T extends string> = { type: 'recursion'; value: T }
+  export function recursion<T extends string>(value: T): RecursionType<T> {
+    return { type: 'recursion', value }
+  }
+
   export type LiteralType<T> = { type: 'literal'; value: T }
   export function literal<T extends null | undefined | boolean | number | bigint | string | symbol>(
     value: T
@@ -45,29 +50,31 @@ export namespace Fct {
    * Infer<NumberType> is equivalent to number
    * Infer<typeof object({})> is equivalent to {}
    */
-  export type Infer<T> = T extends BooleanType
+  export type Infer<T, Z = T> = T extends BooleanType
     ? boolean
     : T extends NumberType
     ? number
     : T extends StringType
     ? string
+    : T extends RecursionType<infer K>
+    ? { [key in K]: Infer<Z> }
     : T extends LiteralType<infer L>
     ? L
     : T extends ObjectType<infer O>
-    ? InferObjectType<O>
+    ? InferObjectType<O, Z>
     : T extends UnionType<infer A>
-    ? InferUnionType<A>
+    ? InferUnionType<A, Z>
     : T extends IntersectionType<infer A>
-    ? InferIntersectionType<A>
+    ? InferIntersectionType<A, Z>
     : never
-  type InferObjectType<T> = {
-    [K in keyof T]: Infer<T[K]>
+  type InferObjectType<T, Z> = {
+    [K in keyof T]: Infer<T[K], Z>
   }
-  type InferUnionType<T extends readonly any[]> = T extends readonly [infer H, ...infer R]
-    ? Infer<H> | InferUnionType<R>
+  type InferUnionType<T extends readonly any[], Z> = T extends readonly [infer H, ...infer R]
+    ? Infer<H, Z> | InferUnionType<R, Z>
     : never
-  type InferIntersectionType<T extends readonly any[]> = T extends readonly [infer H, ...infer R]
-    ? Infer<H> & InferUnionType<R>
+  type InferIntersectionType<T extends readonly any[], Z> = T extends readonly [infer H, ...infer R]
+    ? Infer<H, Z> & InferUnionType<R, Z>
     : unknown
 }
 
