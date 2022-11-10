@@ -1,6 +1,10 @@
 import { sortBy } from '../Array/order'
 import { map as mapIterator } from '../Iterator/other'
 
+export function setOf<T extends readonly any[]>(...args: T): ReadonlySet<T[number]> {
+  return new Set(args)
+}
+
 export function map<T, U>(set: ReadonlySet<T>, f: (_: T) => U): ReadonlySet<U> {
   return new Set(mapIterator(set.values(), f))
 }
