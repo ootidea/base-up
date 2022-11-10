@@ -6,9 +6,9 @@
  * @example
  * Until<2 | 4> is equivalent to [0, 1] | [0, 1, 2, 3]
  * @example
- * Until<number> is equivalent to []
+ * Until<number> is equivalent to readonly number[]
  */
-export type Until<N extends number> = N extends N ? _Until<N> : never
+export type Until<N extends number> = number extends N ? readonly number[] : N extends N ? _Until<N> : never
 type _Until<N extends number, Result extends readonly any[] = []> = Result['length'] extends N
   ? Result
   : _Until<N, [...Result, Result['length']]>
