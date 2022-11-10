@@ -11,6 +11,7 @@
     "format:prettier": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,scss}\"",
     "format:package-json": "sort-package-json",
     "test": "vitest run",
+    "typecheck": "tsc",
     "preview": "vite preview"
   },
   "devDependencies": {
