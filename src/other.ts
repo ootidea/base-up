@@ -52,6 +52,13 @@ export function isInstanceOf<T extends abstract new (..._: any) => any>(
   return value instanceof ctor
 }
 
+export function isNotInstanceOf<T extends abstract new (..._: any) => any, U>(
+  ctor: T,
+  value: U | InstanceType<T>
+): value is U {
+  return !(value instanceof ctor)
+}
+
 /** Convert Less-Than or Equal to (<= symbol) function to comparator. */
 export function ltoetToComparator<T>(ltoet: (lhs: T, rhs: T) => boolean): (lhs: T, rhs: T) => number {
   return (lhs, rhs) => {
