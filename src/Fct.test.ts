@@ -1,4 +1,4 @@
-import { adtCaseFunction, adtConstructors, Fct } from './Adt'
+import { adtCaseFunction, adtConstructors, Fct } from './Fct'
 
 test('Adt', () => {
   const adtSchema = Fct.object({ box: Fct.object({ value: Fct.number }), empty: Fct.object({}) })
