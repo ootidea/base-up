@@ -1,5 +1,5 @@
 import { id } from '../Function/other'
-import { ltToComparator } from '../other'
+import { ltToComparator } from '../order'
 import { ReadonlyNonEmptyArray } from './type'
 
 export function maxBy<T>(array: ReadonlyNonEmptyArray<T>, by: (element: T) => number): T
