@@ -7,10 +7,23 @@
  * keys({ 0: null, 1: 'time' }) results ['0', '1']
  * keys({ 0: null, 1: 'time' }) is typed as ('0' | '1')[]
  */
-export function keys<T extends object>(record: T): ReadonlyArray<Key<keyof T>> {
+export function keys<T extends {}>(record: T): ReadonlyArray<Key<keyof T>> {
   return Object.keys(record) as any
 }
 type Key<T extends keyof any> = T extends string ? T : T extends number ? `${T}` : never
+
+/**
+ * Function with improved type of Object.values.
+ * @example
+ * values({ abc: 3, def: true }) results [3, true]
+ * values({ abc: 3, def: true }) is typed as (number | boolean)[]
+ * @example
+ * values({ 0: null, 1: 'time' } as const) results [null, 'time']
+ * values({ 0: null, 1: 'time' } as const) is typed as (null | 'time')[]
+ */
+export function values<T extends {}>(record: T): ReadonlyArray<T[keyof T]> {
+  return Object.values(record) as any
+}
 
 /** Function with improved type of Object.fromEntries. */
 export function fromEntries<T extends readonly [any, any]>(entries: Iterable<T>): Record<T[0], T[1]> {
