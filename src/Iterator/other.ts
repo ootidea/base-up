@@ -1,4 +1,4 @@
-import { LimitedLengthArray } from '../Array/type'
+import { LimitedSizeArray } from '../Array/type'
 
 export function* map<T, U>(self: Iterable<T>, f: (_: T) => U): Generator<U> {
   const iterator = self[Symbol.iterator]()
@@ -20,7 +20,7 @@ export function* filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T
   iterator.return?.()
 }
 
-export function take<T, N extends number>(self: Iterable<T>, n: N): LimitedLengthArray<N, T> {
+export function take<T, N extends number>(self: Iterable<T>, n: N): LimitedSizeArray<N, T> {
   const result: T[] = []
   const iterator = self[Symbol.iterator]()
   for (let value = iterator.next(); !value.done && result.length < n; value = iterator.next()) {

@@ -1,4 +1,4 @@
-import { FixedLengthArray } from './type'
+import { FixedSizeArray } from './type'
 
 /**
  * @example
@@ -11,7 +11,7 @@ import { FixedLengthArray } from './type'
 export function chunk<T, N extends number>(
   array: readonly T[],
   size: N
-): number extends N ? readonly T[][] : readonly FixedLengthArray<N, T>[] {
+): number extends N ? readonly T[][] : readonly FixedSizeArray<N, T>[] {
   if (size <= 0) {
     throw RangeError(`Size(${size}) must be greater than 0.`)
   }
