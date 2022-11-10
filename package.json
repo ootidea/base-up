@@ -6,6 +6,8 @@
   "scripts": {
     "build": "tsc && vite build",
     "dev": "vite",
+    "format": "run-p format:*",
+    "format:prettier": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,scss}\"",
     "format:package-json": "sort-package-json",
     "preview": "vite preview"
   },
