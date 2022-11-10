@@ -58,3 +58,5 @@ export function isNotInstanceOf<T extends abstract new (..._: any) => any, U>(
 ): value is U {
   return !(value instanceof ctor)
 }
+
+export type Nominal<Base, Tag extends symbol> = Base & Record<Tag, never>
