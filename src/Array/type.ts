@@ -1,3 +1,5 @@
+import { Until } from '../number/other'
+
 export type NonEmptyArray<T> = [T, ...T[]]
 
 export type ReadonlyNonEmptyArray<T> = readonly [T, ...T[]]
@@ -18,6 +20,8 @@ export type FixedLengthArray<N extends number, T = unknown> = N extends N ? _Fix
 type _FixedLengthArray<N extends number, T = unknown, Result extends readonly any[] = []> = Result['length'] extends N
   ? Result
   : _FixedLengthArray<N, T, [...Result, T]>
+
+export type LimitedLengthArray<N extends number, T = unknown> = FixedLengthArray<N | Until<N>, T>
 
 export type Tail<T> = T extends [any, ...infer A] ? A : []
 
