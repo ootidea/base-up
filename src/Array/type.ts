@@ -16,7 +16,7 @@ export type ReadonlyNonEmptyArray<T> = readonly [T, ...T[]]
  */
 export type FixedLengthArray<
   N extends number,
-  T = undefined,
+  T = unknown,
   Result extends readonly any[] = []
 > = Result['length'] extends N ? Result : FixedLengthArray<N, T, [...Result, T]>
 
