@@ -7,4 +7,7 @@ export default defineConfig({
       formats: ['es', 'cjs'],
     },
   },
+  test: {
+    globals: true,
+  },
 })
