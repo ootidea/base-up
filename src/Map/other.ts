@@ -1,4 +1,4 @@
-import { map as mapIterator } from '../Iterator/other'
+import { map as mapIterable } from '../Iterable/other'
 import { Nominal } from '../other'
 
 declare const NON_EMPTY_MAP_TAG: unique symbol
@@ -29,7 +29,7 @@ export function isNotEmpty<K, T>(map: ReadonlyMap<K, T>): map is ReadonlyNonEmpt
 export function map<K, T, U>(map: ReadonlyNonEmptyMap<K, T>, f: (_: T) => U): ReadonlyNonEmptyMap<K, U>
 export function map<K, T, U>(map: ReadonlyMap<K, T>, f: (_: T) => U): ReadonlyMap<K, U>
 export function map<K, T, U>(map: ReadonlyMap<K, T>, f: (_: T) => U): ReadonlyMap<K, U> {
-  return new Map(mapIterator(map.entries(), ([key, value]) => [key, f(value)]))
+  return new Map(mapIterable(map.entries(), ([key, value]) => [key, f(value)]))
 }
 
 export function set<K, T>(map: ReadonlyMap<K, T>, key: K, value: T): ReadonlyMap<K, T> {
