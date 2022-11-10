@@ -22,10 +22,14 @@ export type FixedLengthArray<
 
 export type Tail<T> = T extends [any, ...infer A] ? A : []
 
+export function isEmpty<T>(array: ReadonlyNonEmptyArray<T>): false
+export function isEmpty<T>(array: readonly T[]): array is []
 export function isEmpty<T>(array: readonly T[]): array is [] {
   return array.length === 0
 }
 
+export function isNotEmpty<T>(array: ReadonlyNonEmptyArray<T>): true
+export function isNotEmpty<T>(array: readonly T[]): array is ReadonlyNonEmptyArray<T>
 export function isNotEmpty<T>(array: readonly T[]): array is ReadonlyNonEmptyArray<T> {
   return array.length > 0
 }
