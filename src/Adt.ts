@@ -35,17 +35,17 @@ export namespace Fct {
   export const string = { type: 'string' } as const
   export type StringType = typeof string
 
-  export function recursion<K extends keyof any>(key: K) {
-    return { type: 'recursion', key } as const
-  }
-  export type RecursionType<K extends keyof any> = ReturnType<typeof recursion<K>>
-
   export function literal<T extends null | undefined | boolean | number | bigint | string | symbol>(value: T) {
     return { type: 'literal', value } as const
   }
   export type LiteralType<T extends null | undefined | boolean | number | bigint | string | symbol> = ReturnType<
     typeof literal<T>
   >
+
+  export function array<T>(value: T) {
+    return { type: 'array', value } as const
+  }
+  export type ArrayType<T> = ReturnType<typeof array<T>>
 
   export function object<T extends object>(value: T) {
     return { type: 'object', value } as const
@@ -61,6 +61,11 @@ export namespace Fct {
     return { type: 'intersection', parts } as const
   }
   export type IntersectionType<T extends readonly any[]> = ReturnType<typeof intersection<T>>
+
+  export function recursion<K extends keyof any>(key: K) {
+    return { type: 'recursion', key } as const
+  }
+  export type RecursionType<K extends keyof any> = ReturnType<typeof recursion<K>>
 
   /**
    * @example
@@ -86,16 +91,18 @@ export namespace Fct {
     ? number
     : T extends StringType
     ? string
-    : T extends RecursionType<infer K>
-    ? { [key in K]: Infer<Z> }
     : T extends LiteralType<infer L>
     ? L
+    : T extends ArrayType<infer U>
+    ? Infer<U, Z>[]
     : T extends ObjectType<infer O>
     ? InferObjectType<O, Z>
     : T extends UnionType<infer A>
     ? InferUnionType<A, Z>
     : T extends IntersectionType<infer A>
     ? InferIntersectionType<A, Z>
+    : T extends RecursionType<infer K>
+    ? { [key in K]: Infer<Z> }
     : never
   type InferObjectType<T, Z> = {
     [K in keyof T]: Infer<T[K], Z>
