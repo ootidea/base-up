@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format:package-json": "sort-package-json"
   },
   "devDependencies": {
     "sort-package-json": "^2.1.0",
