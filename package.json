@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "sort-package-json": "^2.1.0",
     "typescript": "^4.6.4",
     "vite": "^3.2.3"
   },
