@@ -7,9 +7,10 @@
  * keys({ 0: null, 1: 'time' }) results ['0', '1']
  * keys({ 0: null, 1: 'time' }) is typed as ('0' | '1')[]
  */
-export function keys<K extends string | number>(record: Record<K, unknown>): ReadonlyArray<`${K}`> {
+export function keys<T extends object>(record: T): ReadonlyArray<Key<keyof T>> {
   return Object.keys(record) as any
 }
+type Key<T extends keyof any> = T extends string ? T : T extends number ? `${T}` : never
 
 /** Function with improved type of Object.fromEntries. */
 export function fromEntries<T extends readonly [any, any]>(entries: Iterable<T>): Record<T[0], T[1]> {
