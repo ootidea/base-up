@@ -4,21 +4,20 @@ export type ReadonlyNonEmptyArray<T> = readonly [T, ...T[]]
 
 /**
  * @example
- * FixedLengthArray<3> is equivalent to [undefined, undefined, undefined]
+ * FixedLengthArray<3> is equivalent to [unknown, unknown, unknown]
  * @example
  * FixedLengthArray<3, boolean> is equivalent to [boolean, boolean, boolean]
  * @example
  * FixedLengthArray<0, Set<number>> is equivalent to []
  * @example
- * FixedLengthArray<2 | 4> is equivalent to [undefined, undefined]
+ * FixedLengthArray<2 | 3, any> is equivalent to [any, any] | [any, any, any]
  * @example
  * FixedLengthArray<number> is equivalent to []
  */
-export type FixedLengthArray<
-  N extends number,
-  T = unknown,
-  Result extends readonly any[] = []
-> = Result['length'] extends N ? Result : FixedLengthArray<N, T, [...Result, T]>
+export type FixedLengthArray<N extends number, T = unknown> = N extends N ? _FixedLengthArray<N, T> : never
+type _FixedLengthArray<N extends number, T = unknown, Result extends readonly any[] = []> = Result['length'] extends N
+  ? Result
+  : _FixedLengthArray<N, T, [...Result, T]>
 
 export type Tail<T> = T extends [any, ...infer A] ? A : []
 
