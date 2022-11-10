@@ -1,2 +1,2 @@
-# minrich
+# base-up
 TypeScript utility library
