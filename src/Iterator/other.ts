@@ -29,3 +29,7 @@ export function take<T, N extends number>(self: Iterable<T>, n: N): LimitedSizeA
   iterator.return?.()
   return result as any
 }
+
+export function* repeat<T>(value: T): Generator<T> {
+  while (true) yield value
+}
