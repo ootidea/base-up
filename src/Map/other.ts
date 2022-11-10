@@ -31,3 +31,15 @@ export function map<K, T, U>(map: ReadonlyMap<K, T>, f: (_: T) => U): ReadonlyMa
 export function map<K, T, U>(map: ReadonlyMap<K, T>, f: (_: T) => U): ReadonlyMap<K, U> {
   return new Map(mapIterator(map.entries(), ([key, value]) => [key, f(value)]))
 }
+
+export function set<K, T>(map: ReadonlyMap<K, T>, key: K, value: T): ReadonlyMap<K, T> {
+  const cloned = new Map(map)
+  cloned.set(key, value)
+  return cloned
+}
+
+export function update<K, T>(map: ReadonlyMap<K, T>, key: K, f: (_: T | undefined) => T): ReadonlyMap<K, T> {
+  const cloned = new Map(map)
+  cloned.set(key, f(cloned.get(key)))
+  return cloned
+}
