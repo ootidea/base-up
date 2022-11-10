@@ -56,3 +56,13 @@ export function intersection<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Re
   }
   return result
 }
+
+export function isDisjoint<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): boolean {
+  const [small, big] = sortBy([lhs, rhs], (set) => set.size)
+  for (const value of small.values()) {
+    if (big.has(value as any)) {
+      return false
+    }
+  }
+  return true
+}
