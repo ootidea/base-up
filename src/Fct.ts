@@ -32,8 +32,14 @@ export namespace Fct {
   export const number = { type: 'number' } as const
   export type NumberType = typeof number
 
+  export const bigint = { type: 'bigint' } as const
+  export type BigintType = typeof bigint
+
   export const string = { type: 'string' } as const
   export type StringType = typeof string
+
+  export const symbol = { type: 'symbol' } as const
+  export type SymbolType = typeof symbol
 
   export function literal<T extends null | undefined | boolean | number | bigint | string | symbol>(value: T) {
     return { type: 'literal', value } as const
@@ -89,8 +95,12 @@ export namespace Fct {
     ? boolean
     : T extends NumberType
     ? number
+    : T extends BigintType
+    ? bigint
     : T extends StringType
     ? string
+    : T extends SymbolType
+    ? symbol
     : T extends LiteralType<infer L>
     ? L
     : T extends ArrayType<infer U>
