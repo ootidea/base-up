@@ -2,8 +2,8 @@ import { LimitedSizeArray } from '../Array/type'
 
 export function* map<T, U>(self: Iterable<T>, f: (_: T) => U): Generator<U> {
   const iterator = self[Symbol.iterator]()
-  for (let value = iterator.next(); !value.done; value = iterator.next()) {
-    yield f(value.value)
+  for (let element = iterator.next(); !element.done; element = iterator.next()) {
+    yield f(element.value)
   }
   iterator.return?.()
 }
@@ -12,9 +12,9 @@ export function filter<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): 
 export function filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T>
 export function* filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T> {
   const iterator = self[Symbol.iterator]()
-  for (let value = iterator.next(); !value.done; value = iterator.next()) {
-    if (f(value.value)) {
-      yield value.value
+  for (let element = iterator.next(); !element.done; element = iterator.next()) {
+    if (f(element.value)) {
+      yield element.value
     }
   }
   iterator.return?.()
@@ -23,8 +23,8 @@ export function* filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T
 export function take<T, N extends number>(self: Iterable<T>, n: N): LimitedSizeArray<N, T> {
   const result: T[] = []
   const iterator = self[Symbol.iterator]()
-  for (let value = iterator.next(); !value.done && result.length < n; value = iterator.next()) {
-    result.push(value.value)
+  for (let element = iterator.next(); !element.done && result.length < n; element = iterator.next()) {
+    result.push(element.value)
   }
   iterator.return?.()
   return result as any
