@@ -1,5 +1,3 @@
-import { LimitedSizeArray } from '../Array/type'
-
 export function* until(n: number): Generator<number> {
   for (let i = 0; i < n; i++) {
     yield i
@@ -25,16 +23,6 @@ export function elementAt<T>(self: Iterable<T>, n: number): T | undefined {
   for (i = 0, element = iterator.next(); i < n && !element.done; ++i, element = iterator.next()) {}
   iterator.return?.()
   return element.value
-}
-
-export function take<T, N extends number>(self: Iterable<T>, n: N): LimitedSizeArray<N, T> {
-  const result: T[] = []
-  const iterator = self[Symbol.iterator]()
-  for (let element = iterator.next(); !element.done && result.length < n; element = iterator.next()) {
-    result.push(element.value)
-  }
-  iterator.return?.()
-  return result as any
 }
 
 export function* map<T, U>(self: Iterable<T>, f: (_: T) => U): Generator<U> {
