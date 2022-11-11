@@ -1,4 +1,5 @@
 import { Tail } from '../Array/type'
+import { PseudoAny } from '../other'
 
 export function curry<F extends (..._: any) => any>(
   f: F
@@ -21,4 +22,10 @@ export function call<T>(f: () => T): T {
 
 export function id<T>(value: T): T {
   return value
+}
+
+export function returnLast<T extends readonly PseudoAny[]>(
+  ...args: T
+): T extends readonly [...any, infer L] ? L : undefined {
+  return args[args.length - 1] as any
 }
