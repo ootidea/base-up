@@ -18,7 +18,7 @@ type _Until<N extends number, Result extends readonly any[] = []> = Result['leng
  * randomIntegerUntil(0) results 0
  */
 export function randomIntegerUntil<N extends number>(value: N): Until<N> {
-  return Math.floor(Math.random() * (value + 1)) as any
+  return Math.floor(Math.random() * value) as any
 }
 
 export function randomInteger(min: number, max: number): number {
