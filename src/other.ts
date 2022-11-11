@@ -1,3 +1,16 @@
+/**
+ * All lowercase types that exist in TypeScript, excluding unknown and any.
+ * T | never is equivalent to T, so never is omitted.
+ *
+ * This helps to infer literal types as follows.
+ * @example
+ * function success<T extends readonly PseudoAny[]>(...args: T): T { return args }
+ * function failures<T extends readonly any[]>(...args: T): T { return args }
+ * success(1, 'a') is typed as [1, 'a']
+ * failures(1, 'a') is typed as [number, string]
+ */
+export type PseudoAny = null | undefined | void | boolean | number | bigint | string | symbol | object
+
 export function assert<T, U extends T>(value: T, predicate: (value: T) => value is U): asserts value is U
 export function assert<T>(value: T, predicate: (value: T) => boolean): void | never
 export function assert<T>(value: T, predicate: (value: T) => boolean): void | never {
@@ -17,7 +30,7 @@ export function assert<T>(value: T, predicate: (value: T) => boolean): void | ne
  * assert(n, isJust(123 as const)) will narrow the type of n to 123.
  */
 export const isJust =
-  <T extends null | undefined | boolean | number | bigint | string | symbol | object, U extends T>(literal: U) =>
+  <T extends PseudoAny, U extends T>(literal: U) =>
   (value: T): value is U =>
     value === literal
 

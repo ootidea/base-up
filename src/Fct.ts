@@ -1,3 +1,5 @@
+import { PseudoAny } from './other'
+
 /**
  * Utility for defining tagged union types.
  * @example
@@ -41,12 +43,10 @@ export namespace Fct {
   export const symbol = { type: 'symbol' } as const
   export type SymbolType = typeof symbol
 
-  export function literal<T extends null | undefined | boolean | number | bigint | string | symbol>(value: T) {
+  export function literal<T extends PseudoAny>(value: T) {
     return { type: 'literal', value } as const
   }
-  export type LiteralType<T extends null | undefined | boolean | number | bigint | string | symbol> = ReturnType<
-    typeof literal<T>
-  >
+  export type LiteralType<T extends PseudoAny> = ReturnType<typeof literal<T>>
 
   export function array<T>(value: T) {
     return { type: 'array', value } as const
