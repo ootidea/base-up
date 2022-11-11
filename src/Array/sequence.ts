@@ -1,3 +1,5 @@
+import { PseudoAny } from '../other'
+
 /**
  * @example
  * Until<3> is equivalent to [0, 1, 2]
@@ -15,12 +17,40 @@ type _Until<N extends number, Result extends readonly any[] = []> = Result['leng
 
 /**
  * @example
+ * RepeatArray<3, ['a', 'b']> is typed as ['a', 'b', 'a', 'b', 'a', 'b']
+ * RepeatArray<0, ['a', 'b']> is typed as []
+ * @example
+ * RepeatArray<0 | 1, ['a', 'b']> is typed as [] | ['a', 'b']
+ * RepeatArray<number, ['a', 'b']> is typed as readonly ('a' | 'b')[]
+ */
+export type RepeatArray<N extends number, A extends readonly PseudoAny[]> = number extends N
+  ? readonly A[number][]
+  : N extends N
+  ? _RepeatArray<N, A>
+  : never
+type _RepeatArray<
+  N extends number,
+  A extends readonly PseudoAny[],
+  L extends readonly any[] = [],
+  R extends readonly PseudoAny[] = []
+> = L['length'] extends N ? R : _RepeatArray<N, A, [...L, any], [...R, ...A]>
+
+/**
+ * @example
  * until(3) results [0, 1, 2]
  * until(3) is typed as [0, 1, 2]
  * @example
- * const n: number = 3
+ * until(0) results []
+ * until(0) is typed as []
+ * @example
+ * const n: number = 4
+ * until(n) results [0, 1, 2, 3]
  * until(n) is typed as readonly number[]
  */
-export function until<N extends number>(length: N): number extends N ? readonly number[] : Until<N> {
+export function until<N extends number>(length: N): Until<N> {
   return Array.from({ length }, (_, i) => i) as any
+}
+
+export function repeat<N extends number, T extends readonly PseudoAny[]>(count: N, ...values: T): RepeatArray<N, T> {
+  return Array.from({ length: count * values.length }, (_, i) => values[i % values.length]) as any
 }
