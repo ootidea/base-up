@@ -10,6 +10,6 @@ test('take', () => {
   expect(take([1, 2, 3], 0)).toStrictEqual([])
 })
 
-test('take', () => {
+test('repeat', () => {
   expect(take(repeat(true), 5)).toStrictEqual([true, true, true, true, true])
 })
