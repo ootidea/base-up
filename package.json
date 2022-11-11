@@ -10,7 +10,7 @@
     "format": "run-p format:*",
     "format:prettier": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,scss}\"",
     "format:package-json": "sort-package-json",
-    "test": "vitest",
+    "test": "vitest --silent=false",
     "typecheck": "tsc",
     "preview": "vite preview"
   },
