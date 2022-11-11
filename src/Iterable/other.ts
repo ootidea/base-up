@@ -20,6 +20,15 @@ export function* filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T
   iterator.return?.()
 }
 
+export function elementAt<T>(self: Iterable<T>, n: number): T | undefined {
+  const iterator = self[Symbol.iterator]()
+  let i: number
+  let element: IteratorResult<T>
+  for (i = 0, element = iterator.next(); i < n && !element.done; ++i, element = iterator.next()) {}
+  iterator.return?.()
+  return element.value
+}
+
 export function take<T, N extends number>(self: Iterable<T>, n: N): LimitedSizeArray<N, T> {
   const result: T[] = []
   const iterator = self[Symbol.iterator]()
