@@ -33,3 +33,11 @@ export function take<T, N extends number>(self: Iterable<T>, n: N): LimitedSizeA
 export function* repeat<T>(value: T): Generator<T> {
   while (true) yield value
 }
+
+export function* repeatApply<T>(initialValue: T, f: (_: T) => T): Generator<T> {
+  let value = initialValue
+  while (true) {
+    yield value
+    value = f(value)
+  }
+}
