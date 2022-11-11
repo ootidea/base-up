@@ -1,14 +1,14 @@
 import { sortBy } from '../Array/order'
 import { filter as filterIterable, map as mapIterable } from '../Iterable/other'
-import { Nominal } from '../other'
+import { Nominal, Tuple } from '../other'
 
 declare const NON_EMPTY_SET_TAG: unique symbol
 export type NonEmptySet<T> = Nominal<Set<T>, typeof NON_EMPTY_SET_TAG>
 export type ReadonlyNonEmptySet<T> = Nominal<ReadonlySet<T>, typeof NON_EMPTY_SET_TAG>
 
-export function setOf<H, T extends readonly any[]>(head: H, ...tail: T): ReadonlyNonEmptySet<H | T[number]>
-export function setOf<T extends readonly any[]>(...args: T): ReadonlySet<T[number]>
-export function setOf<T extends readonly any[]>(...args: T): ReadonlySet<T[number]> {
+export function setOf<H, T extends Tuple>(head: H, ...tail: T): ReadonlyNonEmptySet<H | T[number]>
+export function setOf<T extends Tuple>(...args: T): ReadonlySet<T[number]>
+export function setOf<T extends Tuple>(...args: T): ReadonlySet<T[number]> {
   return new Set(args)
 }
 

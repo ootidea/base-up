@@ -1,3 +1,5 @@
+import { Tuple } from '../other'
+
 /**
  * @example
  * Until<3> is equivalent to 0 | 1 | 2
@@ -7,7 +9,7 @@
  * Until<number> is equivalent to number
  */
 export type Until<N extends number> = number extends N ? number : N extends N ? _Until<N> : never
-type _Until<N extends number, Result extends readonly any[] = []> = Result['length'] extends N
+type _Until<N extends number, Result extends Tuple = []> = Result['length'] extends N
   ? never
   : Result['length'] | _Until<N, [...Result, any]>
 

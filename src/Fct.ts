@@ -1,4 +1,4 @@
-import { PseudoAny } from './other'
+import { PseudoAny, Tuple } from './other'
 
 /**
  * Utility for defining tagged union types.
@@ -58,15 +58,15 @@ export namespace Fct {
   }
   export type ObjectType<T extends object> = ReturnType<typeof object<T>>
 
-  export function union<T extends readonly any[]>(...parts: T) {
+  export function union<T extends Tuple>(...parts: T) {
     return { type: 'union', parts } as const
   }
-  export type UnionType<T extends readonly any[]> = ReturnType<typeof union<T>>
+  export type UnionType<T extends Tuple> = ReturnType<typeof union<T>>
 
-  export function intersection<T extends readonly any[]>(...parts: T) {
+  export function intersection<T extends Tuple>(...parts: T) {
     return { type: 'intersection', parts } as const
   }
-  export type IntersectionType<T extends readonly any[]> = ReturnType<typeof intersection<T>>
+  export type IntersectionType<T extends Tuple> = ReturnType<typeof intersection<T>>
 
   export function recursion<K extends keyof any>(key: K) {
     return { type: 'recursion', key } as const
