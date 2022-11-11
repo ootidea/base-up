@@ -41,3 +41,9 @@ export function* repeatApply<T>(initialValue: T, f: (_: T) => T): Generator<T> {
     value = f(value)
   }
 }
+
+export function* until(n: number): Generator<number> {
+  for (let i = 0; i < n; i++) {
+    yield i
+  }
+}

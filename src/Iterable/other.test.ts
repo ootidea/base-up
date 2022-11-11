@@ -1,4 +1,4 @@
-import { filter, repeat, repeatApply, take } from './other'
+import { filter, repeat, repeatApply, take, until } from './other'
 
 test('filter', () => {
   expect([...filter([1, 2, 3], (n) => n % 2 === 0)]).toStrictEqual([2])
@@ -21,4 +21,8 @@ test('repeatApply', () => {
       5
     )
   ).toStrictEqual([0, 3, 6, 9, 12])
+})
+
+test('until', () => {
+  expect([...until(5)]).toStrictEqual([0, 1, 2, 3, 4])
 })
