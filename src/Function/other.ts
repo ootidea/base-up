@@ -6,8 +6,8 @@ export function curry<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R): (
       f(h, ...l)
 }
 
-export function apply1<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R, h: H): (...l: L) => R {
-  return curry(f)(h)
+export function applyFirst<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R, h: H): (...l: L) => R {
+  return (...l: L) => f(h, ...l)
 }
 
 export function call<T>(f: () => T): T {
