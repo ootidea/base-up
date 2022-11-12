@@ -34,4 +34,9 @@ test('zip', () => {
     ['a', 1],
     ['a', 2],
   ])
+  expect([...zip(repeat('a'), until(3), repeat(0))]).toStrictEqual([
+    ['a', 0, 0],
+    ['a', 1, 0],
+    ['a', 2, 0],
+  ])
 })

@@ -41,16 +41,20 @@ export function* filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T
   }
 }
 
-export function* zip<T, U>(lhs: Iterable<T>, rhs: Iterable<U>): Generator<[T, U]> {
-  const lhsIterator = lhs[Symbol.iterator]()
-  const rhsIterator = rhs[Symbol.iterator]()
+type UnwrapIterable<T> = T extends Iterable<infer U> ? U : T
+type UnwrapIterableAll<T extends readonly any[]> = T extends readonly [infer H, ...infer L]
+  ? [UnwrapIterable<H>, ...UnwrapIterableAll<L>]
+  : []
+type Zip<T extends readonly Iterable<any>[]> = Generator<UnwrapIterableAll<T>>
+
+export function* zip<T extends readonly Iterable<any>[]>(...source: T): Zip<T> {
+  const iterators = source.map((iterable) => iterable[Symbol.iterator]())
   for (
-    let lhsElement = lhsIterator.next(), rhsElement = rhsIterator.next();
-    !lhsElement.done && !rhsElement.done;
-    lhsElement = lhsIterator.next(), rhsElement = rhsIterator.next()
+    let elements = iterators.map((iterator) => iterator.next());
+    elements.every((element) => !element.done);
+    elements = iterators.map((iterator) => iterator.next())
   ) {
-    yield [lhsElement.value, rhsElement.value]
+    yield elements.map((element) => element.value) as any
   }
-  lhsIterator.return?.()
-  rhsIterator.return?.()
+  iterators.map((iterator) => iterator.return?.())
 }
