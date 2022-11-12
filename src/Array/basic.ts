@@ -26,8 +26,7 @@ export function filter<T>(self: readonly T[], f: (_: T) => boolean): readonly T[
 
 export function take<T, N extends number>(self: Iterable<T>, n: N): LimitedSizeArray<N, T>
 export function take<T>(self: Iterable<T>, n: number): readonly T[]
-export function take<T>(self: Iterable<T>): LimitedSizeArray<1, T>
-export function take<T>(self: Iterable<T>, n: number = 1): readonly T[] {
+export function take<T>(self: Iterable<T>, n: number): readonly T[] {
   const result: T[] = []
   const iterator = self[Symbol.iterator]()
   for (let element = iterator.next(); !element.done && result.length < n; element = iterator.next()) {
