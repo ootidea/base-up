@@ -1,3 +1,4 @@
+import { Tuple } from '../other'
 import { FixedSizeArray } from './type'
 
 /**
@@ -19,6 +20,19 @@ export function chunk<T, N extends number>(
   const result = []
   for (let i = 0; i + size <= array.length; i += size) {
     result.push(array.slice(i, i + size))
+  }
+  return result as any
+}
+
+export function cartesianProductOf<T extends Tuple, U extends Tuple>(
+  lhs: T,
+  rhs: U
+): readonly [T[number], U[number]][] {
+  const result = []
+  for (const lhsElement of lhs) {
+    for (const rhsElement of rhs) {
+      result.push([lhsElement, rhsElement])
+    }
   }
   return result as any
 }
