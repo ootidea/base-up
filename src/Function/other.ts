@@ -1,19 +1,13 @@
-import { Tail } from '../Array/type'
 import { Tuple } from '../other'
 
-export function curry<F extends (..._: any) => any>(
-  f: F
-): (a: Parameters<F>[0]) => (...bs: Tail<Parameters<F>>) => ReturnType<F> {
-  return (a: Parameters<F>[0]) =>
-    (...bs: Tail<Parameters<F>>) =>
-      f(a, ...bs)
+export function curry<H, L extends Tuple, R>(f: (h: H, ...l: L) => R): (a: H) => (...bs: L) => R {
+  return (h: H) =>
+    (...l: L) =>
+      f(h, ...l)
 }
 
-export function apply1<F extends (..._: any) => any>(
-  f: F,
-  a: Parameters<F>[0]
-): (...bs: Tail<Parameters<F>>) => ReturnType<F> {
-  return curry(f)(a)
+export function apply1<H, L extends Tuple, R>(f: (h: H, ...l: L) => R, h: H): (...l: L) => R {
+  return curry(f)(h)
 }
 
 export function call<T>(f: () => T): T {

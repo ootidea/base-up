@@ -23,8 +23,6 @@ type _FixedSizeArray<N extends number, T = unknown, Result extends readonly any[
 
 export type LimitedSizeArray<N extends number, T = unknown> = FixedSizeArray<N | Until<N>, T>
 
-export type Tail<T> = T extends [any, ...infer A] ? A : []
-
 export function isEmpty<T>(array: ReadonlyNonEmptyArray<T>): false
 export function isEmpty<T>(array: readonly T[]): array is []
 export function isEmpty<T>(array: readonly T[]): array is [] {
