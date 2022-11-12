@@ -1,4 +1,4 @@
-import { AccurateTuple } from '../Array/type'
+import { AccurateTuple, Tuple } from '../Array/type'
 
 export function* until(n: number): Generator<number> {
   for (let i = 0; i < n; i++) {
@@ -12,8 +12,8 @@ export function* until(n: number): Generator<number> {
  * repeat(1, 2) yields 1, 2, 1, 2, ...
  */
 export function repeat<T extends AccurateTuple>(...values: T): Generator<T[number], void, undefined>
-export function repeat<T extends readonly any[]>(...values: T): Generator<T[number], void, undefined>
-export function* repeat<T extends readonly any[]>(...values: T): Generator<T[number], void, undefined> {
+export function repeat<T extends Tuple>(...values: T): Generator<T[number], void, undefined>
+export function* repeat<T extends Tuple>(...values: T): Generator<T[number], void, undefined> {
   while (true) yield* values
 }
 
@@ -51,7 +51,7 @@ export function* filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T
 }
 
 type UnwrapIterable<T> = T extends Iterable<infer U> ? U : T
-type UnwrapIterableAll<T extends readonly any[]> = T extends readonly [infer H, ...infer L]
+type UnwrapIterableAll<T extends Tuple> = T extends readonly [infer H, ...infer L]
   ? [UnwrapIterable<H>, ...UnwrapIterableAll<L>]
   : []
 type Zip<T extends readonly Iterable<any>[]> = Generator<UnwrapIterableAll<T>>

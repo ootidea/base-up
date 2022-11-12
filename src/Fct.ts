@@ -1,4 +1,4 @@
-import { AccurateTuple } from './Array/type'
+import { AccurateTuple, Tuple } from './Array/type'
 import { PseudoAny } from './other'
 
 /**
@@ -118,10 +118,10 @@ export namespace Fct {
   type InferObjectType<T, Z> = {
     [K in keyof T]: Infer<T[K], Z>
   }
-  type InferUnionType<T extends readonly any[], Z> = T extends readonly [infer H, ...infer R]
+  type InferUnionType<T extends Tuple, Z> = T extends readonly [infer H, ...infer R]
     ? Infer<H, Z> | InferUnionType<R, Z>
     : never
-  type InferIntersectionType<T extends readonly any[], Z> = T extends readonly [infer H, ...infer R]
+  type InferIntersectionType<T extends Tuple, Z> = T extends readonly [infer H, ...infer R]
     ? Infer<H, Z> & InferUnionType<R, Z>
     : unknown
 }
