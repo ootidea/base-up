@@ -37,6 +37,8 @@ export function take<T>(self: Iterable<T>, n: number = 1): readonly T[] {
   return result as any
 }
 
+export function indexOf<T>(self: [], value: T, fromIndex?: number): undefined
+export function indexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined
 export function indexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined {
   const index = self.indexOf(value, fromIndex)
   if (index === -1) return undefined
@@ -44,9 +46,23 @@ export function indexOf<T>(self: readonly T[], value: T, fromIndex?: number): nu
   return index
 }
 
+export function lastIndexOf<T>(self: [], value: T, fromIndex?: number): undefined
+export function lastIndexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined
 export function lastIndexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined {
   const index = self.lastIndexOf(value, fromIndex)
   if (index === -1) return undefined
 
   return index
+}
+
+export function indexesOf<T>(self: [], value: T): []
+export function indexesOf<T>(self: readonly T[], value: T): readonly number[]
+export function indexesOf<T>(self: readonly T[], value: T): readonly number[] {
+  const result = []
+  for (let i = 0; i < self.length; i++) {
+    if (self[i] === value) {
+      result.push(i)
+    }
+  }
+  return result
 }
