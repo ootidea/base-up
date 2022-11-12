@@ -36,3 +36,17 @@ export function take<T>(self: Iterable<T>, n: number = 1): readonly T[] {
   iterator.return?.()
   return result as any
 }
+
+export function indexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined {
+  const index = self.indexOf(value, fromIndex)
+  if (index === -1) return undefined
+
+  return index
+}
+
+export function lastIndexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined {
+  const index = self.lastIndexOf(value, fromIndex)
+  if (index === -1) return undefined
+
+  return index
+}
