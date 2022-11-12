@@ -1,4 +1,4 @@
-import { Tuple } from '../other'
+import { AccurateTuple } from '../other'
 import { FixedSizeArray } from './type'
 
 /**
@@ -24,7 +24,7 @@ export function chunk<T, N extends number>(
   return result as any
 }
 
-export function cartesianProductOf<T extends Tuple, U extends Tuple>(
+export function cartesianProductOf<T extends AccurateTuple, U extends AccurateTuple>(
   lhs: T,
   rhs: U
 ): readonly [T[number], U[number]][] {

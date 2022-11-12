@@ -1,4 +1,4 @@
-import { Tuple } from '../other'
+import { AccurateTuple } from '../other'
 
 export function* until(n: number): Generator<number> {
   for (let i = 0; i < n; i++) {
@@ -11,7 +11,7 @@ export function* until(n: number): Generator<number> {
  * repeat('a') yields 'a', 'a', 'a', ...
  * repeat(1, 2) yields 1, 2, 1, 2, ...
  */
-export function repeat<T extends Tuple>(...values: T): Generator<T[number], void, undefined>
+export function repeat<T extends AccurateTuple>(...values: T): Generator<T[number], void, undefined>
 export function repeat<T extends readonly any[]>(...values: T): Generator<T[number], void, undefined>
 export function* repeat<T extends readonly any[]>(...values: T): Generator<T[number], void, undefined> {
   while (true) yield* values

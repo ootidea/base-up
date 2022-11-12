@@ -1,4 +1,4 @@
-import { Tuple } from '../other'
+import { AccurateTuple } from '../other'
 
 /**
  * @example
@@ -11,7 +11,7 @@ import { Tuple } from '../other'
  * Until<number> is equivalent to readonly number[]
  */
 export type Until<N extends number> = number extends N ? readonly number[] : N extends N ? _Until<N> : never
-type _Until<N extends number, Result extends Tuple = []> = Result['length'] extends N
+type _Until<N extends number, Result extends AccurateTuple = []> = Result['length'] extends N
   ? Result
   : _Until<N, [...Result, Result['length']]>
 
@@ -23,14 +23,17 @@ type _Until<N extends number, Result extends Tuple = []> = Result['length'] exte
  * RepeatArray<0 | 1, ['a', 'b']> is typed as [] | ['a', 'b']
  * RepeatArray<number, ['a', 'b']> is typed as readonly ('a' | 'b')[]
  */
-export type RepeatArray<N extends number, A extends Tuple> = number extends N
+export type RepeatArray<N extends number, A extends AccurateTuple> = number extends N
   ? readonly A[number][]
   : N extends N
   ? _RepeatArray<N, A>
   : never
-type _RepeatArray<N extends number, A extends Tuple, L extends Tuple = [], R extends Tuple = []> = L['length'] extends N
-  ? R
-  : _RepeatArray<N, A, [...L, any], [...R, ...A]>
+type _RepeatArray<
+  N extends number,
+  A extends AccurateTuple,
+  L extends AccurateTuple = [],
+  R extends AccurateTuple = []
+> = L['length'] extends N ? R : _RepeatArray<N, A, [...L, any], [...R, ...A]>
 
 /**
  * @example
@@ -48,6 +51,6 @@ export function until<N extends number>(length: N): Until<N> {
   return Array.from({ length }, (_, i) => i) as any
 }
 
-export function repeat<N extends number, T extends Tuple>(count: N, ...values: T): RepeatArray<N, T> {
+export function repeat<N extends number, T extends AccurateTuple>(count: N, ...values: T): RepeatArray<N, T> {
   return Array.from({ length: count * values.length }, (_, i) => values[i % values.length]) as any
 }
