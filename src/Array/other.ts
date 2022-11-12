@@ -1,4 +1,4 @@
-import { AccurateTuple, FixedSizeArray } from './type'
+import { AccurateTuple, FixedSizeArray, NonEmptyArray, ReadonlyNonEmptyArray } from './type'
 
 /**
  * @example
@@ -21,6 +21,20 @@ export function chunk<T, N extends number>(
     result.push(array.slice(i, i + size))
   }
   return result as any
+}
+
+export function groupBy<T, U>(self: readonly T[], by: (_: T) => U): Map<U, ReadonlyNonEmptyArray<T>> {
+  const result = new Map<U, NonEmptyArray<T>>()
+  for (const value of self) {
+    const key = by(value)
+    const array = result.get(key)
+    if (array === undefined) {
+      result.set(key, [value])
+    } else {
+      array.push(value)
+    }
+  }
+  return result
 }
 
 export function cartesianProductOf<T extends AccurateTuple, U extends AccurateTuple>(
