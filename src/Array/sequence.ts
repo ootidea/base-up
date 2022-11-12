@@ -1,4 +1,4 @@
-import { AccurateTuple } from './type'
+import { AccurateTuple, FixedSizeArray } from './type'
 
 /**
  * @example
@@ -53,4 +53,16 @@ export function until<N extends number>(length: N): Until<N> {
 
 export function repeat<N extends number, T extends AccurateTuple>(count: N, ...values: T): RepeatArray<N, T> {
   return Array.from({ length: count * values.length }, (_, i) => values[i % values.length]) as any
+}
+
+export function repeatApply<N extends number, T>(length: N, first: T, f: (_: T) => T): FixedSizeArray<N, T> {
+  if (length === 0) return [] as any
+
+  const result: T[] = [first]
+  let value = first
+  for (let i = 1; i < length; i++) {
+    value = f(value)
+    result.push(value)
+  }
+  return result as any
 }

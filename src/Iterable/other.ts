@@ -17,8 +17,8 @@ export function* repeat<T extends Tuple>(...values: T): Generator<T[number], voi
   while (true) yield* values
 }
 
-export function* repeatApply<T>(initialValue: T, f: (_: T) => T): Generator<T> {
-  let value = initialValue
+export function* repeatApply<T>(first: T, f: (_: T) => T): Generator<T> {
+  let value = first
   while (true) {
     yield value
     value = f(value)
