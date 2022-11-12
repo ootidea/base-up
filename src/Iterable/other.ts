@@ -1,11 +1,20 @@
+import { Tuple } from '../other'
+
 export function* until(n: number): Generator<number> {
   for (let i = 0; i < n; i++) {
     yield i
   }
 }
 
-export function* repeat<T>(value: T): Generator<T> {
-  while (true) yield value
+/**
+ * @example
+ * repeat('a') yields 'a', 'a', 'a', ...
+ * repeat(1, 2) yields 1, 2, 1, 2, ...
+ */
+export function repeat<T extends Tuple>(...values: T): Generator<T[number], void, undefined>
+export function repeat<T extends readonly any[]>(...values: T): Generator<T[number], void, undefined>
+export function* repeat<T extends readonly any[]>(...values: T): Generator<T[number], void, undefined> {
+  while (true) yield* values
 }
 
 export function* repeatApply<T>(initialValue: T, f: (_: T) => T): Generator<T> {

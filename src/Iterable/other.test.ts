@@ -7,6 +7,7 @@ test('until', () => {
 
 test('repeat', () => {
   expect(take(repeat(true), 5)).toStrictEqual([true, true, true, true, true])
+  expect(take(repeat(1, 2), 4)).toStrictEqual([1, 2, 1, 2])
 })
 
 test('repeatApply', () => {
