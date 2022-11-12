@@ -20,12 +20,16 @@ export function maxBy<T>(array: readonly T[], by: (element: T) => number): T | u
   return candidateElement
 }
 
+export function sort<T>(array: []): []
+export function sort<T>(array: readonly [T]): readonly [T]
 export function sort<T>(array: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
 export function sort<T>(array: readonly T[]): readonly T[]
 export function sort<T>(array: readonly T[]): readonly T[] {
   return sortBy(array, id)
 }
 
+export function sortBy<T, U>(array: [], by: (_: T) => U): []
+export function sortBy<T, U>(array: readonly [T], by: (_: T) => U): readonly [T]
 export function sortBy<T, U>(array: ReadonlyNonEmptyArray<T>, by: (_: T) => U): ReadonlyNonEmptyArray<T>
 export function sortBy<T, U>(array: readonly T[], by: (_: T) => U): readonly T[]
 export function sortBy<T, U>(array: readonly T[], by: (_: T) => U): readonly T[] {
@@ -34,6 +38,8 @@ export function sortBy<T, U>(array: readonly T[], by: (_: T) => U): readonly T[]
   return cloned
 }
 
+export function shuffle<T>(self: []): []
+export function shuffle<T>(self: readonly [T]): readonly [T]
 export function shuffle<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
 export function shuffle<T>(self: readonly T[]): readonly T[]
 export function shuffle<T>(self: readonly T[]): readonly T[] {
