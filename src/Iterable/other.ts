@@ -40,3 +40,17 @@ export function* filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T
     }
   }
 }
+
+export function* zip<T, U>(lhs: Iterable<T>, rhs: Iterable<U>): Generator<[T, U]> {
+  const lhsIterator = lhs[Symbol.iterator]()
+  const rhsIterator = rhs[Symbol.iterator]()
+  for (
+    let lhsElement = lhsIterator.next(), rhsElement = rhsIterator.next();
+    !lhsElement.done && !rhsElement.done;
+    lhsElement = lhsIterator.next(), rhsElement = rhsIterator.next()
+  ) {
+    yield [lhsElement.value, rhsElement.value]
+  }
+  lhsIterator.return?.()
+  rhsIterator.return?.()
+}

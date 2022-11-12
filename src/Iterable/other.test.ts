@@ -1,5 +1,5 @@
 import { take } from '../Array/basic'
-import { elementAt, filter, repeat, repeatApply, until } from './other'
+import { elementAt, filter, repeat, repeatApply, until, zip } from './other'
 
 test('until', () => {
   expect([...until(5)]).toStrictEqual([0, 1, 2, 3, 4])
@@ -26,4 +26,12 @@ test('elementAt', () => {
 
 test('filter', () => {
   expect([...filter([1, 2, 3], (n) => n % 2 === 0)]).toStrictEqual([2])
+})
+
+test('zip', () => {
+  expect([...zip(repeat('a'), until(3))]).toStrictEqual([
+    ['a', 0],
+    ['a', 1],
+    ['a', 2],
+  ])
 })
