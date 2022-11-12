@@ -26,21 +26,17 @@ export function elementAt<T>(self: Iterable<T>, n: number): T | undefined {
 }
 
 export function* map<T, U>(self: Iterable<T>, f: (_: T) => U): Generator<U> {
-  const iterator = self[Symbol.iterator]()
-  for (let element = iterator.next(); !element.done; element = iterator.next()) {
-    yield f(element.value)
+  for (const value of self) {
+    yield f(value)
   }
-  iterator.return?.()
 }
 
 export function filter<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): Generator<U>
 export function filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T>
 export function* filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T> {
-  const iterator = self[Symbol.iterator]()
-  for (let element = iterator.next(); !element.done; element = iterator.next()) {
-    if (f(element.value)) {
-      yield element.value
+  for (const value of self) {
+    if (f(value)) {
+      yield value
     }
   }
-  iterator.return?.()
 }
