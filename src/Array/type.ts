@@ -17,7 +17,7 @@ export type ReadonlyNonEmptyArray<T> = readonly [T, ...T[]]
  * FixedSizeArray<number> is equivalent to []
  */
 export type FixedSizeArray<N extends number, T = unknown> = N extends N ? _FixedSizeArray<N, T> : never
-type _FixedSizeArray<N extends number, T = unknown, Result extends readonly any[] = []> = Result['length'] extends N
+type _FixedSizeArray<N extends number, T = unknown, Result extends readonly T[] = []> = Result['length'] extends N
   ? Result
   : _FixedSizeArray<N, T, [...Result, T]>
 
