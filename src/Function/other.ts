@@ -1,4 +1,4 @@
-import { AccurateTuple } from '../other'
+import { AccurateTuple } from '../Array/type'
 
 export function curry<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R): (a: H) => (...bs: L) => R {
   return (h: H) =>

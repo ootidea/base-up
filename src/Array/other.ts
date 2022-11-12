@@ -1,5 +1,4 @@
-import { AccurateTuple } from '../other'
-import { FixedSizeArray } from './type'
+import { AccurateTuple, FixedSizeArray } from './type'
 
 /**
  * @example

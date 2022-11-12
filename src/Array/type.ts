@@ -1,7 +1,9 @@
 import { Until } from '../number/other'
+import { PseudoAny } from '../other'
+
+export type AccurateTuple = readonly PseudoAny[]
 
 export type NonEmptyArray<T> = [T, ...T[]]
-
 export type ReadonlyNonEmptyArray<T> = readonly [T, ...T[]]
 
 /**
