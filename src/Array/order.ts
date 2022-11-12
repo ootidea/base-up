@@ -3,11 +3,11 @@ import { randomIntegerUntil } from '../number/other'
 import { ltToComparator } from '../order'
 import { ReadonlyNonEmptyArray } from './type'
 
-export function maxBy<T>(array: ReadonlyNonEmptyArray<T>, by: (element: T) => number): T
-export function maxBy<T>(array: readonly T[], by: (element: T) => number): T | undefined {
-  if (array.length === 0) return undefined
+export function maxBy<T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => number): T
+export function maxBy<T>(self: readonly T[], by: (element: T) => number): T | undefined {
+  if (self.length === 0) return undefined
 
-  const [firstElement, ...rest] = array
+  const [firstElement, ...rest] = self
   let candidateElement = firstElement
   let maxValue = by(firstElement)
   for (const element of rest) {
@@ -20,20 +20,20 @@ export function maxBy<T>(array: readonly T[], by: (element: T) => number): T | u
   return candidateElement
 }
 
-export function sort<T>(array: []): []
-export function sort<T>(array: readonly [T]): readonly [T]
-export function sort<T>(array: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
-export function sort<T>(array: readonly T[]): readonly T[]
-export function sort<T>(array: readonly T[]): readonly T[] {
-  return sortBy(array, id)
+export function sort<T>(self: []): []
+export function sort<T>(self: readonly [T]): readonly [T]
+export function sort<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
+export function sort<T>(self: readonly T[]): readonly T[]
+export function sort<T>(self: readonly T[]): readonly T[] {
+  return sortBy(self, id)
 }
 
-export function sortBy<T, U>(array: [], by: (_: T) => U): []
-export function sortBy<T, U>(array: readonly [T], by: (_: T) => U): readonly [T]
-export function sortBy<T, U>(array: ReadonlyNonEmptyArray<T>, by: (_: T) => U): ReadonlyNonEmptyArray<T>
-export function sortBy<T, U>(array: readonly T[], by: (_: T) => U): readonly T[]
-export function sortBy<T, U>(array: readonly T[], by: (_: T) => U): readonly T[] {
-  const cloned = array.slice()
+export function sortBy<T, U>(self: [], by: (_: T) => U): []
+export function sortBy<T, U>(self: readonly [T], by: (_: T) => U): readonly [T]
+export function sortBy<T, U>(self: ReadonlyNonEmptyArray<T>, by: (_: T) => U): ReadonlyNonEmptyArray<T>
+export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[]
+export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[] {
+  const cloned = self.slice()
   cloned.sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs)))
   return cloned
 }
