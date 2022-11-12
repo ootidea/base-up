@@ -1,3 +1,5 @@
+import { update } from '../MutableMap/other'
+import { push } from './modification'
 import { AccurateTuple, FixedSizeArray, NonEmptyArray, ReadonlyNonEmptyArray } from './type'
 
 /**
@@ -27,12 +29,7 @@ export function groupBy<T, U>(self: readonly T[], by: (_: T) => U): Map<U, Reado
   const result = new Map<U, NonEmptyArray<T>>()
   for (const value of self) {
     const key = by(value)
-    const array = result.get(key)
-    if (array === undefined) {
-      result.set(key, [value])
-    } else {
-      array.push(value)
-    }
+    update(result, key, (prev) => push(prev ?? ([] as const), value))
   }
   return result
 }
