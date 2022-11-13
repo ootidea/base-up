@@ -1,5 +1,5 @@
 import { AccurateTuple, FixedSizeArray, NonEmptyArray, ReadonlyNonEmptyArray } from '../Array'
-import { update } from '../MutableMap/other'
+import { update } from '../keyValueStore'
 import { push } from '../sequence'
 
 /**
