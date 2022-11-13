@@ -1,6 +1,7 @@
+import { shuffle } from '../Array'
 import { id } from '../Function'
 import { setOf } from '../Set'
-import { shuffle, sort, sortBy } from './order'
+import { sort, sortBy } from './order'
 
 test('sort', () => {
   expect(sort([1, 2, 3])).toStrictEqual([1, 2, 3])

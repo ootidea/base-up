@@ -1,4 +1,4 @@
-import { Until } from './number'
+import { randomIntegerUntil, Until } from './number'
 import { PseudoAny } from './type'
 
 export type AccurateTuple = readonly PseudoAny[]
@@ -49,4 +49,20 @@ export function every<F extends (value: T) => value is U, T, U extends T>(
 export function every<F extends (value: T) => boolean, T>(self: readonly T[], f: F): boolean
 export function every<F extends (value: T) => boolean, T>(self: readonly T[], f: F): boolean {
   return self.every(f)
+}
+
+export function shuffle<T>(self: []): []
+export function shuffle<T>(self: readonly [T]): readonly [T]
+export function shuffle<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
+export function shuffle<T>(self: readonly T[]): readonly T[]
+export function shuffle<T>(self: readonly T[]): readonly T[] {
+  const result: T[] = []
+  for (let i = 0; i < self.length; ++i) {
+    const j = randomIntegerUntil(i + 1)
+    if (j < i) {
+      result.push(result[j])
+    }
+    result[j] = self[i]
+  }
+  return result
 }

@@ -1,6 +1,5 @@
 import { ReadonlyNonEmptyArray } from '../Array'
 import { id } from '../Function'
-import { randomIntegerUntil } from '../number'
 import { ltToComparator } from '../order'
 
 export function maxBy<T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => number): T
@@ -36,20 +35,4 @@ export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[] 
   const cloned = self.slice()
   cloned.sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs)))
   return cloned
-}
-
-export function shuffle<T>(self: []): []
-export function shuffle<T>(self: readonly [T]): readonly [T]
-export function shuffle<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
-export function shuffle<T>(self: readonly T[]): readonly T[]
-export function shuffle<T>(self: readonly T[]): readonly T[] {
-  const result: T[] = []
-  for (let i = 0; i < self.length; ++i) {
-    const j = randomIntegerUntil(i + 1)
-    if (j < i) {
-      result.push(result[j])
-    }
-    result[j] = self[i]
-  }
-  return result
 }
