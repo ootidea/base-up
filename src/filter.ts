@@ -1,3 +1,4 @@
+import { ReadonlyNonEmptyArray } from './Array'
 import { newSet } from './Set'
 
 export function filter<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): readonly U[]
@@ -22,4 +23,46 @@ export namespace filter {
   export function Set<T>(set: ReadonlySet<T>, f: (_: T) => boolean): ReadonlySet<T> {
     return newSet(filter.Iterable(set.values(), f))
   }
+}
+
+export function first<T>(self: ReadonlyNonEmptyArray<T>): T
+export function first<T>(self: readonly T[]): T | undefined
+export function first<T>(self: readonly T[]): T | undefined {
+  return self[0]
+}
+
+export function last<T>(self: ReadonlyNonEmptyArray<T>): T
+export function last<T>(self: readonly T[]): T | undefined
+export function last<T>(self: readonly T[]): T | undefined {
+  return self[self.length - 1]
+}
+
+export function indexOf<T>(self: [], value: T, fromIndex?: number): undefined
+export function indexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined
+export function indexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined {
+  const index = self.indexOf(value, fromIndex)
+  if (index === -1) return undefined
+
+  return index
+}
+
+export function lastIndexOf<T>(self: [], value: T, fromIndex?: number): undefined
+export function lastIndexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined
+export function lastIndexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined {
+  const index = self.lastIndexOf(value, fromIndex)
+  if (index === -1) return undefined
+
+  return index
+}
+
+export function indexesOf<T>(self: [], value: T): []
+export function indexesOf<T>(self: readonly T[], value: T): readonly number[]
+export function indexesOf<T>(self: readonly T[], value: T): readonly number[] {
+  const result = []
+  for (let i = 0; i < self.length; i++) {
+    if (self[i] === value) {
+      result.push(i)
+    }
+  }
+  return result
 }

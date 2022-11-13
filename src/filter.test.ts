@@ -1,5 +1,6 @@
+import { indexesOf, last } from './filter'
 import { repeat } from './Iterable'
-import { indexesOf, last, take } from './sequence'
+import { take } from './transform'
 
 test('last', () => {
   expect(last([1, 2, 3])).toBe(3)

@@ -1,5 +1,5 @@
 import { curry, enunary, returnLast } from './Function'
-import { take } from './sequence'
+import { take } from './transform'
 
 test('curry', () => {
   const plus = (a: number, b: string) => a + b

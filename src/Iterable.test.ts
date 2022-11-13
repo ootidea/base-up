@@ -1,6 +1,6 @@
 import { filter } from './filter'
 import { elementAt, repeat, repeatApply, until, zip } from './Iterable'
-import { take } from './sequence'
+import { take } from './transform'
 
 test('until', () => {
   expect([...until(5)]).toStrictEqual([0, 1, 2, 3, 4])
