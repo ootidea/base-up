@@ -1,4 +1,4 @@
-import { cartesianProductOf } from './combination'
+import { cartesianProductOf, prefixesOf } from './combination'
 
 test('cartesianProductOf', () => {
   expect(cartesianProductOf([0, 1], ['a', 'b'])).toStrictEqual([
@@ -13,4 +13,9 @@ test('cartesianProductOf', () => {
     [0, 'a'],
     [1, 'a'],
   ])
+})
+
+test('prefixesOf', () => {
+  expect(prefixesOf([1, 2, 3])).toStrictEqual([[], [1], [1, 2], [1, 2, 3]])
+  expect(prefixesOf([])).toStrictEqual([[]])
 })

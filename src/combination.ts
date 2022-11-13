@@ -1,4 +1,4 @@
-import { AccurateTuple } from './Array'
+import { AccurateTuple, NonEmptyArray, ReadonlyNonEmptyArray } from './Array'
 
 export function cartesianProductOf<T extends AccurateTuple, U extends AccurateTuple>(
   lhs: T,
@@ -11,4 +11,14 @@ export function cartesianProductOf<T extends AccurateTuple, U extends AccurateTu
     }
   }
   return result as any
+}
+
+export function prefixesOf<T>(self: readonly T[]): ReadonlyNonEmptyArray<readonly T[]> {
+  const result: NonEmptyArray<readonly T[]> = [[]]
+  const prefixes = []
+  for (const element of self) {
+    prefixes.push(element)
+    result.push(prefixes.slice())
+  }
+  return result
 }
