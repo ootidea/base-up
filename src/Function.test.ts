@@ -1,5 +1,5 @@
-import { take } from './Array/basic'
 import { curry, enunary, returnLast } from './Function'
+import { take } from './sequence'
 
 test('curry', () => {
   const plus = (a: number, b: string) => a + b

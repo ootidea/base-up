@@ -1,5 +1,5 @@
-import { take } from './Array/basic'
 import { elementAt, filter, repeat, repeatApply, until, zip } from './Iterable'
+import { take } from './sequence'
 
 test('until', () => {
   expect([...until(5)]).toStrictEqual([0, 1, 2, 3, 4])

@@ -1,5 +1,5 @@
 import { repeat } from '../Iterable'
-import { indexesOf, last, take } from './basic'
+import { indexesOf, last, take } from '../sequence'
 
 test('last', () => {
   expect(last([1, 2, 3])).toBe(3)
