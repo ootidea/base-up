@@ -66,3 +66,20 @@ export function indexesOf<T>(self: readonly T[], value: T): readonly number[] {
   }
   return result
 }
+
+export function maxBy<T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => number): T
+export function maxBy<T>(self: readonly T[], by: (element: T) => number): T | undefined {
+  if (self.length === 0) return undefined
+
+  const [firstElement, ...rest] = self
+  let candidateElement = firstElement
+  let maxValue = by(firstElement)
+  for (const element of rest) {
+    const value = by(element)
+    if (maxValue < value) {
+      candidateElement = element
+      maxValue = value
+    }
+  }
+  return candidateElement
+}

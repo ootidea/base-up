@@ -1,5 +1,5 @@
 import { AccurateTuple } from './Array'
-import { sortBy } from './Array/order'
+import { sortBy } from './transform'
 import { Nominal } from './type'
 
 declare const NON_EMPTY_SET_TAG: unique symbol

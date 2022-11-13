@@ -1,5 +1,7 @@
 import { LimitedSizeArray, ReadonlyNonEmptyArray } from './Array'
+import { id } from './Function'
 import { newMap, ReadonlyNonEmptyMap } from './Map'
+import { ltToComparator } from './order'
 import { newSet, ReadonlyNonEmptySet } from './Set'
 
 export function map<T, U>(self: ReadonlyNonEmptyArray<T>, f: (_: T) => U): ReadonlyNonEmptyArray<U>
@@ -47,5 +49,23 @@ export function tail<T>(self: readonly T[]): readonly T[] | undefined {
 
   const cloned = self.slice()
   cloned.shift()
+  return cloned
+}
+
+export function sort<T>(self: []): []
+export function sort<T>(self: readonly [T]): readonly [T]
+export function sort<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
+export function sort<T>(self: readonly T[]): readonly T[]
+export function sort<T>(self: readonly T[]): readonly T[] {
+  return sortBy(self, id)
+}
+
+export function sortBy<T, U>(self: [], by: (_: T) => U): []
+export function sortBy<T, U>(self: readonly [T], by: (_: T) => U): readonly [T]
+export function sortBy<T, U>(self: ReadonlyNonEmptyArray<T>, by: (_: T) => U): ReadonlyNonEmptyArray<T>
+export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[]
+export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[] {
+  const cloned = self.slice()
+  cloned.sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs)))
   return cloned
 }
