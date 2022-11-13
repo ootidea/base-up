@@ -1,4 +1,4 @@
-import { AccurateTuple, FixedSizeArray } from '../Array'
+import { AccurateTuple, FixedSizeArray } from './Array'
 
 /**
  * @example

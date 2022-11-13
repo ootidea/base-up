@@ -1,6 +1,6 @@
 import { mapOf } from '../Map'
+import { until } from '../sequence'
 import { cartesianProductOf, chunk, groupBy } from './other'
-import { until } from './sequence'
 
 test('chunk', () => {
   expect(chunk([1, 2, 3, 4, 5, 6], 2)).toStrictEqual([
