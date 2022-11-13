@@ -1,5 +1,5 @@
 import { indexesOf, last } from './filter'
-import { repeat } from './Iterable'
+import { repeat } from './generate'
 import { take } from './transform'
 
 test('last', () => {
@@ -11,8 +11,8 @@ test('take', () => {
   expect(take([1, 2, 3], 2)).toStrictEqual([1, 2])
   expect(take([1, 2, 3], 9)).toStrictEqual([1, 2, 3])
   expect(take([1, 2, 3], 0)).toStrictEqual([])
-  expect(take(repeat(true), 3)).toStrictEqual([true, true, true])
-  expect(take(repeat(true), 0)).toStrictEqual([])
+  expect(take(repeat.Iterable(true), 3)).toStrictEqual([true, true, true])
+  expect(take(repeat.Iterable(true), 0)).toStrictEqual([])
 })
 
 test('indexesOf', () => {

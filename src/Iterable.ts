@@ -1,29 +1,4 @@
-import { AccurateTuple, Tuple } from './Array'
-
-export function* until(n: number): Generator<number> {
-  for (let i = 0; i < n; i++) {
-    yield i
-  }
-}
-
-/**
- * @example
- * repeat('a') yields 'a', 'a', 'a', ...
- * repeat(1, 2) yields 1, 2, 1, 2, ...
- */
-export function repeat<T extends AccurateTuple>(...values: T): Generator<T[number], void, undefined>
-export function repeat<T extends Tuple>(...values: T): Generator<T[number], void, undefined>
-export function* repeat<T extends Tuple>(...values: T): Generator<T[number], void, undefined> {
-  while (true) yield* values
-}
-
-export function* repeatApply<T>(first: T, f: (_: T) => T): Generator<T> {
-  let value = first
-  while (true) {
-    yield value
-    value = f(value)
-  }
-}
+import { Tuple } from './Array'
 
 export function elementAt<T>(self: Iterable<T>, n: number): T | undefined {
   const iterator = self[Symbol.iterator]()

@@ -1,4 +1,4 @@
-import { AccurateTuple, FixedSizeArray } from './Array'
+import { AccurateTuple, FixedSizeArray, Tuple } from './Array'
 
 /**
  * @example
@@ -50,9 +50,28 @@ type _RepeatArray<
 export function until<N extends number>(length: N): Until<N> {
   return Array.from({ length }, (_, i) => i) as any
 }
+export namespace until {
+  export function* Iterable(n: number): Generator<number> {
+    for (let i = 0; i < n; i++) {
+      yield i
+    }
+  }
+}
 
 export function repeat<N extends number, T extends AccurateTuple>(count: N, ...values: T): RepeatArray<N, T> {
   return Array.from({ length: count * values.length }, (_, i) => values[i % values.length]) as any
+}
+export namespace repeat {
+  /**
+   * @example
+   * repeat('a') yields 'a', 'a', 'a', ...
+   * repeat(1, 2) yields 1, 2, 1, 2, ...
+   */
+  export function Iterable<T extends AccurateTuple>(...values: T): Generator<T[number], void, undefined>
+  export function Iterable<T extends Tuple>(...values: T): Generator<T[number], void, undefined>
+  export function* Iterable<T extends Tuple>(...values: T): Generator<T[number], void, undefined> {
+    while (true) yield* values
+  }
 }
 
 export function repeatApply<N extends number, T>(length: N, first: T, f: (_: T) => T): FixedSizeArray<N, T> {
@@ -65,4 +84,13 @@ export function repeatApply<N extends number, T>(length: N, first: T, f: (_: T) 
     result.push(value)
   }
   return result as any
+}
+export namespace repeatApply {
+  export function* Iterator<T>(first: T, f: (_: T) => T): Generator<T> {
+    let value = first
+    while (true) {
+      yield value
+      value = f(value)
+    }
+  }
 }
