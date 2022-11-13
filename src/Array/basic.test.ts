@@ -1,4 +1,4 @@
-import { repeat } from '../Iterable/other'
+import { repeat } from '../Iterable'
 import { indexesOf, last, take } from './basic'
 
 test('last', () => {

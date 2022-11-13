@@ -1,6 +1,6 @@
 import { sortBy } from './Array/order'
 import { AccurateTuple } from './Array/type'
-import { filter as filterIterable } from './Iterable/other'
+import { filter as filterIterable } from './Iterable'
 import { Nominal } from './type'
 
 declare const NON_EMPTY_SET_TAG: unique symbol

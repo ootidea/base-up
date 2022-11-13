@@ -1,4 +1,4 @@
-import { map as mapIterable } from './Iterable/other'
+import { map as mapIterable } from './Iterable'
 import { Nominal } from './type'
 
 declare const NON_EMPTY_MAP_TAG: unique symbol

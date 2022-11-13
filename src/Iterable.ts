@@ -1,4 +1,4 @@
-import { AccurateTuple, Tuple } from '../Array/type'
+import { AccurateTuple, Tuple } from './Array/type'
 
 export function* until(n: number): Generator<number> {
   for (let i = 0; i < n; i++) {

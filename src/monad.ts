@@ -1,5 +1,5 @@
 import { ReadonlyNonEmptyArray } from './Array/type'
-import { map as mapIterable } from './Iterable/other'
+import { map as mapIterable } from './Iterable'
 import { newSet, ReadonlyNonEmptySet } from './Set'
 
 export function map<T, U>(self: ReadonlyNonEmptyArray<T>, f: (_: T) => U): ReadonlyNonEmptyArray<U>
