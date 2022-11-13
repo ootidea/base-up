@@ -34,12 +34,6 @@ export function elementAt<T>(self: Iterable<T>, n: number): T | undefined {
   return element.value
 }
 
-export function* map<T, U>(self: Iterable<T>, f: (_: T) => U): Generator<U> {
-  for (const value of self) {
-    yield f(value)
-  }
-}
-
 export function filter<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): Generator<U>
 export function filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T>
 export function* filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T> {

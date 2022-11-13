@@ -1,9 +1,16 @@
-import { map as mapIterable } from './Iterable'
 import { Nominal } from './type'
 
 declare const NON_EMPTY_MAP_TAG: unique symbol
 export type NonEmptyMap<K, T> = Nominal<Map<K, T>, typeof NON_EMPTY_MAP_TAG>
 export type ReadonlyNonEmptyMap<K, T> = Nominal<ReadonlyMap<K, T>, typeof NON_EMPTY_MAP_TAG>
+
+/**
+ * Wrapper function for the Map constructor.
+ * Use to avoid name conflicts.
+ */
+export function newMap<K, T>(...args: ConstructorParameters<typeof Map<K, T>>) {
+  return new Map(...args)
+}
 
 export function mapOf<H extends readonly [any, any], T extends readonly [any, any][]>(
   head: H,
@@ -24,12 +31,6 @@ export function isNotEmpty<K, T>(map: ReadonlyNonEmptyMap<K, T>): true
 export function isNotEmpty<K, T>(map: ReadonlyMap<K, T>): map is ReadonlyNonEmptyMap<K, T>
 export function isNotEmpty<K, T>(map: ReadonlyMap<K, T>): map is ReadonlyNonEmptyMap<K, T> {
   return map.size > 0
-}
-
-export function map<K, T, U>(map: ReadonlyNonEmptyMap<K, T>, f: (_: T) => U): ReadonlyNonEmptyMap<K, U>
-export function map<K, T, U>(map: ReadonlyMap<K, T>, f: (_: T) => U): ReadonlyMap<K, U>
-export function map<K, T, U>(map: ReadonlyMap<K, T>, f: (_: T) => U): ReadonlyMap<K, U> {
-  return new Map(mapIterable(map.entries(), ([key, value]) => [key, f(value)]))
 }
 
 export function set<K, T>(map: ReadonlyMap<K, T>, key: K, value: T): ReadonlyMap<K, T> {
