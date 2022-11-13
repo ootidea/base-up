@@ -1,4 +1,4 @@
-import { every, isEmpty, isNotEmpty } from './type'
+import { every, isEmpty, isNotEmpty } from './collectionPredicate'
 
 test('isEmpty', () => {
   expect(isEmpty([1, 2, 3])).toBe(false)

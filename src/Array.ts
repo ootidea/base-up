@@ -1,5 +1,5 @@
-import { Until } from '../number/other'
-import { PseudoAny } from '../other'
+import { randomIntegerUntil, Until } from './number'
+import { PseudoAny } from './type'
 
 export type AccurateTuple = readonly PseudoAny[]
 export type Tuple = readonly any[]
@@ -30,23 +30,18 @@ type _FixedSizeArray<N extends number, T = unknown, Result extends readonly T[] 
 
 export type LimitedSizeArray<N extends number, T = unknown> = FixedSizeArray<N | Until<N>, T>
 
-export function isEmpty<T>(self: ReadonlyNonEmptyArray<T>): false
-export function isEmpty<T>(self: readonly T[]): self is []
-export function isEmpty<T>(self: readonly T[]): self is [] {
-  return self.length === 0
-}
-
-export function isNotEmpty<T>(self: ReadonlyNonEmptyArray<T>): true
-export function isNotEmpty<T>(self: readonly T[]): self is ReadonlyNonEmptyArray<T>
-export function isNotEmpty<T>(self: readonly T[]): self is ReadonlyNonEmptyArray<T> {
-  return self.length > 0
-}
-
-export function every<F extends (value: T) => value is U, T, U extends T>(
-  array: readonly T[],
-  f: F
-): array is readonly U[]
-export function every<F extends (value: T) => boolean, T>(self: readonly T[], f: F): boolean
-export function every<F extends (value: T) => boolean, T>(self: readonly T[], f: F): boolean {
-  return self.every(f)
+export function shuffle<T>(self: []): []
+export function shuffle<T>(self: readonly [T]): readonly [T]
+export function shuffle<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
+export function shuffle<T>(self: readonly T[]): readonly T[]
+export function shuffle<T>(self: readonly T[]): readonly T[] {
+  const result: T[] = []
+  for (let i = 0; i < self.length; ++i) {
+    const j = randomIntegerUntil(i + 1)
+    if (j < i) {
+      result.push(result[j])
+    }
+    result[j] = self[i]
+  }
+  return result
 }

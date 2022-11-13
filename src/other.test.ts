@@ -1,8 +1,7 @@
-import { isInstanceOf } from './other'
+import { until } from './generate'
+import { mapOf } from './Map'
+import { groupBy } from './other'
 
-test('isInstanceOf', () => {
-  expect(isInstanceOf(Array, [])).toBe(true)
-  expect(isInstanceOf(RegExp, /a/)).toBe(true)
-  expect(isInstanceOf(Date, '2021-09-27T15:08:10.78')).toBe(false)
-  expect(isInstanceOf(Object, {})).toBe(true)
+test('groupBy', () => {
+  expect(groupBy(until(8), (x) => x % 3)).toStrictEqual(mapOf([0, [0, 3, 6]], [1, [1, 4, 7]], [2, [2, 5]]))
 })

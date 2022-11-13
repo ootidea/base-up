@@ -1,4 +1,4 @@
-import { toNumber, toString } from './type'
+import { toNumber, toString } from './string'
 
 test('toNumber', () => {
   expect(toNumber('1.0')).toBe(1)
