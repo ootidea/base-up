@@ -1,4 +1,5 @@
-import { filter, intersection, isDisjoint, map, setOf, union } from './Set'
+import { map } from './monad'
+import { filter, intersection, isDisjoint, setOf, union } from './Set'
 import { isNotNull } from './type'
 
 test('setOf', () => {
@@ -6,7 +7,7 @@ test('setOf', () => {
 })
 
 test('map', () => {
-  expect(map(setOf(2, 1, 3), (x) => x + 10)).toStrictEqual(setOf(12, 11, 13))
+  expect(map.Set(setOf(2, 1, 3), (x) => x + 10)).toStrictEqual(setOf(12, 11, 13))
 })
 
 test('filter', () => {

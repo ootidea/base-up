@@ -1,11 +1,19 @@
 import { sortBy } from './Array/order'
 import { AccurateTuple } from './Array/type'
-import { filter as filterIterable, map as mapIterable } from './Iterable/other'
+import { filter as filterIterable } from './Iterable/other'
 import { Nominal } from './type'
 
 declare const NON_EMPTY_SET_TAG: unique symbol
 export type NonEmptySet<T> = Nominal<Set<T>, typeof NON_EMPTY_SET_TAG>
 export type ReadonlyNonEmptySet<T> = Nominal<ReadonlySet<T>, typeof NON_EMPTY_SET_TAG>
+
+/**
+ * Wrapper function for the Set constructor.
+ * Use to avoid name conflicts.
+ */
+export function newSet<T>(...args: ConstructorParameters<typeof Set<T>>) {
+  return new Set(...args)
+}
 
 export function setOf<H, T extends AccurateTuple>(head: H, ...tail: T): ReadonlyNonEmptySet<H | T[number]>
 export function setOf<T extends AccurateTuple>(...args: T): ReadonlySet<T[number]>
@@ -23,12 +31,6 @@ export function isNotEmpty<T>(set: ReadonlyNonEmptySet<T>): true
 export function isNotEmpty<T>(set: ReadonlySet<T>): set is ReadonlyNonEmptySet<T>
 export function isNotEmpty<T>(set: ReadonlySet<T>): set is ReadonlyNonEmptySet<T> {
   return set.size > 0
-}
-
-export function map<T, U>(set: ReadonlyNonEmptySet<T>, f: (_: T) => U): ReadonlyNonEmptySet<U>
-export function map<T, U>(set: ReadonlySet<T>, f: (_: T) => U): ReadonlySet<U>
-export function map<T, U>(set: ReadonlySet<T>, f: (_: T) => U): ReadonlySet<U> {
-  return new Set(mapIterable(set.values(), f))
 }
 
 export function filter<T, U extends T>(set: ReadonlySet<T>, f: (_: T) => _ is U): ReadonlySet<U>
