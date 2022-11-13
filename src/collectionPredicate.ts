@@ -9,16 +9,16 @@ export function isEmpty<T>(self: readonly T[]): self is [] {
 }
 
 export namespace isEmpty {
-  export function Set<T>(set: ReadonlyNonEmptySet<T>): false
-  export function Set<T>(set: ReadonlySet<T>): boolean
-  export function Set<T>(set: ReadonlySet<T>): boolean {
-    return set.size === 0
+  export function Set<T>(self: ReadonlyNonEmptySet<T>): false
+  export function Set<T>(self: ReadonlySet<T>): boolean
+  export function Set<T>(self: ReadonlySet<T>): boolean {
+    return self.size === 0
   }
 
-  export function Map<K, T>(map: ReadonlyNonEmptyMap<K, T>): false
-  export function Map<K, T>(map: ReadonlyMap<K, T>): boolean
-  export function Map<K, T>(map: ReadonlyMap<K, T>): boolean {
-    return map.size === 0
+  export function Map<K, T>(self: ReadonlyNonEmptyMap<K, T>): false
+  export function Map<K, T>(self: ReadonlyMap<K, T>): boolean
+  export function Map<K, T>(self: ReadonlyMap<K, T>): boolean {
+    return self.size === 0
   }
 }
 
@@ -29,16 +29,16 @@ export function isNotEmpty<T>(self: readonly T[]): self is ReadonlyNonEmptyArray
 }
 
 export namespace isNotEmpty {
-  export function Set<T>(set: ReadonlyNonEmptySet<T>): true
-  export function Set<T>(set: ReadonlySet<T>): set is ReadonlyNonEmptySet<T>
-  export function Set<T>(set: ReadonlySet<T>): set is ReadonlyNonEmptySet<T> {
-    return set.size > 0
+  export function Set<T>(self: ReadonlyNonEmptySet<T>): true
+  export function Set<T>(self: ReadonlySet<T>): self is ReadonlyNonEmptySet<T>
+  export function Set<T>(self: ReadonlySet<T>): self is ReadonlyNonEmptySet<T> {
+    return self.size > 0
   }
 
-  export function Map<K, T>(map: ReadonlyNonEmptyMap<K, T>): true
-  export function Map<K, T>(map: ReadonlyMap<K, T>): map is ReadonlyNonEmptyMap<K, T>
-  export function Map<K, T>(map: ReadonlyMap<K, T>): map is ReadonlyNonEmptyMap<K, T> {
-    return map.size > 0
+  export function Map<K, T>(self: ReadonlyNonEmptyMap<K, T>): true
+  export function Map<K, T>(self: ReadonlyMap<K, T>): self is ReadonlyNonEmptyMap<K, T>
+  export function Map<K, T>(self: ReadonlyMap<K, T>): self is ReadonlyNonEmptyMap<K, T> {
+    return self.size > 0
   }
 }
 

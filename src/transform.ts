@@ -17,10 +17,10 @@ export namespace map {
     }
   }
 
-  export function Set<T, U>(set: ReadonlyNonEmptySet<T>, f: (_: T) => U): ReadonlyNonEmptySet<U>
-  export function Set<T, U>(set: ReadonlySet<T>, f: (_: T) => U): ReadonlySet<U>
-  export function Set<T, U>(set: ReadonlySet<T>, f: (_: T) => U): ReadonlySet<U> {
-    return newSet(map.Iterable(set.values(), f))
+  export function Set<T, U>(self: ReadonlyNonEmptySet<T>, f: (_: T) => U): ReadonlyNonEmptySet<U>
+  export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): ReadonlySet<U>
+  export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): ReadonlySet<U> {
+    return newSet(map.Iterable(self.values(), f))
   }
 
   export function Map<K, T, U>(self: ReadonlyNonEmptyMap<K, T>, f: (_: T) => U): ReadonlyNonEmptyMap<K, U>

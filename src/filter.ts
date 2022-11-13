@@ -18,10 +18,10 @@ export namespace filter {
     }
   }
 
-  export function Set<T, U extends T>(set: ReadonlySet<T>, f: (_: T) => _ is U): ReadonlySet<U>
-  export function Set<T>(set: ReadonlySet<T>, f: (_: T) => boolean): ReadonlySet<T>
-  export function Set<T>(set: ReadonlySet<T>, f: (_: T) => boolean): ReadonlySet<T> {
-    return newSet(filter.Iterable(set.values(), f))
+  export function Set<T, U extends T>(self: ReadonlySet<T>, f: (_: T) => _ is U): ReadonlySet<U>
+  export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): ReadonlySet<T>
+  export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): ReadonlySet<T> {
+    return newSet(filter.Iterable(self.values(), f))
   }
 }
 
