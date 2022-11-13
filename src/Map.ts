@@ -20,15 +20,3 @@ export function mapOf<T extends readonly [any, any][]>(...args: T): ReadonlyMap<
 export function mapOf<T extends readonly [any, any][]>(...args: T): ReadonlyMap<T[number][0], T[number][1]> {
   return new Map(args)
 }
-
-export function set<K, T>(map: ReadonlyMap<K, T>, key: K, value: T): ReadonlyMap<K, T> {
-  const cloned = new Map(map)
-  cloned.set(key, value)
-  return cloned
-}
-
-export function update<K, T>(map: ReadonlyMap<K, T>, key: K, f: (_: T | undefined) => T): ReadonlyMap<K, T> {
-  const cloned = new Map(map)
-  cloned.set(key, f(cloned.get(key)))
-  return cloned
-}

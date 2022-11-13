@@ -28,7 +28,7 @@ export function groupBy<T, U>(self: readonly T[], by: (_: T) => U): Map<U, Reado
   const result = new Map<U, NonEmptyArray<T>>()
   for (const value of self) {
     const key = by(value)
-    update(result, key, (prev) => push(prev ?? ([] as const), value))
+    update.Map.mutable(result, key, (prev) => push(prev ?? ([] as const), value))
   }
   return result
 }
