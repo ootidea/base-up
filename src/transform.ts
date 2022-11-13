@@ -92,3 +92,17 @@ export function chunk<T, N extends number>(
   }
   return result as any
 }
+
+export function reverse<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
+export function reverse<T>(self: readonly T[]): readonly T[]
+export function reverse<T>(self: readonly T[]): readonly T[] {
+  const cloned = self.slice()
+  return cloned.reverse()
+}
+export namespace reverse {
+  export function* Iterable<T>(self: readonly T[]): Generator<T> {
+    for (let i = self.length - 1; i >= 0; i--) {
+      yield self[i]
+    }
+  }
+}
