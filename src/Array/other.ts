@@ -1,6 +1,6 @@
 import { AccurateTuple, FixedSizeArray, NonEmptyArray, ReadonlyNonEmptyArray } from '../Array'
+import { push } from '../collectionAdd'
 import { update } from '../keyValueStore'
-import { push } from '../sequence'
 
 /**
  * @example

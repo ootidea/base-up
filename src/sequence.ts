@@ -1,4 +1,4 @@
-import { AccurateTuple, FixedSizeArray, LimitedSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
+import { AccurateTuple, FixedSizeArray, LimitedSizeArray, ReadonlyNonEmptyArray } from './Array'
 
 /**
  * @example
@@ -119,12 +119,6 @@ export function indexesOf<T>(self: readonly T[], value: T): readonly number[] {
     }
   }
   return result
-}
-
-export function push<T extends AccurateTuple, U extends AccurateTuple>(self: T, ...args: U): [...T, ...U]
-export function push<T extends Tuple, U extends Tuple>(self: T, ...args: U): [...T, ...U]
-export function push<T extends Tuple, U extends Tuple>(self: T, ...args: U): [...T, ...U] {
-  return [...self, ...args]
 }
 
 export function tail<T>(self: ReadonlyNonEmptyArray<T>): readonly T[]
