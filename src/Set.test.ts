@@ -1,12 +1,7 @@
 import { intersection, isDisjoint, setOf, union } from './Set'
-import { map } from './transform'
 
 test('setOf', () => {
   expect(setOf(1, 2)).toStrictEqual(new Set([2, 1]))
-})
-
-test('map', () => {
-  expect(map.Set(setOf(2, 1, 3), (x) => x + 10)).toStrictEqual(setOf(12, 11, 13))
 })
 
 test('union', () => {

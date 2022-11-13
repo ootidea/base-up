@@ -2,7 +2,11 @@ import { shuffle } from './Array'
 import { id } from './Function'
 import { repeat, until } from './generate'
 import { setOf } from './Set'
-import { chunk, sort, sortBy, zip } from './transform'
+import { chunk, map, sort, sortBy, zip } from './transform'
+
+test('map', () => {
+  expect(map.Set(setOf(2, 1, 3), (x) => x + 10)).toStrictEqual(setOf(12, 11, 13))
+})
 
 test('chunk', () => {
   expect(chunk([1, 2, 3, 4, 5, 6], 2)).toStrictEqual([
