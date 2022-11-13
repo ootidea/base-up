@@ -1,19 +1,6 @@
 import { until } from '../generate'
 import { mapOf } from '../Map'
-import { cartesianProductOf, chunk, groupBy } from './other'
-
-test('chunk', () => {
-  expect(chunk([1, 2, 3, 4, 5, 6], 2)).toStrictEqual([
-    [1, 2],
-    [3, 4],
-    [5, 6],
-  ])
-  expect(chunk([3, 1, 4, 1, 5, 9, 2], 3)).toStrictEqual([
-    [3, 1, 4],
-    [1, 5, 9],
-  ])
-  expect(() => chunk([1, 2, 3], 0)).toThrowError()
-})
+import { cartesianProductOf, groupBy } from './other'
 
 test('groupBy', () => {
   expect(groupBy(until(8), (x) => x % 3)).toStrictEqual(mapOf([0, [0, 3, 6]], [1, [1, 4, 7]], [2, [2, 5]]))

@@ -1,4 +1,4 @@
-import { LimitedSizeArray, ReadonlyNonEmptyArray } from './Array'
+import { FixedSizeArray, LimitedSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
 import { id } from './Function'
 import { newMap, ReadonlyNonEmptyMap } from './Map'
 import { ltToComparator } from './order'
@@ -68,4 +68,45 @@ export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[] 
   const cloned = self.slice()
   cloned.sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs)))
   return cloned
+}
+
+/**
+ * @example
+ * chunk([1, 2, 3, 4, 5, 6], 2) results [[1, 2], [3, 4], [5, 6]]
+ * chunk([1, 2, 3, 4, 5, 6], 2) is typed as readonly [number, number][]
+ * @example
+ * chunk([3, 1, 4, 1, 5, 9, 2], 3) results [[3, 1, 4], [1, 5, 9]]
+ * chunk([3, 1, 4, 1, 5, 9, 2], 3) is typed as readonly [number, number, number][]
+ */
+export function chunk<T, N extends number>(
+  array: readonly T[],
+  size: N
+): number extends N ? readonly T[][] : readonly FixedSizeArray<N, T>[] {
+  if (size <= 0) {
+    throw RangeError(`Size(${size}) must be greater than 0.`)
+  }
+
+  const result = []
+  for (let i = 0; i + size <= array.length; i += size) {
+    result.push(array.slice(i, i + size))
+  }
+  return result as any
+}
+
+type UnwrapIterable<T> = T extends Iterable<infer U> ? U : T
+type UnwrapIterableAll<T extends Tuple> = T extends readonly [infer H, ...infer L]
+  ? [UnwrapIterable<H>, ...UnwrapIterableAll<L>]
+  : []
+type Zip<T extends readonly Iterable<any>[]> = Generator<UnwrapIterableAll<T>>
+
+export function* zip<T extends readonly Iterable<any>[]>(...source: T): Zip<T> {
+  const iterators = source.map((iterable) => iterable[Symbol.iterator]())
+  for (
+    let elements = iterators.map((iterator) => iterator.next());
+    elements.every((element) => !element.done);
+    elements = iterators.map((iterator) => iterator.next())
+  ) {
+    yield elements.map((element) => element.value) as any
+  }
+  iterators.map((iterator) => iterator.return?.())
 }
