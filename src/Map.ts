@@ -21,18 +21,6 @@ export function mapOf<T extends readonly [any, any][]>(...args: T): ReadonlyMap<
   return new Map(args)
 }
 
-export function isEmpty<K, T>(map: ReadonlyNonEmptyMap<K, T>): false
-export function isEmpty<K, T>(map: ReadonlyMap<K, T>): boolean
-export function isEmpty<K, T>(map: ReadonlyMap<K, T>): boolean {
-  return map.size === 0
-}
-
-export function isNotEmpty<K, T>(map: ReadonlyNonEmptyMap<K, T>): true
-export function isNotEmpty<K, T>(map: ReadonlyMap<K, T>): map is ReadonlyNonEmptyMap<K, T>
-export function isNotEmpty<K, T>(map: ReadonlyMap<K, T>): map is ReadonlyNonEmptyMap<K, T> {
-  return map.size > 0
-}
-
 export function set<K, T>(map: ReadonlyMap<K, T>, key: K, value: T): ReadonlyMap<K, T> {
   const cloned = new Map(map)
   cloned.set(key, value)

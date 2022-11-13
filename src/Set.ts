@@ -21,18 +21,6 @@ export function setOf<T extends AccurateTuple>(...args: T): ReadonlySet<T[number
   return new Set(args)
 }
 
-export function isEmpty<T>(set: ReadonlyNonEmptySet<T>): false
-export function isEmpty<T>(set: ReadonlySet<T>): boolean
-export function isEmpty<T>(set: ReadonlySet<T>): boolean {
-  return set.size === 0
-}
-
-export function isNotEmpty<T>(set: ReadonlyNonEmptySet<T>): true
-export function isNotEmpty<T>(set: ReadonlySet<T>): set is ReadonlyNonEmptySet<T>
-export function isNotEmpty<T>(set: ReadonlySet<T>): set is ReadonlyNonEmptySet<T> {
-  return set.size > 0
-}
-
 export function filter<T, U extends T>(set: ReadonlySet<T>, f: (_: T) => _ is U): ReadonlySet<U>
 export function filter<T>(set: ReadonlySet<T>, f: (_: T) => boolean): ReadonlySet<T>
 export function filter<T>(set: ReadonlySet<T>, f: (_: T) => boolean): ReadonlySet<T> {
