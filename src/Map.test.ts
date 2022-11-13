@@ -1,4 +1,4 @@
-import { mapOf } from './other'
+import { mapOf } from './Map'
 
 test('mapOf', () => {
   expect(mapOf(['key', 1])).toStrictEqual(new Map([['key', 1]]))

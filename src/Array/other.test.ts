@@ -1,4 +1,4 @@
-import { mapOf } from '../Map/other'
+import { mapOf } from '../Map'
 import { cartesianProductOf, chunk, groupBy } from './other'
 import { until } from './sequence'
 

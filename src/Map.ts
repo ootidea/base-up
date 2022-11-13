@@ -1,5 +1,5 @@
-import { map as mapIterable } from '../Iterable/other'
-import { Nominal } from '../type'
+import { map as mapIterable } from './Iterable/other'
+import { Nominal } from './type'
 
 declare const NON_EMPTY_MAP_TAG: unique symbol
 export type NonEmptyMap<K, T> = Nominal<Map<K, T>, typeof NON_EMPTY_MAP_TAG>
