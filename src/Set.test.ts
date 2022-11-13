@@ -1,5 +1,5 @@
-import { isNotNull } from './other'
 import { filter, intersection, isDisjoint, map, setOf, union } from './Set'
+import { isNotNull } from './type'
 
 test('setOf', () => {
   expect(setOf(1, 2)).toStrictEqual(new Set([2, 1]))

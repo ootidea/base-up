@@ -1,5 +1,5 @@
 import { AccurateTuple, Tuple } from './Array/type'
-import { PseudoAny } from './other'
+import { PseudoAny } from './type'
 
 /**
  * Utility for defining tagged union types.

@@ -1,7 +1,7 @@
 import { sortBy } from './Array/order'
 import { AccurateTuple } from './Array/type'
 import { filter as filterIterable, map as mapIterable } from './Iterable/other'
-import { Nominal } from './other'
+import { Nominal } from './type'
 
 declare const NON_EMPTY_SET_TAG: unique symbol
 export type NonEmptySet<T> = Nominal<Set<T>, typeof NON_EMPTY_SET_TAG>

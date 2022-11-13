@@ -1,4 +1,4 @@
-import { isInstanceOf } from './other'
+import { isInstanceOf } from './type'
 
 test('isInstanceOf', () => {
   expect(isInstanceOf(Array, [])).toBe(true)
