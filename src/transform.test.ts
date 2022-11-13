@@ -1,15 +1,8 @@
 import { shuffle } from './Array'
 import { id } from './Function'
 import { repeat, until } from './generate'
-import { elementAt } from './Iterable'
 import { setOf } from './Set'
 import { chunk, sort, sortBy, zip } from './transform'
-
-test('elementAt', () => {
-  expect(elementAt(until.Iterable(5), 0)).toBe(0)
-  expect(elementAt(until.Iterable(5), 3)).toBe(3)
-  expect(elementAt(until.Iterable(5), 5)).toBe(undefined)
-})
 
 test('chunk', () => {
   expect(chunk([1, 2, 3, 4, 5, 6], 2)).toStrictEqual([

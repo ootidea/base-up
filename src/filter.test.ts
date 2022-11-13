@@ -1,5 +1,5 @@
-import { filter, indexesOf, last } from './filter'
-import { repeat } from './generate'
+import { elementAt, filter, indexesOf, last } from './filter'
+import { repeat, until } from './generate'
 import { setOf } from './Set'
 import { take } from './transform'
 import { isNotNull } from './type'
@@ -27,4 +27,10 @@ test('take', () => {
 test('indexesOf', () => {
   expect(indexesOf([true, false, true, true], true)).toStrictEqual([0, 2, 3])
   expect(indexesOf([], 123)).toStrictEqual([])
+})
+
+test('elementAt', () => {
+  expect(elementAt(until.Iterable(5), 0)).toBe(0)
+  expect(elementAt(until.Iterable(5), 3)).toBe(3)
+  expect(elementAt(until.Iterable(5), 5)).toBe(undefined)
 })
