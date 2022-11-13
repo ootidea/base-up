@@ -130,9 +130,3 @@ export function tail<T>(self: readonly T[]): readonly T[] | undefined {
   cloned.shift()
   return cloned
 }
-
-export function removeAt<T>(self: readonly T[], i: number): readonly T[] {
-  const cloned = self.slice()
-  cloned.splice(i, 1)
-  return cloned
-}
