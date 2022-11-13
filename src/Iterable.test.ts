@@ -1,4 +1,5 @@
-import { elementAt, filter, repeat, repeatApply, until, zip } from './Iterable'
+import { filter } from './filter'
+import { elementAt, repeat, repeatApply, until, zip } from './Iterable'
 import { take } from './sequence'
 
 test('until', () => {
@@ -26,7 +27,7 @@ test('elementAt', () => {
 })
 
 test('filter', () => {
-  expect([...filter([1, 2, 3], (n) => n % 2 === 0)]).toStrictEqual([2])
+  expect([...filter.Iterable([1, 2, 3], (n) => n % 2 === 0)]).toStrictEqual([2])
 })
 
 test('zip', () => {

@@ -34,16 +34,6 @@ export function elementAt<T>(self: Iterable<T>, n: number): T | undefined {
   return element.value
 }
 
-export function filter<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): Generator<U>
-export function filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T>
-export function* filter<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T> {
-  for (const value of self) {
-    if (f(value)) {
-      yield value
-    }
-  }
-}
-
 type UnwrapIterable<T> = T extends Iterable<infer U> ? U : T
 type UnwrapIterableAll<T extends Tuple> = T extends readonly [infer H, ...infer L]
   ? [UnwrapIterable<H>, ...UnwrapIterableAll<L>]

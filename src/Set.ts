@@ -1,6 +1,5 @@
 import { AccurateTuple } from './Array'
 import { sortBy } from './Array/order'
-import { filter as filterIterable } from './Iterable'
 import { Nominal } from './type'
 
 declare const NON_EMPTY_SET_TAG: unique symbol
@@ -19,12 +18,6 @@ export function setOf<H, T extends AccurateTuple>(head: H, ...tail: T): Readonly
 export function setOf<T extends AccurateTuple>(...args: T): ReadonlySet<T[number]>
 export function setOf<T extends AccurateTuple>(...args: T): ReadonlySet<T[number]> {
   return new Set(args)
-}
-
-export function filter<T, U extends T>(set: ReadonlySet<T>, f: (_: T) => _ is U): ReadonlySet<U>
-export function filter<T>(set: ReadonlySet<T>, f: (_: T) => boolean): ReadonlySet<T>
-export function filter<T>(set: ReadonlySet<T>, f: (_: T) => boolean): ReadonlySet<T> {
-  return new Set(filterIterable(set.values(), f))
 }
 
 export function union<T, U>(lhs: ReadonlyNonEmptySet<T>, rhs: ReadonlySet<U>): ReadonlyNonEmptySet<T | U>
