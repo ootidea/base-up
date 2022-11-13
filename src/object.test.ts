@@ -1,5 +1,5 @@
-import { setOf } from '../Set'
-import { fromEntries, keys, numberKeys } from './other'
+import { fromEntries, keys, numberKeys } from './object'
+import { setOf } from './Set'
 
 test('keys', () => {
   expect(new Set(keys({ abc: 3, def: true }))).toStrictEqual(setOf('abc', 'def'))
