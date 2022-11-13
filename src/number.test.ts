@@ -1,4 +1,4 @@
-import { mod, randomIntegerUntil, sum } from './other'
+import { mod, randomIntegerUntil, sum } from './number'
 
 test('randomIntegerUntil', () => {
   expect(randomIntegerUntil(0)).toBe(0)
