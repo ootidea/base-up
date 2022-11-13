@@ -1,4 +1,4 @@
-import { repeat, repeatApply, until } from './sequence'
+import { repeat, repeatApply, until } from './generate'
 
 test('until', () => {
   expect(until(3)).toStrictEqual([0, 1, 2])

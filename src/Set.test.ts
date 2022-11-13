@@ -1,6 +1,6 @@
 import { filter } from './filter'
-import { map } from './monad'
 import { intersection, isDisjoint, setOf, union } from './Set'
+import { map } from './transform'
 import { isNotNull } from './type'
 
 test('setOf', () => {

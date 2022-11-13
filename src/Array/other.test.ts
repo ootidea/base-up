@@ -1,5 +1,5 @@
+import { until } from '../generate'
 import { mapOf } from '../Map'
-import { until } from '../sequence'
 import { cartesianProductOf, chunk, groupBy } from './other'
 
 test('chunk', () => {
