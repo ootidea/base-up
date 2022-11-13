@@ -1,5 +1,5 @@
+import { AccurateTuple } from './Array'
 import { sortBy } from './Array/order'
-import { AccurateTuple } from './Array/type'
 import { filter as filterIterable } from './Iterable'
 import { Nominal } from './type'
 

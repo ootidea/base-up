@@ -1,4 +1,4 @@
-import { AccurateTuple, Tuple } from './Array/type'
+import { AccurateTuple, Tuple } from './Array'
 import { PseudoAny } from './type'
 
 /**

@@ -1,4 +1,4 @@
-import { ReadonlyNonEmptyArray } from './Array/type'
+import { ReadonlyNonEmptyArray } from './Array'
 import { newMap, ReadonlyNonEmptyMap } from './Map'
 import { newSet, ReadonlyNonEmptySet } from './Set'
 

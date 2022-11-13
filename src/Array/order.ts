@@ -1,7 +1,7 @@
+import { ReadonlyNonEmptyArray } from '../Array'
 import { id } from '../Function'
 import { randomIntegerUntil } from '../number'
 import { ltToComparator } from '../order'
-import { ReadonlyNonEmptyArray } from './type'
 
 export function maxBy<T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => number): T
 export function maxBy<T>(self: readonly T[], by: (element: T) => number): T | undefined {

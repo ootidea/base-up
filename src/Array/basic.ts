@@ -1,4 +1,4 @@
-import { LimitedSizeArray, ReadonlyNonEmptyArray } from './type'
+import { LimitedSizeArray, ReadonlyNonEmptyArray } from '../Array'
 
 export function first<T>(self: ReadonlyNonEmptyArray<T>): T
 export function first<T>(self: readonly T[]): T | undefined
