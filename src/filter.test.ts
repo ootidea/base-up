@@ -1,6 +1,15 @@
-import { indexesOf, last } from './filter'
+import { filter, indexesOf, last } from './filter'
 import { repeat } from './generate'
+import { setOf } from './Set'
 import { take } from './transform'
+import { isNotNull } from './type'
+
+test('filter', () => {
+  expect([...filter.Iterable([1, 2, 3], (n) => n % 2 === 0)]).toStrictEqual([2])
+
+  expect(filter.Set(setOf(0, 1, 2), (x) => x > 0)).toStrictEqual(setOf(1, 2))
+  expect(filter.Set(setOf(null, 1, 2), isNotNull)).toStrictEqual(setOf(1, 2))
+})
 
 test('last', () => {
   expect(last([1, 2, 3])).toBe(3)

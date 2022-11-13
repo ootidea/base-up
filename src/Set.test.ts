@@ -1,7 +1,5 @@
-import { filter } from './filter'
 import { intersection, isDisjoint, setOf, union } from './Set'
 import { map } from './transform'
-import { isNotNull } from './type'
 
 test('setOf', () => {
   expect(setOf(1, 2)).toStrictEqual(new Set([2, 1]))
@@ -9,11 +7,6 @@ test('setOf', () => {
 
 test('map', () => {
   expect(map.Set(setOf(2, 1, 3), (x) => x + 10)).toStrictEqual(setOf(12, 11, 13))
-})
-
-test('filter', () => {
-  expect(filter.Set(setOf(0, 1, 2), (x) => x > 0)).toStrictEqual(setOf(1, 2))
-  expect(filter.Set(setOf(null, 1, 2), isNotNull)).toStrictEqual(setOf(1, 2))
 })
 
 test('union', () => {
