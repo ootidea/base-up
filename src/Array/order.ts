@@ -1,5 +1,5 @@
-import { id } from '../Function/other'
-import { randomIntegerUntil } from '../number/other'
+import { id } from '../Function'
+import { randomIntegerUntil } from '../number'
 import { ltToComparator } from '../order'
 import { ReadonlyNonEmptyArray } from './type'
 

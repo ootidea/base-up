@@ -1,4 +1,4 @@
-import { Until } from '../number/other'
+import { Until } from '../number'
 import { PseudoAny } from '../other'
 
 export type AccurateTuple = readonly PseudoAny[]

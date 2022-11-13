@@ -1,4 +1,4 @@
-import { setOf } from '../Set/other'
+import { setOf } from '../Set'
 import { fromEntries, keys, numberKeys } from './other'
 
 test('keys', () => {

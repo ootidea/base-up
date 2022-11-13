@@ -1,5 +1,5 @@
-import { id } from '../Function/other'
-import { setOf } from '../Set/other'
+import { id } from '../Function'
+import { setOf } from '../Set'
 import { shuffle, sort, sortBy } from './order'
 
 test('sort', () => {
