@@ -1,4 +1,5 @@
-import { curry, enunary, returnLast } from './Function'
+import { curry, enunary, pipe, returnLast } from './Function'
+import { until } from './generate'
 import { take } from './transform'
 
 test('curry', () => {
@@ -15,4 +16,8 @@ test('enunary', () => {
 test('returnLast', () => {
   expect(returnLast(1, 'second', false)).toBe(false)
   expect(returnLast()).toBe(undefined)
+})
+
+test('pipe', () => {
+  expect(pipe(10, (x) => x / 2, until)).toStrictEqual([0, 1, 2, 3, 4])
 })

@@ -25,3 +25,43 @@ export function id<T>(value: T): T {
 export function returnLast<T extends AccurateTuple>(...args: T): T extends readonly [...any, infer L] ? L : undefined {
   return args[args.length - 1] as any
 }
+
+export function pipe<A>(a: A): A
+export function pipe<A, B>(a: A, b: (a: A) => B): B
+export function pipe<A, B, C>(a: A, b: (a: A) => B, c: (b: B) => C): C
+export function pipe<A, B, C, D>(a: A, b: (a: A) => B, c: (b: B) => C, d: (c: C) => D): D
+export function pipe<A, B, C, D, E>(a: A, b: (a: A) => B, c: (b: B) => C, d: (c: C) => D, e: (d: D) => E): E
+export function pipe<A, B, C, D, E, F>(
+  a: A,
+  b: (a: A) => B,
+  c: (b: B) => C,
+  d: (c: C) => D,
+  e: (d: D) => E,
+  f: (e: E) => F
+): F
+export function pipe<A, B, C, D, E, F, G>(
+  a: A,
+  b: (a: A) => B,
+  c: (b: B) => C,
+  d: (c: C) => D,
+  e: (d: D) => E,
+  f: (e: E) => F,
+  g: (f: F) => G
+): G
+export function pipe<A, B, C, D, E, F, G, H>(
+  a: A,
+  b: (a: A) => B,
+  c: (b: B) => C,
+  d: (c: C) => D,
+  e: (d: D) => E,
+  f: (e: E) => F,
+  g: (f: F) => G,
+  h: (g: G) => H
+): H
+export function pipe<A, T extends readonly Function[]>(a: A, ...fs: T) {
+  let value: any = a
+  for (let f of fs) {
+    value = f(value)
+  }
+  return value
+}
