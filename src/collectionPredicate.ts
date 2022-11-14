@@ -50,3 +50,24 @@ export function every<F extends (value: T) => boolean, T>(self: readonly T[], f:
 export function every<F extends (value: T) => boolean, T>(self: readonly T[], f: F): boolean {
   return self.every(f)
 }
+
+export function isUnique<T>(self: readonly T[]): boolean {
+  const set = new Set<T>()
+  for (const value of self) {
+    if (set.has(value)) return false
+
+    set.add(value)
+  }
+  return true
+}
+export namespace isUnique {
+  export function Iterable<T>(self: Iterable<T>): boolean {
+    const set = new Set<T>()
+    for (const value of self) {
+      if (set.has(value)) return false
+
+      set.add(value)
+    }
+    return true
+  }
+}
