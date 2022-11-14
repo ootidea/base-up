@@ -1,7 +1,8 @@
 import { shuffle } from './Array'
 import { id } from './Function'
+import { repeat } from './generate'
 import { setOf } from './Set'
-import { chunk, map, reverse, sort, sortBy } from './transform'
+import { chunk, map, reverse, sort, sortBy, unique } from './transform'
 
 test('map', () => {
   expect(map.Set(setOf(2, 1, 3), (x) => x + 10)).toStrictEqual(setOf(12, 11, 13))
@@ -37,10 +38,17 @@ test('shuffle', () => {
   expect(shuffle([])).toStrictEqual([])
   expect(shuffle(['one'])).toStrictEqual(['one'])
 })
+
 test('reverse', () => {
   expect(reverse([1, 2, 3])).toStrictEqual([3, 2, 1])
   expect(reverse([1])).toStrictEqual([1])
   expect(reverse([])).toStrictEqual([])
 
   expect([...reverse.Iterable([1, 2, 3])]).toStrictEqual([3, 2, 1])
+})
+
+test('unique', () => {
+  expect(unique([3, 1, 4, 1, 5, 9])).toStrictEqual([3, 1, 4, 5, 9])
+  expect(unique(repeat(10, 'me'))).toStrictEqual(['me'])
+  expect(unique([])).toStrictEqual([])
 })

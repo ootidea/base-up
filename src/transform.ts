@@ -106,3 +106,26 @@ export namespace reverse {
     }
   }
 }
+
+export function unique<T>(self: readonly T[]): readonly T[] {
+  const set = new Set<T>()
+  const result = []
+  for (const value of self) {
+    if (!set.has(value)) {
+      set.add(value)
+      result.push(value)
+    }
+  }
+  return result
+}
+export namespace unique {
+  export function* Iterable<T>(self: Iterable<T>): Generator<T> {
+    const set = new Set<T>()
+    for (const value of self) {
+      if (!set.has(value)) {
+        set.add(value)
+        yield value
+      }
+    }
+  }
+}
