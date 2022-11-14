@@ -1,4 +1,5 @@
 import { ReadonlyNonEmptyArray } from './Array'
+import { update } from './collectionUpdate'
 import { newSet } from './Set'
 
 export function filter<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): readonly U[]
@@ -110,4 +111,21 @@ export function elementAt<T>(self: Iterable<T>, n: number): T | undefined {
   for (i = 0, element = iterator.next(); i < n && !element.done; ++i, element = iterator.next()) {}
   iterator.return?.()
   return element.value
+}
+
+export function findMostOften<T, U>(self: readonly T[]): T | undefined {
+  const map = new Map<T, number>()
+  let maxCount = 0
+  let candidateValue: T | undefined = undefined
+  for (const value of self) {
+    update.Map.mutable(map, value, (prev) => {
+      const nextCount = (prev ?? 0) + 1
+      if (maxCount < nextCount) {
+        maxCount = nextCount
+        candidateValue = value
+      }
+      return nextCount
+    })
+  }
+  return candidateValue
 }

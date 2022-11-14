@@ -1,4 +1,4 @@
-import { elementAt, filter, indexesOf, last } from './filter'
+import { elementAt, filter, findMostOften, indexesOf, last } from './filter'
 import { repeat, until } from './generate'
 import { setOf } from './Set'
 import { take } from './transform'
@@ -33,4 +33,10 @@ test('elementAt', () => {
   expect(elementAt(until.Iterable(5), 0)).toBe(0)
   expect(elementAt(until.Iterable(5), 3)).toBe(3)
   expect(elementAt(until.Iterable(5), 5)).toBe(undefined)
+})
+
+test('findMostOften', () => {
+  expect(findMostOften([3, 1, 4, 1, 5])).toBe(1)
+  expect(findMostOften(['a', 'b', 'c'])).toBe('a')
+  expect(findMostOften([])).toBe(undefined)
 })
