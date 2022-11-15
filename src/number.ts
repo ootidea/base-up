@@ -89,9 +89,13 @@ export type Max<N extends number, M extends number> = `${N}` extends `-${infer P
  * RangeTo<3> is equivalent to 0 | 1 | 2
  * RangeTo<4, 8> is equivalent to 4 | 5 | 6 | 7
  * RangeTo<5, 3> is equivalent to 5 | 4
- * RangeTo<1, 2> is equivalent to 1
+ * @example
+ * RangeTo<2, -2> is equivalent to 2 | 1 | 0 | -1
+ * RangeTo<-2, 2> is equivalent to -2 | -1 | 0 | 1
+ * @example
  * RangeTo<1, 1> is equivalent to never
  * RangeTo<0> is equivalent to never
+ * @example
  * RangeTo<2 | 4> is equivalent to 0 | 1 | 2 | 3
  * RangeTo<number, 9> is equivalent to number
  * RangeTo<9, number> is equivalent to number
@@ -102,12 +106,21 @@ export type RangeTo<N extends number, M extends number = 0> = number extends N
   ? number
   : N extends N
   ? M extends M
-    ? Exclude<_RangeTo<Max<N, M>>, _RangeTo<Min<N, M>>>
+    ? `${N}` extends `-${infer PN extends number}`
+      ? `${M}` extends `-${infer PM extends number}`
+        ? Neg<Exclude<_RangeTo<Max<PN, PM>>, _RangeTo<Min<PN, PM>>>>
+        : Neg<_RangeUpTo<PN>> | _RangeTo<M>
+      : `${M}` extends `-${infer PM extends number}`
+      ? _RangeUpTo<N> | Neg<_RangeTo<PM>>
+      : Exclude<_RangeTo<Max<N, M>>, _RangeTo<Min<N, M>>>
     : never
   : never
 type _RangeTo<N extends number, Result extends Tuple = []> = Result['length'] extends N
   ? never
   : Result['length'] | _RangeTo<N, [...Result, any]>
+type _RangeUpTo<N extends number, Result extends Tuple = []> = Result['length'] extends N
+  ? N
+  : Result['length'] | _RangeUpTo<N, [...Result, any]>
 
 /**
  * @example
