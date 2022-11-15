@@ -119,13 +119,17 @@ export type RangeTo<N extends number, M extends number | undefined = undefined> 
   : N extends N
   ? M extends M
     ? M extends number
-    ? `${N}` extends `-${infer PN extends number}`
-      ? `${M}` extends `-${infer PM extends number}`
-        ? Neg<Exclude<_RangeTo<Max<PN, PM>>, _RangeTo<Min<PN, PM>>>>
-        : Neg<_RangeUpTo<PN>> | _RangeTo<M>
-      : `${M}` extends `-${infer PM extends number}`
-      ? _RangeUpTo<N> | Neg<_RangeTo<PM>>
-      : Exclude<_RangeTo<Max<N, M>>, _RangeTo<Min<N, M>>>
+      ? `${N}` extends `-${infer PN extends number}`
+        ? `${M}` extends `-${infer PM extends number}`
+          ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
+            ? Neg<Exclude<_RangeUpTo<PN>, _RangeUpTo<PM>>>
+            : Neg<Exclude<_RangeTo<PM>, _RangeTo<PN>>>
+          : Neg<_RangeUpTo<PN>> | _RangeTo<M>
+        : `${M}` extends `-${infer PM extends number}`
+        ? _RangeUpTo<N> | Neg<_RangeTo<PM>>
+        : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
+        ? Exclude<_RangeUpTo<N>, _RangeUpTo<M>>
+        : Exclude<_RangeTo<M>, _RangeTo<N>>
       : RangeTo<0, N>
     : never
   : never
