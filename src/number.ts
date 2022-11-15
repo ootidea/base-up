@@ -1,17 +1,4 @@
-import { AccurateTuple, FixedSizeArray, OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
-
-/**
- * @example
- * Until<3> is equivalent to 0 | 1 | 2
- * Until<0> is equivalent to never
- * @example
- * Until<2 | 4> is equivalent to 0 | 1 | 2 | 3
- * Until<number> is equivalent to number
- */
-export type Until<N extends number> = number extends N ? number : N extends N ? _Until<N> : never
-type _Until<N extends number, Result extends AccurateTuple = []> = Result['length'] extends N
-  ? never
-  : Result['length'] | _Until<N, [...Result, any]>
+import { FixedSizeArray, OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
 
 /**
  * @example
@@ -56,7 +43,9 @@ export type Max<N extends number, M extends number> = OrMoreSizeArray<N> extends
  * RangeTo<number, 9> is equivalent to number
  * RangeTo<9, number> is equivalent to number
  */
-export type RangeTo<N extends number, M extends number = 0> = PositiveRangeTo<N, M>
+export type RangeTo<N extends number, M extends number = 0> = PositiveRangeTo<N, M> extends infer R extends number
+  ? R
+  : never
 type PositiveRangeTo<N extends number, M extends number = 0> = number extends N
   ? number
   : number extends M
@@ -78,7 +67,7 @@ type _PositiveRangeTo<
  * randomIntegerUntil(1) results 0
  * randomIntegerUntil(0) results 0
  */
-export function randomIntegerUntil<N extends number>(value: N): Until<N> {
+export function randomIntegerUntil<N extends number>(value: N): RangeTo<N> {
   return Math.floor(Math.random() * value) as any
 }
 

@@ -1,4 +1,4 @@
-import { randomIntegerUntil, Until } from './number'
+import { randomIntegerUntil, RangeTo } from './number'
 import { PseudoAny } from './type'
 
 export type AccurateTuple = readonly PseudoAny[]
@@ -46,7 +46,7 @@ type _OrMoreSizeArray<N extends number, T = unknown, Result extends readonly T[]
   ? [...Result, ...T[]]
   : _OrMoreSizeArray<N, T, [...Result, T]>
 
-export type LimitedSizeArray<N extends number, T = unknown> = FixedSizeArray<N | Until<N>, T>
+export type LimitedSizeArray<N extends number, T = unknown> = FixedSizeArray<N | RangeTo<N>, T>
 
 export function shuffle<T>(self: []): []
 export function shuffle<T>(self: readonly [T]): readonly [T]
