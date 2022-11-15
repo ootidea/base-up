@@ -127,3 +127,28 @@ export namespace unique {
     }
   }
 }
+
+export function uniqueBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[] {
+  const set = new Set<U>()
+  const result = []
+  for (const value of self) {
+    const temp = by(value)
+    if (!set.has(temp)) {
+      set.add(temp)
+      result.push(value)
+    }
+  }
+  return result
+}
+export namespace uniqueBy {
+  export function* Iterable<T, U>(self: Iterable<T>, by: (_: T) => U): Generator<T> {
+    const set = new Set<U>()
+    for (const value of self) {
+      const temp = by(value)
+      if (!set.has(temp)) {
+        set.add(temp)
+        yield value
+      }
+    }
+  }
+}
