@@ -1,10 +1,10 @@
-import { factorialOf, gcdOf, mod, randomIntegerUntil } from './number'
+import { factorialOf, gcdOf, mod, randomIntegerTo } from './number'
 
-test('randomIntegerUntil', () => {
-  expect(randomIntegerUntil(0)).toBe(0)
-  expect(randomIntegerUntil(1)).toBe(0)
-  expect(randomIntegerUntil(3) < 3).toBe(true)
-  expect(0 <= randomIntegerUntil(3)).toBe(true)
+test('randomIntegerTo', () => {
+  expect(randomIntegerTo(0)).toBe(0)
+  expect(randomIntegerTo(1)).toBe(0)
+  expect(randomIntegerTo(3) < 3).toBe(true)
+  expect(0 <= randomIntegerTo(3)).toBe(true)
 })
 
 test('mod', () => {

@@ -1,4 +1,4 @@
-import { randomIntegerUntil, RangeTo } from './number'
+import { randomIntegerTo, RangeTo } from './number'
 import { PseudoAny } from './type'
 
 export type AccurateTuple = readonly PseudoAny[]
@@ -55,7 +55,7 @@ export function shuffle<T>(self: readonly T[]): readonly T[]
 export function shuffle<T>(self: readonly T[]): readonly T[] {
   const result: T[] = []
   for (let i = 0; i < self.length; ++i) {
-    const j = randomIntegerUntil(i + 1)
+    const j = randomIntegerTo(i + 1)
     if (j < i) {
       result.push(result[j])
     }
