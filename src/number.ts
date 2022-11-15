@@ -5,14 +5,20 @@ import { OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
  * Abs<-3> is equivalent to 3
  * Abs<0.12> is equivalent to 0.12
  * Abs<-0> is equivalent to 0
+ * Abs<-1.2e-45> is equivalent to 1.2e-45
+ * Abs<-3 | 5> is equivalent to 3 | 5
+ * Abs<number> is equivalent to number
  */
-export type Abs<N extends number> = `${N}` extends `-${infer P extends number}` ? P : N
+export type Abs<N extends number> = N extends N ? (`${N}` extends `-${infer P extends number}` ? P : N) : never
+
 /**
  * @example
  * Neg<1> is equivalent to -1
  * Neg<-0.5> is equivalent to 0.5
  * Neg<0> is equivalent to 0
  * Neg<-0> is equivalent to 0
+ * Neg<1e+100> is equivalent to -1e+100
+ * Neg<-1.2e-45> is equivalent to 1.2e-45
  * Neg<2 | -4> is equivalent to -2 | 4
  * Neg<number> is equivalent to number
  */
@@ -33,13 +39,19 @@ export type Neg<N extends number> = N extends 0
  * Trunc<-3.5> is equivalent to -3
  * Trunc<0.99> is equivalent to 0
  * Trunc<12> is equivalent to 12
+ * Trunc<8.2e-9> is equivalent to 0
+ * Trunc<1e+100> is equivalent to 1e+100
  * Trunc<1.1 | 3.3> is equivalent to 1 | 3
  * Trunc<number> is equivalent to number
  */
 export type Trunc<N extends number> = number extends N
   ? number
   : N extends N
-  ? `${N}` extends `-0.${number}`
+  ? `${N}` extends `${number}e-${number}`
+    ? 0
+    : `${N}` extends `${number}e+${number}`
+    ? N
+    : `${N}` extends `-0.${number}`
     ? 0
     : `${N}` extends `${infer I extends number}.${number}`
     ? I
