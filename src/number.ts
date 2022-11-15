@@ -32,14 +32,39 @@ export type Neg<N extends number> = N extends 0
  * @example
  * Min<0, 3> is equivalent to 0
  * Min<2, 2> is equivalent to 2
+ * Min<-1, 2> is equivalent to -1
+ * Min<-1, -4> is equivalent to -4
  */
-export type Min<N extends number, M extends number> = OrMoreSizeArray<N> extends OrMoreSizeArray<M> ? M : N
+export type Min<N extends number, M extends number> = `${N}` extends `-${infer PN extends number}`
+  ? `${M}` extends `-${infer PM extends number}`
+    ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
+      ? N
+      : M
+    : N
+  : `${M}` extends `-${infer PM extends number}`
+  ? M
+  : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
+  ? M
+  : N
+
 /**
  * @example
  * Max<0, 3> is equivalent to 3
  * Max<2, 2> is equivalent to 2
+ * Max<-1, 2> is equivalent to 2
+ * Max<-1, -4> is equivalent to -1
  */
-export type Max<N extends number, M extends number> = OrMoreSizeArray<N> extends OrMoreSizeArray<M> ? N : M
+export type Max<N extends number, M extends number> = `${N}` extends `-${infer PN extends number}`
+  ? `${M}` extends `-${infer PM extends number}`
+    ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
+      ? M
+      : N
+    : M
+  : `${M}` extends `-${infer PM extends number}`
+  ? N
+  : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
+  ? N
+  : M
 
 /**
  * @example
