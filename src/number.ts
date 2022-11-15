@@ -11,11 +11,21 @@ export type Abs<N extends number> = `${N}` extends `-${infer P extends number}` 
  * @example
  * Neg<1> is equivalent to -1
  * Neg<-0.5> is equivalent to 0.5
+ * Neg<0> is equivalent to 0
+ * Neg<-0> is equivalent to 0
+ * Neg<2 | -4> is equivalent to -2 | 4
+ * Neg<number> is equivalent to number
  */
-export type Neg<N extends number> = `${N}` extends `-${infer P extends number}`
-  ? P
-  : `-${N}` extends `${infer M extends number}`
-  ? M
+export type Neg<N extends number> = N extends 0
+  ? 0
+  : number extends N
+  ? number
+  : N extends N
+  ? `${N}` extends `-${infer P extends number}`
+    ? P
+    : `-${N}` extends `${infer M extends number}`
+    ? M
+    : never
   : never
 
 /**
