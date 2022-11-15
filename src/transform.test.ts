@@ -2,10 +2,16 @@ import { shuffle } from './Array'
 import { id } from './Function'
 import { repeat } from './generate'
 import { setOf } from './Set'
-import { chunk, map, reverse, sort, sortBy, unique } from './transform'
+import { chunk, map, reverse, sort, sortBy, tail, unique } from './transform'
 
 test('map', () => {
   expect(map.Set(setOf(2, 1, 3), (x) => x + 10)).toStrictEqual(setOf(12, 11, 13))
+})
+
+test('tail', () => {
+  expect(tail([1, 2, 3])).toStrictEqual([1, 2])
+  expect(tail([1])).toStrictEqual([])
+  expect(tail([])).toStrictEqual(undefined)
 })
 
 test('chunk', () => {

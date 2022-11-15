@@ -47,9 +47,7 @@ export function tail<T>(self: readonly T[]): readonly T[] | undefined
 export function tail<T>(self: readonly T[]): readonly T[] | undefined {
   if (self.length === 0) return undefined
 
-  const cloned = self.slice()
-  cloned.shift()
-  return cloned
+  return self.slice(0, self.length - 1)
 }
 
 export function sort<T>(self: []): []
