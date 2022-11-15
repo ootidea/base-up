@@ -112,12 +112,13 @@ export type Max<N extends number, M extends number> = `${N}` extends `-${infer P
  * RangeTo<number, 9> is equivalent to number
  * RangeTo<9, number> is equivalent to number
  */
-export type RangeTo<N extends number, M extends number = 0> = number extends N
+export type RangeTo<N extends number, M extends number | undefined = undefined> = number extends N
   ? number
   : number extends M
   ? number
   : N extends N
   ? M extends M
+    ? M extends number
     ? `${N}` extends `-${infer PN extends number}`
       ? `${M}` extends `-${infer PM extends number}`
         ? Neg<Exclude<_RangeTo<Max<PN, PM>>, _RangeTo<Min<PN, PM>>>>
@@ -125,6 +126,7 @@ export type RangeTo<N extends number, M extends number = 0> = number extends N
       : `${M}` extends `-${infer PM extends number}`
       ? _RangeUpTo<N> | Neg<_RangeTo<PM>>
       : Exclude<_RangeTo<Max<N, M>>, _RangeTo<Min<N, M>>>
+      : RangeTo<0, N>
     : never
   : never
 type _RangeTo<N extends number, Result extends Tuple = []> = Result['length'] extends N
