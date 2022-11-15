@@ -1,5 +1,5 @@
 import { elementAt, filter, findMode, indexesOf, last } from './filter'
-import { repeat, until } from './generate'
+import { rangeTo, repeat } from './generate'
 import { setOf } from './Set'
 import { take } from './transform'
 import { isNotNull } from './type'
@@ -30,9 +30,9 @@ test('indexesOf', () => {
 })
 
 test('elementAt', () => {
-  expect(elementAt(until.Iterable(5), 0)).toBe(0)
-  expect(elementAt(until.Iterable(5), 3)).toBe(3)
-  expect(elementAt(until.Iterable(5), 5)).toBe(undefined)
+  expect(elementAt(rangeTo.Iterable(5), 0)).toBe(0)
+  expect(elementAt(rangeTo.Iterable(5), 3)).toBe(3)
+  expect(elementAt(rangeTo.Iterable(5), 5)).toBe(undefined)
 })
 
 test('findMode', () => {

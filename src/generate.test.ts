@@ -1,11 +1,11 @@
-import { repeat, repeatApply, until } from './generate'
+import { rangeTo, repeat, repeatApply } from './generate'
 import { take } from './transform'
 
-test('until', () => {
-  expect(until(3)).toStrictEqual([0, 1, 2])
-  expect(until(0)).toStrictEqual([])
+test('rangeTo', () => {
+  expect(rangeTo(3)).toStrictEqual([0, 1, 2])
+  expect(rangeTo(0)).toStrictEqual([])
 
-  expect([...until.Iterable(5)]).toStrictEqual([0, 1, 2, 3, 4])
+  expect([...rangeTo.Iterable(5)]).toStrictEqual([0, 1, 2, 3, 4])
 })
 
 test('repeat', () => {

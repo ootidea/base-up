@@ -2,35 +2,35 @@ import { AccurateTuple, FixedSizeArray, Tuple } from './Array'
 
 /**
  * @example
- * Until<3> is equivalent to [0, 1, 2]
+ * RangeTo<3> is equivalent to [0, 1, 2]
  * @example
- * Until<0> is equivalent to []
+ * RangeTo<0> is equivalent to []
  * @example
- * Until<2 | 4> is equivalent to [0, 1] | [0, 1, 2, 3]
+ * RangeTo<2 | 4> is equivalent to [0, 1] | [0, 1, 2, 3]
  * @example
- * Until<number> is equivalent to number[]
+ * RangeTo<number> is equivalent to number[]
  */
-export type Until<N extends number> = number extends N ? number[] : N extends N ? _Until<N> : never
-type _Until<N extends number, Result extends AccurateTuple = []> = Result['length'] extends N
+export type RangeTo<N extends number> = number extends N ? number[] : N extends N ? _RangeTo<N> : never
+type _RangeTo<N extends number, Result extends AccurateTuple = []> = Result['length'] extends N
   ? Result
-  : _Until<N, [...Result, Result['length']]>
+  : _RangeTo<N, [...Result, Result['length']]>
 
 /**
  * @example
- * until(3) results [0, 1, 2]
- * until(3) is typed as [0, 1, 2]
+ * rangeTo(3) results [0, 1, 2]
+ * rangeTo(3) is typed as [0, 1, 2]
  * @example
- * until(0) results []
- * until(0) is typed as []
+ * rangeTo(0) results []
+ * rangeTo(0) is typed as []
  * @example
  * const n: number = 4
- * until(n) results [0, 1, 2, 3]
- * until(n) is typed as readonly number[]
+ * rangeTo(n) results [0, 1, 2, 3]
+ * rangeTo(n) is typed as readonly number[]
  */
-export function until<N extends number>(length: N): Until<N> {
+export function rangeTo<N extends number>(length: N): RangeTo<N> {
   return Array.from({ length }, (_, i) => i) as any
 }
-export namespace until {
+export namespace rangeTo {
   export function* Iterable(n: number): Generator<number> {
     for (let i = 0; i < n; i++) {
       yield i

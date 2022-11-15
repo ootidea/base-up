@@ -1,13 +1,13 @@
 import { zip } from './fusion'
-import { repeat, until } from './generate'
+import { rangeTo, repeat } from './generate'
 
 test('zip', () => {
-  expect([...zip(repeat.Iterable('a'), until.Iterable(3))]).toStrictEqual([
+  expect([...zip(repeat.Iterable('a'), rangeTo.Iterable(3))]).toStrictEqual([
     ['a', 0],
     ['a', 1],
     ['a', 2],
   ])
-  expect([...zip(repeat.Iterable('a'), until.Iterable(3), repeat.Iterable(0))]).toStrictEqual([
+  expect([...zip(repeat.Iterable('a'), rangeTo.Iterable(3), repeat.Iterable(0))]).toStrictEqual([
     ['a', 0, 0],
     ['a', 1, 0],
     ['a', 2, 0],
