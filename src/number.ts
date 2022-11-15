@@ -30,6 +30,24 @@ export type Neg<N extends number> = N extends 0
 
 /**
  * @example
+ * Trunc<-3.5> is equivalent to -3
+ * Trunc<0.99> is equivalent to 0
+ * Trunc<12> is equivalent to 12
+ * Trunc<1.1 | 3.3> is equivalent to 1 | 3
+ * Trunc<number> is equivalent to number
+ */
+export type Trunc<N extends number> = number extends N
+  ? number
+  : N extends N
+  ? `${N}` extends `-0.${number}`
+    ? 0
+    : `${N}` extends `${infer I extends number}.${number}`
+    ? I
+    : N
+  : never
+
+/**
+ * @example
  * Min<0, 3> is equivalent to 0
  * Min<2, 2> is equivalent to 2
  * Min<-1, 2> is equivalent to -1
