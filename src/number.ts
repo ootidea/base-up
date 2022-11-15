@@ -27,12 +27,6 @@ export function randomInteger(min: number, max: number): number {
   return Math.floor(Math.random() * (max + 1 - min) + min)
 }
 
-export function sum(self: []): 0
-export function sum(self: readonly number[]): number
-export function sum(self: readonly number[]): number {
-  return self.reduce((lhs, rhs) => lhs + rhs, 0)
-}
-
 /**
  * Function to calculate modulo instead of reminder.
  * @example
