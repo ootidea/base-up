@@ -1,4 +1,4 @@
-import { FixedSizeArray, OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
+import { OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
 
 /**
  * @example
@@ -96,23 +96,18 @@ export type Max<N extends number, M extends number> = `${N}` extends `-${infer P
  * RangeTo<number, 9> is equivalent to number
  * RangeTo<9, number> is equivalent to number
  */
-export type RangeTo<N extends number, M extends number = 0> = PositiveRangeTo<N, M> extends infer R extends number
-  ? R
-  : never
-type PositiveRangeTo<N extends number, M extends number = 0> = number extends N
+export type RangeTo<N extends number, M extends number = 0> = number extends N
   ? number
   : number extends M
   ? number
   : N extends N
   ? M extends M
-    ? _PositiveRangeTo<Min<N, M>, Max<N, M>>
+    ? Exclude<_RangeTo<Max<N, M>>, _RangeTo<Min<N, M>>>
     : never
   : never
-type _PositiveRangeTo<
-  Min extends number,
-  Max extends number,
-  Result extends Tuple = FixedSizeArray<Min>
-> = Result['length'] extends Max ? never : Result['length'] | _PositiveRangeTo<Min, Max, [...Result, any]>
+type _RangeTo<N extends number, Result extends Tuple = []> = Result['length'] extends N
+  ? never
+  : Result['length'] | _RangeTo<N, [...Result, any]>
 
 /**
  * @example
