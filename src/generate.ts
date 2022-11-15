@@ -17,6 +17,21 @@ type _RangeTo<N extends number, Result extends AccurateTuple = []> = Result['len
 
 /**
  * @example
+ * Protruded<[any], [bigint, never, void]> is equivalent to [never, void]
+ * Protruded<[bigint, never, void], [any]> is equivalent to [never, void]
+ * Protruded<[any, any, any], [bigint, never, void]> is equivalent to []
+ * Protruded<FixedSizeArray<1>, FixedSizeArray<4>>['length'] is equivalent to 3
+ */
+export type Protruded<T extends Tuple, U extends Tuple> = T extends [any, ...infer TL]
+  ? U extends [any, ...infer UL]
+    ? Protruded<TL, UL>
+    : T
+  : U extends [any, ...infer UL]
+  ? U
+  : []
+
+/**
+ * @example
  * rangeTo(3) results [0, 1, 2]
  * rangeTo(3) is typed as [0, 1, 2]
  * @example
