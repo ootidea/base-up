@@ -58,6 +58,71 @@ export function pipe<A, B, C, D, E, F, G, H>(
   g: (f: F) => G,
   h: (g: G) => H
 ): H
+export function pipe<A, B, C, D, E, F, G, H, I>(
+  a: A,
+  b: (a: A) => B,
+  c: (b: B) => C,
+  d: (c: C) => D,
+  e: (d: D) => E,
+  f: (e: E) => F,
+  g: (f: F) => G,
+  h: (g: G) => H,
+  i: (h: H) => I
+): I
+export function pipe<A, B, C, D, E, F, G, H, I, J>(
+  a: A,
+  b: (a: A) => B,
+  c: (b: B) => C,
+  d: (c: C) => D,
+  e: (d: D) => E,
+  f: (e: E) => F,
+  g: (f: F) => G,
+  h: (g: G) => H,
+  i: (h: H) => I,
+  j: (i: I) => J
+): J
+export function pipe<A, B, C, D, E, F, G, H, I, J, K>(
+  a: A,
+  b: (a: A) => B,
+  c: (b: B) => C,
+  d: (c: C) => D,
+  e: (d: D) => E,
+  f: (e: E) => F,
+  g: (f: F) => G,
+  h: (g: G) => H,
+  i: (h: H) => I,
+  j: (i: I) => J,
+  k: (j: J) => K
+): K
+export function pipe<A, B, C, D, E, F, G, H, I, J, K, L>(
+  a: A,
+  b: (a: A) => B,
+  c: (b: B) => C,
+  d: (c: C) => D,
+  e: (d: D) => E,
+  f: (e: E) => F,
+  g: (f: F) => G,
+  h: (g: G) => H,
+  i: (h: H) => I,
+  j: (i: I) => J,
+  k: (j: J) => K,
+  l: (k: K) => L
+): L
+export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M>(
+  a: A,
+  b: (a: A) => B,
+  c: (b: B) => C,
+  d: (c: C) => D,
+  e: (d: D) => E,
+  f: (e: E) => F,
+  g: (f: F) => G,
+  h: (g: G) => H,
+  i: (h: H) => I,
+  j: (i: I) => J,
+  k: (j: J) => K,
+  l: (k: K) => L,
+  m: (l: L) => M
+): M
 export function pipe<A, T extends readonly Function[]>(a: A, ...fs: T) {
   let value: any = a
   for (let f of fs) {
