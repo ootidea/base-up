@@ -53,3 +53,13 @@ export function randomInteger(min: number, max: number): number {
 export function mod(a: number, b: number): number {
   return ((a % b) + b) % b
 }
+
+export function factorialOf(n: number): number {
+  if (n === 0) return 1
+
+  let result = n
+  for (let i = n - 1; i > 1; i--) {
+    result *= i
+  }
+  return result
+}
