@@ -17,16 +17,34 @@ export type ReadonlyNonEmptyArray<T> = readonly [T, ...T[]]
  * @example
  * FixedSizeArray<2 | 3, any> is equivalent to [any, any] | [any, any, any]
  * @example
- * FixedSizeArray<number, bigint> is equivalent to readonly bigint[]
+ * FixedSizeArray<number, bigint> is equivalent to bigint[]
  */
 export type FixedSizeArray<N extends number, T = unknown> = number extends N
-  ? readonly T[]
+  ? T[]
   : N extends N
   ? _FixedSizeArray<N, T>
   : never
 type _FixedSizeArray<N extends number, T = unknown, Result extends readonly T[] = []> = Result['length'] extends N
   ? Result
   : _FixedSizeArray<N, T, [...Result, T]>
+
+/**
+ * @example
+ * OrMoreSizeArray<1> is equivalent to [unknown, ...unknown[]]
+ * OrMoreSizeArray<2, number> is equivalent to [number, number, ...number[]]
+ * @example
+ * OrMoreSizeArray<0> is equivalent to unknown[]
+ * OrMoreSizeArray<1 | 2, any> is equivalent to [any, ...any[]] | [any, any, ...any[]]
+ * OrMoreSizeArray<number> is equivalent to unknown[]
+ */
+export type OrMoreSizeArray<N extends number, T = unknown> = number extends N
+  ? T[]
+  : N extends N
+  ? _OrMoreSizeArray<N, T>
+  : never
+type _OrMoreSizeArray<N extends number, T = unknown, Result extends readonly T[] = []> = Result['length'] extends N
+  ? [...Result, ...T[]]
+  : _OrMoreSizeArray<N, T, [...Result, T]>
 
 export type LimitedSizeArray<N extends number, T = unknown> = FixedSizeArray<N | Until<N>, T>
 
