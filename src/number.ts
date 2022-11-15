@@ -1,4 +1,4 @@
-import { AccurateTuple } from './Array'
+import { AccurateTuple, ReadonlyNonEmptyArray } from './Array'
 
 /**
  * @example
@@ -63,4 +63,17 @@ export function factorialOf(n: number): number {
     result *= i
   }
   return result
+}
+
+export function gcdOf(...values: ReadonlyNonEmptyArray<number>): number {
+  let result = values[0]
+  for (let i = 1; i < values.length; i++) {
+    result = binaryGcdOf(result, values[i])
+  }
+  return result
+}
+function binaryGcdOf(a: number, b: number): number {
+  if (b === 0) return a
+
+  return binaryGcdOf(b, a % b)
 }

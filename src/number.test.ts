@@ -1,4 +1,4 @@
-import { factorialOf, mod, randomIntegerUntil } from './number'
+import { factorialOf, gcdOf, mod, randomIntegerUntil } from './number'
 
 test('randomIntegerUntil', () => {
   expect(randomIntegerUntil(0)).toBe(0)
@@ -34,4 +34,14 @@ test('factorialOf', () => {
   expect(factorialOf(1)).toBe(1)
   expect(factorialOf(0)).toBe(1)
   expect(factorialOf(-1)).toBeNaN()
+})
+
+test('gcdOf', () => {
+  expect(gcdOf(40, 120, 60)).toBe(20)
+  expect(gcdOf(2, 99)).toBe(1)
+  expect(gcdOf(99, 2)).toBe(1)
+  expect(gcdOf(1, 99)).toBe(1)
+  expect(gcdOf(99, 1)).toBe(1)
+  expect(gcdOf(0, 99)).toBe(99)
+  expect(gcdOf(99, 0)).toBe(99)
 })
