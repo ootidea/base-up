@@ -56,6 +56,7 @@ export function mod(a: number, b: number): number {
 
 export function factorialOf(n: number): number {
   if (n === 0) return 1
+  if (n < 0) return NaN
 
   let result = n
   for (let i = n - 1; i > 1; i--) {

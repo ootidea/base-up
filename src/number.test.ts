@@ -33,4 +33,5 @@ test('factorialOf', () => {
   expect(factorialOf(4)).toBe(4 * 3 * 2)
   expect(factorialOf(1)).toBe(1)
   expect(factorialOf(0)).toBe(1)
+  expect(factorialOf(-1)).toBeNaN()
 })
