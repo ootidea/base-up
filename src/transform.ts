@@ -1,4 +1,4 @@
-import { FixedSizeArray, LimitedSizeArray, ReadonlyNonEmptyArray } from './Array'
+import { FixedSizeArray, OrLessSizeArray, ReadonlyNonEmptyArray } from './Array'
 import { id } from './Function'
 import { newMap, ReadonlyNonEmptyMap } from './Map'
 import { ltToComparator } from './order'
@@ -30,7 +30,7 @@ export namespace map {
   }
 }
 
-export function take<T, N extends number>(self: Iterable<T>, n: N): LimitedSizeArray<N, T>
+export function take<T, N extends number>(self: Iterable<T>, n: N): OrLessSizeArray<N, T>
 export function take<T>(self: Iterable<T>, n: number): readonly T[]
 export function take<T>(self: Iterable<T>, n: number): readonly T[] {
   const result: T[] = []
