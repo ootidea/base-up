@@ -1,6 +1,6 @@
 import { ReadonlyNonEmptyArray } from './Array'
 import { ReadonlyNonEmptyMap } from './Map'
-import { ReadonlyNonEmptySet } from './Set'
+import { newSet, ReadonlyNonEmptySet } from './Set'
 
 export function isEmpty<T>(self: ReadonlyNonEmptyArray<T>): false
 export function isEmpty<T>(self: readonly T[]): self is []
@@ -39,6 +39,35 @@ export namespace isNotEmpty {
   export function Map<K, T>(self: ReadonlyMap<K, T>): self is ReadonlyNonEmptyMap<K, T>
   export function Map<K, T>(self: ReadonlyMap<K, T>): self is ReadonlyNonEmptyMap<K, T> {
     return self.size > 0
+  }
+}
+
+export function filter<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
+export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[]
+export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[] {
+  return self.filter(f)
+}
+export namespace filter {
+  export function Iterable<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): Iterable<U>
+  export function Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T>
+  export function* Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T> {
+    for (const value of self) {
+      if (f(value)) {
+        yield value
+      }
+    }
+  }
+
+  export function Set<T, U extends T>(self: ReadonlySet<T>, f: (_: T) => _ is U): Set<U>
+  export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T>
+  export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T> {
+    const result = newSet<T>()
+    for (const value of self) {
+      if (f(value)) {
+        result.add(value)
+      }
+    }
+    return result
   }
 }
 
