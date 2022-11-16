@@ -25,6 +25,29 @@ export namespace filter {
   }
 }
 
+export function takeWhile<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
+export function takeWhile<T>(self: readonly T[], f: (_: T) => boolean): T[]
+export function takeWhile<T>(self: readonly T[], f: (_: T) => boolean): T[] {
+  const result = []
+  for (const value of self) {
+    if (!f(value)) return result
+
+    result.push(value)
+  }
+  return result
+}
+export namespace takeWhile {
+  export function Iterable<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): Iterable<U>
+  export function Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T>
+  export function* Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T> {
+    for (const value of self) {
+      if (!f(value)) return
+
+      yield value
+    }
+  }
+}
+
 export function first<T>(self: ReadonlyNonEmptyArray<T>): T
 export function first<T>(self: readonly T[]): T | undefined
 export function first<T>(self: readonly T[]): T | undefined {
