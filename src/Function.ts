@@ -18,7 +18,7 @@ export function call<T>(f: () => T): T {
   return f()
 }
 
-export function id<T>(value: T): T {
+export function identity<T>(value: T): T {
   return value
 }
 

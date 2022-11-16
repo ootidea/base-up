@@ -1,5 +1,5 @@
 import { shuffle } from './Array'
-import { id } from './Function'
+import { identity } from './Function'
 import { repeat } from './generate'
 import { setOf } from './Set'
 import { chunk, map, reverse, sort, sortBy, tail, unique } from './transform'
@@ -36,7 +36,7 @@ test('sort', () => {
 test('sortBy', () => {
   expect(sortBy([1, 2, 3], (x) => -x)).toStrictEqual([3, 2, 1])
   expect(sortBy(['alice', 'bob', 'charlie'], (x) => x.length)).toStrictEqual(['bob', 'alice', 'charlie'])
-  expect(sortBy([], id)).toStrictEqual([])
+  expect(sortBy([], identity)).toStrictEqual([])
 })
 
 test('shuffle', () => {

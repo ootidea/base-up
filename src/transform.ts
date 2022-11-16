@@ -1,6 +1,6 @@
 import { FixedSizeArray, OrLessSizeArray, ReadonlyNonEmptyArray } from './Array'
 import { ltToComparator } from './comparison'
-import { id } from './Function'
+import { identity } from './Function'
 import { newMap, ReadonlyNonEmptyMap } from './Map'
 import { newSet, ReadonlyNonEmptySet } from './Set'
 
@@ -55,7 +55,7 @@ export function sort<T>(self: readonly [T]): readonly [T]
 export function sort<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
 export function sort<T>(self: readonly T[]): readonly T[]
 export function sort<T>(self: readonly T[]): readonly T[] {
-  return sortBy(self, id)
+  return sortBy(self, identity)
 }
 
 export function sortBy<T, U>(self: [], by: (_: T) => U): []
