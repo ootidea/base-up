@@ -1,4 +1,4 @@
-import { rangeTo, repeat, repeatApply } from './generate'
+import { fromEntries, rangeTo, repeat, repeatApply } from './generate'
 import { take } from './transform'
 
 test('rangeTo', () => {
@@ -28,4 +28,17 @@ test('repeatApply', () => {
       5
     )
   ).toStrictEqual([0, 3, 6, 9, 12])
+})
+
+test('fromEntries', () => {
+  const entries = [
+    ['abc', 1],
+    ['def', 2],
+    [0, 3],
+  ] as const
+  const object = fromEntries(entries)
+
+  expect(object.abc).toBe(1)
+  expect(object.def).toBe(2)
+  expect(object[0]).toBe(3)
 })
