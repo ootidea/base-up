@@ -146,15 +146,18 @@ type _RangeUpTo<N extends number, Result extends Tuple = []> = Result['length'] 
  * randomIntegerTo(3) is typed as 0 | 1 | 2
  * randomIntegerTo(1) results 0
  * randomIntegerTo(1) is typed as 0
+ * @example
  * randomIntegerTo(0) results 0
  * randomIntegerTo(0) is typed as 0
+ * randomIntegerTo(-2) results 0 or -1
+ * randomIntegerTo(-2) is typed as 0 | -1
  */
 export function randomIntegerTo<N extends number>(value: N): N extends 0 ? 0 : RangeTo<N> {
-  return Math.floor(Math.random() * value) as any
+  return Math.trunc(Math.random() * value) as any
 }
 
 export function randomIntegerUpTo(min: number, max: number): number {
-  return Math.floor(Math.random() * (max + 1 - min) + min)
+  return Math.trunc(Math.random() * (max + 1 - min) + min)
 }
 
 /**

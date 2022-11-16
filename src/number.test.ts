@@ -5,6 +5,8 @@ test('randomIntegerTo', () => {
   expect(randomIntegerTo(1)).toBe(0)
   expect(randomIntegerTo(3) < 3).toBe(true)
   expect(0 <= randomIntegerTo(3)).toBe(true)
+  expect(randomIntegerTo(-2) <= 0).toBe(true)
+  expect(-2 < randomIntegerTo(-2)).toBe(true)
 })
 
 test('mod', () => {
