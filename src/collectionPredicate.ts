@@ -42,13 +42,20 @@ export namespace isNotEmpty {
   }
 }
 
-export function every<F extends (value: T) => value is U, T, U extends T>(
-  array: readonly T[],
-  f: F
-): array is readonly U[]
-export function every<F extends (value: T) => boolean, T>(self: readonly T[], f: F): boolean
-export function every<F extends (value: T) => boolean, T>(self: readonly T[], f: F): boolean {
+export function every<T, U extends T>(self: readonly T[], f: (value: T) => value is U): self is readonly U[]
+export function every<T>(self: readonly T[], f: (value: T) => boolean): boolean
+export function every<T>(self: readonly T[], f: (value: T) => boolean): boolean {
   return self.every(f)
+}
+export namespace every {
+  export function Iterable<T, U extends T>(self: Iterable<T>, f: (value: T) => value is U): self is Iterable<U>
+  export function Iterable<T>(self: Iterable<T>, f: (value: T) => boolean): boolean
+  export function Iterable<T>(self: Iterable<T>, f: (value: T) => boolean): boolean {
+    for (const value of self) {
+      if (!f(value)) return false
+    }
+    return true
+  }
 }
 
 export function isUnique<T>(self: readonly T[]): boolean {

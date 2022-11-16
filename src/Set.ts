@@ -1,4 +1,5 @@
 import { AccurateTuple } from './Array'
+import { every } from './collectionPredicate'
 import { sortBy } from './transform'
 import { Nominal } from './type'
 
@@ -49,4 +50,9 @@ export function isDisjoint<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): bool
     }
   }
   return true
+}
+
+/** isSubset(a, b) means a ⊆ b. */
+export function isSubset<T>(lhs: ReadonlySet<T>, rhs: ReadonlySet<T>): boolean {
+  return every.Iterable(lhs.values(), (element) => rhs.has(element))
 }
