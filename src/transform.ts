@@ -47,7 +47,7 @@ export function tail<T>(self: readonly T[]): readonly T[] | undefined
 export function tail<T>(self: readonly T[]): readonly T[] | undefined {
   if (self.length === 0) return undefined
 
-  return self.slice(0, self.length - 1)
+  return self.slice(1)
 }
 
 export function sort<T>(self: []): []

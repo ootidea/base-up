@@ -9,7 +9,7 @@ test('map', () => {
 })
 
 test('tail', () => {
-  expect(tail([1, 2, 3])).toStrictEqual([1, 2])
+  expect(tail([1, 2, 3])).toStrictEqual([2, 3])
   expect(tail([1])).toStrictEqual([])
   expect(tail([])).toStrictEqual(undefined)
 })
