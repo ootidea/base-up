@@ -1,4 +1,4 @@
-import { zip } from './fusion'
+import { zip, zipAll } from './fusion'
 import { rangeTo, repeat } from './generate'
 
 test('zip', () => {
@@ -11,5 +11,14 @@ test('zip', () => {
     ['a', 0, 0],
     ['a', 1, 0],
     ['a', 2, 0],
+  ])
+})
+
+test('zipAll', () => {
+  expect([...zipAll([0, 1, 2, 3], ['a', 'b'])]).toStrictEqual([
+    [0, 'a'],
+    [1, 'b'],
+    [2, undefined],
+    [3, undefined],
   ])
 })

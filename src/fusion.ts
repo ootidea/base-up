@@ -1,4 +1,5 @@
 import { Tuple } from './Array'
+import { RangeTo } from './number'
 
 type UnwrapIterable<T> = T extends Iterable<infer U> ? U : T
 type UnwrapIterableAll<T extends Tuple> = T extends readonly [infer H, ...infer L]
@@ -11,6 +12,28 @@ export function* zip<T extends readonly Iterable<any>[]>(...source: T): Zip<T> {
   for (
     let elements = iterators.map((iterator) => iterator.next());
     elements.every((element) => !element.done);
+    elements = iterators.map((iterator) => iterator.next())
+  ) {
+    yield elements.map((element) => element.value) as any
+  }
+  iterators.map((iterator) => iterator.return?.())
+}
+
+type ZipAll<T extends readonly Iterable<any>[]> = Generator<AtLeastOneIsNonUndefined<UnwrapIterableAll<T>>>
+type AtLeastOneIsNonUndefined<T extends Tuple, N extends number = RangeTo<T['length']>> = N extends N
+  ? SetUndefinedableAllBut<T, N>
+  : never
+type SetUndefinedableAllBut<T extends Tuple, N extends number> = T extends readonly [infer H, ...infer L]
+  ? N extends L['length']
+    ? [H, ...SetUndefinedableAllBut<L, N>]
+    : [H | undefined, ...SetUndefinedableAllBut<L, N>]
+  : []
+
+export function* zipAll<T extends readonly Iterable<any>[]>(...source: T): ZipAll<T> {
+  const iterators = source.map((iterable) => iterable[Symbol.iterator]())
+  for (
+    let elements = iterators.map((iterator) => iterator.next());
+    elements.some((element) => !element.done);
     elements = iterators.map((iterator) => iterator.next())
   ) {
     yield elements.map((element) => element.value) as any
