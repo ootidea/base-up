@@ -10,7 +10,7 @@ export function ltToComparator<T>(lt: (lhs: T, rhs: T) => boolean): (lhs: T, rhs
 }
 
 /** Convert Less-Than or Equal to function (<= symbol) to comparator. */
-export function ltoetToComparator<T>(ltoet: (lhs: T, rhs: T) => boolean): (lhs: T, rhs: T) => number {
+export function lteToComparator<T>(ltoet: (lhs: T, rhs: T) => boolean): (lhs: T, rhs: T) => number {
   return (lhs, rhs) => {
     if (ltoet(lhs, rhs)) {
       if (ltoet(rhs, lhs)) return 0
