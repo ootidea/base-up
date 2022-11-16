@@ -1,7 +1,7 @@
 import { FixedSizeArray, OrLessSizeArray, ReadonlyNonEmptyArray } from './Array'
+import { ltToComparator } from './comparison'
 import { id } from './Function'
 import { newMap, ReadonlyNonEmptyMap } from './Map'
-import { ltToComparator } from './order'
 import { newSet, ReadonlyNonEmptySet } from './Set'
 
 export function map<T, U>(self: ReadonlyNonEmptyArray<T>, f: (_: T) => U): ReadonlyNonEmptyArray<U>
