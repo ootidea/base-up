@@ -1,6 +1,7 @@
 import { FixedSizeArray, OrLessSizeArray, ReadonlyNonEmptyArray } from './Array'
 import { ltToComparator } from './comparison'
 import { identity } from './Function'
+import { repeat } from './generate'
 import { newMap, ReadonlyNonEmptyMap } from './Map'
 import { newSet, ReadonlyNonEmptySet } from './Set'
 
@@ -89,6 +90,13 @@ export function chunk<T, N extends number>(
     result.push(array.slice(i, i + size))
   }
   return result as any
+}
+
+export function padStart<T, N extends number>(self: readonly T[], length: N, value: T): readonly T[] {
+  const paddingSize = length - self.length
+  if (paddingSize < 1) return self
+
+  return [...repeat(paddingSize, value), ...self]
 }
 
 export function reverse<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>

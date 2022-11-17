@@ -73,7 +73,9 @@ type _RepeatArray<
   R extends AccurateTuple = []
 > = L['length'] extends N ? R : _RepeatArray<N, A, [...L, any], [...R, ...A]>
 
-export function repeat<N extends number, T extends AccurateTuple>(count: N, ...values: T): RepeatArray<N, T> {
+export function repeat<N extends number, T extends AccurateTuple>(count: N, ...values: T): RepeatArray<N, T>
+export function repeat<N extends number, T extends Tuple>(count: N, ...values: T): RepeatArray<N, T>
+export function repeat<N extends number, T extends Tuple>(count: N, ...values: T): RepeatArray<N, T> {
   return Array.from({ length: count * values.length }, (_, i) => values[i % values.length]) as any
 }
 export namespace repeat {
