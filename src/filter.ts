@@ -151,3 +151,20 @@ export function findMode<T>(self: readonly T[]): T | undefined {
   }
   return candidateValue
 }
+
+export function findModeBy<T, U>(self: readonly T[], by: (_: T) => U): T | undefined {
+  const map = new Map<U, number>()
+  let maxCount = 0
+  let candidateValue: T | undefined = undefined
+  for (const value of self) {
+    update.Map.mutable(map, by(value), (prev) => {
+      const nextCount = (prev ?? 0) + 1
+      if (maxCount < nextCount) {
+        maxCount = nextCount
+        candidateValue = value
+      }
+      return nextCount
+    })
+  }
+  return candidateValue
+}

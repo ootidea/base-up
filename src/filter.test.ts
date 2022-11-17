@@ -1,4 +1,4 @@
-import { elementAt, filter, findMode, indexesOf, last } from './filter'
+import { elementAt, filter, findMode, findModeBy, indexesOf, last } from './filter'
 import { rangeTo, repeat } from './generate'
 import { setOf } from './Set'
 import { take } from './transform'
@@ -39,4 +39,13 @@ test('findMode', () => {
   expect(findMode([3, 1, 4, 1, 5])).toBe(1)
   expect(findMode(['a', 'b', 'c'])).toBe('a')
   expect(findMode([])).toBe(undefined)
+})
+
+test('findModeBy', () => {
+  const first = { id: 1, name: 'first' }
+  const second = { id: 2, name: 'second' }
+  const third = { id: 3, name: 'third' }
+  expect(findModeBy([second, first, second, third], (element) => element.id)).toBe(second)
+  expect(findModeBy([first, second, third], (element) => element.id)).toBe(first)
+  expect(findModeBy([], (element) => element)).toBeUndefined()
 })
