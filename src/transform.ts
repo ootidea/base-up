@@ -51,24 +51,6 @@ export function tail<T>(self: readonly T[]): readonly T[] | undefined {
   return self.slice(1)
 }
 
-export function sort<T>(self: []): []
-export function sort<T>(self: readonly [T]): readonly [T]
-export function sort<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
-export function sort<T>(self: readonly T[]): readonly T[]
-export function sort<T>(self: readonly T[]): readonly T[] {
-  return sortBy(self, identity)
-}
-
-export function sortBy<T, U>(self: [], by: (_: T) => U): []
-export function sortBy<T, U>(self: readonly [T], by: (_: T) => U): readonly [T]
-export function sortBy<T, U>(self: ReadonlyNonEmptyArray<T>, by: (_: T) => U): ReadonlyNonEmptyArray<T>
-export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[]
-export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[] {
-  const cloned = self.slice()
-  cloned.sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs)))
-  return cloned
-}
-
 /**
  * @example
  * chunk([1, 2, 3, 4, 5, 6], 2) results [[1, 2], [3, 4], [5, 6]]
@@ -100,6 +82,24 @@ export function padStart<T, N extends number>(self: readonly T[], length: N, val
 export function padEnd<T, N extends number>(self: readonly T[], length: N, value: T): OrMoreSizeArray<N, T> {
   const paddingSize = Math.max(length - self.length, 0)
   return [...self, ...repeat(paddingSize, value)] as any
+}
+
+export function sort<T>(self: []): []
+export function sort<T>(self: readonly [T]): readonly [T]
+export function sort<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
+export function sort<T>(self: readonly T[]): readonly T[]
+export function sort<T>(self: readonly T[]): readonly T[] {
+  return sortBy(self, identity)
+}
+
+export function sortBy<T, U>(self: [], by: (_: T) => U): []
+export function sortBy<T, U>(self: readonly [T], by: (_: T) => U): readonly [T]
+export function sortBy<T, U>(self: ReadonlyNonEmptyArray<T>, by: (_: T) => U): ReadonlyNonEmptyArray<T>
+export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[]
+export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[] {
+  const cloned = self.slice()
+  cloned.sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs)))
+  return cloned
 }
 
 export function reverse<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
