@@ -133,6 +133,43 @@ export type RangeTo<N extends number, M extends number | undefined = undefined> 
       : RangeTo<0, N>
     : never
   : never
+/**
+ * @example
+ * RangeUpTo<3> is equivalent to 0 | 1 | 2 | 3
+ * RangeUpTo<4, 8> is equivalent to 4 | 5 | 6 | 7 | 8
+ * RangeUpTo<5, 3> is equivalent to 5 | 4 | 3
+ * @example
+ * RangeUpTo<2, -2> is equivalent to 2 | 1 | 0 | -1 | -2
+ * RangeUpTo<-2, 2> is equivalent to -2 | -1 | 0 | 1 | 2
+ * @example
+ * RangeUpTo<1, 1> is equivalent to 1
+ * RangeUpTo<0> is equivalent to 0
+ * @example
+ * RangeUpTo<2 | 4> is equivalent to 0 | 1 | 2 | 3 | 4
+ * RangeUpTo<number, 9> is equivalent to number
+ * RangeUpTo<9, number> is equivalent to number
+ */
+export type RangeUpTo<N extends number, M extends number | undefined = undefined> = number extends N
+  ? number
+  : number extends M
+  ? number
+  : N extends N
+  ? M extends M
+    ? M extends number
+      ? `${N}` extends `-${infer PN extends number}`
+        ? `${M}` extends `-${infer PM extends number}`
+          ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
+            ? Neg<Exclude<_RangeUpTo<PN>, _RangeTo<PM>>>
+            : Neg<Exclude<_RangeUpTo<PM>, _RangeTo<PN>>>
+          : Neg<_RangeUpTo<PN>> | _RangeUpTo<M>
+        : `${M}` extends `-${infer PM extends number}`
+        ? _RangeUpTo<N> | Neg<_RangeUpTo<PM>>
+        : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
+        ? Exclude<_RangeUpTo<N>, _RangeTo<M>>
+        : Exclude<_RangeUpTo<M>, _RangeTo<N>>
+      : RangeUpTo<0, N>
+    : never
+  : never
 type _RangeTo<N extends number, Result extends Tuple = []> = Result['length'] extends N
   ? never
   : Result['length'] | _RangeTo<N, [...Result, any]>
