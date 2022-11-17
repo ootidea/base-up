@@ -1,4 +1,4 @@
-import { FixedSizeArray, OrLessSizeArray, ReadonlyNonEmptyArray } from './Array'
+import { FixedSizeArray, OrLessSizeArray, OrMoreSizeArray, ReadonlyNonEmptyArray } from './Array'
 import { ltToComparator } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
@@ -92,11 +92,14 @@ export function chunk<T, N extends number>(
   return result as any
 }
 
-export function padStart<T, N extends number>(self: readonly T[], length: N, value: T): readonly T[] {
-  const paddingSize = length - self.length
-  if (paddingSize < 1) return self
+export function padStart<T, N extends number>(self: readonly T[], length: N, value: T): OrMoreSizeArray<N, T> {
+  const paddingSize = Math.max(length - self.length, 0)
+  return [...repeat(paddingSize, value), ...self] as any
+}
 
-  return [...repeat(paddingSize, value), ...self]
+export function padEnd<T, N extends number>(self: readonly T[], length: N, value: T): OrMoreSizeArray<N, T> {
+  const paddingSize = Math.max(length - self.length, 0)
+  return [...self, ...repeat(paddingSize, value)] as any
 }
 
 export function reverse<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
