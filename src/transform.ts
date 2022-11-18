@@ -11,6 +11,25 @@ export function map<T, U>(self: readonly T[], f: (_: T) => U): readonly U[] {
   return self.map(f)
 }
 
+export function flatten<T>(self: readonly (readonly T[])[]): readonly T[] {
+  const result = []
+  for (const array of self) {
+    result.push(...array)
+  }
+  return result
+}
+export namespace flatten {
+  export function Set<T>(self: ReadonlySet<ReadonlySet<T>>): Set<T> {
+    const result = newSet<T>()
+    for (const set of self) {
+      for (const value of set.values()) {
+        result.add(value)
+      }
+    }
+    return result
+  }
+}
+
 export namespace map {
   export function* Iterable<T, U>(self: Iterable<T>, f: (_: T) => U): Generator<U> {
     for (const value of self) {
