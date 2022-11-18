@@ -1,11 +1,10 @@
 import { Tuple } from './Array'
 import { RangeTo } from './number'
 
-type UnwrapIterable<T> = T extends Iterable<infer U> ? U : T
 type UnwrapIterableAll<T extends Tuple> = T extends readonly [infer H, ...infer L]
-  ? [UnwrapIterable<H>, ...UnwrapIterableAll<L>]
+  ? [H extends Iterable<infer U> ? U : H, ...UnwrapIterableAll<L>]
   : []
-type Zip<T extends readonly Iterable<any>[]> = Generator<UnwrapIterableAll<T>>
+type Zip<T extends readonly Iterable<any>[]> = Iterable<UnwrapIterableAll<T>>
 
 export function* zip<T extends readonly Iterable<any>[]>(...source: T): Zip<T> {
   const iterators = source.map((iterable) => iterable[Symbol.iterator]())
@@ -19,7 +18,7 @@ export function* zip<T extends readonly Iterable<any>[]>(...source: T): Zip<T> {
   iterators.map((iterator) => iterator.return?.())
 }
 
-type ZipAll<T extends readonly Iterable<any>[]> = Generator<AtLeastOneIsNonUndefined<UnwrapIterableAll<T>>>
+type ZipAll<T extends readonly Iterable<any>[]> = Iterable<AtLeastOneIsNonUndefined<UnwrapIterableAll<T>>>
 type AtLeastOneIsNonUndefined<T extends Tuple, N extends number = RangeTo<T['length']>> = N extends N
   ? SetUndefinedableAllBut<T, N>
   : never
