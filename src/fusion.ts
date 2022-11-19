@@ -33,6 +33,18 @@ export namespace zip {
   }
 }
 
+export function zipWith<T extends readonly (readonly any[])[], U>(
+  f: (...tuple: UnwrapArrayAll<T>) => U,
+  ...source: T
+): readonly U[] {
+  const result = []
+  const length = Math.min(...source.map((array) => array.length))
+  for (let i = 0; i < length; i++) {
+    result.push(f(...(source.map((array) => array[i]) as any)))
+  }
+  return result
+}
+
 type AtLeastOneIsNonUndefined<T extends Tuple, N extends number = RangeTo<T['length']>> = N extends N
   ? SetUndefinedableAllBut<T, N>
   : never
