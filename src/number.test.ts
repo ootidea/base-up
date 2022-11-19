@@ -1,12 +1,20 @@
 import { factorialOf, gcdOf, mod, randomIntegerTo } from './number'
 
 test('randomIntegerTo', () => {
-  expect(randomIntegerTo(0)).toBe(0)
   expect(randomIntegerTo(1)).toBe(0)
   expect(randomIntegerTo(3) < 3).toBe(true)
   expect(0 <= randomIntegerTo(3)).toBe(true)
   expect(randomIntegerTo(-2) <= 0).toBe(true)
   expect(-2 < randomIntegerTo(-2)).toBe(true)
+
+  expect(randomIntegerTo(20, 30) < 30).toBe(true)
+  expect(20 <= randomIntegerTo(20, 30)).toBe(true)
+  expect(randomIntegerTo(5, 6)).toBe(5)
+  expect(randomIntegerTo(5, 4)).toBe(5)
+  expect(() => randomIntegerTo(0)).toThrowError()
+  expect(() => randomIntegerTo(5, 5)).toThrowError()
+  expect(-2 <= randomIntegerTo(-2, 2)).toBe(true)
+  expect(randomIntegerTo(-2, 2) < 2).toBe(true)
 })
 
 test('mod', () => {

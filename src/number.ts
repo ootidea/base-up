@@ -179,18 +179,28 @@ type _RangeUpTo<N extends number, Result extends Tuple = []> = Result['length'] 
 
 /**
  * @example
- * randomIntegerTo(3) results 0 or 1 or 2
+ * randomIntegerTo(3) results 0, 1 or 2
  * randomIntegerTo(3) is typed as 0 | 1 | 2
- * randomIntegerTo(1) results 0
- * randomIntegerTo(1) is typed as 0
+ * randomIntegerTo(1, 4) results 1, 2 or 3
+ * randomIntegerTo(1, 4) is typed as 1 | 2 | 3
  * @example
- * randomIntegerTo(0) results 0
- * randomIntegerTo(0) is typed as 0
  * randomIntegerTo(-2) results 0 or -1
  * randomIntegerTo(-2) is typed as 0 | -1
+ * @example
+ * randomIntegerTo(0) throws RangeError
+ * randomIntegerTo(0) is typed as never
+ * randomIntegerTo(5, 5) throws RangeError
+ * randomIntegerTo(5, 5) is typed as never
  */
-export function randomIntegerTo<N extends number>(value: N): N extends 0 ? 0 : RangeTo<N> {
-  return Math.trunc(Math.random() * value) as any
+export function randomIntegerTo<N extends number>(value: N): RangeTo<N>
+export function randomIntegerTo<N extends number, M extends number>(from: N, to: M): RangeTo<N, M>
+export function randomIntegerTo<N extends number, M extends number>(first: N, second?: M): number {
+  const from = second === undefined ? 0 : first
+  const to = second === undefined ? first : second
+  if (from === to) {
+    throw RangeError(`The arguments of randomIntegerTo are the same value(${to}).\nMust be different values.`)
+  }
+  return Math.trunc(Math.random() * (to - from)) + from
 }
 
 export function randomIntegerUpTo(min: number, max: number): number {
