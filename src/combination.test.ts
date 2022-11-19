@@ -1,4 +1,4 @@
-import { cartesianProductOf, prefixesOf, slide } from './combination'
+import { cartesianProductOf, permutationOf, prefixesOf, slide } from './combination'
 
 test('cartesianProductOf', () => {
   expect(cartesianProductOf([0, 1], ['a', 'b'])).toStrictEqual([
@@ -13,6 +13,33 @@ test('cartesianProductOf', () => {
     [0, 'a'],
     [1, 'a'],
   ])
+})
+
+test('permutationOf', () => {
+  expect(permutationOf([1])).toStrictEqual([[1]])
+  expect(permutationOf([1, 2])).toStrictEqual([
+    [1, 2],
+    [2, 1],
+  ])
+  expect(permutationOf([1, 2, 3])).toStrictEqual([
+    [1, 2, 3],
+    [1, 3, 2],
+    [2, 1, 3],
+    [2, 3, 1],
+    [3, 1, 2],
+    [3, 2, 1],
+  ])
+  expect(permutationOf([1, 2, 3], 2)).toStrictEqual([
+    [1, 2],
+    [1, 3],
+    [2, 1],
+    [2, 3],
+    [3, 1],
+    [3, 2],
+  ])
+  expect(permutationOf([])).toStrictEqual([[]])
+  expect(permutationOf([1], 5)).toStrictEqual([[1]])
+  expect(permutationOf([1, 2], -5)).toStrictEqual([[]])
 })
 
 test('slide', () => {
