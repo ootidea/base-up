@@ -203,8 +203,12 @@ export function randomIntegerTo<N extends number, M extends number>(first: N, se
   return Math.trunc(Math.random() * (to - from)) + from
 }
 
-export function randomIntegerUpTo(min: number, max: number): number {
-  return Math.trunc(Math.random() * (max + 1 - min) + min)
+export function randomIntegerUpTo<N extends number>(value: N): RangeUpTo<N>
+export function randomIntegerUpTo<N extends number, M extends number>(from: N, to: M): RangeUpTo<N, M>
+export function randomIntegerUpTo<N extends number, M extends number>(first: N, second?: M): number {
+  const from = second === undefined ? 0 : first
+  const to = second === undefined ? first : second
+  return Math.trunc(Math.random() * (to + 1 - from)) + from
 }
 
 /**
