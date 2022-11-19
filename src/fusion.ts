@@ -1,21 +1,36 @@
 import { Tuple } from './Array'
 import { RangeTo } from './number'
 
+type UnwrapArrayAll<T extends Tuple> = T extends readonly [infer H, ...infer L]
+  ? [H extends readonly (infer U)[] ? U : H, ...UnwrapArrayAll<L>]
+  : []
+
 type UnwrapIterableAll<T extends Tuple> = T extends readonly [infer H, ...infer L]
   ? [H extends Iterable<infer U> ? U : H, ...UnwrapIterableAll<L>]
   : []
-type Zip<T extends readonly Iterable<any>[]> = Iterable<UnwrapIterableAll<T>>
 
-export function* zip<T extends readonly Iterable<any>[]>(...source: T): Zip<T> {
-  const iterators = source.map((iterable) => iterable[Symbol.iterator]())
-  for (
-    let elements = iterators.map((iterator) => iterator.next());
-    elements.every((element) => !element.done);
-    elements = iterators.map((iterator) => iterator.next())
-  ) {
-    yield elements.map((element) => element.value) as any
+type ZipArray<T extends readonly (readonly any[])[]> = UnwrapArrayAll<T>[]
+export function zip<T extends readonly (readonly any[])[]>(...self: T): ZipArray<T> {
+  const result = []
+  const length = Math.min(...self.map((array) => array.length))
+  for (let i = 0; i < length; i++) {
+    result.push(self.map((array) => array[i]))
   }
-  iterators.map((iterator) => iterator.return?.())
+  return result as any
+}
+export namespace zip {
+  type ZipIterable<T extends readonly Iterable<any>[]> = Iterable<UnwrapIterableAll<T>>
+  export function* Iterable<T extends readonly Iterable<any>[]>(...source: T): ZipIterable<T> {
+    const iterators = source.map((iterable) => iterable[Symbol.iterator]())
+    for (
+      let elements = iterators.map((iterator) => iterator.next());
+      elements.every((element) => !element.done);
+      elements = iterators.map((iterator) => iterator.next())
+    ) {
+      yield elements.map((element) => element.value) as any
+    }
+    iterators.map((iterator) => iterator.return?.())
+  }
 }
 
 type ZipAll<T extends readonly Iterable<any>[]> = Iterable<AtLeastOneIsNonUndefined<UnwrapIterableAll<T>>>
