@@ -24,7 +24,7 @@ export function lteToComparator<T>(lte: (lhs: T, rhs: T) => boolean): (lhs: T, r
 }
 
 export function lexicographicLt<T>(lhs: Iterable<T>, rhs: Iterable<T>): boolean {
-  for (const [lhsElement, rhsElement] of zipAll(lhs, rhs)) {
+  for (const [lhsElement, rhsElement] of zipAll.Iterable(lhs, rhs)) {
     if (lhsElement === undefined) return true
 
     if (rhsElement === undefined) return false
@@ -39,7 +39,7 @@ export function lexicographicLt<T>(lhs: Iterable<T>, rhs: Iterable<T>): boolean 
 }
 
 export function lexicographicLte<T>(lhs: Iterable<T>, rhs: Iterable<T>): boolean {
-  for (const [lhsElement, rhsElement] of zipAll(lhs, rhs)) {
+  for (const [lhsElement, rhsElement] of zipAll.Iterable(lhs, rhs)) {
     if (lhsElement === undefined) return true
 
     if (rhsElement === undefined) return false

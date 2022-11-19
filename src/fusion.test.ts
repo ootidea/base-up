@@ -30,7 +30,24 @@ test('zip', () => {
 })
 
 test('zipAll', () => {
-  expect([...zipAll([0, 1, 2, 3], ['a', 'b'])]).toStrictEqual([
+  expect(zipAll([1, 2, 3], ['a', 'b', 'c'])).toStrictEqual([
+    [1, 'a'],
+    [2, 'b'],
+    [3, 'c'],
+  ])
+  expect(zipAll([1, 2, 3], ['a', 'b'])).toStrictEqual([
+    [1, 'a'],
+    [2, 'b'],
+    [3, undefined],
+  ])
+  expect(zipAll([1, 2, 3], ['a', 'b'], [true, false])).toStrictEqual([
+    [1, 'a', true],
+    [2, 'b', false],
+    [3, undefined, undefined],
+  ])
+  expect(zipAll([1, 2, 3])).toStrictEqual([[1], [2], [3]])
+
+  expect([...zipAll.Iterable([0, 1, 2, 3], ['a', 'b'])]).toStrictEqual([
     [0, 'a'],
     [1, 'b'],
     [2, undefined],
