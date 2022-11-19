@@ -192,7 +192,7 @@ type _RangeUpTo<N extends number, Result extends Tuple = []> = Result['length'] 
  * randomIntegerTo(5, 5) throws RangeError
  * randomIntegerTo(5, 5) is typed as never
  */
-export function randomIntegerTo<N extends number>(value: N): RangeTo<N>
+export function randomIntegerTo<N extends number>(to: N): RangeTo<N>
 export function randomIntegerTo<N extends number, M extends number>(from: N, to: M): RangeTo<N, M>
 export function randomIntegerTo<N extends number, M extends number>(first: N, second?: M): number {
   const from = second === undefined ? 0 : first
@@ -203,8 +203,8 @@ export function randomIntegerTo<N extends number, M extends number>(first: N, se
   return Math.trunc(Math.random() * (to - from)) + from
 }
 
-export function randomIntegerUpTo<N extends number>(value: N): RangeUpTo<N>
-export function randomIntegerUpTo<N extends number, M extends number>(from: N, to: M): RangeUpTo<N, M>
+export function randomIntegerUpTo<N extends number>(upTo: N): RangeUpTo<N>
+export function randomIntegerUpTo<N extends number, M extends number>(from: N, upTo: M): RangeUpTo<N, M>
 export function randomIntegerUpTo<N extends number, M extends number>(first: N, second?: M): number {
   const from = second === undefined ? 0 : first
   const to = second === undefined ? first : second
