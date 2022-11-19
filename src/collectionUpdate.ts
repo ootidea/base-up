@@ -6,6 +6,14 @@ export function push<T extends Tuple, U extends Tuple>(self: T, ...args: U): [..
 export function push<T extends Tuple, U extends Tuple>(self: T, ...args: U): [...T, ...U] {
   return [...self, ...args]
 }
+export namespace push {
+  export function Iterable<T, U extends AccurateTuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]>
+  export function Iterable<T, U extends Tuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]>
+  export function* Iterable<T, U extends Tuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]> {
+    yield* self
+    yield* args
+  }
+}
 
 export function removeAt<T>(self: readonly T[], i: number): readonly T[] {
   const cloned = self.slice()
