@@ -30,7 +30,7 @@ export namespace unshift {
 }
 
 export function removeAt<T>(self: readonly T[], i: number): readonly T[] {
-  const cloned = self.slice()
+  const cloned = [...self]
   cloned.splice(i, 1)
   return cloned
 }

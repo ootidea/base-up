@@ -48,7 +48,7 @@ export function prefixesOf<T>(self: readonly T[]): ReadonlyNonEmptyArray<readonl
   const prefixes = []
   for (const element of self) {
     prefixes.push(element)
-    result.push(prefixes.slice())
+    result.push([...prefixes])
   }
   return result
 }

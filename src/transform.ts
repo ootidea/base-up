@@ -116,16 +116,13 @@ export function sortBy<T, U>(self: readonly [T], by: (_: T) => U): readonly [T]
 export function sortBy<T, U>(self: ReadonlyNonEmptyArray<T>, by: (_: T) => U): ReadonlyNonEmptyArray<T>
 export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[]
 export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[] {
-  const cloned = self.slice()
-  cloned.sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs)))
-  return cloned
+  return [...self].sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs)))
 }
 
 export function reverse<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
 export function reverse<T>(self: readonly T[]): readonly T[]
 export function reverse<T>(self: readonly T[]): readonly T[] {
-  const cloned = self.slice()
-  return cloned.reverse()
+  return [...self].reverse()
 }
 export namespace reverse {
   export function* Iterable<T>(self: readonly T[]): Generator<T> {
