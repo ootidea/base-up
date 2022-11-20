@@ -21,10 +21,19 @@ export function removeAt<T>(self: readonly T[], i: number): readonly T[] {
   return cloned
 }
 
-export function set<K, T>(self: ReadonlyMap<K, T>, key: K, value: T): ReadonlyMap<K, T> {
-  const cloned = new Map(self)
-  cloned.set(key, value)
-  return cloned
+export function set<T, K extends keyof T>(self: T, key: K, value: T[K]): T
+export function set<T, K extends keyof T, V>(self: T, key: K, value: V): Omit<T, K> & Record<K, V>
+export function set<K extends keyof any>(self: any, key: K, value: unknown): any {
+  const result = { ...self }
+  result[key] = value
+  return result
+}
+export namespace set {
+  export function Map<K, T>(self: ReadonlyMap<K, T>, key: K, value: T): ReadonlyMap<K, T> {
+    const cloned = newMap(self)
+    cloned.set(key, value)
+    return cloned
+  }
 }
 
 export namespace update {
