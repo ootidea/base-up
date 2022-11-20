@@ -1,4 +1,5 @@
-import { AccurateTuple, FixedSizeArray, Tuple } from './Array'
+import { AccurateTuple, FixedSizeArray, OrMoreSizeArray, Tuple } from './Array'
+import { Decrement, Increment } from './number'
 
 /**
  * @example
@@ -10,10 +11,33 @@ import { AccurateTuple, FixedSizeArray, Tuple } from './Array'
  * @example
  * RangeTo<number> is equivalent to number[]
  */
-export type RangeTo<N extends number> = number extends N ? number[] : N extends N ? _RangeTo<N> : never
-type _RangeTo<N extends number, Result extends AccurateTuple = []> = Result['length'] extends N
+export type RangeTo<From extends number, To extends number | undefined = undefined> = To extends number
+  ? number extends From
+    ? number[]
+    : number extends To
+    ? number[]
+    : From extends From
+    ? To extends To
+      ? `${From}` extends `-${infer PN extends number}`
+        ? `${To}` extends `-${infer PM extends number}`
+          ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
+            ? IncrementsTo<From, To>
+            : DecrementsTo<From, To>
+          : IncrementsTo<From, To>
+        : `${To}` extends `-${infer PM extends number}`
+        ? DecrementsTo<From, To>
+        : OrMoreSizeArray<From> extends OrMoreSizeArray<To>
+        ? DecrementsTo<From, To>
+        : IncrementsTo<From, To>
+      : never
+    : never
+  : RangeTo<0, From>
+type IncrementsTo<N extends number, M extends number, Result extends Tuple = []> = M extends N
   ? Result
-  : _RangeTo<N, [...Result, Result['length']]>
+  : IncrementsTo<Increment<N>, M, [...Result, N]>
+type DecrementsTo<N extends number, M extends number, Result extends Tuple = []> = M extends N
+  ? Result
+  : DecrementsTo<Decrement<N>, M, [...Result, N]>
 
 /**
  * @example

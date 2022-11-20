@@ -1,4 +1,4 @@
-import { OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
+import { FixedSizeArray, OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
 
 /**
  * @example
@@ -95,6 +95,22 @@ export type Max<N extends number, M extends number> = `${N}` extends `-${infer P
   : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
   ? N
   : M
+
+export type Increment<N extends number> = `${N}` extends `-${infer PN extends number}`
+  ? FixedSizeArray<PN> extends [any, ...infer L]
+    ? Neg<L['length']>
+    : never
+  : [any, ...FixedSizeArray<N>]['length'] extends infer R extends number
+  ? R
+  : never
+
+export type Decrement<N extends number> = `${N}` extends `-${infer PN extends number}`
+  ? [any, ...FixedSizeArray<PN>]['length'] extends infer R extends number
+    ? Neg<R>
+    : never
+  : FixedSizeArray<N> extends [any, ...infer L]
+  ? L['length']
+  : -1
 
 /**
  * @example
