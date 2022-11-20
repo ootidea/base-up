@@ -1,5 +1,6 @@
-import { AccurateTuple, Tuple } from './Array'
+import { AccurateTuple, NonEmptyArray, Tuple } from './Array'
 import { newMap } from './Map'
+import { mod } from './number'
 
 export function push<T extends AccurateTuple, U extends AccurateTuple>(self: T, ...args: U): [...T, ...U]
 export function push<T extends Tuple, U extends Tuple>(self: T, ...args: U): [...T, ...U]
@@ -27,6 +28,12 @@ export namespace unshift {
     yield* args
     yield* self
   }
+}
+
+export function insertAt<T>(self: readonly T[], at: number, ...values: readonly T[]): NonEmptyArray<T> {
+  const cloned = [...self]
+  cloned.splice(mod(at, self.length + 1), 0, ...values)
+  return cloned as any
 }
 
 export function removeAt<T>(self: readonly T[], i: number): readonly T[] {
