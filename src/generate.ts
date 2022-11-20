@@ -64,7 +64,7 @@ export type Protruded<T extends Tuple, U extends Tuple> = T extends [any, ...inf
  * @example
  * const n: number = 4
  * rangeTo(n) results [0, 1, 2, 3]
- * rangeTo(n) is typed as readonly number[]
+ * rangeTo(n) is typed as number[]
  */
 export function rangeTo<To extends number>(to: To): RangeTo<To>
 export function rangeTo<From extends number, To extends number>(from: From, to: To): RangeTo<From, To>
