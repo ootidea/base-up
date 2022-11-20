@@ -15,6 +15,20 @@ export namespace push {
   }
 }
 
+export function unshift<T extends AccurateTuple, U extends AccurateTuple>(self: T, ...args: U): [...U, ...T]
+export function unshift<T extends Tuple, U extends Tuple>(self: T, ...args: U): [...U, ...T]
+export function unshift<T extends Tuple, U extends Tuple>(self: T, ...args: U): [...U, ...T] {
+  return [...args, ...self]
+}
+export namespace unshift {
+  export function Iterable<T, U extends AccurateTuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]>
+  export function Iterable<T, U extends Tuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]>
+  export function* Iterable<T, U extends Tuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]> {
+    yield* args
+    yield* self
+  }
+}
+
 export function removeAt<T>(self: readonly T[], i: number): readonly T[] {
   const cloned = self.slice()
   cloned.splice(i, 1)
