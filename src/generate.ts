@@ -66,8 +66,22 @@ export type Protruded<T extends Tuple, U extends Tuple> = T extends [any, ...inf
  * rangeTo(n) results [0, 1, 2, 3]
  * rangeTo(n) is typed as readonly number[]
  */
-export function rangeTo<N extends number>(length: N): RangeTo<N> {
-  return Array.from({ length }, (_, i) => i) as any
+export function rangeTo<To extends number>(to: To): RangeTo<To>
+export function rangeTo<From extends number, To extends number>(from: From, to: To): RangeTo<From, To>
+export function rangeTo<N extends number, M extends number>(n: N, m?: M): number[] {
+  const [from, to] = m === undefined ? [0, n] : [n, m]
+
+  const result = []
+  if (from < to) {
+    for (let i = from; i < to; i++) {
+      result.push(i)
+    }
+  } else {
+    for (let i = from; i > to; i--) {
+      result.push(i)
+    }
+  }
+  return result as any
 }
 export namespace rangeTo {
   export function* Iterable(n: number): Generator<number> {

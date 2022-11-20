@@ -3,7 +3,13 @@ import { take } from './transform'
 
 test('rangeTo', () => {
   expect(rangeTo(3)).toStrictEqual([0, 1, 2])
+  expect(rangeTo(-3)).toStrictEqual([0, -1, -2])
   expect(rangeTo(0)).toStrictEqual([])
+  expect(rangeTo(2, 5)).toStrictEqual([2, 3, 4])
+  expect(rangeTo(2, -2)).toStrictEqual([2, 1, 0, -1])
+  expect(rangeTo(-2, 2)).toStrictEqual([-2, -1, 0, 1])
+  expect(rangeTo(-2, -5)).toStrictEqual([-2, -3, -4])
+  expect(rangeTo(3, 3)).toStrictEqual([])
 
   expect([...rangeTo.Iterable(5)]).toStrictEqual([0, 1, 2, 3, 4])
 })

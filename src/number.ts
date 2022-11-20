@@ -208,11 +208,10 @@ type _RangeUpTo<N extends number, Result extends Tuple = []> = Result['length'] 
  * randomIntegerTo(5, 5) throws RangeError
  * randomIntegerTo(5, 5) is typed as never
  */
-export function randomIntegerTo<N extends number>(to: N): RangeTo<N>
-export function randomIntegerTo<N extends number, M extends number>(from: N, to: M): RangeTo<N, M>
+export function randomIntegerTo<To extends number>(to: To): RangeTo<To>
+export function randomIntegerTo<From extends number, To extends number>(from: From, to: To): RangeTo<From, To>
 export function randomIntegerTo<N extends number, M extends number>(first: N, second?: M): number {
-  const from = second === undefined ? 0 : first
-  const to = second === undefined ? first : second
+  const [from, to] = second === undefined ? [0, first] : [first, second]
   if (from === to) {
     throw RangeError(`The arguments of randomIntegerTo are the same value(${to}).\nMust be different values.`)
   }
