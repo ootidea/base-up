@@ -25,6 +25,11 @@ export function permutationOf<T>(self: readonly T[], n: number = self.length): r
     return permutationOf(removeAt(self, i), n - 1).map((rest) => [value, ...rest])
   })
 }
+export namespace permutationOf {
+  export function number(lhs: number, rhs: number): number {
+    return rangeTo(lhs, lhs - rhs).reduce((a, b) => a * b)
+  }
+}
 
 export function slide<T, N extends number>(self: readonly T[], n: N): readonly (readonly T[])[] {
   const result = []

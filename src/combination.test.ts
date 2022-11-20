@@ -40,6 +40,10 @@ test('permutationOf', () => {
   expect(permutationOf([])).toStrictEqual([[]])
   expect(permutationOf([1], 5)).toStrictEqual([[1]])
   expect(permutationOf([1, 2], -5)).toStrictEqual([[]])
+
+  expect(permutationOf.number(3, 1)).toBe(3)
+  expect(permutationOf.number(3, 3)).toBe(6)
+  expect(permutationOf.number(5, 2)).toBe(20)
 })
 
 test('slide', () => {
