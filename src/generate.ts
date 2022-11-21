@@ -1,5 +1,5 @@
 import { AccurateTuple, FixedSizeArray, OrMoreSizeArray, Tuple } from './Array'
-import { Decrement, Increment } from './number'
+import { Decrement, Increment, RangeUpTo } from './number'
 
 /**
  * @example
@@ -89,6 +89,24 @@ export namespace rangeTo {
       yield i
     }
   }
+}
+
+export function rangeUpTo<To extends number>(to: To): RangeUpTo<To>
+export function rangeUpTo<From extends number, To extends number>(from: From, to: To): RangeUpTo<From, To>
+export function rangeUpTo<N extends number, M extends number>(n: N, m?: M): number {
+  const [from, to] = m === undefined ? [0, n] : [n, m]
+
+  const result = []
+  if (from < to) {
+    for (let i = from; i <= to; i++) {
+      result.push(i)
+    }
+  } else {
+    for (let i = from; i >= to; i--) {
+      result.push(i)
+    }
+  }
+  return result as any
 }
 
 /**
