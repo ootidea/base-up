@@ -2,7 +2,7 @@ import { shuffle } from './Array'
 import { identity } from './Function'
 import { repeat } from './generate'
 import { setOf } from './Set'
-import { chunk, flatten, map, padEnd, padStart, reverse, sort, sortBy, tail, unique } from './transform'
+import { chunk, flatten, join, map, padEnd, padStart, reverse, sort, sortBy, tail, unique } from './transform'
 
 test('map', () => {
   expect(map.Set(setOf(2, 1, 3), (x) => x + 10)).toStrictEqual(setOf(12, 11, 13))
@@ -28,6 +28,21 @@ test('tail', () => {
   expect(tail([1, 2, 3])).toStrictEqual([2, 3])
   expect(tail([1])).toStrictEqual([])
   expect(tail([])).toStrictEqual(undefined)
+})
+
+test('join', () => {
+  expect(
+    join(
+      [
+        [1, 2],
+        [4, 5, 6],
+        [7, 8],
+      ],
+      0
+    )
+  ).toStrictEqual([1, 2, 0, 4, 5, 6, 0, 7, 8])
+  expect(join([['a', 'b'], ['c']], true, 1)).toStrictEqual(['a', 'b', true, 1, 'c'])
+  expect(join([], '-')).toStrictEqual([])
 })
 
 test('chunk', () => {
