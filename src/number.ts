@@ -195,12 +195,12 @@ type _RangeUpTo<N extends number, Result extends Tuple = []> = Result['length'] 
 
 /**
  * @example
- * randomIntegerTo(3) results 0, 1 or 2
+ * randomIntegerTo(3) returns 0, 1 or 2
  * randomIntegerTo(3) is typed as 0 | 1 | 2
- * randomIntegerTo(1, 4) results 1, 2 or 3
+ * randomIntegerTo(1, 4) returns 1, 2 or 3
  * randomIntegerTo(1, 4) is typed as 1 | 2 | 3
  * @example
- * randomIntegerTo(-2) results 0 or -1
+ * randomIntegerTo(-2) returns 0 or -1
  * randomIntegerTo(-2) is typed as 0 | -1
  * @example
  * randomIntegerTo(0) throws RangeError
@@ -229,25 +229,25 @@ export function randomIntegerUpTo<N extends number, M extends number>(first: N, 
 /**
  * Function to calculate modulo instead of reminder.
  * @example
- * mod(4, 3) results 1
- * mod(3, 3) results 0
- * mod(2, 3) results 2
- * mod(1, 3) results 1
- * mod(0, 3) results 0
- * mod(-1, 3) results 2
- * mod(-2, 3) results 1
- * mod(-3, 3) results 0
- * mod(-4, 3) results 2
+ * mod(4, 3) returns 1
+ * mod(3, 3) returns 0
+ * mod(2, 3) returns 2
+ * mod(1, 3) returns 1
+ * mod(0, 3) returns 0
+ * mod(-1, 3) returns 2
+ * mod(-2, 3) returns 1
+ * mod(-3, 3) returns 0
+ * mod(-4, 3) returns 2
  * @example
- * mod(4, -3) results -2
- * mod(3, -3) results -0
- * mod(2, -3) results -1
- * mod(1, -3) results -2
- * mod(0, -3) results -0
- * mod(-1, -3) results -1
- * mod(-2, -3) results -2
- * mod(-3, -3) results -0
- * mod(-4, -3) results -1
+ * mod(4, -3) returns -2
+ * mod(3, -3) returns -0
+ * mod(2, -3) returns -1
+ * mod(1, -3) returns -2
+ * mod(0, -3) returns -0
+ * mod(-1, -3) returns -1
+ * mod(-2, -3) returns -2
+ * mod(-3, -3) returns -0
+ * mod(-4, -3) returns -1
  */
 export function mod(a: number, b: number): number {
   return ((a % b) + b) % b

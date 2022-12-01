@@ -1,12 +1,12 @@
 /**
  * @example
- * toNumber('123') results 123
+ * toNumber('123') returns 123
  * toNumber('123') is typed as 123
  * @example
- * toNumber('-1') results -1
+ * toNumber('-1') returns -1
  * toNumber('-1') is typed as -1
  * @example
- * toNumber('1.0') results 1
+ * toNumber('1.0') returns 1
  * toNumber('1.0') is typed as number
  */
 export function toNumber<N extends number>(text: `${N}`): N
