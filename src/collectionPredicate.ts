@@ -56,6 +56,24 @@ export namespace every {
   }
 }
 
+export function everyKeys<K, T, U extends K>(
+  self: ReadonlyMap<K, T>,
+  f: (key: K) => key is U
+): self is ReadonlyMap<U, T>
+export function everyKeys<K, T>(self: ReadonlyMap<K, T>, f: (key: K) => boolean): boolean
+export function everyKeys<K, T>(self: ReadonlyMap<K, T>, f: (key: K) => boolean): boolean {
+  return every.Iterable(self.keys(), f)
+}
+
+export function everyValues<K, T, U extends T>(
+  self: ReadonlyMap<K, T>,
+  f: (value: T) => value is U
+): self is ReadonlyMap<K, U>
+export function everyValues<K, T>(self: ReadonlyMap<K, T>, f: (value: T) => boolean): boolean
+export function everyValues<K, T>(self: ReadonlyMap<K, T>, f: (value: T) => boolean): boolean {
+  return every.Iterable(self.values(), f)
+}
+
 export function isUnique<T>(self: readonly T[]): boolean {
   const set = new Set<T>()
   for (const value of self) {
