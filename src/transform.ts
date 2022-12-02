@@ -58,6 +58,17 @@ export function take<T, N extends number>(self: Iterable<T>, n: N): OrLessSizeAr
   iterator.return?.()
   return result as any
 }
+export namespace take {
+  export function* Iterable<T>(self: Iterable<T>, n: number): Iterable<T> {
+    let i = 0
+    for (const value of self) {
+      if (i === n) return
+
+      yield value
+      i++
+    }
+  }
+}
 
 export function tail<T>(self: ReadonlyNonEmptyArray<T>): readonly T[]
 export function tail<T>(self: readonly T[]): readonly T[] | undefined
