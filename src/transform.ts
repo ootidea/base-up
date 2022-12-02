@@ -77,6 +77,16 @@ export function tail<T>(self: readonly T[]): readonly T[] | undefined {
 
   return self.slice(1)
 }
+export namespace tail {
+  export function* Iterable<T>(self: Iterable<T>): Iterable<T> {
+    const iterator = self[Symbol.iterator]()
+    let element = iterator.next()
+    for (element = iterator.next(); !element.done; element = iterator.next()) {
+      yield element.value
+    }
+    iterator.return?.()
+  }
+}
 
 export function join<T, U extends AccurateTuple>(self: readonly (readonly T[])[], ...values: U): (T | U[number])[]
 export function join<T, U extends Tuple>(self: readonly (readonly T[])[], ...values: U): (T | U[number])[]
