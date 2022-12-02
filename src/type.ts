@@ -1,3 +1,5 @@
+import { AccurateTuple, Tuple } from './Array'
+
 /**
  * All lowercase types that exist in TypeScript, excluding unknown and any.
  * T | never is equivalent to T, so never is omitted.
@@ -52,6 +54,12 @@ export const isNotString = <T>(value: T | string): value is T => typeof value !=
 export const isNotSymbol = <T>(value: T | symbol): value is T => typeof value !== 'symbol'
 export const isNotFunction = <T>(value: T | Function): value is T => typeof value !== 'function'
 export const isNotObject = <T>(value: T | symbol): value is T => typeof value !== 'object'
+
+export function isOneOf<T extends AccurateTuple>(...set: T): (value: unknown) => value is T[number]
+export function isOneOf<T extends Tuple>(...set: T): (value: unknown) => value is T[number]
+export function isOneOf<T extends Tuple>(...set: T): (value: unknown) => value is T[number] {
+  return (value: unknown): value is T[number] => new Set(set).has(value as any)
+}
 
 export function isInstanceOf<T extends abstract new (..._: any) => any>(
   ctor: T,

@@ -15,12 +15,6 @@ export function newSet<T>(...args: ConstructorParameters<typeof Set<T>>) {
   return new Set(...args)
 }
 
-export function has<T, U extends T>(self: ReadonlySet<U>, value: T): value is U
-export function has<T>(self: ReadonlySet<T>, value: T): boolean
-export function has<T>(self: ReadonlySet<T>, value: T): boolean {
-  return self.has(value as any)
-}
-
 export function setOf<H extends PseudoAny, T extends AccurateTuple>(
   head: H,
   ...tail: T
@@ -28,6 +22,12 @@ export function setOf<H extends PseudoAny, T extends AccurateTuple>(
 export function setOf<T extends AccurateTuple>(...args: T): ReadonlySet<T[number]>
 export function setOf<T extends AccurateTuple>(...args: T): ReadonlySet<T[number]> {
   return new Set(args)
+}
+
+export function has<T, U extends T>(self: ReadonlySet<U>, value: T): value is U
+export function has<T>(self: ReadonlySet<T>, value: T): boolean
+export function has<T>(self: ReadonlySet<T>, value: T): boolean {
+  return self.has(value as any)
 }
 
 export function union<T, U>(lhs: ReadonlyNonEmptySet<T>, rhs: ReadonlySet<U>): ReadonlyNonEmptySet<T | U>
