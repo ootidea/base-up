@@ -30,12 +30,8 @@ export namespace map {
   }
 }
 
-export function flatten<T>(self: readonly (readonly T[])[]): readonly T[] {
-  const result = []
-  for (const array of self) {
-    result.push(...array)
-  }
-  return result
+export function flatten<T>(self: readonly (readonly T[])[]): T[] {
+  return self.flatMap((x) => x)
 }
 export namespace flatten {
   export function Set<T>(self: ReadonlySet<ReadonlySet<T>>): Set<T> {
