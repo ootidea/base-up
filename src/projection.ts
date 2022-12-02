@@ -7,11 +7,16 @@
  * keys({ 0: null, 1: 'time' }) returns ['0', '1']
  * keys({ 0: null, 1: 'time' }) is typed as ('0' | '1')[]
  */
-export function keys<T extends {}>(record: T): ReadonlyArray<Key<keyof T>> {
+export function keys<T extends {}>(record: T): Keys<T>[] {
   return Object.keys(record) as any
 }
-
-type Key<T extends keyof any> = T extends string ? T : T extends number ? `${T}` : never
+export type Keys<T, K extends keyof T = keyof T> = K extends K
+  ? K extends string
+    ? K
+    : K extends number
+    ? `${K}`
+    : never
+  : never
 
 /**
  * Get keys as type number from a record where key is type number.
