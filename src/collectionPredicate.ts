@@ -7,7 +7,6 @@ export function isEmpty<T>(self: readonly T[]): self is []
 export function isEmpty<T>(self: readonly T[]): self is [] {
   return self.length === 0
 }
-
 export namespace isEmpty {
   export function Set<T>(self: ReadonlyNonEmptySet<T>): false
   export function Set<T>(self: ReadonlySet<T>): boolean
@@ -27,7 +26,6 @@ export function isNotEmpty<T>(self: readonly T[]): self is ReadonlyNonEmptyArray
 export function isNotEmpty<T>(self: readonly T[]): self is ReadonlyNonEmptyArray<T> {
   return self.length > 0
 }
-
 export namespace isNotEmpty {
   export function Set<T>(self: ReadonlyNonEmptySet<T>): true
   export function Set<T>(self: ReadonlySet<T>): self is ReadonlyNonEmptySet<T>

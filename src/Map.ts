@@ -1,3 +1,4 @@
+import { every } from './collectionPredicate'
 import { Nominal } from './type'
 
 declare const NON_EMPTY_MAP_TAG: unique symbol
@@ -19,4 +20,22 @@ export function mapOf<H extends readonly [any, any], T extends readonly [any, an
 export function mapOf<T extends readonly [any, any][]>(...args: T): ReadonlyMap<T[number][0], T[number][1]>
 export function mapOf<T extends readonly [any, any][]>(...args: T): ReadonlyMap<T[number][0], T[number][1]> {
   return new Map(args)
+}
+
+export function everyKeys<K, T, U extends K>(
+  self: ReadonlyMap<K, T>,
+  f: (key: K) => key is U
+): self is ReadonlyMap<U, T>
+export function everyKeys<K, T>(self: ReadonlyMap<K, T>, f: (key: K) => boolean): boolean
+export function everyKeys<K, T>(self: ReadonlyMap<K, T>, f: (key: K) => boolean): boolean {
+  return every.Iterable(self.keys(), f)
+}
+
+export function everyValues<K, T, U extends T>(
+  self: ReadonlyMap<K, T>,
+  f: (value: T) => value is U
+): self is ReadonlyMap<K, U>
+export function everyValues<K, T>(self: ReadonlyMap<K, T>, f: (value: T) => boolean): boolean
+export function everyValues<K, T>(self: ReadonlyMap<K, T>, f: (value: T) => boolean): boolean {
+  return every.Iterable(self.values(), f)
 }
