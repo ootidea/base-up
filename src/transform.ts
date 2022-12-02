@@ -49,9 +49,7 @@ export namespace flatten {
   }
 }
 
-export function take<T, N extends number>(self: Iterable<T>, n: N): OrLessSizeArray<N, T>
-export function take<T>(self: Iterable<T>, n: number): readonly T[]
-export function take<T>(self: Iterable<T>, n: number): readonly T[] {
+export function take<T, N extends number>(self: Iterable<T>, n: N): OrLessSizeArray<N, T> {
   const result: T[] = []
   const iterator = self[Symbol.iterator]()
   for (let element = iterator.next(); !element.done && result.length < n; element = iterator.next()) {
