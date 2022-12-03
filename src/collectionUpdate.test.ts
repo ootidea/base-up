@@ -25,6 +25,7 @@ test('insertAt', () => {
 
   expect([...insertAt.Iterable([0, 1, 2], 0, 9)]).toStrictEqual([9, 0, 1, 2])
   expect([...insertAt.Iterable([0, 1, 2], 3, 9)]).toStrictEqual([0, 1, 2, 9])
+  expect([...insertAt.Iterable([0, 1, 2], 1, 9, 8)]).toStrictEqual([0, 9, 8, 1, 2])
   expect(take(insertAt.Iterable(repeat.Iterable(true), 2, false), 4)).toStrictEqual([true, true, false, true])
   expect(take(insertAt.Iterable(repeat.Iterable(true), 6, false), 4)).toStrictEqual([true, true, true, true])
   expect(take(insertAt.Iterable(repeat.Iterable(true), -1, false), 4)).toStrictEqual([true, true, true, true])
