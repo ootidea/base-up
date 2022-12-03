@@ -86,6 +86,34 @@ export namespace removeAll {
   }
 }
 
+export function remove<T>(self: readonly T[], value: T): T[] {
+  const index = self.findIndex((x) => x !== value)
+  const cloned = [...self]
+  if (index === -1) return cloned
+  cloned.splice(index, 1)
+  return cloned
+}
+export namespace remove {
+  export function* Iterable<T>(self: Iterable<T>, value: T): Iterable<T> {
+    const iterator = self[Symbol.iterator]()
+    let element = iterator.next()
+    // Yields until the given value is found.
+    while (!element.done && element.value !== value) {
+      yield element.value
+      element = iterator.next()
+    }
+
+    // Yields all subsequent values.
+    element = iterator.next()
+    while (!element.done) {
+      yield element.value
+      element = iterator.next()
+    }
+
+    iterator.return?.()
+  }
+}
+
 export function set<T, K extends keyof T>(self: T, key: K, value: T[K]): T
 export function set<T, K extends keyof T, V>(self: T, key: K, value: V): Omit<T, K> & Record<K, V>
 export function set<K extends keyof any>(self: any, key: K, value: unknown): any {
