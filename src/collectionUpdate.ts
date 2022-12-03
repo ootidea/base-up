@@ -30,10 +30,38 @@ export namespace unshift {
   }
 }
 
-export function insertAt<T>(self: readonly T[], at: number, ...values: readonly T[]): NonEmptyArray<T> {
-  const cloned = [...self]
+export function insertAt<T, U extends Tuple>(
+  self: readonly T[],
+  at: number,
+  ...values: U
+): NonEmptyArray<T | U[number]> {
+  const cloned: (T | U[number])[] = [...self]
   cloned.splice(mod(at, self.length + 1), 0, ...values)
   return cloned as any
+}
+export namespace insertAt {
+  export function* Iterable<T, U extends Tuple>(self: Iterable<T>, at: number, ...values: U): Iterable<T | U[number]> {
+    const iterator = self[Symbol.iterator]()
+
+    let i = 0
+    let element: IteratorResult<T>
+    for (; i < at; ++i) {
+      element = iterator.next()
+      yield element.value
+      if (element.done) {
+        break
+      }
+    }
+
+    if (i === at) {
+      yield* values
+    }
+
+    for (element = iterator.next(); !element.done; element = iterator.next()) {
+      yield element.value
+    }
+    iterator.return?.()
+  }
 }
 
 export function removeAt<T>(self: readonly T[], i: number): readonly T[] {
