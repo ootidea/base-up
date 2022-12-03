@@ -61,6 +61,17 @@ export function removeAt<T>(self: readonly T[], i: number): readonly T[] {
   cloned.splice(i, 1)
   return cloned
 }
+export namespace removeAt {
+  export function* Iterable<T>(self: Iterable<T>, at: number): Iterable<T> {
+    let i = 0
+    for (const value of self) {
+      if (i !== at) {
+        yield value
+      }
+      ++i
+    }
+  }
+}
 
 export function set<T, K extends keyof T>(self: T, key: K, value: T[K]): T
 export function set<T, K extends keyof T, V>(self: T, key: K, value: V): Omit<T, K> & Record<K, V>
