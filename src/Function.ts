@@ -6,7 +6,7 @@ export function curry<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R): (
       f(h, ...l)
 }
 
-export function enunary<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R, ...l: L): (h: H) => R {
+export function toUnary<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R, ...l: L): (h: H) => R {
   return (h: H) => f(h, ...l)
 }
 
@@ -125,7 +125,7 @@ export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M>(
 ): M
 export function pipe<A, T extends readonly Function[]>(a: A, ...fs: T) {
   let value: any = a
-  for (let f of fs) {
+  for (const f of fs) {
     value = f(value)
   }
   return value
