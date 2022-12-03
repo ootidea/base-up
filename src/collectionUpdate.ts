@@ -41,26 +41,18 @@ export function insertAt<T, U extends Tuple>(
 }
 export namespace insertAt {
   export function* Iterable<T, U extends Tuple>(self: Iterable<T>, at: number, ...values: U): Iterable<T | U[number]> {
-    const iterator = self[Symbol.iterator]()
-
-    let i = 0
-    let element: IteratorResult<T>
-    for (; i < at; ++i) {
-      element = iterator.next()
-      yield element.value
-      if (element.done) {
-        break
-      }
-    }
-
-    if (i === at) {
+    if (at === 0) {
       yield* values
     }
 
-    for (element = iterator.next(); !element.done; element = iterator.next()) {
-      yield element.value
+    let i = 1
+    for (const value of self) {
+      yield value
+      if (i === at) {
+        yield* values
+      }
+      i++
     }
-    iterator.return?.()
   }
 }
 
