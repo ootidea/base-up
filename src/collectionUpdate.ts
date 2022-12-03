@@ -73,6 +73,19 @@ export namespace removeAt {
   }
 }
 
+export function removeAll<T>(self: readonly T[], value: T): T[] {
+  return self.filter((x) => x !== value)
+}
+export namespace removeAll {
+  export function* Iterable<T>(self: Iterable<T>, value: T): Iterable<T> {
+    for (const x of self) {
+      if (x !== value) {
+        yield value
+      }
+    }
+  }
+}
+
 export function set<T, K extends keyof T>(self: T, key: K, value: T[K]): T
 export function set<T, K extends keyof T, V>(self: T, key: K, value: V): Omit<T, K> & Record<K, V>
 export function set<K extends keyof any>(self: any, key: K, value: unknown): any {
