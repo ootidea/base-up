@@ -9,6 +9,13 @@ export function isEmpty<T>(self: readonly T[]): self is [] {
   return self.length === 0
 }
 export namespace isEmpty {
+  export function Iterable<T>(self: Iterable<T>): boolean {
+    for (const _ of self) {
+      return false
+    }
+    return true
+  }
+
   export function Set<T>(self: ReadonlyNonEmptySet<T>): false
   export function Set<T>(self: ReadonlySet<T>): boolean
   export function Set<T>(self: ReadonlySet<T>): boolean {
@@ -28,6 +35,13 @@ export function isNotEmpty<T>(self: readonly T[]): self is ReadonlyNonEmptyArray
   return self.length > 0
 }
 export namespace isNotEmpty {
+  export function Iterable<T>(self: Iterable<T>): boolean {
+    for (const _ of self) {
+      return true
+    }
+    return false
+  }
+
   export function Set<T>(self: ReadonlyNonEmptySet<T>): true
   export function Set<T>(self: ReadonlySet<T>): self is ReadonlyNonEmptySet<T>
   export function Set<T>(self: ReadonlySet<T>): self is ReadonlyNonEmptySet<T> {
