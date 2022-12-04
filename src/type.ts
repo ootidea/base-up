@@ -31,6 +31,8 @@ export function assertEquals<T, U>(lhs: T, rhs: U) {
   }
 }
 
+export function assertNeverType(shouldBeNever: never) {}
+
 export type nullish = null | undefined
 
 export const isNull = (value: unknown): value is null => value === null
