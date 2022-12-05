@@ -36,7 +36,7 @@ export namespace zip {
 export function zipWith<T extends readonly (readonly any[])[], U>(
   f: (...tuple: UnwrapArrayAll<T>) => U,
   ...source: T
-): readonly U[] {
+): U[] {
   const result = []
   const length = Math.min(...source.map((array) => array.length))
   for (let i = 0; i < length; i++) {
@@ -78,7 +78,7 @@ export namespace zipAll {
   }
 }
 
-export function merge<T, U>(lhs: readonly T[], rhs: readonly U[]): readonly (T | U)[] {
+export function merge<T, U>(lhs: readonly T[], rhs: readonly U[]): (T | U)[] {
   const result = []
   const minLength = Math.min(lhs.length, rhs.length)
   for (let i = 0; i < minLength; ++i) {

@@ -1,13 +1,21 @@
-import { AccurateTuple, FixedSizeArray, OrLessSizeArray, OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
+import {
+  AccurateTuple,
+  FixedSizeArray,
+  NonEmptyArray,
+  OrLessSizeArray,
+  OrMoreSizeArray,
+  ReadonlyNonEmptyArray,
+  Tuple,
+} from './Array'
 import { ltToComparator } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
-import { newMap, ReadonlyNonEmptyMap } from './Map'
-import { newSet, ReadonlyNonEmptySet } from './Set'
+import { newMap, NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
+import { newSet, NonEmptySet, ReadonlyNonEmptySet } from './Set'
 
-export function map<T, U>(self: ReadonlyNonEmptyArray<T>, f: (_: T) => U): ReadonlyNonEmptyArray<U>
-export function map<T, U>(self: readonly T[], f: (_: T) => U): readonly U[]
-export function map<T, U>(self: readonly T[], f: (_: T) => U): readonly U[] {
+export function map<T, U>(self: ReadonlyNonEmptyArray<T>, f: (_: T) => U): NonEmptyArray<U>
+export function map<T, U>(self: readonly T[], f: (_: T) => U): U[]
+export function map<T, U>(self: readonly T[], f: (_: T) => U): U[] {
   return self.map(f)
 }
 export namespace map {
@@ -17,15 +25,15 @@ export namespace map {
     }
   }
 
-  export function Set<T, U>(self: ReadonlyNonEmptySet<T>, f: (_: T) => U): ReadonlyNonEmptySet<U>
-  export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): ReadonlySet<U>
-  export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): ReadonlySet<U> {
+  export function Set<T, U>(self: ReadonlyNonEmptySet<T>, f: (_: T) => U): NonEmptySet<U>
+  export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): Set<U>
+  export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): Set<U> {
     return newSet(map.Iterable(self.values(), f))
   }
 
-  export function Map<K, T, U>(self: ReadonlyNonEmptyMap<K, T>, f: (_: T) => U): ReadonlyNonEmptyMap<K, U>
-  export function Map<K, T, U>(self: ReadonlyMap<K, T>, f: (_: T) => U): ReadonlyMap<K, U>
-  export function Map<K, T, U>(self: ReadonlyMap<K, T>, f: (_: T) => U): ReadonlyMap<K, U> {
+  export function Map<K, T, U>(self: ReadonlyNonEmptyMap<K, T>, f: (_: T) => U): NonEmptyMap<K, U>
+  export function Map<K, T, U>(self: ReadonlyMap<K, T>, f: (_: T) => U): Map<K, U>
+  export function Map<K, T, U>(self: ReadonlyMap<K, T>, f: (_: T) => U): Map<K, U> {
     return newMap(map.Iterable(self.entries(), ([key, value]) => [key, f(value)]))
   }
 }
@@ -66,9 +74,9 @@ export namespace take {
   }
 }
 
-export function tail<T>(self: ReadonlyNonEmptyArray<T>): readonly T[]
-export function tail<T>(self: readonly T[]): readonly T[] | undefined
-export function tail<T>(self: readonly T[]): readonly T[] | undefined {
+export function tail<T>(self: ReadonlyNonEmptyArray<T>): T[]
+export function tail<T>(self: readonly T[]): T[] | undefined
+export function tail<T>(self: readonly T[]): T[] | undefined {
   if (self.length === 0) return undefined
 
   return self.slice(1)
@@ -131,24 +139,24 @@ export function padEnd<T, N extends number>(self: readonly T[], length: N, value
 }
 
 export function sort<T>(self: []): []
-export function sort<T>(self: readonly [T]): readonly [T]
-export function sort<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
-export function sort<T>(self: readonly T[]): readonly T[]
-export function sort<T>(self: readonly T[]): readonly T[] {
+export function sort<T>(self: readonly [T]): [T]
+export function sort<T>(self: ReadonlyNonEmptyArray<T>): NonEmptyArray<T>
+export function sort<T>(self: readonly T[]): T[]
+export function sort<T>(self: readonly T[]): T[] {
   return sortBy(self, identity)
 }
 
 export function sortBy<T, U>(self: [], by: (_: T) => U): []
-export function sortBy<T, U>(self: readonly [T], by: (_: T) => U): readonly [T]
-export function sortBy<T, U>(self: ReadonlyNonEmptyArray<T>, by: (_: T) => U): ReadonlyNonEmptyArray<T>
-export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[]
-export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[] {
+export function sortBy<T, U>(self: readonly [T], by: (_: T) => U): [T]
+export function sortBy<T, U>(self: ReadonlyNonEmptyArray<T>, by: (_: T) => U): NonEmptyArray<T>
+export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): T[]
+export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): T[] {
   return [...self].sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs)))
 }
 
-export function reverse<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
-export function reverse<T>(self: readonly T[]): readonly T[]
-export function reverse<T>(self: readonly T[]): readonly T[] {
+export function reverse<T>(self: ReadonlyNonEmptyArray<T>): NonEmptyArray<T>
+export function reverse<T>(self: readonly T[]): T[]
+export function reverse<T>(self: readonly T[]): T[] {
   return [...self].reverse()
 }
 export namespace reverse {
@@ -159,7 +167,7 @@ export namespace reverse {
   }
 }
 
-export function unique<T>(self: readonly T[]): readonly T[] {
+export function unique<T>(self: readonly T[]): T[] {
   const set = new Set<T>()
   const result = []
   for (const value of self) {
@@ -182,7 +190,7 @@ export namespace unique {
   }
 }
 
-export function uniqueBy<T, U>(self: readonly T[], by: (_: T) => U): readonly T[] {
+export function uniqueBy<T, U>(self: readonly T[], by: (_: T) => U): T[] {
   const set = new Set<U>()
   const result = []
   for (const value of self) {

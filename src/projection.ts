@@ -24,7 +24,7 @@ export type Keys<T, K extends keyof T = keyof T> = K extends K
  * numberKeys({ 10: [], 4: "abc" }) returns [10, 4]
  * numberKeys({ 10: [], 4: "abc" }) is typed as readonly (10 | 4)[]
  */
-export function numberKeys<K extends number>(record: Record<K, unknown>): readonly K[] {
+export function numberKeys<K extends number>(record: Record<K, unknown>): K[] {
   return Object.keys(record).map(Number) as any
 }
 
@@ -37,6 +37,6 @@ export function numberKeys<K extends number>(record: Record<K, unknown>): readon
  * values({ 0: false, 1: 'time' } as const) returns [false, 'time']
  * values({ 0: false, 1: 'time' } as const) is typed as (false | 'time')[]
  */
-export function values<T extends {}>(record: T): ReadonlyArray<T[keyof T]> {
+export function values<T extends {}>(record: T): T[keyof T][] {
   return Object.values(record) as any
 }

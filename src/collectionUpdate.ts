@@ -56,7 +56,7 @@ export namespace insertAt {
   }
 }
 
-export function removeAt<T>(self: readonly T[], i: number): readonly T[] {
+export function removeAt<T>(self: readonly T[], i: number): T[] {
   const cloned = [...self]
   cloned.splice(i, 1)
   return cloned
@@ -122,7 +122,7 @@ export function set<K extends keyof any>(self: any, key: K, value: unknown): any
   return result
 }
 export namespace set {
-  export function Map<K, T>(self: ReadonlyMap<K, T>, key: K, value: T): ReadonlyMap<K, T> {
+  export function Map<K, T>(self: ReadonlyMap<K, T>, key: K, value: T): Map<K, T> {
     const cloned = newMap(self)
     cloned.set(key, value)
     return cloned
@@ -130,7 +130,7 @@ export namespace set {
 }
 
 export namespace update {
-  export function Map<K, T>(self: ReadonlyMap<K, T>, key: K, f: (_: T | undefined) => T): ReadonlyMap<K, T> {
+  export function Map<K, T>(self: ReadonlyMap<K, T>, key: K, f: (_: T | undefined) => T): Map<K, T> {
     const cloned = newMap(self)
     cloned.set(key, f(cloned.get(key)))
     return cloned

@@ -49,10 +49,10 @@ type _OrMoreSizeArray<N extends number, T = unknown, Result extends readonly T[]
 export type OrLessSizeArray<N extends number, T = unknown> = FixedSizeArray<RangeUpTo<N>, T>
 
 export function shuffle<T>(self: []): []
-export function shuffle<T>(self: readonly [T]): readonly [T]
-export function shuffle<T>(self: ReadonlyNonEmptyArray<T>): ReadonlyNonEmptyArray<T>
-export function shuffle<T>(self: readonly T[]): readonly T[]
-export function shuffle<T>(self: readonly T[]): readonly T[] {
+export function shuffle<T>(self: readonly [T]): [T]
+export function shuffle<T>(self: ReadonlyNonEmptyArray<T>): NonEmptyArray<T>
+export function shuffle<T>(self: readonly T[]): T[]
+export function shuffle<T>(self: readonly T[]): T[] {
   const result: T[] = []
   for (let i = 0; i < self.length; ++i) {
     const j = randomIntegerTo(i + 1)

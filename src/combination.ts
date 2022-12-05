@@ -1,11 +1,11 @@
-import { AccurateTuple, NonEmptyArray, ReadonlyNonEmptyArray } from './Array'
+import { AccurateTuple, NonEmptyArray } from './Array'
 import { removeAt } from './collectionUpdate'
 import { rangeTo } from './generate'
 
 export function cartesianProductOf<T extends AccurateTuple, U extends AccurateTuple>(
   lhs: T,
   rhs: U
-): readonly [T[number], U[number]][] {
+): [T[number], U[number]][] {
   const result = []
   for (const lhsElement of lhs) {
     for (const rhsElement of rhs) {
@@ -15,7 +15,7 @@ export function cartesianProductOf<T extends AccurateTuple, U extends AccurateTu
   return result as any
 }
 
-export function permutationOf<T>(self: readonly T[], n: number = self.length): readonly (readonly T[])[] {
+export function permutationOf<T>(self: readonly T[], n: number = self.length): (readonly T[])[] {
   if (n <= 0) return [[]]
 
   if (self.length <= 1) return [self]
@@ -31,7 +31,7 @@ export namespace permutationOf {
   }
 }
 
-export function slide<T, N extends number>(self: readonly T[], n: N): readonly (readonly T[])[] {
+export function slide<T, N extends number>(self: readonly T[], n: N): (readonly T[])[] {
   const result = []
   if (n < 0) throw new RangeError()
 
@@ -43,7 +43,7 @@ export function slide<T, N extends number>(self: readonly T[], n: N): readonly (
   return result
 }
 
-export function prefixesOf<T>(self: readonly T[]): ReadonlyNonEmptyArray<readonly T[]> {
+export function prefixesOf<T>(self: readonly T[]): NonEmptyArray<readonly T[]> {
   const result: NonEmptyArray<readonly T[]> = [[]]
   const prefixes = []
   for (const element of self) {

@@ -1,7 +1,7 @@
-import { NonEmptyArray, ReadonlyNonEmptyArray } from './Array'
+import { NonEmptyArray } from './Array'
 import { push, update } from './collectionUpdate'
 
-export function groupBy<T, U>(self: readonly T[], by: (_: T) => U): Map<U, ReadonlyNonEmptyArray<T>> {
+export function groupBy<T, U>(self: readonly T[], by: (_: T) => U): Map<U, NonEmptyArray<T>> {
   const result = new Map<U, NonEmptyArray<T>>()
   for (const value of self) {
     const key = by(value)

@@ -2,9 +2,9 @@ import { ReadonlyNonEmptyArray } from './Array'
 import { update } from './collectionUpdate'
 import { newSet } from './Set'
 
-export function filter<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): readonly U[]
-export function filter<T>(self: readonly T[], f: (_: T) => boolean): readonly T[]
-export function filter<T>(self: readonly T[], f: (_: T) => boolean): readonly T[] {
+export function filter<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
+export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[]
+export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[] {
   return self.filter(f) as any
 }
 export namespace filter {
@@ -18,9 +18,9 @@ export namespace filter {
     }
   }
 
-  export function Set<T, U extends T>(self: ReadonlySet<T>, f: (_: T) => _ is U): ReadonlySet<U>
-  export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): ReadonlySet<T>
-  export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): ReadonlySet<T> {
+  export function Set<T, U extends T>(self: ReadonlySet<T>, f: (_: T) => _ is U): Set<U>
+  export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T>
+  export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T> {
     return newSet(filter.Iterable(self.values(), f))
   }
 }
@@ -79,8 +79,8 @@ export function lastIndexOf<T>(self: readonly T[], value: T, fromIndex?: number)
 }
 
 export function indexesOf<T>(self: [], value: T): []
-export function indexesOf<T>(self: readonly T[], value: T): readonly number[]
-export function indexesOf<T>(self: readonly T[], value: T): readonly number[] {
+export function indexesOf<T>(self: readonly T[], value: T): number[]
+export function indexesOf<T>(self: readonly T[], value: T): number[] {
   const result = []
   for (let i = 0; i < self.length; i++) {
     if (self[i] === value) {

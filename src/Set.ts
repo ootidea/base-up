@@ -15,12 +15,9 @@ export function newSet<T>(...args: ConstructorParameters<typeof Set<T>>) {
   return new Set(...args)
 }
 
-export function setOf<H extends PseudoAny, T extends AccurateTuple>(
-  head: H,
-  ...tail: T
-): ReadonlyNonEmptySet<H | T[number]>
-export function setOf<T extends AccurateTuple>(...args: T): ReadonlySet<T[number]>
-export function setOf<T extends AccurateTuple>(...args: T): ReadonlySet<T[number]> {
+export function setOf<H extends PseudoAny, T extends AccurateTuple>(head: H, ...tail: T): NonEmptySet<H | T[number]>
+export function setOf<T extends AccurateTuple>(...args: T): Set<T[number]>
+export function setOf<T extends AccurateTuple>(...args: T): Set<T[number]> {
   return new Set(args)
 }
 
@@ -30,9 +27,9 @@ export function has<T>(self: ReadonlySet<T>, value: T): boolean {
   return self.has(value as any)
 }
 
-export function union<T, U>(lhs: ReadonlyNonEmptySet<T>, rhs: ReadonlySet<U>): ReadonlyNonEmptySet<T | U>
-export function union<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlyNonEmptySet<U>): ReadonlyNonEmptySet<T | U>
-export function union<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): ReadonlySet<T | U> {
+export function union<T, U>(lhs: ReadonlyNonEmptySet<T>, rhs: ReadonlySet<U>): NonEmptySet<T | U>
+export function union<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlyNonEmptySet<U>): NonEmptySet<T | U>
+export function union<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T | U> {
   const cloned = new Set<T | U>(lhs)
   for (const value of rhs.values()) {
     cloned.add(value)
@@ -40,7 +37,7 @@ export function union<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): ReadonlyS
   return cloned
 }
 
-export function intersection<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): ReadonlySet<T & U> {
+export function intersection<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T & U> {
   const result = new Set<T & U>()
   const [small, big] = sortBy([lhs, rhs], (set) => set.size)
   for (const value of small.values()) {
