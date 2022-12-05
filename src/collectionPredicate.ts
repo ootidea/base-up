@@ -22,6 +22,10 @@ export namespace isEmpty {
     return self.size === 0
   }
 
+  export function object(self: {}): boolean {
+    return Object.keys(self).length === 0
+  }
+
   export function Map<K, T>(self: ReadonlyNonEmptyMap<K, T>): false
   export function Map<K, T>(self: ReadonlyMap<K, T>): boolean
   export function Map<K, T>(self: ReadonlyMap<K, T>): boolean {
@@ -46,6 +50,10 @@ export namespace isNotEmpty {
   export function Set<T>(self: ReadonlySet<T>): self is ReadonlyNonEmptySet<T>
   export function Set<T>(self: ReadonlySet<T>): self is ReadonlyNonEmptySet<T> {
     return self.size > 0
+  }
+
+  export function object(self: {}): boolean {
+    return Object.keys(self).length > 0
   }
 
   export function Map<K, T>(self: ReadonlyNonEmptyMap<K, T>): true
