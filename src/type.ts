@@ -72,8 +72,8 @@ export function isInstanceOf<T extends abstract new (..._: any) => any>(
 
 export function isNotInstanceOf<T extends abstract new (..._: any) => any, U>(
   ctor: T,
-  value: U | InstanceType<T>
-): value is U {
+  value: U
+): value is Exclude<U, InstanceType<T>> {
   return !(value instanceof ctor)
 }
 
