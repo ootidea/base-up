@@ -63,18 +63,18 @@ export function isOneOf<T extends Tuple>(...set: T): (value: unknown) => value i
   return (value: unknown): value is T[number] => new Set(set).has(value as any)
 }
 
-export function isInstanceOf<T extends abstract new (..._: any) => any>(
-  ctor: T,
-  value: unknown
-): value is InstanceType<T> {
-  return value instanceof ctor
+export const isInstanceOf = <T extends abstract new (..._: any) => any>(
+  ctor: T
+): ((value: unknown) => value is InstanceType<T>) => {
+  // @ts-ignore
+  return (value: unknown) => value instanceof ctor
 }
 
-export function isNotInstanceOf<T extends abstract new (..._: any) => any, U>(
-  ctor: T,
-  value: U
-): value is Exclude<U, InstanceType<T>> {
-  return !(value instanceof ctor)
+export function isNotInstanceOf<T extends abstract new (..._: any) => any>(
+  ctor: T
+): <U>(value: U) => value is Exclude<U, InstanceType<T>> {
+  // @ts-ignore
+  return <U>(value: U) => !(value instanceof ctor)
 }
 
 export type Nominal<Base, Tag extends symbol> = Base & Record<Tag, never>
