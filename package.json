@@ -1,11 +1,16 @@
 {
   "name": "base-up",
   "version": "0.0.0",
-  "private": true,
   "license": "CC0-1.0",
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/base-up.js",
+      "require": "./dist/base-up.cjs"
+    }
+  },
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "vite build && tsc -p tsconfig-emit.json",
     "dev": "vite",
     "format": "run-p format:*",
     "format:prettier": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,scss}\"",
