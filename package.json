@@ -1,5 +1,6 @@
 {
-  "name": "base-up",
+  "name": "@ootidea/base-up",
+  "author": "ootidea",
   "version": "0.0.0",
   "license": "CC0-1.0",
   "type": "module",
