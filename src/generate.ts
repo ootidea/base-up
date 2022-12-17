@@ -1,5 +1,5 @@
 import { AccurateTuple, FixedSizeArray, OrMoreSizeArray, Tuple } from './Array'
-import { Decrement, Increment, RangeUpTo } from './number'
+import { Decrement, Increment } from './number'
 
 /**
  * @example
@@ -38,6 +38,34 @@ type IncrementsTo<N extends number, M extends number, Result extends Tuple = []>
 type DecrementsTo<N extends number, M extends number, Result extends Tuple = []> = M extends N
   ? Result
   : DecrementsTo<Decrement<N>, M, [...Result, N]>
+
+export type RangeUpTo<From extends number, To extends number | undefined = undefined> = To extends number
+  ? number extends From
+    ? number[]
+    : number extends To
+    ? number[]
+    : From extends From
+    ? To extends To
+      ? `${From}` extends `-${infer PN extends number}`
+        ? `${To}` extends `-${infer PM extends number}`
+          ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
+            ? IncrementsUpTo<From, To>
+            : DecrementsUpTo<From, To>
+          : IncrementsUpTo<From, To>
+        : `${To}` extends `-${infer PM extends number}`
+        ? DecrementsUpTo<From, To>
+        : OrMoreSizeArray<From> extends OrMoreSizeArray<To>
+        ? DecrementsUpTo<From, To>
+        : IncrementsUpTo<From, To>
+      : never
+    : never
+  : RangeUpTo<0, From>
+type IncrementsUpTo<N extends number, M extends number, Result extends Tuple = []> = M extends N
+  ? [...Result, N]
+  : IncrementsUpTo<Increment<N>, M, [...Result, N]>
+type DecrementsUpTo<N extends number, M extends number, Result extends Tuple = []> = M extends N
+  ? [...Result, N]
+  : DecrementsUpTo<Decrement<N>, M, [...Result, N]>
 
 /**
  * @example
@@ -93,7 +121,7 @@ export namespace rangeTo {
 
 export function rangeUpTo<To extends number>(to: To): RangeUpTo<To>
 export function rangeUpTo<From extends number, To extends number>(from: From, to: To): RangeUpTo<From, To>
-export function rangeUpTo<N extends number, M extends number>(n: N, m?: M): number {
+export function rangeUpTo<N extends number, M extends number>(n: N, m?: M): number[] {
   const [from, to] = m === undefined ? [0, n] : [n, m]
 
   const result = []
