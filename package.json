@@ -1,9 +1,14 @@
 {
   "name": "base-up",
   "author": "ootidea",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "CC0-1.0",
   "type": "module",
+  "main": "./dist/base-up.js",
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "import": "./dist/base-up.js",
