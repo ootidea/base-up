@@ -1,7 +1,7 @@
 {
   "name": "base-up",
   "author": "ootidea",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "CC0-1.0",
   "type": "module",
   "main": "./dist/base-up.js",
