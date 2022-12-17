@@ -1,17 +1,17 @@
 import { AccurateTuple, Tuple } from './Array'
 
 /**
- * All lowercase types that exist in TypeScript, excluding unknown and any.
+ * Union of all lowercase types in TypeScript, excluding unknown and any.
  * T | never is equivalent to T, so never is omitted.
  *
  * This helps to infer literal types as follows.
  * @example
- * function success<T extends readonly PseudoAny[]>(...args: T): T { return args }
+ * function success<T extends readonly Known[]>(...args: T): T { return args }
  * function failures<T extends readonly any[]>(...args: T): T { return args }
  * success(1, 'a') is typed as [1, 'a']
  * failures(1, 'a') is typed as [number, string]
  */
-export type PseudoAny = null | undefined | void | boolean | number | bigint | string | symbol | object
+export type Known = null | undefined | void | boolean | number | bigint | string | symbol | object
 
 export function assert<T, U extends T>(value: T, predicate: (value: T) => value is U): asserts value is U
 export function assert<T>(value: T, predicate: (value: T) => boolean): void
@@ -21,8 +21,8 @@ export function assert<T>(value: T, predicate: (value: T) => boolean) {
   }
 }
 
-export function assertEquals<T extends PseudoAny, U extends T>(lhs: T, rhs: U): asserts lhs is U
-export function assertEquals<T extends U, U extends PseudoAny>(lhs: T, rhs: U): asserts rhs is T
+export function assertEquals<T extends Known, U extends T>(lhs: T, rhs: U): asserts lhs is U
+export function assertEquals<T extends U, U extends Known>(lhs: T, rhs: U): asserts rhs is T
 export function assertEquals<T, U extends T>(lhs: T, rhs: U): asserts lhs is U
 export function assertEquals<T extends U, U>(lhs: T, rhs: U): asserts rhs is T
 export function assertEquals<T, U>(lhs: T, rhs: U) {

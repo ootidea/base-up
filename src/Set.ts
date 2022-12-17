@@ -1,7 +1,7 @@
 import { AccurateTuple } from './Array'
 import { every } from './collectionPredicate'
 import { sortBy } from './transform'
-import { Nominal, PseudoAny } from './type'
+import { Known, Nominal } from './type'
 
 declare const NON_EMPTY_SET_TAG: unique symbol
 export type NonEmptySet<T> = Nominal<Set<T>, typeof NON_EMPTY_SET_TAG>
@@ -15,7 +15,7 @@ export function newSet<T>(...args: ConstructorParameters<typeof Set<T>>) {
   return new Set(...args)
 }
 
-export function setOf<H extends PseudoAny, T extends AccurateTuple>(head: H, ...tail: T): NonEmptySet<H | T[number]>
+export function setOf<H extends Known, T extends AccurateTuple>(head: H, ...tail: T): NonEmptySet<H | T[number]>
 export function setOf<T extends AccurateTuple>(...args: T): Set<T[number]>
 export function setOf<T extends AccurateTuple>(...args: T): Set<T[number]> {
   return new Set(args)

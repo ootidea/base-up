@@ -1,5 +1,5 @@
 import { AccurateTuple, Tuple } from './Array'
-import { PseudoAny } from './type'
+import { Known } from './type'
 
 /**
  * Utility for defining tagged union types.
@@ -44,10 +44,10 @@ export namespace Fct {
   export const symbol = { type: 'symbol' } as const
   export type SymbolType = typeof symbol
 
-  export function literal<T extends PseudoAny>(value: T) {
+  export function literal<T extends Known>(value: T) {
     return { type: 'literal', value } as const
   }
-  export type LiteralType<T extends PseudoAny> = ReturnType<typeof literal<T>>
+  export type LiteralType<T extends Known> = ReturnType<typeof literal<T>>
 
   export function array<T>(value: T) {
     return { type: 'array', value } as const
