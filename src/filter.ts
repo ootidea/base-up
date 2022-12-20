@@ -90,6 +90,21 @@ export function indexesOf<T>(self: readonly T[], value: T): number[] {
   return result
 }
 
+export function maxOf<T>(self: ReadonlyNonEmptyArray<T>): T
+export function maxOf<T>(self: readonly T[]): T | undefined
+export function maxOf<T>(self: readonly T[]): T | undefined {
+  if (self.length === 0) return undefined
+
+  const [firstElement, ...rest] = self
+  let candidateElement = firstElement
+  for (const element of rest) {
+    if (candidateElement < element) {
+      candidateElement = element
+    }
+  }
+  return candidateElement
+}
+
 export function maxBy<T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => unknown): T
 export function maxBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined
 export function maxBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined {
@@ -103,6 +118,21 @@ export function maxBy<T>(self: readonly T[], by: (element: T) => unknown): T | u
     if ((maxValue as any) < (value as any)) {
       candidateElement = element
       maxValue = value
+    }
+  }
+  return candidateElement
+}
+
+export function minOf<T>(self: ReadonlyNonEmptyArray<T>): T
+export function minOf<T>(self: readonly T[]): T | undefined
+export function minOf<T>(self: readonly T[]): T | undefined {
+  if (self.length === 0) return undefined
+
+  const [firstElement, ...rest] = self
+  let candidateElement = firstElement
+  for (const element of rest) {
+    if (candidateElement > element) {
+      candidateElement = element
     }
   }
   return candidateElement
