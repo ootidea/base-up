@@ -22,7 +22,8 @@
     "format": "run-p format:*",
     "format:prettier": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,scss}\"",
     "format:package-json": "sort-package-json",
-    "release": "npm run build && npm publish --access=public && package-version-git-tag --push",
+    "postversion": "git push && git push --tags",
+    "prepublishOnly": "npm run build",
     "test": "vitest --silent=false",
     "typecheck": "tsc"
   },
