@@ -90,9 +90,9 @@ export function indexesOf<T>(self: readonly T[], value: T): number[] {
   return result
 }
 
-export function maxBy<T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => number): T
-export function maxBy<T>(self: readonly T[], by: (element: T) => number): T | undefined
-export function maxBy<T>(self: readonly T[], by: (element: T) => number): T | undefined {
+export function maxBy<T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => unknown): T
+export function maxBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined
+export function maxBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined {
   if (self.length === 0) return undefined
 
   const [firstElement, ...rest] = self
@@ -100,7 +100,7 @@ export function maxBy<T>(self: readonly T[], by: (element: T) => number): T | un
   let maxValue = by(firstElement)
   for (const element of rest) {
     const value = by(element)
-    if (maxValue < value) {
+    if ((maxValue as any) < (value as any)) {
       candidateElement = element
       maxValue = value
     }
@@ -108,9 +108,9 @@ export function maxBy<T>(self: readonly T[], by: (element: T) => number): T | un
   return candidateElement
 }
 
-export function minBy<T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => number): T
-export function minBy<T>(self: readonly T[], by: (element: T) => number): T | undefined
-export function minBy<T>(self: readonly T[], by: (element: T) => number): T | undefined {
+export function minBy<T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => unknown): T
+export function minBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined
+export function minBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined {
   if (self.length === 0) return undefined
 
   const [firstElement, ...rest] = self
@@ -118,7 +118,7 @@ export function minBy<T>(self: readonly T[], by: (element: T) => number): T | un
   let minValue = by(firstElement)
   for (const element of rest) {
     const value = by(element)
-    if (minValue > value) {
+    if ((minValue as any) > (value as any)) {
       candidateElement = element
       minValue = value
     }
