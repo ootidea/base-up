@@ -33,7 +33,7 @@ export {
 } from './filter'
 export { zipWith, zip, zipAll, merge } from './fusion'
 export { rangeTo, rangeUpTo, repeat, repeatApply, fromEntries } from './generate'
-export { sum, groupBy } from './other'
+export { sumOf, groupBy } from './other'
 export { keys, numberKeys, values } from './projection'
 export {
   assert,

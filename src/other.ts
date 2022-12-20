@@ -10,8 +10,8 @@ export function groupBy<T, U>(self: readonly T[], by: (_: T) => U): Map<U, NonEm
   return result
 }
 
-export function sum(self: []): 0
-export function sum(self: readonly number[]): number
-export function sum(self: readonly number[]): number {
+export function sumOf(self: []): 0
+export function sumOf(self: readonly number[]): number
+export function sumOf(self: readonly number[]): number {
   return self.reduce((lhs, rhs) => lhs + rhs, 0)
 }
