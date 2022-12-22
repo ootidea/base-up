@@ -31,6 +31,15 @@ export function assertEquals<T, U>(lhs: T, rhs: U) {
   }
 }
 
+export function assertInstanceOf<T extends abstract new (..._: any) => any>(
+  value: unknown,
+  ctor: T
+): asserts value is InstanceType<T> {
+  if (!(value instanceof ctor)) {
+    throw new Error()
+  }
+}
+
 /**
  * @example
  * switch (status) {
