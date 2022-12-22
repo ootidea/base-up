@@ -31,6 +31,17 @@ export function assertEquals<T, U>(lhs: T, rhs: U) {
   }
 }
 
+/**
+ * @example
+ * switch (status) {
+ *   case 'on':
+ *     break
+ *   case 'off':
+ *     break
+ *   default:
+ *     assertNeverType(status)
+ * }
+ */
 export function assertNeverType(shouldBeNever: never) {}
 
 export type nullish = null | undefined
