@@ -11,6 +11,7 @@ import { ltToComparator } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
 import { newMap, NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
+import { newPromise } from './Promise'
 import { newSet, NonEmptySet, ReadonlyNonEmptySet } from './Set'
 
 export function map<T, U>(self: ReadonlyNonEmptyArray<T>, f: (_: T) => U): NonEmptyArray<U>
@@ -35,6 +36,12 @@ export namespace map {
   export function Map<K, T, U>(self: ReadonlyMap<K, T>, f: (_: T) => U): Map<K, U>
   export function Map<K, T, U>(self: ReadonlyMap<K, T>, f: (_: T) => U): Map<K, U> {
     return newMap(map.Iterable(self.entries(), ([key, value]) => [key, f(value)]))
+  }
+
+  export function Promise<T, U>(self: PromiseLike<T>, f: (_: T) => U): Promise<U> {
+    return newPromise<U>((resolve, reject) => {
+      self.then((value) => resolve(f(value)), reject)
+    })
   }
 }
 

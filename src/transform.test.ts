@@ -4,8 +4,10 @@ import { repeat } from './generate'
 import { setOf } from './Set'
 import { chunk, flatten, join, map, padEnd, padStart, reverse, sort, sortBy, tail, unique } from './transform'
 
-test('map', () => {
+test('map', async () => {
   expect(map.Set(setOf(2, 1, 3), (x) => x + 10)).toStrictEqual(setOf(12, 11, 13))
+
+  expect(await map.Promise(Promise.resolve({ a: 123 }), (value) => value.a)).toBe(123)
 })
 
 test('flatten', () => {
