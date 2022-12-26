@@ -67,7 +67,7 @@ export {
   isNotInstanceOf,
 } from './type'
 export { shuffle } from './Array'
-export { setOf, has, isSubset, union, intersection, isDisjoint } from './Set'
+export { setOf, has, isSubset, unionOf, intersectionOf, isDisjoint } from './Set'
 export { mapOf } from './Map'
 export { getProperty } from './object'
 export { mod, factorialOf, gcdOf, randomIntegerTo, randomIntegerUpTo } from './number'

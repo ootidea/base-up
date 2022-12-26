@@ -27,9 +27,9 @@ export function has<T>(self: ReadonlySet<T>, value: T): boolean {
   return self.has(value as any)
 }
 
-export function union<T, U>(lhs: ReadonlyNonEmptySet<T>, rhs: ReadonlySet<U>): NonEmptySet<T | U>
-export function union<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlyNonEmptySet<U>): NonEmptySet<T | U>
-export function union<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T | U> {
+export function unionOf<T, U>(lhs: ReadonlyNonEmptySet<T>, rhs: ReadonlySet<U>): NonEmptySet<T | U>
+export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlyNonEmptySet<U>): NonEmptySet<T | U>
+export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T | U> {
   const cloned = new Set<T | U>(lhs)
   for (const value of rhs.values()) {
     cloned.add(value)
@@ -37,7 +37,7 @@ export function union<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T | U
   return cloned
 }
 
-export function intersection<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T & U> {
+export function intersectionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T & U> {
   const result = new Set<T & U>()
   const [small, big] = sortBy([lhs, rhs], (set) => set.size)
   for (const value of small.values()) {
