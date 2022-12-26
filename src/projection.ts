@@ -40,3 +40,15 @@ export function numberKeys<K extends number>(record: Record<K, unknown>): K[] {
 export function values<T extends {}>(record: T): T[keyof T][] {
   return Object.values(record) as any
 }
+
+/** Function with improved type of Object.entries */
+export function entriesOf<K extends keyof any, T>(record: Record<K, T>): [StringKey<K>, T][] {
+  return Object.entries(record) as any
+}
+export type StringKey<K extends keyof any> = K extends K
+  ? K extends string
+    ? K
+    : K extends number
+    ? `${K}`
+    : never
+  : never
