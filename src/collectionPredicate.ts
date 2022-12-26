@@ -1,6 +1,6 @@
 import { ReadonlyNonEmptyArray } from './Array'
 import { ReadonlyNonEmptyMap } from './Map'
-import { keys, values } from './projection'
+import { keysOf, valuesOf } from './projection'
 import { ReadonlyNonEmptySet } from './Set'
 
 export function isEmpty<T>(self: ReadonlyNonEmptyArray<T>): false
@@ -86,7 +86,7 @@ export function everyKeys<K extends string, U extends K>(
 ): self is Record<U, unknown>
 export function everyKeys<K extends string>(self: Record<K, unknown>, f: (key: K) => boolean): boolean
 export function everyKeys<K extends string>(self: Record<K, unknown>, f: (key: K) => boolean): boolean {
-  return keys(self).every(f)
+  return keysOf(self).every(f)
 }
 export namespace everyKeys {
   export function Map<K, U extends K>(
@@ -105,7 +105,7 @@ export function everyValues<K extends keyof any, T, U extends T>(
 ): self is Record<K, U>
 export function everyValues<K extends keyof any, T>(self: Record<K, T>, f: (value: T) => boolean): boolean
 export function everyValues<K extends keyof any, T>(self: Record<K, T>, f: (value: T) => boolean): boolean {
-  return values(self).every(f)
+  return valuesOf(self).every(f)
 }
 export namespace everyValues {
   export function Map<K, T, U extends T>(

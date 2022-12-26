@@ -34,7 +34,7 @@ export {
 export { zipWith, zip, zipAll, merge } from './fusion'
 export { rangeTo, rangeUpTo, repeat, repeatApply, fromEntries } from './generate'
 export { sumOf, groupBy } from './other'
-export { keys, numberKeys, values } from './projection'
+export { keysOf, numberKeysOf, valuesOf } from './projection'
 export {
   assert,
   assertEquals,
