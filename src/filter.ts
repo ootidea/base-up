@@ -48,15 +48,15 @@ export namespace takeWhile {
   }
 }
 
-export function first<T>(self: ReadonlyNonEmptyArray<T>): T
-export function first<T>(self: readonly T[]): T | undefined
-export function first<T>(self: readonly T[]): T | undefined {
+export function firstOf<T>(self: ReadonlyNonEmptyArray<T>): T
+export function firstOf<T>(self: readonly T[]): T | undefined
+export function firstOf<T>(self: readonly T[]): T | undefined {
   return self[0]
 }
 
-export function last<T>(self: ReadonlyNonEmptyArray<T>): T
-export function last<T>(self: readonly T[]): T | undefined
-export function last<T>(self: readonly T[]): T | undefined {
+export function lastOf<T>(self: ReadonlyNonEmptyArray<T>): T
+export function lastOf<T>(self: readonly T[]): T | undefined
+export function lastOf<T>(self: readonly T[]): T | undefined {
   return self[self.length - 1]
 }
 

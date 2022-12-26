@@ -19,11 +19,11 @@ export { slide, cartesianProductOf, permutationOf, prefixesOf } from './combinat
 export { lexicographicLt, lexicographicLte, lteToComparator, ltToComparator } from './comparison'
 export {
   filter,
-  first,
+  firstOf,
   elementAt,
   findMode,
   findModeBy,
-  last,
+  lastOf,
   lastIndexOf,
   indexesOf,
   indexOf,

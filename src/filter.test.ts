@@ -1,4 +1,4 @@
-import { elementAt, filter, findMode, findModeBy, indexesOf, last } from './filter'
+import { elementAt, filter, findMode, findModeBy, indexesOf, lastOf } from './filter'
 import { rangeTo, repeat } from './generate'
 import { setOf } from './Set'
 import { take } from './transform'
@@ -12,8 +12,8 @@ test('filter', () => {
 })
 
 test('last', () => {
-  expect(last([1, 2, 3])).toBe(3)
-  expect(last([])).toBe(undefined)
+  expect(lastOf([1, 2, 3])).toBe(3)
+  expect(lastOf([])).toBe(undefined)
 })
 
 test('take', () => {
