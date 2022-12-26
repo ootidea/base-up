@@ -28,16 +28,19 @@ export {
   indexesOf,
   indexOf,
   minBy,
+  minOf,
   maxBy,
+  maxOf,
   takeWhile,
 } from './filter'
 export { zipWith, zip, zipAll, merge } from './fusion'
 export { rangeTo, rangeUpTo, repeat, repeatApply, fromEntries } from './generate'
 export { sumOf, groupBy } from './other'
-export { keysOf, numberKeysOf, valuesOf } from './projection'
+export { keysOf, numberKeysOf, valuesOf, entriesOf } from './projection'
 export {
   assert,
   assertEquals,
+  assertInstanceOf,
   assertNeverType,
   isBoolean,
   isNull,
