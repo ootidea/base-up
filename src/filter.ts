@@ -165,7 +165,7 @@ export function elementAt<T>(self: Iterable<T>, n: number): T | undefined {
   return element.value
 }
 
-export function findMode<T>(self: readonly T[]): T | undefined {
+export function modeOf<T>(self: readonly T[]): T | undefined {
   const map = new Map<T, number>()
   let maxCount = 0
   let candidateValue: T | undefined = undefined
@@ -182,7 +182,7 @@ export function findMode<T>(self: readonly T[]): T | undefined {
   return candidateValue
 }
 
-export function findModeBy<T, U>(self: readonly T[], by: (_: T) => U): T | undefined {
+export function modeBy<T, U>(self: readonly T[], by: (_: T) => U): T | undefined {
   const map = new Map<U, number>()
   let maxCount = 0
   let candidateValue: T | undefined = undefined

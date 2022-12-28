@@ -1,4 +1,4 @@
-import { elementAt, filter, findMode, findModeBy, indexesOf, lastOf } from './filter'
+import { elementAt, filter, indexesOf, lastOf, modeBy, modeOf } from './filter'
 import { rangeTo, repeat } from './generate'
 import { setOf } from './Set'
 import { take } from './transform'
@@ -35,17 +35,17 @@ test('elementAt', () => {
   expect(elementAt(rangeTo.Iterable(5), 5)).toBe(undefined)
 })
 
-test('findMode', () => {
-  expect(findMode([3, 1, 4, 1, 5])).toBe(1)
-  expect(findMode(['a', 'b', 'c'])).toBe('a')
-  expect(findMode([])).toBe(undefined)
+test('modeOf', () => {
+  expect(modeOf([3, 1, 4, 1, 5])).toBe(1)
+  expect(modeOf(['a', 'b', 'c'])).toBe('a')
+  expect(modeOf([])).toBe(undefined)
 })
 
-test('findModeBy', () => {
+test('modeBy', () => {
   const first = { id: 1, name: 'first' }
   const second = { id: 2, name: 'second' }
   const third = { id: 3, name: 'third' }
-  expect(findModeBy([second, first, second, third], (element) => element.id)).toBe(second)
-  expect(findModeBy([first, second, third], (element) => element.id)).toBe(first)
-  expect(findModeBy([], (element) => element)).toBeUndefined()
+  expect(modeBy([second, first, second, third], (element) => element.id)).toBe(second)
+  expect(modeBy([first, second, third], (element) => element.id)).toBe(first)
+  expect(modeBy([], (element) => element)).toBeUndefined()
 })
