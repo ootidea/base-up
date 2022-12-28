@@ -6,6 +6,7 @@ export default defineConfig({
       entry: 'src/index.ts',
       formats: ['es', 'cjs'],
     },
+    minify: false,
   },
   test: {
     globals: true,
