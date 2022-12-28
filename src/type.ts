@@ -16,7 +16,7 @@ export type Known = null | undefined | void | boolean | number | bigint | string
 export function assert<T, U extends T>(value: T, predicate: (value: T) => value is U): asserts value is U
 export function assert<T>(value: T, predicate: (value: T) => boolean): void
 export function assert<T>(value: T, predicate: (value: T) => boolean) {
-  if (predicate(value)) {
+  if (!predicate(value)) {
     throw new Error()
   }
 }
