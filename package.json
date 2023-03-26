@@ -27,6 +27,7 @@
   ],
   "license": "CC0-1.0",
   "author": "ootidea",
+  "sideEffects": false,
   "type": "module",
   "exports": {
     ".": {
