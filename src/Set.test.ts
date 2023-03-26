@@ -1,15 +1,19 @@
-import { intersectionOf, isDisjoint, isSubset, setOf, unionOf } from './Set'
+import { differenceOf, intersectionOf, isDisjoint, isSubset, setOf, unionOf } from './Set'
 
 test('setOf', () => {
   expect(setOf(1, 2)).toStrictEqual(new Set([2, 1]))
 })
 
-test('union', () => {
+test('unionOf', () => {
   expect(unionOf(setOf(1, 2, 3), setOf(3, 4, 5))).toStrictEqual(setOf(1, 2, 3, 4, 5))
 })
 
-test('intersection', () => {
+test('intersectionOf', () => {
   expect(intersectionOf(setOf(1, 2, 3), setOf(2, 3, 4))).toStrictEqual(setOf(2, 3))
+})
+
+test('differenceOf', () => {
+  expect(differenceOf(setOf(1, 2, 3), setOf(2, 3, 4))).toStrictEqual(setOf(1))
 })
 
 test('isDisjoint', () => {

@@ -48,6 +48,19 @@ export function intersectionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): 
   return result
 }
 
+/**
+ * Create the set difference(lhs - rhs) that elements are contained lhs but not contained rhs.
+ * @example
+ * differenceOf(setOf(1, 2, 3), setOf(2, 3, 4)) returns setOf(1)
+ */
+export function differenceOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T> {
+  const cloned = new Set<T>(lhs)
+  for (const value of rhs) {
+    cloned.delete(value as any)
+  }
+  return cloned
+}
+
 export function isDisjoint<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): boolean {
   const [small, big] = sortBy([lhs, rhs], (set) => set.size)
   for (const value of small) {
