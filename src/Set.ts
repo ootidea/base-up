@@ -40,7 +40,7 @@ export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T |
 export function intersectionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T & U> {
   const result = new Set<T & U>()
   const [small, big] = sortBy([lhs, rhs], (set) => set.size)
-  for (const value of small.values()) {
+  for (const value of small) {
     if (big.has(value as any)) {
       result.add(value as any)
     }
@@ -50,7 +50,7 @@ export function intersectionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): 
 
 export function isDisjoint<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): boolean {
   const [small, big] = sortBy([lhs, rhs], (set) => set.size)
-  for (const value of small.values()) {
+  for (const value of small) {
     if (big.has(value as any)) {
       return false
     }
@@ -60,5 +60,5 @@ export function isDisjoint<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): bool
 
 /** isSubset(a, b) means a ⊆ b. */
 export function isSubset<T>(lhs: ReadonlySet<T>, rhs: ReadonlySet<T>): boolean {
-  return every.Iterable(lhs.values(), (element) => rhs.has(element))
+  return every.Iterable(lhs, (element) => rhs.has(element))
 }
