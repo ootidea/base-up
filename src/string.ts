@@ -11,6 +11,9 @@
  * @example
  * toNumber('1.00') returns 1
  * toNumber('1.00') is typed as number
+ * @example
+ * toNumber('1.05') returns 1.05
+ * toNumber('1.05') is typed as 1.05
  */
 export function toNumber<N extends number>(text: `${N}.0`): N
 export function toNumber<N extends number>(text: `${N}`): N
