@@ -7,8 +7,12 @@
  * toNumber('-1') is typed as -1
  * @example
  * toNumber('1.0') returns 1
- * toNumber('1.0') is typed as number
+ * toNumber('1.0') is typed as 1
+ * @example
+ * toNumber('1.00') returns 1
+ * toNumber('1.00') is typed as number
  */
+export function toNumber<N extends number>(text: `${N}.0`): N
 export function toNumber<N extends number>(text: `${N}`): N
 export function toNumber(text: any): number
 export function toNumber(text: any): number {
