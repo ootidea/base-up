@@ -229,27 +229,27 @@ export function randomIntegerUpTo<N extends number, M extends number>(first: N, 
 /**
  * Function to calculate modulo instead of reminder.
  * @example
- * mod(4, 3) returns 1
- * mod(3, 3) returns 0
- * mod(2, 3) returns 2
- * mod(1, 3) returns 1
- * mod(0, 3) returns 0
- * mod(-1, 3) returns 2
- * mod(-2, 3) returns 1
- * mod(-3, 3) returns 0
- * mod(-4, 3) returns 2
+ * modOf(4, 3) returns 1
+ * modOf(3, 3) returns 0
+ * modOf(2, 3) returns 2
+ * modOf(1, 3) returns 1
+ * modOf(0, 3) returns 0
+ * modOf(-1, 3) returns 2
+ * modOf(-2, 3) returns 1
+ * modOf(-3, 3) returns 0
+ * modOf(-4, 3) returns 2
  * @example
- * mod(4, -3) returns -2
- * mod(3, -3) returns -0
- * mod(2, -3) returns -1
- * mod(1, -3) returns -2
- * mod(0, -3) returns -0
- * mod(-1, -3) returns -1
- * mod(-2, -3) returns -2
- * mod(-3, -3) returns -0
- * mod(-4, -3) returns -1
+ * modOf(4, -3) returns -2
+ * modOf(3, -3) returns -0
+ * modOf(2, -3) returns -1
+ * modOf(1, -3) returns -2
+ * modOf(0, -3) returns -0
+ * modOf(-1, -3) returns -1
+ * modOf(-2, -3) returns -2
+ * modOf(-3, -3) returns -0
+ * modOf(-4, -3) returns -1
  */
-export function mod(a: number, b: number): number {
+export function modOf(a: number, b: number): number {
   return ((a % b) + b) % b
 }
 

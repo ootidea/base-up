@@ -1,4 +1,4 @@
-import { factorialOf, gcdOf, mod, randomIntegerTo, randomIntegerUpTo } from './number'
+import { factorialOf, gcdOf, modOf, randomIntegerTo, randomIntegerUpTo } from './number'
 
 test('randomIntegerTo', () => {
   expect(randomIntegerTo(1)).toBe(0)
@@ -35,26 +35,26 @@ test('randomIntegerUpTo', () => {
   expect(randomIntegerUpTo(2, -2) <= 2).toBe(true)
 })
 
-test('mod', () => {
-  expect(mod(4, 3)).toBe(1)
-  expect(mod(3, 3)).toBe(0)
-  expect(mod(2, 3)).toBe(2)
-  expect(mod(1, 3)).toBe(1)
-  expect(mod(0, 3)).toBe(0)
-  expect(mod(-1, 3)).toBe(2)
-  expect(mod(-2, 3)).toBe(1)
-  expect(mod(-3, 3)).toBe(0)
-  expect(mod(-4, 3)).toBe(2)
+test('modOf', () => {
+  expect(modOf(4, 3)).toBe(1)
+  expect(modOf(3, 3)).toBe(0)
+  expect(modOf(2, 3)).toBe(2)
+  expect(modOf(1, 3)).toBe(1)
+  expect(modOf(0, 3)).toBe(0)
+  expect(modOf(-1, 3)).toBe(2)
+  expect(modOf(-2, 3)).toBe(1)
+  expect(modOf(-3, 3)).toBe(0)
+  expect(modOf(-4, 3)).toBe(2)
 
-  expect(mod(4, -3)).toBe(-2)
-  expect(mod(3, -3)).toBe(-0)
-  expect(mod(2, -3)).toBe(-1)
-  expect(mod(1, -3)).toBe(-2)
-  expect(mod(0, -3)).toBe(-0)
-  expect(mod(-1, -3)).toBe(-1)
-  expect(mod(-2, -3)).toBe(-2)
-  expect(mod(-3, -3)).toBe(-0)
-  expect(mod(-4, -3)).toBe(-1)
+  expect(modOf(4, -3)).toBe(-2)
+  expect(modOf(3, -3)).toBe(-0)
+  expect(modOf(2, -3)).toBe(-1)
+  expect(modOf(1, -3)).toBe(-2)
+  expect(modOf(0, -3)).toBe(-0)
+  expect(modOf(-1, -3)).toBe(-1)
+  expect(modOf(-2, -3)).toBe(-2)
+  expect(modOf(-3, -3)).toBe(-0)
+  expect(modOf(-4, -3)).toBe(-1)
 })
 
 test('factorialOf', () => {
