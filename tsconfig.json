@@ -11,6 +11,7 @@
     "esModuleInterop": true,
     "noEmit": true,
     "noImplicitReturns": true,
+    "noErrorTruncation": true,
     "skipLibCheck": true,
     "types": ["vitest/globals"]
   },
