@@ -1,4 +1,4 @@
-import { factorialOf, gcdOf, modOf, randomIntegerTo, randomIntegerUpTo } from './number'
+import { clamp, factorialOf, gcdOf, modOf, randomIntegerTo, randomIntegerUpTo } from './number'
 
 test('randomIntegerTo', () => {
   expect(randomIntegerTo(1)).toBe(0)
@@ -33,6 +33,19 @@ test('randomIntegerUpTo', () => {
   expect(randomIntegerUpTo(-2, 2) <= 2).toBe(true)
   expect(-2 <= randomIntegerUpTo(2, -2)).toBe(true)
   expect(randomIntegerUpTo(2, -2) <= 2).toBe(true)
+})
+
+test('clamp', () => {
+  expect(clamp(0, 5, 10)).toBe(5)
+  expect(clamp(-10, -50, 0)).toBe(-10)
+  expect(clamp(0.5, 0, 9.5)).toBe(0.5)
+  expect(clamp(0, Infinity, 10)).toBe(10)
+  expect(clamp(0, -Infinity, 10)).toBe(0)
+  expect(clamp(-Infinity, 0, Infinity)).toBe(0)
+  expect(clamp(0, NaN, 10)).toBeNaN()
+  expect(clamp(0, 5, NaN)).toBeNaN()
+  expect(clamp(NaN, 5, 10)).toBeNaN()
+  expect(clamp(100, 5, 0)).toBe(100)
 })
 
 test('modOf', () => {

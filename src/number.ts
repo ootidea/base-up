@@ -226,6 +226,10 @@ export function randomIntegerUpTo<N extends number, M extends number>(first: N, 
   return Math.trunc(Math.random() * (to + 1 - from)) + from
 }
 
+export function clamp(min: number, value: number, max: number): number {
+  return Math.max(min, Math.min(value, max))
+}
+
 /**
  * Function to calculate modulo instead of reminder.
  * @example
