@@ -65,12 +65,30 @@ export {
   isNotFunction,
   isNotObject,
   isNotInstanceOf,
+  type nullish,
+  type Nominal,
 } from './type'
-export { shuffle } from './Array'
-export { setOf, has, isSubset, unionOf, intersectionOf, isDisjoint } from './Set'
-export { mapOf } from './Map'
-export { getProperty } from './object'
+export {
+  shuffle,
+  type NonEmptyArray,
+  type ReadonlyNonEmptyArray,
+  type FixedSizeArray,
+  type OrMoreSizeArray,
+  type OrLessSizeArray,
+} from './Array'
+export {
+  setOf,
+  has,
+  isSubset,
+  unionOf,
+  intersectionOf,
+  isDisjoint,
+  type NonEmptySet,
+  type ReadonlyNonEmptySet,
+} from './Set'
+export { mapOf, type NonEmptyMap, type ReadonlyNonEmptyMap } from './Map'
+export { getProperty, type NestedProperty } from './object'
 export { modOf, factorialOf, gcdOf, randomIntegerTo, randomIntegerUpTo } from './number'
 export { toNumber, toString } from './string'
 export { pipe, call, identity, curry, applyFirst, bindAllButFirst, returnLast } from './Function'
-export { forever } from './Promise'
+export { forever, type Promisable } from './Promise'
