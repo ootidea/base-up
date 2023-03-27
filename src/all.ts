@@ -91,6 +91,7 @@ export {
   isSubset,
   unionOf,
   intersectionOf,
+  differenceOf,
   isDisjoint,
   type NonEmptySet,
   type ReadonlyNonEmptySet,
