@@ -97,7 +97,7 @@ export {
   type ReadonlyNonEmptySet,
 } from './Set'
 export { mapOf, type NonEmptyMap, type ReadonlyNonEmptyMap } from './Map'
-export { getProperty, type NestedProperty } from './object'
+export { getProperty, type NestedProperty, type PartialRecord } from './object'
 export {
   modOf,
   factorialOf,
@@ -108,6 +108,7 @@ export {
   type IntegerRangeTo,
   type IntegerRangeUpTo,
 } from './number'
-export { toNumber, toString } from './string'
+export { toNumber, toString, type LiteralAutoComplete } from './string'
 export { pipe, call, identity, curry, applyFirst, bindAllButFirst, returnLast } from './Function'
 export { forever, type Promisable } from './Promise'
+export { type DiscriminatedUnion } from './Fct'

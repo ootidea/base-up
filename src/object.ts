@@ -15,3 +15,5 @@ export function getProperty<T, Ks extends readonly (keyof any)[]>(self: T, ...ke
   }
   return undefined as any
 }
+
+export type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>

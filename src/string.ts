@@ -41,3 +41,10 @@ export function toString(value: any): string
 export function toString(value: any): string {
   return String(value)
 }
+
+/**
+ * A type for enabling automatic completion of specific literals in an editor.
+ * Unlike a literal union type, it also accepts values other than the specified literals.
+ * https://github.com/sindresorhus/type-fest/blob/main/source/literal-union.d.ts
+ */
+export type LiteralAutoComplete<Literals extends Base, Base = string> = Literals | (Base & Record<never, never>)
