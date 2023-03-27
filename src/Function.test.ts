@@ -1,4 +1,4 @@
-import { curry, pipe, returnLast, toUnary } from './Function'
+import { bindAllButFirst, curry, pipe, returnLast } from './Function'
 import { rangeTo } from './generate'
 import { take } from './transform'
 
@@ -8,8 +8,8 @@ test('curry', () => {
   expect(curry(plus)(123)('abc')).toBe('123abc')
 })
 
-test('toUnary', () => {
-  const unary = toUnary(take, 3)
+test('bindAllButFirst', () => {
+  const unary = bindAllButFirst(take, 3)
   expect(unary([1, 2, 3, 4, 5])).toStrictEqual([1, 2, 3])
 })
 

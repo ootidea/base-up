@@ -6,7 +6,7 @@ export function curry<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R): (
       f(h, ...l)
 }
 
-export function toUnary<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R, ...l: L): (h: H) => R {
+export function bindAllButFirst<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R, ...l: L): (h: H) => R {
   return (h: H) => f(h, ...l)
 }
 
