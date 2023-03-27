@@ -1,4 +1,4 @@
-import { randomIntegerTo, RangeUpTo } from './number'
+import { IntegerRangeUpTo, randomIntegerTo } from './number'
 import { Known } from './type'
 
 export type AccurateTuple = readonly Known[]
@@ -46,7 +46,7 @@ type _OrMoreSizeArray<N extends number, T = unknown, Result extends readonly T[]
   ? [...Result, ...T[]]
   : _OrMoreSizeArray<N, T, [...Result, T]>
 
-export type OrLessSizeArray<N extends number, T = unknown> = FixedSizeArray<RangeUpTo<N>, T>
+export type OrLessSizeArray<N extends number, T = unknown> = FixedSizeArray<IntegerRangeUpTo<N>, T>
 
 export function shuffle<T>(self: []): []
 export function shuffle<T>(self: readonly [T]): [T]

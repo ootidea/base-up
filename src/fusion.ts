@@ -1,5 +1,5 @@
 import { Tuple } from './Array'
-import { RangeTo } from './number'
+import { IntegerRangeTo } from './number'
 
 type UnwrapArrayAll<T extends Tuple> = T extends readonly [infer H, ...infer L]
   ? [H extends readonly (infer U)[] ? U : H, ...UnwrapArrayAll<L>]
@@ -45,7 +45,7 @@ export function zipWith<T extends readonly (readonly any[])[], U>(
   return result
 }
 
-type AtLeastOneIsNonUndefined<T extends Tuple, N extends number = RangeTo<T['length']>> = N extends N
+type AtLeastOneIsNonUndefined<T extends Tuple, N extends number = IntegerRangeTo<T['length']>> = N extends N
   ? SetUndefinedableAllBut<T, N>
   : never
 type SetUndefinedableAllBut<T extends Tuple, N extends number> = T extends readonly [infer H, ...infer L]

@@ -114,21 +114,21 @@ export type Decrement<N extends number> = `${N}` extends `-${infer PN extends nu
 
 /**
  * @example
- * RangeTo<3> is equivalent to 0 | 1 | 2
- * RangeTo<4, 8> is equivalent to 4 | 5 | 6 | 7
- * RangeTo<5, 3> is equivalent to 5 | 4
+ * IntegerRangeTo<3> is equivalent to 0 | 1 | 2
+ * IntegerRangeTo<4, 8> is equivalent to 4 | 5 | 6 | 7
+ * IntegerRangeTo<5, 3> is equivalent to 5 | 4
  * @example
- * RangeTo<2, -2> is equivalent to 2 | 1 | 0 | -1
- * RangeTo<-2, 2> is equivalent to -2 | -1 | 0 | 1
+ * IntegerRangeTo<2, -2> is equivalent to 2 | 1 | 0 | -1
+ * IntegerRangeTo<-2, 2> is equivalent to -2 | -1 | 0 | 1
  * @example
- * RangeTo<1, 1> is equivalent to never
- * RangeTo<0> is equivalent to never
+ * IntegerRangeTo<1, 1> is equivalent to never
+ * IntegerRangeTo<0> is equivalent to never
  * @example
- * RangeTo<2 | 4> is equivalent to 0 | 1 | 2 | 3
- * RangeTo<number, 9> is equivalent to number
- * RangeTo<9, number> is equivalent to number
+ * IntegerRangeTo<2 | 4> is equivalent to 0 | 1 | 2 | 3
+ * IntegerRangeTo<number, 9> is equivalent to number
+ * IntegerRangeTo<9, number> is equivalent to number
  */
-export type RangeTo<N extends number, M extends number | undefined = undefined> = number extends N
+export type IntegerRangeTo<N extends number, M extends number | undefined = undefined> = number extends N
   ? number
   : number extends M
   ? number
@@ -138,34 +138,34 @@ export type RangeTo<N extends number, M extends number | undefined = undefined> 
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
           ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
-            ? Neg<Exclude<_RangeUpTo<PN>, _RangeUpTo<PM>>>
-            : Neg<Exclude<_RangeTo<PM>, _RangeTo<PN>>>
-          : Neg<_RangeUpTo<PN>> | _RangeTo<M>
+            ? Neg<Exclude<_IntegerRangeUpTo<PN>, _IntegerRangeUpTo<PM>>>
+            : Neg<Exclude<_IntegerRangeTo<PM>, _IntegerRangeTo<PN>>>
+          : Neg<_IntegerRangeUpTo<PN>> | _IntegerRangeTo<M>
         : `${M}` extends `-${infer PM extends number}`
-        ? _RangeUpTo<N> | Neg<_RangeTo<PM>>
+        ? _IntegerRangeUpTo<N> | Neg<_IntegerRangeTo<PM>>
         : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
-        ? Exclude<_RangeUpTo<N>, _RangeUpTo<M>>
-        : Exclude<_RangeTo<M>, _RangeTo<N>>
-      : RangeTo<0, N>
+        ? Exclude<_IntegerRangeUpTo<N>, _IntegerRangeUpTo<M>>
+        : Exclude<_IntegerRangeTo<M>, _IntegerRangeTo<N>>
+      : IntegerRangeTo<0, N>
     : never
   : never
 /**
  * @example
- * RangeUpTo<3> is equivalent to 0 | 1 | 2 | 3
- * RangeUpTo<4, 8> is equivalent to 4 | 5 | 6 | 7 | 8
- * RangeUpTo<5, 3> is equivalent to 5 | 4 | 3
+ * IntegerRangeUpTo<3> is equivalent to 0 | 1 | 2 | 3
+ * IntegerRangeUpTo<4, 8> is equivalent to 4 | 5 | 6 | 7 | 8
+ * IntegerRangeUpTo<5, 3> is equivalent to 5 | 4 | 3
  * @example
- * RangeUpTo<2, -2> is equivalent to 2 | 1 | 0 | -1 | -2
- * RangeUpTo<-2, 2> is equivalent to -2 | -1 | 0 | 1 | 2
+ * IntegerRangeUpTo<2, -2> is equivalent to 2 | 1 | 0 | -1 | -2
+ * IntegerRangeUpTo<-2, 2> is equivalent to -2 | -1 | 0 | 1 | 2
  * @example
- * RangeUpTo<1, 1> is equivalent to 1
- * RangeUpTo<0> is equivalent to 0
+ * IntegerRangeUpTo<1, 1> is equivalent to 1
+ * IntegerRangeUpTo<0> is equivalent to 0
  * @example
- * RangeUpTo<2 | 4> is equivalent to 0 | 1 | 2 | 3 | 4
- * RangeUpTo<number, 9> is equivalent to number
- * RangeUpTo<9, number> is equivalent to number
+ * IntegerRangeUpTo<2 | 4> is equivalent to 0 | 1 | 2 | 3 | 4
+ * IntegerRangeUpTo<number, 9> is equivalent to number
+ * IntegerRangeUpTo<9, number> is equivalent to number
  */
-export type RangeUpTo<N extends number, M extends number | undefined = undefined> = number extends N
+export type IntegerRangeUpTo<N extends number, M extends number | undefined = undefined> = number extends N
   ? number
   : number extends M
   ? number
@@ -175,23 +175,23 @@ export type RangeUpTo<N extends number, M extends number | undefined = undefined
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
           ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
-            ? Neg<Exclude<_RangeUpTo<PN>, _RangeTo<PM>>>
-            : Neg<Exclude<_RangeUpTo<PM>, _RangeTo<PN>>>
-          : Neg<_RangeUpTo<PN>> | _RangeUpTo<M>
+            ? Neg<Exclude<_IntegerRangeUpTo<PN>, _IntegerRangeTo<PM>>>
+            : Neg<Exclude<_IntegerRangeUpTo<PM>, _IntegerRangeTo<PN>>>
+          : Neg<_IntegerRangeUpTo<PN>> | _IntegerRangeUpTo<M>
         : `${M}` extends `-${infer PM extends number}`
-        ? _RangeUpTo<N> | Neg<_RangeUpTo<PM>>
+        ? _IntegerRangeUpTo<N> | Neg<_IntegerRangeUpTo<PM>>
         : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
-        ? Exclude<_RangeUpTo<N>, _RangeTo<M>>
-        : Exclude<_RangeUpTo<M>, _RangeTo<N>>
-      : RangeUpTo<0, N>
+        ? Exclude<_IntegerRangeUpTo<N>, _IntegerRangeTo<M>>
+        : Exclude<_IntegerRangeUpTo<M>, _IntegerRangeTo<N>>
+      : IntegerRangeUpTo<0, N>
     : never
   : never
-type _RangeTo<N extends number, Result extends Tuple = []> = Result['length'] extends N
+type _IntegerRangeTo<N extends number, Result extends Tuple = []> = Result['length'] extends N
   ? never
-  : Result['length'] | _RangeTo<N, [...Result, any]>
-type _RangeUpTo<N extends number, Result extends Tuple = []> = Result['length'] extends N
+  : Result['length'] | _IntegerRangeTo<N, [...Result, any]>
+type _IntegerRangeUpTo<N extends number, Result extends Tuple = []> = Result['length'] extends N
   ? N
-  : Result['length'] | _RangeUpTo<N, [...Result, any]>
+  : Result['length'] | _IntegerRangeUpTo<N, [...Result, any]>
 
 /**
  * @example
@@ -208,8 +208,8 @@ type _RangeUpTo<N extends number, Result extends Tuple = []> = Result['length'] 
  * randomIntegerTo(5, 5) throws RangeError
  * randomIntegerTo(5, 5) is typed as never
  */
-export function randomIntegerTo<To extends number>(to: To): RangeTo<To>
-export function randomIntegerTo<From extends number, To extends number>(from: From, to: To): RangeTo<From, To>
+export function randomIntegerTo<To extends number>(to: To): IntegerRangeTo<To>
+export function randomIntegerTo<From extends number, To extends number>(from: From, to: To): IntegerRangeTo<From, To>
 export function randomIntegerTo<N extends number, M extends number>(first: N, second?: M): number {
   const [from, to] = second === undefined ? [0, first] : [first, second]
   if (from === to) {
@@ -218,8 +218,8 @@ export function randomIntegerTo<N extends number, M extends number>(first: N, se
   return Math.trunc(Math.random() * (to - from)) + from
 }
 
-export function randomIntegerUpTo<N extends number>(upTo: N): RangeUpTo<N>
-export function randomIntegerUpTo<N extends number, M extends number>(from: N, upTo: M): RangeUpTo<N, M>
+export function randomIntegerUpTo<N extends number>(upTo: N): IntegerRangeUpTo<N>
+export function randomIntegerUpTo<N extends number, M extends number>(from: N, upTo: M): IntegerRangeUpTo<N, M>
 export function randomIntegerUpTo<N extends number, M extends number>(first: N, second?: M): number {
   const from = second === undefined ? 0 : first
   const to = second === undefined ? first : second
