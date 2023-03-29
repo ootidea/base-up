@@ -6,7 +6,10 @@ export type NestedProperty<T, Ks extends readonly (keyof any)[]> = Ks extends []
   ? NestedProperty<T[H], R>
   : undefined
 
-export function getProperty<T, Ks extends readonly (keyof any)[]>(self: T, ...keys: Ks): NestedProperty<T, Ks> {
+export function getProperty<T extends object, Ks extends readonly (keyof any)[]>(
+  self: T,
+  ...keys: Ks
+): NestedProperty<T, Ks> {
   if (keys.length === 0) return self as any
 
   const firstKey = keys[0]
