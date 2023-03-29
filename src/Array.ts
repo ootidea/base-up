@@ -1,7 +1,5 @@
 import { IntegerRangeUpTo, randomIntegerTo } from './number'
-import { Known } from './type'
 
-export type AccurateTuple = readonly Known[]
 export type Tuple = readonly any[]
 
 export type NonEmptyArray<T> = [T, ...T[]]

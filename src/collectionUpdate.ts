@@ -1,36 +1,28 @@
-import { AccurateTuple, NonEmptyArray, Tuple } from './Array'
+import { NonEmptyArray, Tuple } from './Array'
 import { newMap } from './Map'
 import { modOf } from './number'
 
-export function push<T extends AccurateTuple, U extends AccurateTuple>(self: T, ...args: U): [...T, ...U]
-export function push<T extends Tuple, U extends Tuple>(self: T, ...args: U): [...T, ...U]
-export function push<T extends Tuple, U extends Tuple>(self: T, ...args: U): [...T, ...U] {
-  return [...self, ...args]
+export function push<const T extends Tuple, const U extends Tuple>(self: T, ...args: U): [...T, ...U] {
+  return [...self, ...args] as any
 }
 export namespace push {
-  export function Iterable<T, U extends AccurateTuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]>
-  export function Iterable<T, U extends Tuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]>
-  export function* Iterable<T, U extends Tuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]> {
+  export function* Iterable<T, const U extends Tuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]> {
     yield* self
     yield* args
   }
 }
 
-export function unshift<T extends AccurateTuple, U extends AccurateTuple>(self: T, ...args: U): [...U, ...T]
-export function unshift<T extends Tuple, U extends Tuple>(self: T, ...args: U): [...U, ...T]
-export function unshift<T extends Tuple, U extends Tuple>(self: T, ...args: U): [...U, ...T] {
-  return [...args, ...self]
+export function unshift<const T extends Tuple, const U extends Tuple>(self: T, ...args: U): [...U, ...T] {
+  return [...args, ...self] as any
 }
 export namespace unshift {
-  export function Iterable<T, U extends AccurateTuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]>
-  export function Iterable<T, U extends Tuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]>
-  export function* Iterable<T, U extends Tuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]> {
+  export function* Iterable<T, const U extends Tuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]> {
     yield* args
     yield* self
   }
 }
 
-export function insertAt<T, U extends Tuple>(
+export function insertAt<T, const U extends Tuple>(
   self: readonly T[],
   at: number,
   ...values: U
@@ -40,7 +32,11 @@ export function insertAt<T, U extends Tuple>(
   return cloned as any
 }
 export namespace insertAt {
-  export function* Iterable<T, U extends Tuple>(self: Iterable<T>, at: number, ...values: U): Iterable<T | U[number]> {
+  export function* Iterable<T, const U extends Tuple>(
+    self: Iterable<T>,
+    at: number,
+    ...values: U
+  ): Iterable<T | U[number]> {
     if (at === 0) {
       yield* values
     }
@@ -56,6 +52,7 @@ export namespace insertAt {
   }
 }
 
+// TODO: support tuple
 export function removeAt<T>(self: readonly T[], i: number): T[] {
   const cloned = [...self]
   cloned.splice(i, 1)
@@ -73,6 +70,7 @@ export namespace removeAt {
   }
 }
 
+// TODO: support tuple
 export function removeAll<T>(self: readonly T[], value: T): T[] {
   return self.filter((x) => x !== value)
 }
@@ -86,6 +84,7 @@ export namespace removeAll {
   }
 }
 
+// TODO: support tuple
 export function remove<T>(self: readonly T[], value: T): T[] {
   const index = self.findIndex((x) => x !== value)
   const cloned = [...self]

@@ -1,4 +1,4 @@
-import { AccurateTuple, FixedSizeArray, OrMoreSizeArray, Tuple } from './Array'
+import { FixedSizeArray, OrMoreSizeArray, Tuple } from './Array'
 import { Decrement, Increment } from './number'
 
 /**
@@ -145,21 +145,16 @@ export function rangeUpTo<N extends number, M extends number>(n: N, m?: M): numb
  * RepeatArray<0 | 1, ['a', 'b']> is typed as [] | ['a', 'b']
  * RepeatArray<number, ['a', 'b']> is typed as readonly ('a' | 'b')[]
  */
-export type RepeatArray<N extends number, A extends AccurateTuple> = number extends N
+export type RepeatArray<N extends number, A extends Tuple> = number extends N
   ? readonly A[number][]
   : N extends N
   ? _RepeatArray<N, A>
   : never
-type _RepeatArray<
-  N extends number,
-  A extends AccurateTuple,
-  L extends AccurateTuple = [],
-  R extends AccurateTuple = []
-> = L['length'] extends N ? R : _RepeatArray<N, A, [...L, any], [...R, ...A]>
+type _RepeatArray<N extends number, A extends Tuple, L extends Tuple = [], R extends Tuple = []> = L['length'] extends N
+  ? R
+  : _RepeatArray<N, A, [...L, any], [...R, ...A]>
 
-export function repeat<N extends number, T extends AccurateTuple>(count: N, ...values: T): RepeatArray<N, T>
-export function repeat<N extends number, T extends Tuple>(count: N, ...values: T): RepeatArray<N, T>
-export function repeat<N extends number, T extends Tuple>(count: N, ...values: T): RepeatArray<N, T> {
+export function repeat<N extends number, const T extends Tuple>(count: N, ...values: T): RepeatArray<N, T> {
   return Array.from({ length: count * values.length }, (_, i) => values[i % values.length]) as any
 }
 export namespace repeat {
@@ -168,9 +163,7 @@ export namespace repeat {
    * repeat('a') yields 'a', 'a', 'a', ...
    * repeat(1, 2) yields 1, 2, 1, 2, ...
    */
-  export function Iterable<T extends AccurateTuple>(...values: T): Generator<T[number], void, undefined>
-  export function Iterable<T extends Tuple>(...values: T): Generator<T[number], void, undefined>
-  export function* Iterable<T extends Tuple>(...values: T): Generator<T[number], void, undefined> {
+  export function* Iterable<const T extends Tuple>(...values: T): Generator<T[number], void, undefined> {
     while (true) yield* values
   }
 }

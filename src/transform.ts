@@ -1,12 +1,4 @@
-import {
-  AccurateTuple,
-  FixedSizeArray,
-  NonEmptyArray,
-  OrLessSizeArray,
-  OrMoreSizeArray,
-  ReadonlyNonEmptyArray,
-  Tuple,
-} from './Array'
+import { FixedSizeArray, NonEmptyArray, OrLessSizeArray, OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
 import { ltToComparator } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
@@ -99,9 +91,7 @@ export namespace tail {
   }
 }
 
-export function join<T, U extends AccurateTuple>(self: readonly (readonly T[])[], ...values: U): (T | U[number])[]
-export function join<T, U extends Tuple>(self: readonly (readonly T[])[], ...values: U): (T | U[number])[]
-export function join<T, U extends Tuple>(self: readonly (readonly T[])[], ...values: U): (T | U[number])[] {
+export function join<T, const U extends Tuple>(self: readonly (readonly T[])[], ...values: U): (T | U[number])[] {
   const result: (T | U[number])[] = []
   for (let i = 0; i < self.length; i++) {
     if (i > 0) {

@@ -1,4 +1,4 @@
-import { AccurateTuple, Tuple } from './Array'
+import { Tuple } from './Array'
 
 /**
  * Union of all lowercase types in TypeScript, excluding unknown and any.
@@ -21,8 +21,6 @@ export function assert<T>(value: T, predicate: (value: T) => boolean) {
   }
 }
 
-export function assertEquals<T extends Known, U extends T>(lhs: T, rhs: U): asserts lhs is U
-export function assertEquals<T extends U, U extends Known>(lhs: T, rhs: U): asserts rhs is T
 export function assertEquals<T, U extends T>(lhs: T, rhs: U): asserts lhs is U
 export function assertEquals<T extends U, U>(lhs: T, rhs: U): asserts rhs is T
 export function assertEquals<T, U>(lhs: T, rhs: U) {
@@ -77,9 +75,7 @@ export const isNotSymbol = <T>(value: T | symbol): value is T => typeof value !=
 export const isNotFunction = <T>(value: T | Function): value is T => typeof value !== 'function'
 export const isNotObject = <T>(value: T | symbol): value is T => typeof value !== 'object'
 
-export function isOneOf<T extends AccurateTuple>(...set: T): (value: unknown) => value is T[number]
-export function isOneOf<T extends Tuple>(...set: T): (value: unknown) => value is T[number]
-export function isOneOf<T extends Tuple>(...set: T): (value: unknown) => value is T[number] {
+export function isOneOf<const T extends Tuple>(...set: T): (value: unknown) => value is T[number] {
   return (value: unknown): value is T[number] => new Set(set).has(value as any)
 }
 

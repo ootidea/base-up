@@ -1,8 +1,8 @@
-import { AccurateTuple, NonEmptyArray } from './Array'
+import { NonEmptyArray, Tuple } from './Array'
 import { removeAt } from './collectionUpdate'
 import { rangeTo } from './generate'
 
-export function cartesianProductOf<T extends AccurateTuple, U extends AccurateTuple>(
+export function cartesianProductOf<const T extends Tuple, const U extends Tuple>(
   lhs: T,
   rhs: U
 ): [T[number], U[number]][] {

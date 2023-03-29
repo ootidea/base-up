@@ -1,7 +1,7 @@
-import { AccurateTuple } from './Array'
+import { Tuple } from './Array'
 import { every } from './collectionPredicate'
 import { sortBy } from './transform'
-import { Known, Nominal } from './type'
+import { Nominal } from './type'
 
 declare const NON_EMPTY_SET_TAG: unique symbol
 export type NonEmptySet<T> = Nominal<Set<T>, typeof NON_EMPTY_SET_TAG>
@@ -11,14 +11,12 @@ export type ReadonlyNonEmptySet<T> = Nominal<ReadonlySet<T>, typeof NON_EMPTY_SE
  * Wrapper function for the Set constructor.
  * Use to avoid name conflicts.
  */
-export function newSet<T>(...args: ConstructorParameters<typeof Set<T>>) {
+export function newSet<T>(...args: ConstructorParameters<typeof Set<T>>): Set<T> {
   return new Set(...args)
 }
 
-export function setOf<H extends Known, T extends AccurateTuple>(head: H, ...tail: T): NonEmptySet<H | T[number]>
-export function setOf<T extends AccurateTuple>(...args: T): Set<T[number]>
-export function setOf<T extends AccurateTuple>(...args: T): Set<T[number]> {
-  return new Set(args)
+export function setOf<const T extends Tuple>(...args: T): T extends readonly [] ? Set<never> : NonEmptySet<T[number]> {
+  return new Set(args) as any
 }
 
 export function toggle<T, U>(self: ReadonlySet<T>, value: U): Set<T | U> {

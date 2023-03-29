@@ -1,16 +1,16 @@
-import { AccurateTuple } from './Array'
+import { Tuple } from './Array'
 
-export function curry<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R): (a: H) => (...bs: L) => R {
+export function curry<H, const L extends Tuple, R>(f: (h: H, ...l: L) => R): (a: H) => (...bs: L) => R {
   return (h: H) =>
     (...l: L) =>
       f(h, ...l)
 }
 
-export function bindAllButFirst<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R, ...l: L): (h: H) => R {
+export function bindAllButFirst<H, const L extends Tuple, R>(f: (h: H, ...l: L) => R, ...l: L): (h: H) => R {
   return (h: H) => f(h, ...l)
 }
 
-export function applyFirst<H, L extends AccurateTuple, R>(f: (h: H, ...l: L) => R, h: H): (...l: L) => R {
+export function applyFirst<H, const L extends Tuple, R>(f: (h: H, ...l: L) => R, h: H): (...l: L) => R {
   return (...l: L) => f(h, ...l)
 }
 
@@ -22,7 +22,7 @@ export function identity<T>(value: T): T {
   return value
 }
 
-export function returnLast<T extends AccurateTuple>(...args: T): T extends readonly [...any, infer L] ? L : undefined {
+export function returnLast<const T extends Tuple>(...args: T): T extends readonly [...any, infer L] ? L : undefined {
   return args[args.length - 1] as any
 }
 
