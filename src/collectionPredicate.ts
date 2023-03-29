@@ -1,4 +1,4 @@
-import { ReadonlyNonEmptyArray } from './Array'
+import { ReadonlyNonEmptyArray, Tuple } from './Array'
 import { ReadonlyNonEmptyMap } from './Map'
 import { keysOf, valuesOf } from './projection'
 import { ReadonlyNonEmptySet } from './Set'
@@ -116,6 +116,14 @@ export namespace everyValues {
   export function Map<K, T>(self: ReadonlyMap<K, T>, f: (value: T) => boolean): boolean {
     return every.Iterable(self.values(), f)
   }
+}
+
+export function includes<const T extends Tuple>(
+  self: T,
+  value: unknown,
+  fromIndex?: number | undefined
+): value is T[number] {
+  return self.includes(value as any, fromIndex)
 }
 
 export function isUnique<T>(self: readonly T[]): boolean {
