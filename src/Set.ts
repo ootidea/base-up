@@ -21,6 +21,16 @@ export function setOf<T extends AccurateTuple>(...args: T): Set<T[number]> {
   return new Set(args)
 }
 
+export function toggle<T, U>(self: ReadonlySet<T>, value: U): Set<T | U> {
+  const cloned = new Set(self)
+  if (cloned.has(value as any)) {
+    cloned.delete(value as any)
+  } else {
+    cloned.add(value as any)
+  }
+  return cloned
+}
+
 export function has<T, U extends T>(self: ReadonlySet<U>, value: T): value is U
 export function has<T>(self: ReadonlySet<T>, value: T): boolean
 export function has<T>(self: ReadonlySet<T>, value: T): boolean {

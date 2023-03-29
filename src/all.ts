@@ -88,6 +88,7 @@ export {
 export {
   setOf,
   has,
+  toggle,
   isSubset,
   unionOf,
   intersectionOf,
