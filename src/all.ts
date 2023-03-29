@@ -79,6 +79,7 @@ export {
 } from './type'
 export {
   shuffle,
+  type Tuple,
   type NonEmptyArray,
   type ReadonlyNonEmptyArray,
   type FixedSizeArray,
