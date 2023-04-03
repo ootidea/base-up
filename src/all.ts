@@ -113,4 +113,4 @@ export {
 export { toNumber, toString, type LiteralAutoComplete } from './string'
 export { pipe, call, identity, curry, applyFirst, bindAllButFirst, returnLast } from './Function'
 export { forever, type Promisable } from './Promise'
-export { type DiscriminatedUnion } from './Fct'
+export { type DiscriminatedUnion } from './type'

@@ -94,3 +94,12 @@ export function isNotInstanceOf<T extends abstract new (..._: any) => any, U>(
 }
 
 export type Nominal<Base, Tag extends symbol> = Base & Record<Tag, never>
+
+/**
+ * Utility for defining tagged union types.
+ * @example
+ * DiscriminatedUnion<{ Rect: { width: number; height: number }; Circle: { radius: number } }>
+ * is equivalent to
+ * { type: 'Rect'; width: number; height: number } | { type: 'Circle'; radius: number }
+ */
+export type DiscriminatedUnion<T, K extends keyof T = keyof T> = K extends K ? { type: K } & T[K] : never
