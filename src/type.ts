@@ -40,6 +40,7 @@ export function assertInstanceOf<T extends abstract new (..._: any) => any>(
 
 /**
  * @example
+ * let status: 'on' | 'off' = 'on'
  * switch (status) {
  *   case 'on':
  *     break
