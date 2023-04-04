@@ -1,6 +1,6 @@
 import { Tuple } from './Array'
 
-export function curry<H, const L extends Tuple, R>(f: (h: H, ...l: L) => R): (a: H) => (...bs: L) => R {
+export function curry<const H, const L extends Tuple, const R>(f: (h: H, ...l: L) => R): (a: H) => (...bs: L) => R {
   return (h: H) =>
     (...l: L) =>
       f(h, ...l)
@@ -10,15 +10,15 @@ export function bindAllButFirst<H, const L extends Tuple, R>(f: (h: H, ...l: L) 
   return (h: H) => f(h, ...l)
 }
 
-export function applyFirst<H, const L extends Tuple, R>(f: (h: H, ...l: L) => R, h: H): (...l: L) => R {
+export function applyFirst<const H, const L extends Tuple, const R>(f: (h: H, ...l: L) => R, h: H): (...l: L) => R {
   return (...l: L) => f(h, ...l)
 }
 
-export function call<T>(f: () => T): T {
+export function call<const T>(f: () => T): T {
   return f()
 }
 
-export function identity<T>(value: T): T {
+export function identity<const T>(value: T): T {
   return value
 }
 

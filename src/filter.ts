@@ -2,9 +2,9 @@ import { ReadonlyNonEmptyArray } from './Array'
 import { update } from './collectionUpdate'
 import { newSet } from './Set'
 
-export function filter<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
-export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[]
-export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[] {
+export function filter<const T, const U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
+export function filter<const T>(self: readonly T[], f: (_: T) => boolean): T[]
+export function filter<const T>(self: readonly T[], f: (_: T) => boolean): T[] {
   return self.filter(f) as any
 }
 export namespace filter {
@@ -25,9 +25,9 @@ export namespace filter {
   }
 }
 
-export function takeWhile<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
-export function takeWhile<T>(self: readonly T[], f: (_: T) => boolean): T[]
-export function takeWhile<T>(self: readonly T[], f: (_: T) => boolean): T[] {
+export function takeWhile<const T, const U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
+export function takeWhile<const T>(self: readonly T[], f: (_: T) => boolean): T[]
+export function takeWhile<const T>(self: readonly T[], f: (_: T) => boolean): T[] {
   const result = []
   for (const value of self) {
     if (!f(value)) return result
