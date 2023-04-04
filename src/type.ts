@@ -49,7 +49,9 @@ export function assertInstanceOf<T extends abstract new (..._: any) => any>(
  *     assertNeverType(status)
  * }
  */
-export function assertNeverType(shouldBeNever: never) {}
+export function assertNeverType(shouldBeNever: never): never {
+  throw new Error()
+}
 
 export type nullish = null | undefined
 
