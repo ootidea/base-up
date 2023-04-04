@@ -29,6 +29,16 @@ export function toggle<T, U>(self: ReadonlySet<T>, value: U): Set<T | U> {
   return cloned
 }
 
+export function setWhetherHas<T, U>(self: ReadonlySet<T>, value: U, has: boolean): Set<T | U> {
+  const cloned = new Set(self)
+  if (has) {
+    cloned.add(value as any)
+  } else {
+    cloned.delete(value as any)
+  }
+  return cloned
+}
+
 export function has<T, U extends T>(self: ReadonlySet<U>, value: T): value is U
 export function has<T>(self: ReadonlySet<T>, value: T): boolean
 export function has<T>(self: ReadonlySet<T>, value: T): boolean {

@@ -1,4 +1,4 @@
-import { differenceOf, intersectionOf, isDisjoint, isSubset, setOf, toggle, unionOf } from './Set'
+import { differenceOf, intersectionOf, isDisjoint, isSubset, setOf, setWhetherHas, toggle, unionOf } from './Set'
 
 test('setOf', () => {
   expect(setOf(1, 2)).toStrictEqual(new Set([2, 1]))
@@ -8,6 +8,13 @@ test('toggle', () => {
   expect(toggle(setOf(1, 2, 3), 2)).toStrictEqual(setOf(1, 3))
   expect(toggle(setOf(1, 2, 3), 9)).toStrictEqual(setOf(1, 2, 3, 9))
   expect(toggle(setOf(1, 2, 3), null)).toStrictEqual(setOf(1, 2, 3, null))
+})
+
+test('setWhetherHas', () => {
+  expect(setWhetherHas(setOf(1, 2, 3), 2, false)).toStrictEqual(setOf(1, 3))
+  expect(setWhetherHas(setOf(1, 2, 3), 2, true)).toStrictEqual(setOf(1, 2, 3))
+  expect(setWhetherHas(setOf(1, 2, 3), 9, false)).toStrictEqual(setOf(1, 2, 3))
+  expect(setWhetherHas(setOf(1, 2, 3), 9, true)).toStrictEqual(setOf(1, 2, 3, 9))
 })
 
 test('unionOf', () => {
