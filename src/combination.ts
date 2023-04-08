@@ -1,6 +1,6 @@
 import { NonEmptyArray, Tuple } from './Array'
 import { removeAt } from './collectionUpdate'
-import { rangeTo } from './generate'
+import { rangeUntil } from './generate'
 
 export function cartesianProductOf<const T extends Tuple, const U extends Tuple>(
   lhs: T,
@@ -20,14 +20,14 @@ export function permutationOf<T>(self: readonly T[], n: number = self.length): (
 
   if (self.length <= 1) return [self]
 
-  return rangeTo(self.length).flatMap((i) => {
+  return rangeUntil(self.length).flatMap((i) => {
     const value = self[i]
     return permutationOf(removeAt(self, i), n - 1).map((rest) => [value, ...rest])
   })
 }
 export namespace permutationOf {
   export function number(lhs: number, rhs: number): number {
-    return rangeTo(lhs, lhs - rhs).reduce((a, b) => a * b)
+    return rangeUntil(lhs, lhs - rhs).reduce((a, b) => a * b)
   }
 }
 

@@ -122,21 +122,21 @@ export type Decrement<N extends number> = `${N}` extends `-${infer PN extends nu
 
 /**
  * @example
- * IntegerRangeTo<3> is equivalent to 0 | 1 | 2
- * IntegerRangeTo<4, 8> is equivalent to 4 | 5 | 6 | 7
- * IntegerRangeTo<5, 3> is equivalent to 5 | 4
+ * IntegerRangeUntil<3> is equivalent to 0 | 1 | 2
+ * IntegerRangeUntil<4, 8> is equivalent to 4 | 5 | 6 | 7
+ * IntegerRangeUntil<5, 3> is equivalent to 5 | 4
  * @example
- * IntegerRangeTo<2, -2> is equivalent to 2 | 1 | 0 | -1
- * IntegerRangeTo<-2, 2> is equivalent to -2 | -1 | 0 | 1
+ * IntegerRangeUntil<2, -2> is equivalent to 2 | 1 | 0 | -1
+ * IntegerRangeUntil<-2, 2> is equivalent to -2 | -1 | 0 | 1
  * @example
- * IntegerRangeTo<1, 1> is equivalent to never
- * IntegerRangeTo<0> is equivalent to never
+ * IntegerRangeUntil<1, 1> is equivalent to never
+ * IntegerRangeUntil<0> is equivalent to never
  * @example
- * IntegerRangeTo<2 | 4> is equivalent to 0 | 1 | 2 | 3
- * IntegerRangeTo<number, 9> is equivalent to number
- * IntegerRangeTo<9, number> is equivalent to number
+ * IntegerRangeUntil<2 | 4> is equivalent to 0 | 1 | 2 | 3
+ * IntegerRangeUntil<number, 9> is equivalent to number
+ * IntegerRangeUntil<9, number> is equivalent to number
  */
-export type IntegerRangeTo<N extends number, M extends number | undefined = undefined> = number extends N
+export type IntegerRangeUntil<N extends number, M extends number | undefined = undefined> = number extends N
   ? number
   : number extends M
   ? number
@@ -147,14 +147,14 @@ export type IntegerRangeTo<N extends number, M extends number | undefined = unde
         ? `${M}` extends `-${infer PM extends number}`
           ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
             ? Neg<Exclude<_IntegerRangeThrough<PN>, _IntegerRangeThrough<PM>>>
-            : Neg<Exclude<_IntegerRangeTo<PM>, _IntegerRangeTo<PN>>>
-          : Neg<_IntegerRangeThrough<PN>> | _IntegerRangeTo<M>
+            : Neg<Exclude<_IntegerRangeUntil<PM>, _IntegerRangeUntil<PN>>>
+          : Neg<_IntegerRangeThrough<PN>> | _IntegerRangeUntil<M>
         : `${M}` extends `-${infer PM extends number}`
-        ? _IntegerRangeThrough<N> | Neg<_IntegerRangeTo<PM>>
+        ? _IntegerRangeThrough<N> | Neg<_IntegerRangeUntil<PM>>
         : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
         ? Exclude<_IntegerRangeThrough<N>, _IntegerRangeThrough<M>>
-        : Exclude<_IntegerRangeTo<M>, _IntegerRangeTo<N>>
-      : IntegerRangeTo<0, N>
+        : Exclude<_IntegerRangeUntil<M>, _IntegerRangeUntil<N>>
+      : IntegerRangeUntil<0, N>
     : never
   : never
 /**
@@ -183,45 +183,48 @@ export type IntegerRangeThrough<N extends number, M extends number | undefined =
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
           ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
-            ? Neg<Exclude<_IntegerRangeThrough<PN>, _IntegerRangeTo<PM>>>
-            : Neg<Exclude<_IntegerRangeThrough<PM>, _IntegerRangeTo<PN>>>
+            ? Neg<Exclude<_IntegerRangeThrough<PN>, _IntegerRangeUntil<PM>>>
+            : Neg<Exclude<_IntegerRangeThrough<PM>, _IntegerRangeUntil<PN>>>
           : Neg<_IntegerRangeThrough<PN>> | _IntegerRangeThrough<M>
         : `${M}` extends `-${infer PM extends number}`
         ? _IntegerRangeThrough<N> | Neg<_IntegerRangeThrough<PM>>
         : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
-        ? Exclude<_IntegerRangeThrough<N>, _IntegerRangeTo<M>>
-        : Exclude<_IntegerRangeThrough<M>, _IntegerRangeTo<N>>
+        ? Exclude<_IntegerRangeThrough<N>, _IntegerRangeUntil<M>>
+        : Exclude<_IntegerRangeThrough<M>, _IntegerRangeUntil<N>>
       : IntegerRangeThrough<0, N>
     : never
   : never
-type _IntegerRangeTo<N extends number, Result extends Tuple = []> = Result['length'] extends N
+type _IntegerRangeUntil<N extends number, Result extends Tuple = []> = Result['length'] extends N
   ? never
-  : Result['length'] | _IntegerRangeTo<N, [...Result, any]>
+  : Result['length'] | _IntegerRangeUntil<N, [...Result, any]>
 type _IntegerRangeThrough<N extends number, Result extends Tuple = []> = Result['length'] extends N
   ? N
   : Result['length'] | _IntegerRangeThrough<N, [...Result, any]>
 
 /**
  * @example
- * randomIntegerTo(3) returns 0, 1 or 2
- * randomIntegerTo(3) is typed as 0 | 1 | 2
- * randomIntegerTo(1, 4) returns 1, 2 or 3
- * randomIntegerTo(1, 4) is typed as 1 | 2 | 3
+ * randomIntegerUntil(3) returns 0, 1 or 2
+ * randomIntegerUntil(3) is typed as 0 | 1 | 2
+ * randomIntegerUntil(1, 4) returns 1, 2 or 3
+ * randomIntegerUntil(1, 4) is typed as 1 | 2 | 3
  * @example
- * randomIntegerTo(-2) returns 0 or -1
- * randomIntegerTo(-2) is typed as 0 | -1
+ * randomIntegerUntil(-2) returns 0 or -1
+ * randomIntegerUntil(-2) is typed as 0 | -1
  * @example
- * randomIntegerTo(0) throws RangeError
- * randomIntegerTo(0) is typed as never
- * randomIntegerTo(5, 5) throws RangeError
- * randomIntegerTo(5, 5) is typed as never
+ * randomIntegerUntil(0) throws RangeError
+ * randomIntegerUntil(0) is typed as never
+ * randomIntegerUntil(5, 5) throws RangeError
+ * randomIntegerUntil(5, 5) is typed as never
  */
-export function randomIntegerTo<To extends number>(to: To): IntegerRangeTo<To>
-export function randomIntegerTo<From extends number, To extends number>(from: From, to: To): IntegerRangeTo<From, To>
-export function randomIntegerTo<N extends number, M extends number>(first: N, second?: M): number {
+export function randomIntegerUntil<To extends number>(to: To): IntegerRangeUntil<To>
+export function randomIntegerUntil<From extends number, To extends number>(
+  from: From,
+  to: To
+): IntegerRangeUntil<From, To>
+export function randomIntegerUntil<N extends number, M extends number>(first: N, second?: M): number {
   const [from, to] = second === undefined ? [0, first] : [first, second]
   if (from === to) {
-    throw RangeError(`The arguments of randomIntegerTo are the same value(${to}).\nMust be different values.`)
+    throw RangeError(`The arguments of randomIntegerUntil are the same value(${to}).\nMust be different values.`)
   }
   return Math.trunc(Math.random() * (to - from)) + from
 }

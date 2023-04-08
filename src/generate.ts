@@ -3,15 +3,15 @@ import { Decrement, Increment } from './number'
 
 /**
  * @example
- * RangeTo<3> is equivalent to [0, 1, 2]
+ * RangeUntil<3> is equivalent to [0, 1, 2]
  * @example
- * RangeTo<0> is equivalent to []
+ * RangeUntil<0> is equivalent to []
  * @example
- * RangeTo<2 | 4> is equivalent to [0, 1] | [0, 1, 2, 3]
+ * RangeUntil<2 | 4> is equivalent to [0, 1] | [0, 1, 2, 3]
  * @example
- * RangeTo<number> is equivalent to number[]
+ * RangeUntil<number> is equivalent to number[]
  */
-export type RangeTo<From extends number, To extends number | undefined = undefined> = To extends number
+export type RangeUntil<From extends number, To extends number | undefined = undefined> = To extends number
   ? number extends From
     ? number[]
     : number extends To
@@ -21,23 +21,23 @@ export type RangeTo<From extends number, To extends number | undefined = undefin
       ? `${From}` extends `-${infer PN extends number}`
         ? `${To}` extends `-${infer PM extends number}`
           ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
-            ? IncrementsTo<From, To>
-            : DecrementsTo<From, To>
-          : IncrementsTo<From, To>
+            ? IncrementsUntil<From, To>
+            : DecrementsUntil<From, To>
+          : IncrementsUntil<From, To>
         : `${To}` extends `-${infer PM extends number}`
-        ? DecrementsTo<From, To>
+        ? DecrementsUntil<From, To>
         : OrMoreSizeArray<From> extends OrMoreSizeArray<To>
-        ? DecrementsTo<From, To>
-        : IncrementsTo<From, To>
+        ? DecrementsUntil<From, To>
+        : IncrementsUntil<From, To>
       : never
     : never
-  : RangeTo<0, From>
-type IncrementsTo<N extends number, M extends number, Result extends Tuple = []> = M extends N
+  : RangeUntil<0, From>
+type IncrementsUntil<N extends number, M extends number, Result extends Tuple = []> = M extends N
   ? Result
-  : IncrementsTo<Increment<N>, M, [...Result, N]>
-type DecrementsTo<N extends number, M extends number, Result extends Tuple = []> = M extends N
+  : IncrementsUntil<Increment<N>, M, [...Result, N]>
+type DecrementsUntil<N extends number, M extends number, Result extends Tuple = []> = M extends N
   ? Result
-  : DecrementsTo<Decrement<N>, M, [...Result, N]>
+  : DecrementsUntil<Decrement<N>, M, [...Result, N]>
 
 export type RangeThrough<From extends number, To extends number | undefined = undefined> = To extends number
   ? number extends From
@@ -84,19 +84,19 @@ export type Protruded<T extends Tuple, U extends Tuple> = T extends [any, ...inf
 
 /**
  * @example
- * rangeTo(3) returns [0, 1, 2]
- * rangeTo(3) is typed as [0, 1, 2]
+ * rangeUntil(3) returns [0, 1, 2]
+ * rangeUntil(3) is typed as [0, 1, 2]
  * @example
- * rangeTo(0) returns []
- * rangeTo(0) is typed as []
+ * rangeUntil(0) returns []
+ * rangeUntil(0) is typed as []
  * @example
  * const n: number = 4
- * rangeTo(n) returns [0, 1, 2, 3]
- * rangeTo(n) is typed as number[]
+ * rangeUntil(n) returns [0, 1, 2, 3]
+ * rangeUntil(n) is typed as number[]
  */
-export function rangeTo<To extends number>(to: To): RangeTo<To>
-export function rangeTo<From extends number, To extends number>(from: From, to: To): RangeTo<From, To>
-export function rangeTo<N extends number, M extends number>(n: N, m?: M): number[] {
+export function rangeUntil<To extends number>(to: To): RangeUntil<To>
+export function rangeUntil<From extends number, To extends number>(from: From, to: To): RangeUntil<From, To>
+export function rangeUntil<N extends number, M extends number>(n: N, m?: M): number[] {
   const [from, to] = m === undefined ? [0, n] : [n, m]
 
   const result = []
@@ -111,7 +111,7 @@ export function rangeTo<N extends number, M extends number>(n: N, m?: M): number
   }
   return result as any
 }
-export namespace rangeTo {
+export namespace rangeUntil {
   export function* Iterable(n: number): Generator<number> {
     for (let i = 0; i < n; i++) {
       yield i

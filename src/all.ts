@@ -35,12 +35,12 @@ export {
 } from './filter'
 export { zipWith, zip, zipAll, merge } from './fusion'
 export {
-  rangeTo,
+  rangeUntil,
   rangeThrough,
   repeat,
   repeatApply,
   fromEntries,
-  type RangeTo,
+  type RangeUntil,
   type RangeThrough,
   type RepeatArray,
 } from './generate'
@@ -104,10 +104,10 @@ export {
   modOf,
   factorialOf,
   gcdOf,
-  randomIntegerTo,
+  randomIntegerUntil,
   randomIntegerThrough,
   clamp,
-  type IntegerRangeTo,
+  type IntegerRangeUntil,
   type IntegerRangeThrough,
 } from './number'
 export { toNumber, toString, type LiteralAutoComplete } from './string'
