@@ -177,10 +177,16 @@ export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): T[] {
   return [...self].sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs)))
 }
 
-export function reverse<T>(self: ReadonlyNonEmptyArray<T>): NonEmptyArray<T>
-export function reverse<T>(self: readonly T[]): T[]
-export function reverse<T>(self: readonly T[]): T[] {
-  return [...self].reverse()
+/**
+ * @example
+ * Reverse<[0, 1, 2]> is equivalent to [2, 1, 0]
+ * Reverse<[]> is equivalent to []
+ * Reverse<string[]> is equivalent to string[]
+ */
+export type Reverse<T extends Tuple> = T extends readonly [infer H, ...infer L] ? [...Reverse<L>, H] : T
+
+export function reverse<const T extends Tuple>(self: T): Reverse<T> {
+  return [...self].reverse() as Reverse<T>
 }
 export namespace reverse {
   export function* Iterable<T>(self: readonly T[]): Generator<T> {
