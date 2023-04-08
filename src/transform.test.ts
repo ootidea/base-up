@@ -85,7 +85,8 @@ test('sortBy', () => {
 })
 
 test('shuffle', () => {
-  expect(setOf(...shuffle([1, 2, 3, 4]))).toStrictEqual(setOf(1, 2, 3, 4))
+  expect(setOf(...shuffle([1, 2, 3]))).toStrictEqual(setOf(1, 2, 3))
+  expect(shuffle([1, 2, 3]).length).toEqual(3)
   expect(shuffle([])).toStrictEqual([])
   expect(shuffle(['one'])).toStrictEqual(['one'])
 })
