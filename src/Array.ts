@@ -22,7 +22,7 @@ export type FixedSizeArray<N extends number, T = unknown> = number extends N
   : N extends N
   ? _FixedSizeArray<N, T>
   : never
-type _FixedSizeArray<N extends number, T = unknown, Result extends readonly T[] = []> = Result['length'] extends N
+type _FixedSizeArray<N extends number, T, Result extends readonly T[] = []> = N extends Result['length']
   ? Result
   : _FixedSizeArray<N, T, [...Result, T]>
 
@@ -40,9 +40,9 @@ export type OrMoreSizeArray<N extends number, T = unknown> = number extends N
   : N extends N
   ? _OrMoreSizeArray<N, T>
   : never
-type _OrMoreSizeArray<N extends number, T = unknown, Result extends readonly T[] = []> = Result['length'] extends N
-  ? [...Result, ...T[]]
-  : _OrMoreSizeArray<N, T, [...Result, T]>
+type _OrMoreSizeArray<N extends number, T, Acc extends readonly T[] = []> = N extends Acc['length']
+  ? [...Acc, ...T[]]
+  : _OrMoreSizeArray<N, T, [...Acc, T]>
 
 export type OrLessSizeArray<N extends number, T = unknown> = FixedSizeArray<IntegerRangeUpTo<N>, T>
 
