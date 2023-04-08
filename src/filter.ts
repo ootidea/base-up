@@ -48,13 +48,15 @@ export namespace takeWhile {
   }
 }
 
-export function firstOf<T>(self: ReadonlyNonEmptyArray<T>): T
+export function firstOf(self: []): undefined
+export function firstOf<const T>(self: readonly [T, ...unknown[]]): T
 export function firstOf<T>(self: readonly T[]): T | undefined
 export function firstOf<T>(self: readonly T[]): T | undefined {
   return self[0]
 }
 
-export function lastOf<T>(self: ReadonlyNonEmptyArray<T>): T
+export function lastOf(self: []): undefined
+export function lastOf<const T>(self: readonly [...unknown[], T]): T
 export function lastOf<T>(self: readonly T[]): T | undefined
 export function lastOf<T>(self: readonly T[]): T | undefined {
   return self[self.length - 1]
@@ -90,7 +92,7 @@ export function indexesOf<T>(self: readonly T[], value: T): number[] {
   return result
 }
 
-export function maxOf<T>(self: ReadonlyNonEmptyArray<T>): T
+export function maxOf<const T>(self: ReadonlyNonEmptyArray<T>): T
 export function maxOf<T>(self: readonly T[]): T | undefined
 export function maxOf<T>(self: readonly T[]): T | undefined {
   if (self.length === 0) return undefined
@@ -105,7 +107,7 @@ export function maxOf<T>(self: readonly T[]): T | undefined {
   return candidateElement
 }
 
-export function maxBy<T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => unknown): T
+export function maxBy<const T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => unknown): T
 export function maxBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined
 export function maxBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined {
   if (self.length === 0) return undefined
@@ -123,7 +125,7 @@ export function maxBy<T>(self: readonly T[], by: (element: T) => unknown): T | u
   return candidateElement
 }
 
-export function minOf<T>(self: ReadonlyNonEmptyArray<T>): T
+export function minOf<const T>(self: ReadonlyNonEmptyArray<T>): T
 export function minOf<T>(self: readonly T[]): T | undefined
 export function minOf<T>(self: readonly T[]): T | undefined {
   if (self.length === 0) return undefined
@@ -138,7 +140,7 @@ export function minOf<T>(self: readonly T[]): T | undefined {
   return candidateElement
 }
 
-export function minBy<T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => unknown): T
+export function minBy<const T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => unknown): T
 export function minBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined
 export function minBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined {
   if (self.length === 0) return undefined
@@ -165,7 +167,9 @@ export function elementAt<T>(self: Iterable<T>, n: number): T | undefined {
   return element.value
 }
 
-export function modeOf<T>(self: readonly T[]): T | undefined {
+export function modeOf<const T>(self: ReadonlyNonEmptyArray<T>): T
+export function modeOf<const T>(self: readonly T[]): T | undefined
+export function modeOf<const T>(self: readonly T[]): T | undefined {
   const map = new Map<T, number>()
   let maxCount = 0
   let candidateValue: T | undefined = undefined
@@ -182,6 +186,8 @@ export function modeOf<T>(self: readonly T[]): T | undefined {
   return candidateValue
 }
 
+export function modeBy<const T, U>(self: ReadonlyNonEmptyArray<T>, by: (_: T) => U): T
+export function modeBy<T, U>(self: readonly T[], by: (_: T) => U): T | undefined
 export function modeBy<T, U>(self: readonly T[], by: (_: T) => U): T | undefined {
   const map = new Map<U, number>()
   let maxCount = 0
