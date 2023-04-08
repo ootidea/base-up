@@ -1,7 +1,7 @@
 import { elementAt, filter, indexesOf, lastOf, modeBy, modeOf } from './filter'
 import { rangeTo, repeat } from './generate'
 import { setOf } from './Set'
-import { take } from './transform'
+import { drop, take } from './transform'
 import { isNotNull } from './type'
 
 test('filter', () => {
@@ -22,6 +22,12 @@ test('take', () => {
   expect(take([1, 2, 3], 0)).toStrictEqual([])
   expect(take(repeat.Iterable(true), 3)).toStrictEqual([true, true, true])
   expect(take(repeat.Iterable(true), 0)).toStrictEqual([])
+})
+
+test('drop', () => {
+  expect(drop([1, 2, 3], 0)).toStrictEqual([1, 2, 3])
+  expect(drop([1, 2, 3], 1)).toStrictEqual([2, 3])
+  expect(drop([1, 2, 3], 3)).toStrictEqual([])
 })
 
 test('indexesOf', () => {

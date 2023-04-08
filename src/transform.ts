@@ -3,6 +3,7 @@ import { ltToComparator } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
 import { newMap, NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
+import { IntegerRangeUpTo } from './number'
 import { newPromise } from './Promise'
 import { newSet, NonEmptySet, ReadonlyNonEmptySet } from './Set'
 
@@ -71,6 +72,31 @@ export namespace take {
       i++
     }
   }
+}
+
+/**
+ * @example
+ * Drop<[0, 1, 2], 0> is equivalent to [0, 1, 2]
+ * Drop<[0, 1, 2], 1> is equivalent to [1, 2]
+ * Drop<[0, 1, 2], 2> is equivalent to [2]
+ * Drop<[0, 1, 2], 3> is equivalent to []
+ * Drop<[0, 1, 2], 4> is equivalent to []
+ * Drop<[0, 1, 2], 1 | 2> is equivalent to [1, 2] | [2]
+ * Drop<[0, 1, 2], number> is equivalent to [0, 1, 2] | [1, 2] | [2] | []
+ */
+export type Drop<T extends Tuple, N extends number> = N extends N
+  ? number extends N
+    ? Drop<T, IntegerRangeUpTo<T['length']>>
+    : _Drop<T, FixedSizeArray<N>>
+  : never
+type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]
+  ? T extends readonly [any, ...infer TL]
+    ? _Drop<TL, NL>
+    : []
+  : T
+
+export function drop<const T extends Tuple, N extends number>(self: T, n: N): Drop<T, N> {
+  return self.slice(n) as any
 }
 
 export function tail<T>(self: ReadonlyNonEmptyArray<T>): T[]

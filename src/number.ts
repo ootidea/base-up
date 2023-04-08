@@ -96,6 +96,14 @@ export type Max<N extends number, M extends number> = `${N}` extends `-${infer P
   ? N
   : M
 
+/**
+ * @example
+ * Increment<0> is equivalent to 1
+ * Increment<-1> is equivalent to 0
+ * Increment<-2> is equivalent to -1
+ * Increment<1 | 3> is equivalent to 2 | 4
+ * Increment<number> is equivalent to number
+ */
 export type Increment<N extends number> = `${N}` extends `-${infer PN extends number}`
   ? FixedSizeArray<PN> extends [any, ...infer L]
     ? Neg<L['length']>
