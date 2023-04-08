@@ -36,12 +36,12 @@ export {
 export { zipWith, zip, zipAll, merge } from './fusion'
 export {
   rangeTo,
-  rangeUpTo,
+  rangeThrough,
   repeat,
   repeatApply,
   fromEntries,
   type RangeTo,
-  type RangeUpTo,
+  type RangeThrough,
   type RepeatArray,
 } from './generate'
 export { sumOf, groupBy } from './other'
@@ -105,10 +105,10 @@ export {
   factorialOf,
   gcdOf,
   randomIntegerTo,
-  randomIntegerUpTo,
+  randomIntegerThrough,
   clamp,
   type IntegerRangeTo,
-  type IntegerRangeUpTo,
+  type IntegerRangeThrough,
 } from './number'
 export { toNumber, toString, type LiteralAutoComplete } from './string'
 export { pipe, call, identity, curry, applyFirst, bindAllButFirst, returnLast } from './Function'

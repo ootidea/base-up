@@ -146,34 +146,34 @@ export type IntegerRangeTo<N extends number, M extends number | undefined = unde
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
           ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
-            ? Neg<Exclude<_IntegerRangeUpTo<PN>, _IntegerRangeUpTo<PM>>>
+            ? Neg<Exclude<_IntegerRangeThrough<PN>, _IntegerRangeThrough<PM>>>
             : Neg<Exclude<_IntegerRangeTo<PM>, _IntegerRangeTo<PN>>>
-          : Neg<_IntegerRangeUpTo<PN>> | _IntegerRangeTo<M>
+          : Neg<_IntegerRangeThrough<PN>> | _IntegerRangeTo<M>
         : `${M}` extends `-${infer PM extends number}`
-        ? _IntegerRangeUpTo<N> | Neg<_IntegerRangeTo<PM>>
+        ? _IntegerRangeThrough<N> | Neg<_IntegerRangeTo<PM>>
         : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
-        ? Exclude<_IntegerRangeUpTo<N>, _IntegerRangeUpTo<M>>
+        ? Exclude<_IntegerRangeThrough<N>, _IntegerRangeThrough<M>>
         : Exclude<_IntegerRangeTo<M>, _IntegerRangeTo<N>>
       : IntegerRangeTo<0, N>
     : never
   : never
 /**
  * @example
- * IntegerRangeUpTo<3> is equivalent to 0 | 1 | 2 | 3
- * IntegerRangeUpTo<4, 8> is equivalent to 4 | 5 | 6 | 7 | 8
- * IntegerRangeUpTo<5, 3> is equivalent to 5 | 4 | 3
+ * IntegerRangeThrough<3> is equivalent to 0 | 1 | 2 | 3
+ * IntegerRangeThrough<4, 8> is equivalent to 4 | 5 | 6 | 7 | 8
+ * IntegerRangeThrough<5, 3> is equivalent to 5 | 4 | 3
  * @example
- * IntegerRangeUpTo<2, -2> is equivalent to 2 | 1 | 0 | -1 | -2
- * IntegerRangeUpTo<-2, 2> is equivalent to -2 | -1 | 0 | 1 | 2
+ * IntegerRangeThrough<2, -2> is equivalent to 2 | 1 | 0 | -1 | -2
+ * IntegerRangeThrough<-2, 2> is equivalent to -2 | -1 | 0 | 1 | 2
  * @example
- * IntegerRangeUpTo<1, 1> is equivalent to 1
- * IntegerRangeUpTo<0> is equivalent to 0
+ * IntegerRangeThrough<1, 1> is equivalent to 1
+ * IntegerRangeThrough<0> is equivalent to 0
  * @example
- * IntegerRangeUpTo<2 | 4> is equivalent to 0 | 1 | 2 | 3 | 4
- * IntegerRangeUpTo<number, 9> is equivalent to number
- * IntegerRangeUpTo<9, number> is equivalent to number
+ * IntegerRangeThrough<2 | 4> is equivalent to 0 | 1 | 2 | 3 | 4
+ * IntegerRangeThrough<number, 9> is equivalent to number
+ * IntegerRangeThrough<9, number> is equivalent to number
  */
-export type IntegerRangeUpTo<N extends number, M extends number | undefined = undefined> = number extends N
+export type IntegerRangeThrough<N extends number, M extends number | undefined = undefined> = number extends N
   ? number
   : number extends M
   ? number
@@ -183,23 +183,23 @@ export type IntegerRangeUpTo<N extends number, M extends number | undefined = un
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
           ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
-            ? Neg<Exclude<_IntegerRangeUpTo<PN>, _IntegerRangeTo<PM>>>
-            : Neg<Exclude<_IntegerRangeUpTo<PM>, _IntegerRangeTo<PN>>>
-          : Neg<_IntegerRangeUpTo<PN>> | _IntegerRangeUpTo<M>
+            ? Neg<Exclude<_IntegerRangeThrough<PN>, _IntegerRangeTo<PM>>>
+            : Neg<Exclude<_IntegerRangeThrough<PM>, _IntegerRangeTo<PN>>>
+          : Neg<_IntegerRangeThrough<PN>> | _IntegerRangeThrough<M>
         : `${M}` extends `-${infer PM extends number}`
-        ? _IntegerRangeUpTo<N> | Neg<_IntegerRangeUpTo<PM>>
+        ? _IntegerRangeThrough<N> | Neg<_IntegerRangeThrough<PM>>
         : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
-        ? Exclude<_IntegerRangeUpTo<N>, _IntegerRangeTo<M>>
-        : Exclude<_IntegerRangeUpTo<M>, _IntegerRangeTo<N>>
-      : IntegerRangeUpTo<0, N>
+        ? Exclude<_IntegerRangeThrough<N>, _IntegerRangeTo<M>>
+        : Exclude<_IntegerRangeThrough<M>, _IntegerRangeTo<N>>
+      : IntegerRangeThrough<0, N>
     : never
   : never
 type _IntegerRangeTo<N extends number, Result extends Tuple = []> = Result['length'] extends N
   ? never
   : Result['length'] | _IntegerRangeTo<N, [...Result, any]>
-type _IntegerRangeUpTo<N extends number, Result extends Tuple = []> = Result['length'] extends N
+type _IntegerRangeThrough<N extends number, Result extends Tuple = []> = Result['length'] extends N
   ? N
-  : Result['length'] | _IntegerRangeUpTo<N, [...Result, any]>
+  : Result['length'] | _IntegerRangeThrough<N, [...Result, any]>
 
 /**
  * @example
@@ -226,9 +226,9 @@ export function randomIntegerTo<N extends number, M extends number>(first: N, se
   return Math.trunc(Math.random() * (to - from)) + from
 }
 
-export function randomIntegerUpTo<N extends number>(upTo: N): IntegerRangeUpTo<N>
-export function randomIntegerUpTo<N extends number, M extends number>(from: N, upTo: M): IntegerRangeUpTo<N, M>
-export function randomIntegerUpTo<N extends number, M extends number>(first: N, second?: M): number {
+export function randomIntegerThrough<N extends number>(end: N): IntegerRangeThrough<N>
+export function randomIntegerThrough<N extends number, M extends number>(start: N, end: M): IntegerRangeThrough<N, M>
+export function randomIntegerThrough<N extends number, M extends number>(first: N, second?: M): number {
   const from = second === undefined ? 0 : first
   const to = second === undefined ? first : second
   return Math.trunc(Math.random() * (to + 1 - from)) + from

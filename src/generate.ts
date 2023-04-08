@@ -39,7 +39,7 @@ type DecrementsTo<N extends number, M extends number, Result extends Tuple = []>
   ? Result
   : DecrementsTo<Decrement<N>, M, [...Result, N]>
 
-export type RangeUpTo<From extends number, To extends number | undefined = undefined> = To extends number
+export type RangeThrough<From extends number, To extends number | undefined = undefined> = To extends number
   ? number extends From
     ? number[]
     : number extends To
@@ -49,23 +49,23 @@ export type RangeUpTo<From extends number, To extends number | undefined = undef
       ? `${From}` extends `-${infer PN extends number}`
         ? `${To}` extends `-${infer PM extends number}`
           ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
-            ? IncrementsUpTo<From, To>
-            : DecrementsUpTo<From, To>
-          : IncrementsUpTo<From, To>
+            ? IncrementsThrough<From, To>
+            : DecrementsThrough<From, To>
+          : IncrementsThrough<From, To>
         : `${To}` extends `-${infer PM extends number}`
-        ? DecrementsUpTo<From, To>
+        ? DecrementsThrough<From, To>
         : OrMoreSizeArray<From> extends OrMoreSizeArray<To>
-        ? DecrementsUpTo<From, To>
-        : IncrementsUpTo<From, To>
+        ? DecrementsThrough<From, To>
+        : IncrementsThrough<From, To>
       : never
     : never
-  : RangeUpTo<0, From>
-type IncrementsUpTo<N extends number, M extends number, Result extends Tuple = []> = M extends N
+  : RangeThrough<0, From>
+type IncrementsThrough<N extends number, M extends number, Result extends Tuple = []> = M extends N
   ? [...Result, N]
-  : IncrementsUpTo<Increment<N>, M, [...Result, N]>
-type DecrementsUpTo<N extends number, M extends number, Result extends Tuple = []> = M extends N
+  : IncrementsThrough<Increment<N>, M, [...Result, N]>
+type DecrementsThrough<N extends number, M extends number, Result extends Tuple = []> = M extends N
   ? [...Result, N]
-  : DecrementsUpTo<Decrement<N>, M, [...Result, N]>
+  : DecrementsThrough<Decrement<N>, M, [...Result, N]>
 
 /**
  * @example
@@ -119,9 +119,9 @@ export namespace rangeTo {
   }
 }
 
-export function rangeUpTo<To extends number>(to: To): RangeUpTo<To>
-export function rangeUpTo<From extends number, To extends number>(from: From, to: To): RangeUpTo<From, To>
-export function rangeUpTo<N extends number, M extends number>(n: N, m?: M): number[] {
+export function rangeThrough<To extends number>(to: To): RangeThrough<To>
+export function rangeThrough<From extends number, To extends number>(from: From, to: To): RangeThrough<From, To>
+export function rangeThrough<N extends number, M extends number>(n: N, m?: M): number[] {
   const [from, to] = m === undefined ? [0, n] : [n, m]
 
   const result = []

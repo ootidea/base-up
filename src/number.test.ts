@@ -1,4 +1,4 @@
-import { clamp, factorialOf, gcdOf, modOf, randomIntegerTo, randomIntegerUpTo, roundAt } from './number'
+import { clamp, factorialOf, gcdOf, modOf, randomIntegerThrough, randomIntegerTo, roundAt } from './number'
 
 test('randomIntegerTo', () => {
   expect(randomIntegerTo(1)).toBe(0)
@@ -19,20 +19,20 @@ test('randomIntegerTo', () => {
   expect(randomIntegerTo(2, -2) <= 2).toBe(true)
 })
 
-test('randomIntegerUpTo', () => {
-  expect(randomIntegerUpTo(0)).toBe(0)
-  expect(randomIntegerUpTo(3) <= 3).toBe(true)
-  expect(0 <= randomIntegerUpTo(3)).toBe(true)
-  expect(randomIntegerUpTo(-2) <= 0).toBe(true)
-  expect(-2 <= randomIntegerUpTo(-2)).toBe(true)
+test('randomIntegerThrough', () => {
+  expect(randomIntegerThrough(0)).toBe(0)
+  expect(randomIntegerThrough(3) <= 3).toBe(true)
+  expect(0 <= randomIntegerThrough(3)).toBe(true)
+  expect(randomIntegerThrough(-2) <= 0).toBe(true)
+  expect(-2 <= randomIntegerThrough(-2)).toBe(true)
 
-  expect(randomIntegerUpTo(20, 30) <= 30).toBe(true)
-  expect(20 <= randomIntegerUpTo(20, 30)).toBe(true)
-  expect(randomIntegerUpTo(5, 5)).toBe(5)
-  expect(-2 <= randomIntegerUpTo(-2, 2)).toBe(true)
-  expect(randomIntegerUpTo(-2, 2) <= 2).toBe(true)
-  expect(-2 <= randomIntegerUpTo(2, -2)).toBe(true)
-  expect(randomIntegerUpTo(2, -2) <= 2).toBe(true)
+  expect(randomIntegerThrough(20, 30) <= 30).toBe(true)
+  expect(20 <= randomIntegerThrough(20, 30)).toBe(true)
+  expect(randomIntegerThrough(5, 5)).toBe(5)
+  expect(-2 <= randomIntegerThrough(-2, 2)).toBe(true)
+  expect(randomIntegerThrough(-2, 2) <= 2).toBe(true)
+  expect(-2 <= randomIntegerThrough(2, -2)).toBe(true)
+  expect(randomIntegerThrough(2, -2) <= 2).toBe(true)
 })
 
 test('clamp', () => {

@@ -1,4 +1,4 @@
-import { fromEntries, rangeTo, rangeUpTo, repeat, repeatApply } from './generate'
+import { fromEntries, rangeThrough, rangeTo, repeat, repeatApply } from './generate'
 import { take } from './transform'
 
 test('rangeTo', () => {
@@ -14,15 +14,15 @@ test('rangeTo', () => {
   expect([...rangeTo.Iterable(5)]).toStrictEqual([0, 1, 2, 3, 4])
 })
 
-test('rangeUpTo', () => {
-  expect(rangeUpTo(3)).toStrictEqual([0, 1, 2, 3])
-  expect(rangeUpTo(-3)).toStrictEqual([0, -1, -2, -3])
-  expect(rangeUpTo(0)).toStrictEqual([0])
-  expect(rangeUpTo(2, 5)).toStrictEqual([2, 3, 4, 5])
-  expect(rangeUpTo(2, -2)).toStrictEqual([2, 1, 0, -1, -2])
-  expect(rangeUpTo(-2, 2)).toStrictEqual([-2, -1, 0, 1, 2])
-  expect(rangeUpTo(-2, -5)).toStrictEqual([-2, -3, -4, -5])
-  expect(rangeUpTo(3, 3)).toStrictEqual([3])
+test('rangeThrough', () => {
+  expect(rangeThrough(3)).toStrictEqual([0, 1, 2, 3])
+  expect(rangeThrough(-3)).toStrictEqual([0, -1, -2, -3])
+  expect(rangeThrough(0)).toStrictEqual([0])
+  expect(rangeThrough(2, 5)).toStrictEqual([2, 3, 4, 5])
+  expect(rangeThrough(2, -2)).toStrictEqual([2, 1, 0, -1, -2])
+  expect(rangeThrough(-2, 2)).toStrictEqual([-2, -1, 0, 1, 2])
+  expect(rangeThrough(-2, -5)).toStrictEqual([-2, -3, -4, -5])
+  expect(rangeThrough(3, 3)).toStrictEqual([3])
 })
 
 test('repeat', () => {

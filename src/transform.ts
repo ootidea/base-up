@@ -3,7 +3,7 @@ import { ltToComparator } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
 import { newMap, NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
-import { IntegerRangeUpTo } from './number'
+import { IntegerRangeThrough } from './number'
 import { newPromise } from './Promise'
 import { newSet, NonEmptySet, ReadonlyNonEmptySet } from './Set'
 
@@ -86,7 +86,7 @@ export namespace take {
  */
 export type Drop<T extends Tuple, N extends number> = N extends N
   ? number extends N
-    ? Drop<T, IntegerRangeUpTo<T['length']>>
+    ? Drop<T, IntegerRangeThrough<T['length']>>
     : _Drop<T, FixedSizeArray<N>>
   : never
 type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]
