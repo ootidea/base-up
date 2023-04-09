@@ -2,6 +2,22 @@ import { FixedSizeArray, OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from '.
 
 /**
  * @example
+ * IsInteger<12.34> is equivalent to false
+ * IsInteger<-12> is equivalent to true
+ * IsInteger<0.1e-15> is equivalent to false
+ * IsInteger<1e+100> is equivalent to true
+ * @example
+ * IsInteger<12, []> is equivalent to []
+ * IsInteger<0.5, number, never> is equivalent to never
+ */
+export type IsInteger<N extends number, Then = true, Else = false> = `${N}` extends
+  | `${string}.${string}`
+  | `${string}e-${string}`
+  ? Else
+  : Then
+
+/**
+ * @example
  * Abs<-3> is equivalent to 3
  * Abs<0.12> is equivalent to 0.12
  * Abs<-0> is equivalent to 0
