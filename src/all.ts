@@ -9,7 +9,10 @@ export {
   padEnd,
   padStart,
   take,
+  drop,
+  type Drop,
   reverse,
+  type Reverse,
   unique,
   uniqueBy,
 } from './transform'
