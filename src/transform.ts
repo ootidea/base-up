@@ -161,20 +161,15 @@ export function padEnd<T, N extends number>(self: readonly T[], length: N, value
   return [...self, ...repeat(paddingSize, value)] as any
 }
 
-export function sort<T>(self: []): []
-export function sort<T>(self: readonly [T]): [T]
-export function sort<T>(self: ReadonlyNonEmptyArray<T>): NonEmptyArray<T>
-export function sort<T>(self: readonly T[]): T[]
-export function sort<T>(self: readonly T[]): T[] {
+export function sort<const T extends Tuple>(self: T): FixedSizeArray<T['length'], T[number]> {
   return sortBy(self, identity)
 }
 
-export function sortBy<T, U>(self: [], by: (_: T) => U): []
-export function sortBy<T, U>(self: readonly [T], by: (_: T) => U): [T]
-export function sortBy<T, U>(self: ReadonlyNonEmptyArray<T>, by: (_: T) => U): NonEmptyArray<T>
-export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): T[]
-export function sortBy<T, U>(self: readonly T[], by: (_: T) => U): T[] {
-  return [...self].sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs)))
+export function sortBy<const T extends Tuple, U>(
+  self: T,
+  by: (_: T[number]) => U
+): FixedSizeArray<T['length'], T[number]> {
+  return [...self].sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs))) as any
 }
 
 /**
