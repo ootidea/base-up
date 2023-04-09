@@ -1,5 +1,5 @@
 import { FixedSizeArray, OrMoreSizeArray, Tuple } from './Array'
-import { Decrement, Increment } from './number'
+import { Drop, Reverse } from './transform'
 
 /**
  * @example
@@ -11,6 +11,23 @@ import { Decrement, Increment } from './number'
  * @example
  * RangeUntil<number> is equivalent to number[]
  */
+/**
+ * @example
+ * RangeUntil<3> is equivalent to [0, 1, 2]
+ * RangeUntil<2, 5> is equivalent to [2, 3, 4]
+ * RangeUntil<5, 2> is equivalent to [5, 4, 3]
+ * RangeUntil<7, 7> is equivalent to []
+ * @example
+ * RangeUntil<-3, 2> is equivalent to [-3, -2, -1, 0, 1]
+ * RangeUntil<3, -2> is equivalent to [3, 2, 1, 0, -1]
+ * RangeUntil<-1, -3> is equivalent to [-1, -2]
+ * RangeUntil<-3, -1> is equivalent to [-3, -2]
+ * @example
+ * RangeUntil<2 | -2> is equivalent to [0, 1] | [0, -1]
+ * RangeUntil<1, 3 | 5> is equivalent to [1, 2] | [1, 2, 3, 4]
+ * RangeUntil<0 | 2, 4> is equivalent to [0, 1, 2, 3] | [2, 3]
+ * RangeUntil<number> is equivalent to number[]
+ */
 export type RangeUntil<From extends number, To extends number | undefined = undefined> = To extends number
   ? number extends From
     ? number[]
@@ -20,25 +37,36 @@ export type RangeUntil<From extends number, To extends number | undefined = unde
     ? To extends To
       ? `${From}` extends `-${infer PN extends number}`
         ? `${To}` extends `-${infer PM extends number}`
-          ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
-            ? IncrementsUntil<From, To>
-            : DecrementsUntil<From, To>
-          : IncrementsUntil<From, To>
+          ? OrMoreSizeArray<PM> extends OrMoreSizeArray<PN>
+            ? ToNegativeNumbers<Drop<NaturalNumbersUntil<PM>, PN>>
+            : ToNegativeNumbers<Reverse<Drop<NaturalNumbersThrough<PN>, NaturalNumbersThrough<PM>['length']>>>
+          : [...ToNegativeNumbers<Reverse<PositiveIntegersThrough<PN>>>, ...NaturalNumbersUntil<To>]
         : `${To}` extends `-${infer PM extends number}`
-        ? DecrementsUntil<From, To>
-        : OrMoreSizeArray<From> extends OrMoreSizeArray<To>
-        ? DecrementsUntil<From, To>
-        : IncrementsUntil<From, To>
+        ? [...Reverse<PositiveIntegersThrough<From>>, ...ToNegativeNumbers<NaturalNumbersUntil<PM>>]
+        : OrMoreSizeArray<To> extends OrMoreSizeArray<From>
+        ? Drop<NaturalNumbersUntil<To>, From>
+        : Reverse<Drop<NaturalNumbersThrough<From>, NaturalNumbersThrough<To>['length']>>
       : never
     : never
   : RangeUntil<0, From>
-type IncrementsUntil<N extends number, M extends number, Result extends Tuple = []> = M extends N
-  ? Result
-  : IncrementsUntil<Increment<N>, M, [...Result, N]>
-type DecrementsUntil<N extends number, M extends number, Result extends Tuple = []> = M extends N
-  ? Result
-  : DecrementsUntil<Decrement<N>, M, [...Result, N]>
 
+/**
+ * @example
+ * RangeThrough<3> is equivalent to [0, 1, 2, 3]
+ * RangeThrough<2, 5> is equivalent to [2, 3, 4, 5]
+ * RangeThrough<5, 2> is equivalent to [5, 4, 3, 2]
+ * RangeThrough<7, 7> is equivalent to [7]
+ * @example
+ * RangeThrough<-3, 2> is equivalent to [-3, -2, -1, 0, 1, 2]
+ * RangeThrough<3, -2> is equivalent to [3, 2, 1, 0, -1, -2]
+ * RangeThrough<-1, -3> is equivalent to [-1, -2, -3]
+ * RangeThrough<-3, -1> is equivalent to [-3, -2, -1]
+ * @example
+ * RangeThrough<2 | -2> is equivalent to [0, 1, 2] | [0, -1, -2]
+ * RangeThrough<1, 3 | 5> is equivalent to [1, 2, 3] | [1, 2, 3, 4, 5]
+ * RangeThrough<0 | 2, 4> is equivalent to [0, 1, 2, 3, 4] | [2, 3, 4]
+ * RangeThrough<number> is equivalent to number[]
+ */
 export type RangeThrough<From extends number, To extends number | undefined = undefined> = To extends number
   ? number extends From
     ? number[]
@@ -48,24 +76,98 @@ export type RangeThrough<From extends number, To extends number | undefined = un
     ? To extends To
       ? `${From}` extends `-${infer PN extends number}`
         ? `${To}` extends `-${infer PM extends number}`
-          ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
-            ? IncrementsThrough<From, To>
-            : DecrementsThrough<From, To>
-          : IncrementsThrough<From, To>
+          ? OrMoreSizeArray<PM> extends OrMoreSizeArray<PN>
+            ? ToNegativeNumbers<Drop<NaturalNumbersThrough<PM>, PN>>
+            : ToNegativeNumbers<Reverse<Drop<NaturalNumbersThrough<PN>, PM>>>
+          : [...ToNegativeNumbers<Reverse<PositiveIntegersThrough<PN>>>, ...NaturalNumbersThrough<To>]
         : `${To}` extends `-${infer PM extends number}`
-        ? DecrementsThrough<From, To>
-        : OrMoreSizeArray<From> extends OrMoreSizeArray<To>
-        ? DecrementsThrough<From, To>
-        : IncrementsThrough<From, To>
+        ? [...Reverse<PositiveIntegersThrough<From>>, ...ToNegativeNumbers<NaturalNumbersThrough<PM>>]
+        : OrMoreSizeArray<To> extends OrMoreSizeArray<From>
+        ? Drop<NaturalNumbersThrough<To>, From>
+        : Reverse<Drop<NaturalNumbersThrough<From>, To>>
       : never
     : never
   : RangeThrough<0, From>
-type IncrementsThrough<N extends number, M extends number, Result extends Tuple = []> = M extends N
-  ? [...Result, N]
-  : IncrementsThrough<Increment<N>, M, [...Result, N]>
-type DecrementsThrough<N extends number, M extends number, Result extends Tuple = []> = M extends N
-  ? [...Result, N]
-  : DecrementsThrough<Decrement<N>, M, [...Result, N]>
+
+/**
+ * @example
+ * NaturalNumbersUntil<3> is equivalent to [0, 1, 2]
+ * NaturalNumbersUntil<0> is equivalent to []
+ * NaturalNumbersUntil<1 | 2> is equivalent to [0] | [0, 1]
+ * NaturalNumbersUntil<number> is equivalent to never
+ */
+type NaturalNumbersUntil<N extends number> = number extends N
+  ? never
+  : N extends N
+  ? _NaturalNumbersUntil<N, []>
+  : never
+type _NaturalNumbersUntil<N extends number, Acc extends Tuple> = Acc['length'] extends N
+  ? Acc
+  : _NaturalNumbersUntil<N, [...Acc, Acc['length']]>
+
+/**
+ * @example
+ * NaturalNumbersThrough<3> is equivalent to [0, 1, 2, 3]
+ * NaturalNumbersThrough<0> is equivalent to [0]
+ * NaturalNumbersThrough<1 | 2> is equivalent to [0, 1] | [0, 1, 2]
+ * NaturalNumbersThrough<number> is equivalent to never
+ */
+type NaturalNumbersThrough<N extends number> = number extends N
+  ? never
+  : N extends N
+  ? _NaturalNumbersThrough<N, []>
+  : never
+type _NaturalNumbersThrough<N extends number, Acc extends Tuple> = Acc['length'] extends N
+  ? [...Acc, Acc['length']]
+  : _NaturalNumbersThrough<N, [...Acc, Acc['length']]>
+
+/**
+ * @example
+ * PositiveIntegersUntil<3> is equivalent to [1, 2]
+ * PositiveIntegersUntil<1 | 2> is equivalent to [] | [1]
+ * PositiveIntegersUntil<0> is equivalent to []
+ * PositiveIntegersUntil<number> is equivalent to never
+ */
+type PositiveIntegersUntil<N extends number> = number extends N
+  ? never
+  : N extends N
+  ? _PositiveIntegersUntil<Drop<FixedSizeArray<N>, 1>, []>
+  : never
+type _PositiveIntegersUntil<Size extends Tuple, Acc extends Tuple> = Acc extends Size
+  ? Acc
+  : _PositiveIntegersUntil<Size, [...Acc, [any, ...Acc]['length']]>
+
+/**
+ * @example
+ * PositiveIntegersThrough<3> is equivalent to [1, 2, 3]
+ * PositiveIntegersThrough<1 | 2> is equivalent to [1] | [1, 2]
+ * PositiveIntegersThrough<0> is equivalent to []
+ * PositiveIntegersThrough<number> is equivalent to never
+ */
+type PositiveIntegersThrough<N extends number> = number extends N
+  ? never
+  : N extends 0
+  ? []
+  : N extends N
+  ? _PositiveIntegersUntil<FixedSizeArray<N>, []>
+  : never
+
+/**
+ * @example
+ * ToNegativeNumbers<[1, 2, -3]> is equivalent to [-1, -2, -3]
+ * ToNegativeNumbers<[0]> is equivalent to [0]
+ * ToNegativeNumbers<[]> is equivalent to []
+ */
+type ToNegativeNumbers<T extends readonly number[]> = T extends readonly [
+  infer H extends number,
+  ...infer L extends readonly number[]
+]
+  ? H extends 0
+    ? [0, ...ToNegativeNumbers<L>]
+    : `-${H}` extends `${infer N extends number}`
+    ? [N, ...ToNegativeNumbers<L>]
+    : [H, ...ToNegativeNumbers<L>]
+  : []
 
 /**
  * @example
