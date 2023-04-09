@@ -113,6 +113,13 @@ export namespace remove {
   }
 }
 
+export function moveTo<T>(self: readonly T[], from: number, to: number): T[] {
+  const cloned = [...self]
+  const [removed] = cloned.splice(from, 1)
+  cloned.splice(modOf(to, self.length), 0, removed)
+  return cloned
+}
+
 export function set<T, K extends keyof T>(self: T, key: K, value: T[K]): T
 export function set<T, K extends keyof T, V>(self: T, key: K, value: V): Omit<T, K> & Record<K, V>
 export function set<K extends keyof any>(self: any, key: K, value: unknown): any {
