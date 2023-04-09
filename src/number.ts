@@ -237,6 +237,22 @@ export function randomIntegerThrough<N extends number, M extends number>(first: 
   return Math.trunc(Math.random() * (to + 1 - from)) + from
 }
 
+/**
+ * The clamp function restricts a given input value to a specified range or interval, by constraining it to a minimum and maximum value.
+ * If the input value is within the specified range, the function returns the input value itself.
+ * However, if the input value is outside of the specified range, the function returns the nearest boundary value that it is constrained to.
+ *
+ * @example
+ * clamp(0, 50, 100) returns 50
+ * clamp(0, 110, 100) returns 100
+ * clamp(0, -20, 100) returns 0
+ * @example
+ * clamp(0, Infinity, 100) returns 100
+ * clamp(0, -Infinity, 100) returns 0
+ * @example
+ * clamp(0, 50, Infinity) returns 50
+ * clamp(-Infinity, 50, 100) returns 50
+ */
 export function clamp(min: number, value: number, max: number): number {
   return Math.max(min, Math.min(value, max))
 }
