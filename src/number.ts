@@ -259,6 +259,8 @@ export function clamp(min: number, value: number, max: number): number {
 
 /**
  * Function to calculate modulo instead of reminder.
+ * Unlike the % operator, the modOf function handles negative numbers differently, such that the result has the same sign as the divisor.
+ *
  * @example
  * modOf(4, 3) returns 1
  * modOf(3, 3) returns 0

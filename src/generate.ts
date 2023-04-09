@@ -256,14 +256,19 @@ type _RepeatArray<N extends number, A extends Tuple, L extends Tuple = [], R ext
   ? R
   : _RepeatArray<N, A, [...L, any], [...R, ...A]>
 
+/**
+ * @example
+ * repeat(3, 'a') returns ['a', 'a', 'a']
+ * repeat(2, true, false) returns [true, false, true, false]
+ */
 export function repeat<N extends number, const T extends Tuple>(count: N, ...values: T): RepeatArray<N, T> {
   return Array.from({ length: count * values.length }, (_, i) => values[i % values.length]) as any
 }
 export namespace repeat {
   /**
    * @example
-   * repeat('a') yields 'a', 'a', 'a', ...
-   * repeat(1, 2) yields 1, 2, 1, 2, ...
+   * repeat.Iterable('a') yields 'a', 'a', 'a', ...
+   * repeat.Iterable(1, 2) yields 1, 2, 1, 2, ...
    */
   export function* Iterable<const T extends Tuple>(...values: T): Generator<T[number], void, undefined> {
     while (true) yield* values
@@ -291,7 +296,16 @@ export namespace repeatApply {
   }
 }
 
-/** Function with improved type of Object.fromEntries. */
-export function fromEntries<T extends readonly [any, any]>(entries: Iterable<T>): Record<T[0], T[1]> {
+/**
+ * Function that improves the type of Object.fromEntries.
+ *
+ * @example
+ * fromEntries([['a', 1], ['b', 2]]) returns { a: 1, b: 2 }
+ * fromEntries([['a', 1], ['b', 2]]) is typed as Record<'a' | 'b', 1 | 2>
+ * @example
+ * fromEntries([]) returns {}
+ * fromEntries([]) is typed as Record<never, never>
+ */
+export function fromEntries<const T extends readonly [any, any]>(entries: Iterable<T>): Record<T[0], T[1]> {
   return Object.fromEntries(entries) as any
 }

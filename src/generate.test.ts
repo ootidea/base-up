@@ -27,18 +27,23 @@ test('rangeThrough', () => {
 
 test('repeat', () => {
   expect(repeat(3, true)).toStrictEqual([true, true, true])
-  expect(repeat(2, true, 'done')).toStrictEqual([true, 'done', true, 'done'])
+  expect(repeat(2, 0.5, 'done')).toStrictEqual([0.5, 'done', 0.5, 'done'])
+  expect(repeat(1, 123)).toStrictEqual([123])
   expect(repeat(0, 123)).toStrictEqual([])
+})
 
+test('repeat.Iterator', () => {
   expect(take(repeat.Iterable(true), 5)).toStrictEqual([true, true, true, true, true])
-  expect(take(repeat.Iterable(1, 2), 4)).toStrictEqual([1, 2, 1, 2])
+  expect(take(repeat.Iterable(0, 9), 4)).toStrictEqual([0, 9, 0, 9])
 })
 
 test('repeatApply', () => {
   expect(repeatApply(4, -5, (x) => x * -2)).toStrictEqual([-5, 10, -20, 40])
   expect(repeatApply(3, 'title', (text) => 're: ' + text)).toStrictEqual(['title', 're: title', 're: re: title'])
   expect(repeatApply(0, '123', (x) => x + 1)).toStrictEqual([])
+})
 
+test('repeatApply.Iterator', () => {
   expect(
     take(
       repeatApply.Iterator(0, (x) => x + 3),
