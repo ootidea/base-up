@@ -55,8 +55,7 @@ export namespace insertAt {
 // TODO: support tuple
 export function removeAt<T>(self: readonly T[], i: number): T[] {
   const cloned = [...self]
-  // TODO: support negative index
-  cloned.splice(i, 1)
+  cloned.splice(modOf(i, cloned.length), 1)
   return cloned
 }
 export namespace removeAt {

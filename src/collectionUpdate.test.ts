@@ -1,4 +1,4 @@
-import { insertAt, push, unshift } from './collectionUpdate'
+import { insertAt, push, removeAt, unshift } from './collectionUpdate'
 import { repeat } from './generate'
 import { take } from './transform'
 
@@ -29,4 +29,15 @@ test('insertAt', () => {
   expect(take(insertAt.Iterable(repeat.Iterable(true), 2, false), 4)).toStrictEqual([true, true, false, true])
   expect(take(insertAt.Iterable(repeat.Iterable(true), 6, false), 4)).toStrictEqual([true, true, true, true])
   expect(take(insertAt.Iterable(repeat.Iterable(true), -1, false), 4)).toStrictEqual([true, true, true, true])
+})
+
+test('removeAt', () => {
+  expect(removeAt([0, 1, 2], 0)).toStrictEqual([1, 2])
+  expect(removeAt([0, 1, 2], 1)).toStrictEqual([0, 2])
+  expect(removeAt([0, 1, 2], 2)).toStrictEqual([0, 1])
+  expect(removeAt([0, 1, 2], 3)).toStrictEqual([1, 2])
+  expect(removeAt([0, 1, 2], -1)).toStrictEqual([0, 1])
+  expect(removeAt([0, 1, 2], -2)).toStrictEqual([0, 2])
+  expect(removeAt([0, 1, 2], -3)).toStrictEqual([1, 2])
+  expect(removeAt([0, 1, 2], -4)).toStrictEqual([0, 1])
 })
