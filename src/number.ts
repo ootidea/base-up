@@ -1,4 +1,5 @@
 import { FixedSizeArray, OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
+import { includes } from './collectionPredicate'
 
 /**
  * @example
@@ -342,4 +343,43 @@ function binaryGcdOf(a: number, b: number): number {
   if (b === 0) return a
 
   return binaryGcdOf(b, a % b)
+}
+
+/**
+ * Determines whether a given number is a prime number using the wheel factorization method with the base 2-3-5-7.
+ *
+ * @example
+ * isPrimeNumber(2) returns true
+ * isPrimeNumber(3) returns true
+ * isPrimeNumber(4) returns false
+ * @example
+ * isPrimeNumber(-1) returns false
+ * isPrimeNumber(0) returns false
+ * isPrimeNumber(1) returns false
+ * isPrimeNumber(2.5) returns false
+ * isPrimeNumber(Infinite) returns false
+ */
+export function isPrimeNumber(n: number): boolean {
+  if (n <= 1 || !Number.isFinite(n) || !Number.isInteger(n)) return false
+
+  const BASE_PRIME_NUMBERS = [2, 3, 5, 7]
+  const WHEEL = [
+    2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, 6, 4, 6, 8, 4, 2, 4, 2, 4, 8, 6, 4, 6, 2, 4, 6, 2, 6, 6, 4, 2, 4, 6,
+    2, 6, 4, 2, 4, 2, 10, 2, 10,
+  ]
+
+  if (includes(BASE_PRIME_NUMBERS, n)) return true
+
+  if (BASE_PRIME_NUMBERS.some((p) => n % p === 0)) return false
+
+  let i = 11
+  let c = 0
+  const upperBound = Math.sqrt(n) + 1
+  while (i < upperBound) {
+    if (n % i === 0) return false
+
+    i += WHEEL[c % WHEEL.length]!
+    c++
+  }
+  return true
 }
