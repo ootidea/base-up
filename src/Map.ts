@@ -12,11 +12,16 @@ export function newMap<K, T>(...args: ConstructorParameters<typeof Map<K, T>>): 
   return new Map(...args)
 }
 
-export function mapOf<H extends readonly [any, any], T extends readonly [any, any][]>(
-  head: H,
-  ...tail: T
-): NonEmptyMap<H[0] | T[number][0], H[1] | T[number][1]>
-export function mapOf<T extends readonly [any, any][]>(...args: T): Map<T[number][0], T[number][1]>
-export function mapOf<T extends readonly [any, any][]>(...args: T): Map<T[number][0], T[number][1]> {
+/**
+ * Create a Map object from a tuple of key-value pairs.
+ * More precisely typed than Map constructor.
+ * @example
+ * mapOf([true, 1], [false, 0]) returns new Map([[true, 1], [false, 0]])
+ * mapOf([true, 1], [false, 0]) is typed as Map<boolean, 0 | 1>
+ * @example
+ * mapOf() returns new Map()
+ * mapOf() is typed as Map<never, never>
+ */
+export function mapOf<const T extends readonly (readonly [any, any])[]>(...args: T): Map<T[number][0], T[number][1]> {
   return new Map(args)
 }

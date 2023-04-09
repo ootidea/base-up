@@ -1,3 +1,4 @@
+import { expect } from 'vitest'
 import { mapOf } from './Map'
 
 test('mapOf', () => {
@@ -8,4 +9,5 @@ test('mapOf', () => {
       [false, 0],
     ])
   )
+  expect(mapOf()).toStrictEqual(new Map())
 })
