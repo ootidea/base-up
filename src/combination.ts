@@ -31,7 +31,7 @@ export namespace permutationOf {
   }
 }
 
-export function slide<T, N extends number>(self: readonly T[], n: N): (readonly T[])[] {
+export function slide<const T extends Tuple, N extends number>(self: T, n: N): [T[number], T[number]][] {
   const result = []
   if (n < 0) throw new RangeError()
 
@@ -40,7 +40,7 @@ export function slide<T, N extends number>(self: readonly T[], n: N): (readonly 
   for (let i = 0; i + n - 1 < self.length; i++) {
     result.push(self.slice(i, i + n))
   }
-  return result
+  return result as any
 }
 
 export function prefixesOf<T>(self: readonly T[]): NonEmptyArray<readonly T[]> {
