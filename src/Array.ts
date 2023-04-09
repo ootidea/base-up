@@ -1,4 +1,4 @@
-import { IntegerRangeThrough, randomIntegerUntil } from './number'
+import { IntegerRangeThrough, randomIntegerThrough } from './number'
 
 export type Tuple = readonly any[]
 
@@ -49,9 +49,9 @@ export type OrLessSizeArray<N extends number, T = unknown> = FixedSizeArray<Inte
 export function shuffle<const T extends Tuple>(self: T): FixedSizeArray<T['length'], T[number]> {
   const result: T[] = []
   for (let i = 0; i < self.length; ++i) {
-    const j = randomIntegerUntil(i + 1)
+    const j = randomIntegerThrough(i)
     if (j < i) {
-      result.push(result[j])
+      result.push(result[j]!)
     }
     result[j] = self[i]
   }

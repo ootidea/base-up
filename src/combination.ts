@@ -21,7 +21,7 @@ export function permutationOf<T>(self: readonly T[], n: number = self.length): (
   if (self.length <= 1) return [self]
 
   return rangeUntil(self.length).flatMap((i) => {
-    const value = self[i]
+    const value = self[i]!
     return permutationOf(removeAt(self, i), n - 1).map((rest) => [value, ...rest])
   })
 }

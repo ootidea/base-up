@@ -82,7 +82,7 @@ export function merge<T, U>(lhs: readonly T[], rhs: readonly U[]): (T | U)[] {
   const result = []
   const minLength = Math.min(lhs.length, rhs.length)
   for (let i = 0; i < minLength; ++i) {
-    result.push(lhs[i], rhs[i])
+    result.push(lhs[i]!, rhs[i]!)
   }
   if (lhs.length === minLength) {
     result.push(...rhs.slice(minLength))

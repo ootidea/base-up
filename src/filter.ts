@@ -1,4 +1,5 @@
 import { ReadonlyNonEmptyArray } from './Array'
+import { isNotEmpty } from './collectionPredicate'
 import { update } from './collectionUpdate'
 import { newSet } from './Set'
 
@@ -95,7 +96,7 @@ export function indexesOf<T>(self: readonly T[], value: T): number[] {
 export function maxOf<const T>(self: ReadonlyNonEmptyArray<T>): T
 export function maxOf<T>(self: readonly T[]): T | undefined
 export function maxOf<T>(self: readonly T[]): T | undefined {
-  if (self.length === 0) return undefined
+  if (!isNotEmpty(self)) return undefined
 
   const [firstElement, ...rest] = self
   let candidateElement = firstElement
@@ -107,17 +108,17 @@ export function maxOf<T>(self: readonly T[]): T | undefined {
   return candidateElement
 }
 
-export function maxBy<const T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => unknown): T
-export function maxBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined
-export function maxBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined {
-  if (self.length === 0) return undefined
+export function maxBy<const T, U>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => U): T
+export function maxBy<T, U>(self: readonly T[], by: (element: T) => U): T | undefined
+export function maxBy<T, U>(self: readonly T[], by: (element: T) => U): T | undefined {
+  if (!isNotEmpty(self)) return undefined
 
   const [firstElement, ...rest] = self
   let candidateElement = firstElement
   let maxValue = by(firstElement)
   for (const element of rest) {
     const value = by(element)
-    if ((maxValue as any) < (value as any)) {
+    if (maxValue < value) {
       candidateElement = element
       maxValue = value
     }
@@ -128,7 +129,7 @@ export function maxBy<T>(self: readonly T[], by: (element: T) => unknown): T | u
 export function minOf<const T>(self: ReadonlyNonEmptyArray<T>): T
 export function minOf<T>(self: readonly T[]): T | undefined
 export function minOf<T>(self: readonly T[]): T | undefined {
-  if (self.length === 0) return undefined
+  if (!isNotEmpty(self)) return undefined
 
   const [firstElement, ...rest] = self
   let candidateElement = firstElement
@@ -140,17 +141,17 @@ export function minOf<T>(self: readonly T[]): T | undefined {
   return candidateElement
 }
 
-export function minBy<const T>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => unknown): T
-export function minBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined
-export function minBy<T>(self: readonly T[], by: (element: T) => unknown): T | undefined {
-  if (self.length === 0) return undefined
+export function minBy<const T, U>(self: ReadonlyNonEmptyArray<T>, by: (element: T) => U): T
+export function minBy<T, U>(self: readonly T[], by: (element: T) => U): T | undefined
+export function minBy<T, U>(self: readonly T[], by: (element: T) => U): T | undefined {
+  if (!isNotEmpty(self)) return undefined
 
   const [firstElement, ...rest] = self
   let candidateElement = firstElement
   let minValue = by(firstElement)
   for (const element of rest) {
     const value = by(element)
-    if ((minValue as any) > (value as any)) {
+    if (minValue > value) {
       candidateElement = element
       minValue = value
     }

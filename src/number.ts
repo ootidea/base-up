@@ -312,9 +312,10 @@ export function factorialOf(n: number): number {
 }
 
 export function gcdOf(...values: ReadonlyNonEmptyArray<number>): number {
-  let result = values[0]
-  for (let i = 1; i < values.length; i++) {
-    result = binaryGcdOf(result, values[i])
+  const [first, ...rest] = values
+  let result = first
+  for (const value of rest) {
+    result = binaryGcdOf(result, value)
   }
   return result
 }

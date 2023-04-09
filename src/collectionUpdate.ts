@@ -115,8 +115,8 @@ export namespace remove {
 
 export function moveTo<T>(self: readonly T[], from: number, to: number): T[] {
   const cloned = [...self]
-  const [removed] = cloned.splice(from, 1)
-  cloned.splice(modOf(to, self.length), 0, removed)
+  const [removed] = cloned.splice(modOf(from, self.length), 1)
+  cloned.splice(modOf(to, self.length), 0, removed!)
   return cloned
 }
 

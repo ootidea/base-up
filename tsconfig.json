@@ -1,18 +1,12 @@
 {
+  "extends": "@tsconfig/strictest/tsconfig.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "moduleResolution": "Node",
-    "strict": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "noEmit": true,
-    "noImplicitReturns": true,
-    "noErrorTruncation": true,
-    "skipLibCheck": true,
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "verbatimModuleSyntax": false,
     "types": ["vitest/globals"]
   },
   "include": ["src"]

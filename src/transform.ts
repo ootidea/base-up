@@ -123,7 +123,7 @@ export function join<T, const U extends Tuple>(self: readonly (readonly T[])[], 
     if (i > 0) {
       result.push(...values)
     }
-    result.push(...self[i])
+    result.push(...self[i]!)
   }
   return result
 }
@@ -186,7 +186,7 @@ export function reverse<const T extends Tuple>(self: T): Reverse<T> {
 export namespace reverse {
   export function* Iterable<T>(self: readonly T[]): Generator<T> {
     for (let i = self.length - 1; i >= 0; i--) {
-      yield self[i]
+      yield self[i]!
     }
   }
 }
