@@ -36,9 +36,9 @@ export type Neg<N extends number> = N extends 0
 
 /**
  * @example
- * Trunc<-3.5> is equivalent to -3
- * Trunc<0.99> is equivalent to 0
- * Trunc<12> is equivalent to 12
+ * Trunc<3.5> is equivalent to 3
+ * Trunc<-0.09> is equivalent to 0
+ * Trunc<-12> is equivalent to -12
  * Trunc<8.2e-9> is equivalent to 0
  * Trunc<1e+100> is equivalent to 1e+100
  * Trunc<1.1 | 3.3> is equivalent to 1 | 3
@@ -47,13 +47,13 @@ export type Neg<N extends number> = N extends 0
 export type Trunc<N extends number> = number extends N
   ? number
   : N extends N
-  ? `${N}` extends `${number}e-${number}`
+  ? `${N}` extends `${string}e-${string}`
     ? 0
-    : `${N}` extends `${number}e+${number}`
+    : `${N}` extends `${string}e+${string}`
     ? N
-    : `${N}` extends `-0.${number}`
+    : `${N}` extends `-0.${string}`
     ? 0
-    : `${N}` extends `${infer I extends number}.${number}`
+    : `${N}` extends `${infer I extends number}.${string}`
     ? I
     : N
   : never
