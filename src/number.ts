@@ -282,8 +282,8 @@ export function clamp(min: number, value: number, max: number): number {
  * modOf(-3, -3) returns -0
  * modOf(-4, -3) returns -1
  */
-export function modOf(a: number, b: number): number {
-  return ((a % b) + b) % b
+export function modOf<const N extends number>(a: number, b: N): IntegerRangeUntil<N> {
+  return (((a % b) + b) % b) as any
 }
 
 /**
