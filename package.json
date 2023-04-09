@@ -4,6 +4,7 @@
   "description": "A modern TypeScript utility library",
   "keywords": [
     "stdlib",
+    "type-level",
     "functional",
     "functional-programming",
     "immutable",
@@ -15,6 +16,8 @@
     "Record",
     "map",
     "filter",
+    "take",
+    "drop",
     "shuffle",
     "sort",
     "join",
