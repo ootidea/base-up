@@ -34,7 +34,9 @@
     "lexicographic-order",
     "pipe",
     "curry",
-    "modulo"
+    "modulo",
+    "prime-test",
+    "wheel-factorization"
   ],
   "license": "CC0-1.0",
   "author": "ootidea",
