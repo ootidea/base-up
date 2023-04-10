@@ -21,7 +21,7 @@ export namespace map {
   export function Set<T, U>(self: ReadonlyNonEmptySet<T>, f: (_: T) => U): NonEmptySet<U>
   export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): Set<U>
   export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): Set<U> {
-    return newSet(map.Iterable(self.values(), f))
+    return newSet(map.Iterable(self, f))
   }
 
   export function Map<K, T, U>(self: ReadonlyNonEmptyMap<K, T>, f: (_: T) => U): NonEmptyMap<K, U>
@@ -44,7 +44,7 @@ export namespace flatten {
   export function Set<T>(self: ReadonlySet<ReadonlySet<T>>): Set<T> {
     const result = newSet<T>()
     for (const set of self) {
-      for (const value of set.values()) {
+      for (const value of set) {
         result.add(value)
       }
     }

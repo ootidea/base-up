@@ -22,7 +22,7 @@ export namespace filter {
   export function Set<T, U extends T>(self: ReadonlySet<T>, f: (_: T) => _ is U): Set<U>
   export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T>
   export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T> {
-    return newSet(filter.Iterable(self.values(), f))
+    return newSet(filter.Iterable(self, f))
   }
 }
 

@@ -49,7 +49,7 @@ export function unionOf<T, U>(lhs: ReadonlyNonEmptySet<T>, rhs: ReadonlySet<U>):
 export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlyNonEmptySet<U>): NonEmptySet<T | U>
 export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T | U> {
   const cloned = new Set<T | U>(lhs)
-  for (const value of rhs.values()) {
+  for (const value of rhs) {
     cloned.add(value)
   }
   return cloned
