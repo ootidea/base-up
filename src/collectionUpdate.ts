@@ -120,6 +120,17 @@ export function moveTo<T>(self: readonly T[], from: number, to: number): T[] {
   return cloned
 }
 
+/**
+ * @example
+ * setAt(['a', 'b', 'c'], 0, 'D') returns ['D', 'b', 'c']
+ * setAt(['a', 'b', 'c'], -1, 'D') returns ['a', 'b', 'D']
+ */
+export function setAt<T>(self: readonly T[], at: number, value: T): T[] {
+  const cloned = [...self]
+  cloned.splice(modOf(at, self.length), 1, value)
+  return cloned
+}
+
 export function set<T, K extends keyof T>(self: T, key: K, value: T[K]): T
 export function set<T, K extends keyof T, V>(self: T, key: K, value: V): Omit<T, K> & Record<K, V>
 export function set<K extends keyof any>(self: any, key: K, value: unknown): any {
