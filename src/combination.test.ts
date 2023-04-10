@@ -1,4 +1,4 @@
-import { cartesianProductOf, permutationOf, prefixesOf, slide } from './combination'
+import { cartesianProductOf, permutationOf, prefixesOf, slideWindow } from './combination'
 
 test('cartesianProductOf', () => {
   expect(cartesianProductOf([0, 1], ['a', 'b'])).toStrictEqual([
@@ -46,16 +46,16 @@ test('permutationOf', () => {
   expect(permutationOf.number(5, 2)).toBe(20)
 })
 
-test('slide', () => {
-  expect(slide([1, 2, 3], 2)).toStrictEqual([
+test('slideWindow', () => {
+  expect(slideWindow([1, 2, 3], 2)).toStrictEqual([
     [1, 2],
     [2, 3],
   ])
-  expect(slide([1, 2, 3], 3)).toStrictEqual([[1, 2, 3]])
-  expect(slide([1, 2, 3], 1)).toStrictEqual([[1], [2], [3]])
-  expect(slide([1, 2, 3], 0)).toStrictEqual([[], [], [], []])
-  expect(slide([1, 2, 3], 4)).toStrictEqual([])
-  expect(slide([], 0)).toStrictEqual([[]])
+  expect(slideWindow([1, 2, 3], 3)).toStrictEqual([[1, 2, 3]])
+  expect(slideWindow([1, 2, 3], 1)).toStrictEqual([[1], [2], [3]])
+  expect(slideWindow([1, 2, 3], 0)).toStrictEqual([[], [], [], []])
+  expect(slideWindow([1, 2, 3], 4)).toStrictEqual([])
+  expect(slideWindow([], 0)).toStrictEqual([[]])
 })
 
 test('prefixesOf', () => {
