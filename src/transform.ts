@@ -3,7 +3,6 @@ import { ltToComparator } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
 import { newMap, NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
-import { IntegerRangeThrough } from './number'
 import { newPromise } from './Promise'
 import { newSet, NonEmptySet, ReadonlyNonEmptySet } from './Set'
 
@@ -86,7 +85,7 @@ export namespace take {
  */
 export type Drop<T extends Tuple, N extends number> = N extends N
   ? number extends N
-    ? Drop<T, IntegerRangeThrough<T['length']>>
+    ? _Drop<T, OrLessSizeArray<T['length']>>
     : _Drop<T, FixedSizeArray<N>>
   : never
 type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]
@@ -94,9 +93,23 @@ type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer
     ? _Drop<TL, NL>
     : []
   : T
-
-export function drop<const T extends Tuple, N extends number>(self: T, n: N): Drop<T, N> {
-  return self.slice(n) as any
+/**
+ * Remove the first n elements from an array immutably.
+ * If the second argument is omitted, it removes only one element.
+ *
+ * @example
+ * drop([0, 1, 2]) is equivalent to [1, 2]
+ * drop([0, 1, 2], 2) is equivalent to [2]
+ * drop([0, 1, 2], 3) is equivalent to []
+ * @example
+ * drop([0, 1, 2], 4) is equivalent to []
+ * drop([0, 1, 2], 0) is equivalent to [0, 1, 2]
+ * drop([0, 1, 2], -1) is equivalent to [0, 1, 2]
+ */
+export function drop<const T extends Tuple>(self: T): Drop<T, 1>
+export function drop<const T extends Tuple, N extends number>(self: T, n: N): Drop<T, N>
+export function drop<const T extends Tuple>(self: T, n: number = 1) {
+  return self.slice(Math.max(n, 0))
 }
 
 export function tail<T>(self: ReadonlyNonEmptyArray<T>): T[]
