@@ -1,4 +1,4 @@
-import { ReadonlyNonEmptyArray } from './Array'
+import { ReadonlyNonEmptyArray, Tuple } from './Array'
 import { isNotEmpty } from './collectionPredicate'
 import { update } from './collectionUpdate'
 import { newSet } from './Set'
@@ -49,17 +49,53 @@ export namespace takeWhile {
   }
 }
 
-export function firstOf(self: []): undefined
-export function firstOf<const T>(self: readonly [T, ...unknown[]]): T
-export function firstOf<T>(self: readonly T[]): T | undefined
-export function firstOf<T>(self: readonly T[]): T | undefined {
+/**
+ * @example
+ * FirstOf<[bigint]> is equivalent to bigint
+ * FirstOf<[number, bigint]> is equivalent to number
+ * FirstOf<[]> is equivalent to undefined
+ * FirstOf<boolean[]> is equivalent to boolean | undefined
+ * FirstOf<[...string[], string]> is equivalent to string
+ * FirstOf<[...string[], number]> is equivalent to string | number
+ */
+export type FirstOf<T extends Tuple> = T extends readonly [infer First, ...any]
+  ? First
+  : T extends readonly [...infer U, infer L]
+  ? _FirstOf<U, L>
+  : T extends []
+  ? undefined
+  : T[0] | undefined
+type _FirstOf<T extends Tuple, L> = T extends []
+  ? L
+  : T extends readonly [...infer T2, infer L2]
+  ? _FirstOf<T2, L2>
+  : T[0] | L
+export function firstOf<const T extends Tuple>(self: T): FirstOf<T> {
   return self[0]
 }
 
-export function lastOf(self: []): undefined
-export function lastOf<const T>(self: readonly [...unknown[], T]): T
-export function lastOf<T>(self: readonly T[]): T | undefined
-export function lastOf<T>(self: readonly T[]): T | undefined {
+/**
+ * @example
+ * LastOf<[bigint]> is equivalent to bigint
+ * LastOf<[bigint, number]> is equivalent to number
+ * LastOf<[]> is equivalent to undefined
+ * LastOf<boolean[]> is equivalent to boolean | undefined
+ * LastOf<[string, ...string[]]> is equivalent to string
+ * LastOf<[boolean, ...string[]]> is equivalent to boolean | string
+ */
+export type LastOf<T extends Tuple> = T extends readonly [...any, infer Last]
+  ? Last
+  : T extends readonly [infer F, ...infer U]
+  ? _LastOf<F, U>
+  : T extends []
+  ? undefined
+  : T[0] | undefined
+type _LastOf<F, T extends Tuple> = T extends []
+  ? F
+  : T extends readonly [infer F2, ...infer T2]
+  ? _LastOf<F2, T2>
+  : F | T[0]
+export function lastOf<const T extends Tuple>(self: T): LastOf<T> {
   return self[self.length - 1]
 }
 
