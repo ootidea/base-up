@@ -1,9 +1,10 @@
 import { IntegerRangeThrough, randomIntegerThrough } from './number'
+import { Drop } from './transform'
 
 export type Tuple = readonly any[]
 
-export type NonEmptyArray<T> = [T, ...T[]]
-export type ReadonlyNonEmptyArray<T> = readonly [T, ...T[]]
+export type NonEmptyArray<T> = [T, ...T[]] | [...T[], T]
+export type ReadonlyNonEmptyArray<T> = readonly [T, ...T[]] | readonly [...T[], T]
 
 /**
  * @example
@@ -27,22 +28,18 @@ type _FixedSizeArray<N extends number, T, Result extends readonly T[] = []> = Re
   : _FixedSizeArray<N, T, [...Result, T]>
 
 /**
+ * TODO: OrMoreSizeArray<50> is TS2589 error.
+ *
  * @example
- * OrMoreSizeArray<1> is equivalent to [unknown, ...unknown[]]
- * OrMoreSizeArray<2, number> is equivalent to [number, number, ...number[]]
- * @example
- * OrMoreSizeArray<0> is equivalent to unknown[]
- * OrMoreSizeArray<1 | 2, any> is equivalent to [any, ...any[]] | [any, any, ...any[]]
- * OrMoreSizeArray<number> is equivalent to unknown[]
+ * OrMoreSizeArray<1> is equivalent to [unknown, ...unknown[]] | [...unknown[], unknown]
+ * OrMoreSizeArray<2, Date> is equivalent to [Date, Date, ...Date[]] | [Date, ...Date[], Date] | [...Date[], Date, Date]
+ * OrMoreSizeArray<0, string> is equivalent to string[]
+ * OrMoreSizeArray<number, string> is equivalent to string[]
  */
-export type OrMoreSizeArray<N extends number, T = unknown> = number extends N
-  ? T[]
-  : N extends N
-  ? _OrMoreSizeArray<N, T>
+export type OrMoreSizeArray<N extends number, T = unknown> = _OrMoreSizeArray<N, IntegerRangeThrough<N>, T>
+type _OrMoreSizeArray<N extends number, M extends number, T> = M extends M
+  ? [...Drop<FixedSizeArray<N, T>, M>, ...T[], ...FixedSizeArray<M, T>]
   : never
-type _OrMoreSizeArray<N extends number, T, Acc extends readonly T[] = []> = Acc['length'] extends N
-  ? [...Acc, ...T[]]
-  : _OrMoreSizeArray<N, T, [...Acc, T]>
 
 export type OrLessSizeArray<N extends number, T = unknown> = FixedSizeArray<IntegerRangeThrough<N>, T>
 

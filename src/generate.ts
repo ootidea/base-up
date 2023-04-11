@@ -1,4 +1,4 @@
-import { FixedSizeArray, OrMoreSizeArray, Tuple } from './Array'
+import { FixedSizeArray, Tuple } from './Array'
 import { Drop, Reverse } from './transform'
 
 /**
@@ -37,13 +37,13 @@ export type RangeUntil<From extends number, To extends number | undefined = unde
     ? To extends To
       ? `${From}` extends `-${infer PN extends number}`
         ? `${To}` extends `-${infer PM extends number}`
-          ? OrMoreSizeArray<PM> extends OrMoreSizeArray<PN>
+          ? [...FixedSizeArray<PM>, ...any] extends [...FixedSizeArray<PN>, ...any]
             ? ToNegativeNumbers<Drop<NaturalNumbersUntil<PM>, PN>>
             : ToNegativeNumbers<Reverse<Drop<NaturalNumbersThrough<PN>, NaturalNumbersThrough<PM>['length']>>>
           : [...ToNegativeNumbers<Reverse<PositiveIntegersThrough<PN>>>, ...NaturalNumbersUntil<To>]
         : `${To}` extends `-${infer PM extends number}`
         ? [...Reverse<PositiveIntegersThrough<From>>, ...ToNegativeNumbers<NaturalNumbersUntil<PM>>]
-        : OrMoreSizeArray<To> extends OrMoreSizeArray<From>
+        : [...FixedSizeArray<To>, ...any] extends [...FixedSizeArray<From>, ...any]
         ? Drop<NaturalNumbersUntil<To>, From>
         : Reverse<Drop<NaturalNumbersThrough<From>, NaturalNumbersThrough<To>['length']>>
       : never
@@ -76,13 +76,13 @@ export type RangeThrough<From extends number, To extends number | undefined = un
     ? To extends To
       ? `${From}` extends `-${infer PN extends number}`
         ? `${To}` extends `-${infer PM extends number}`
-          ? OrMoreSizeArray<PM> extends OrMoreSizeArray<PN>
+          ? [...FixedSizeArray<PM>, ...any] extends [...FixedSizeArray<PN>, ...any]
             ? ToNegativeNumbers<Drop<NaturalNumbersThrough<PM>, PN>>
             : ToNegativeNumbers<Reverse<Drop<NaturalNumbersThrough<PN>, PM>>>
           : [...ToNegativeNumbers<Reverse<PositiveIntegersThrough<PN>>>, ...NaturalNumbersThrough<To>]
         : `${To}` extends `-${infer PM extends number}`
         ? [...Reverse<PositiveIntegersThrough<From>>, ...ToNegativeNumbers<NaturalNumbersThrough<PM>>]
-        : OrMoreSizeArray<To> extends OrMoreSizeArray<From>
+        : [...FixedSizeArray<To>, ...any] extends [...FixedSizeArray<From>, ...any]
         ? Drop<NaturalNumbersThrough<To>, From>
         : Reverse<Drop<NaturalNumbersThrough<From>, To>>
       : never

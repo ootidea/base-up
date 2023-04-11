@@ -1,4 +1,4 @@
-import { FixedSizeArray, OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
+import { FixedSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
 import { includes } from './collectionPredicate'
 
 /**
@@ -84,13 +84,13 @@ export type Trunc<N extends number> = number extends N
  */
 export type Min<N extends number, M extends number> = `${N}` extends `-${infer PN extends number}`
   ? `${M}` extends `-${infer PM extends number}`
-    ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
+    ? [...FixedSizeArray<PN>, ...any] extends [...FixedSizeArray<PM>, ...any]
       ? N
       : M
     : N
   : `${M}` extends `-${infer PM extends number}`
   ? M
-  : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
+  : [...FixedSizeArray<N>, ...any] extends [...FixedSizeArray<M>, ...any]
   ? M
   : N
 
@@ -103,13 +103,13 @@ export type Min<N extends number, M extends number> = `${N}` extends `-${infer P
  */
 export type Max<N extends number, M extends number> = `${N}` extends `-${infer PN extends number}`
   ? `${M}` extends `-${infer PM extends number}`
-    ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
+    ? [...FixedSizeArray<PN>, ...any] extends [...FixedSizeArray<PM>, ...any]
       ? M
       : N
     : M
   : `${M}` extends `-${infer PM extends number}`
   ? N
-  : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
+  : [...FixedSizeArray<N>, ...any] extends [...FixedSizeArray<M>, ...any]
   ? N
   : M
 
@@ -162,13 +162,13 @@ export type IntegerRangeUntil<N extends number, M extends number | undefined = u
     ? M extends number
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
-          ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
+          ? [...FixedSizeArray<PN>, ...any] extends [...FixedSizeArray<PM>, ...any]
             ? Neg<Exclude<_IntegerRangeThrough<PN>, _IntegerRangeThrough<PM>>>
             : Neg<Exclude<_IntegerRangeUntil<PM>, _IntegerRangeUntil<PN>>>
           : Neg<_IntegerRangeThrough<PN>> | _IntegerRangeUntil<M>
         : `${M}` extends `-${infer PM extends number}`
         ? _IntegerRangeThrough<N> | Neg<_IntegerRangeUntil<PM>>
-        : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
+        : [...FixedSizeArray<N>, ...any] extends [...FixedSizeArray<M>, ...any]
         ? Exclude<_IntegerRangeThrough<N>, _IntegerRangeThrough<M>>
         : Exclude<_IntegerRangeUntil<M>, _IntegerRangeUntil<N>>
       : IntegerRangeUntil<0, N>
@@ -199,13 +199,13 @@ export type IntegerRangeThrough<N extends number, M extends number | undefined =
     ? M extends number
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
-          ? OrMoreSizeArray<PN> extends OrMoreSizeArray<PM>
+          ? [...FixedSizeArray<PN>, ...any] extends [...FixedSizeArray<PM>, ...any]
             ? Neg<Exclude<_IntegerRangeThrough<PN>, _IntegerRangeUntil<PM>>>
             : Neg<Exclude<_IntegerRangeThrough<PM>, _IntegerRangeUntil<PN>>>
           : Neg<_IntegerRangeThrough<PN>> | _IntegerRangeThrough<M>
         : `${M}` extends `-${infer PM extends number}`
         ? _IntegerRangeThrough<N> | Neg<_IntegerRangeThrough<PM>>
-        : OrMoreSizeArray<N> extends OrMoreSizeArray<M>
+        : [...FixedSizeArray<N>, ...any] extends [...FixedSizeArray<M>, ...any]
         ? Exclude<_IntegerRangeThrough<N>, _IntegerRangeUntil<M>>
         : Exclude<_IntegerRangeThrough<M>, _IntegerRangeUntil<N>>
       : IntegerRangeThrough<0, N>
