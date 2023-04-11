@@ -80,10 +80,14 @@ export namespace take {
  * Drop<[0, 1, 2], 2> is equivalent to [2]
  * Drop<[0, 1, 2], 3> is equivalent to []
  * Drop<[0, 1, 2], 4> is equivalent to []
+ * @example
  * Drop<[0, 1, 2], 1 | 2> is equivalent to [1, 2] | [2]
  * Drop<[0, 1, 2], number> is equivalent to [0, 1, 2] | [1, 2] | [2] | []
+ * @example
+ * Drop<[number, ...string[]], 2> is equivalent to string[]
+ * Drop<any, 1> is equivalent to any
  */
-export type Drop<T extends Tuple, N extends number> = N extends N
+export type Drop<T extends Tuple, N extends number = 1> = N extends N
   ? number extends N
     ? _Drop<T, OrLessSizeArray<T['length']>>
     : _Drop<T, FixedSizeArray<N>>
@@ -91,7 +95,9 @@ export type Drop<T extends Tuple, N extends number> = N extends N
 type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]
   ? T extends readonly [any, ...infer TL]
     ? _Drop<TL, NL>
-    : []
+    : T extends []
+    ? []
+    : T
   : T
 /**
  * Remove the first n elements from an array immutably.
@@ -119,10 +125,14 @@ export function drop<const T extends Tuple>(self: T, n: number = 1) {
  * DropLast<[0, 1, 2], 2> is equivalent to [0]
  * DropLast<[0, 1, 2], 3> is equivalent to []
  * DropLast<[0, 1, 2], 4> is equivalent to []
+ * @example
  * DropLast<[0, 1, 2], 1 | 2> is equivalent to [0, 1] | [0]
  * DropLast<[0, 1, 2], number> is equivalent to [0, 1, 2] | [0, 1] | [0] | []
+ * @example
+ * DropLast<[...number[], boolean], 2> is equivalent to number[]
+ * DropLast<any, 1> is equivalent to any
  */
-export type DropLast<T extends Tuple, N extends number> = N extends N
+export type DropLast<T extends Tuple, N extends number = 1> = N extends N
   ? number extends N
     ? _DropLast<T, OrLessSizeArray<T['length']>>
     : _DropLast<T, FixedSizeArray<N>>
@@ -130,7 +140,9 @@ export type DropLast<T extends Tuple, N extends number> = N extends N
 type _DropLast<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]
   ? T extends readonly [...infer TL, any]
     ? _DropLast<TL, NL>
-    : []
+    : T extends []
+    ? []
+    : T
   : T
 /**
  * Remove the last n elements from an array immutably.
