@@ -163,6 +163,7 @@ export function dropLast<const T extends Tuple>(self: T, n: number = 1) {
   return self.slice(0, Math.max(self.length - n, 0))
 }
 
+/** @deprecated */
 export function tail<T>(self: ReadonlyNonEmptyArray<T>): T[]
 export function tail<T>(self: readonly T[]): T[] | undefined
 export function tail<T>(self: readonly T[]): T[] | undefined {
