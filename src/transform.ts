@@ -256,7 +256,7 @@ export namespace reverse {
   }
 }
 
-export function unique<T>(self: readonly T[]): T[] {
+export function removeDuplicates<T>(self: readonly T[]): T[] {
   const set = new Set<T>()
   const result = []
   for (const value of self) {
@@ -267,7 +267,7 @@ export function unique<T>(self: readonly T[]): T[] {
   }
   return result
 }
-export namespace unique {
+export namespace removeDuplicates {
   export function* Iterable<T>(self: Iterable<T>): Iterable<T> {
     const set = new Set<T>()
     for (const value of self) {
@@ -279,7 +279,7 @@ export namespace unique {
   }
 }
 
-export function uniqueBy<T, U>(self: readonly T[], by: (_: T) => U): T[] {
+export function removeDuplicatesBy<T, U>(self: readonly T[], by: (_: T) => U): T[] {
   const set = new Set<U>()
   const result = []
   for (const value of self) {
@@ -291,7 +291,7 @@ export function uniqueBy<T, U>(self: readonly T[], by: (_: T) => U): T[] {
   }
   return result
 }
-export namespace uniqueBy {
+export namespace removeDuplicatesBy {
   export function* Iterable<T, U>(self: Iterable<T>, by: (_: T) => U): Iterable<T> {
     const set = new Set<U>()
     for (const value of self) {

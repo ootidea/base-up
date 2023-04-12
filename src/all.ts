@@ -13,8 +13,8 @@ export {
   type Drop,
   reverse,
   type Reverse,
-  unique,
-  uniqueBy,
+  removeDuplicates,
+  removeDuplicatesBy,
 } from './transform'
 export { push, set, insertAt, removeAt, remove, removeAll, moveTo, update, unshift } from './collectionUpdate'
 export { isEmpty, includes, everyKeys, every, everyValues, isNotEmpty, isUnique } from './collectionPredicate'
