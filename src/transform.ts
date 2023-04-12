@@ -12,7 +12,7 @@ export function map<T, U>(self: readonly T[], f: (_: T) => U): U[] {
   return self.map(f)
 }
 export namespace map {
-  export function* Iterable<T, U>(self: Iterable<T>, f: (_: T) => U): Generator<U> {
+  export function* Iterable<T, U>(self: Iterable<T>, f: (_: T) => U): Iterable<U> {
     for (const value of self) {
       yield f(value)
     }
@@ -249,7 +249,7 @@ export function reverse<const T extends Tuple>(self: T): Reverse<T> {
   return [...self].reverse() as Reverse<T>
 }
 export namespace reverse {
-  export function* Iterable<T>(self: readonly T[]): Generator<T> {
+  export function* Iterable<T>(self: readonly T[]): Iterable<T> {
     for (let i = self.length - 1; i >= 0; i--) {
       yield self[i]!
     }
@@ -268,7 +268,7 @@ export function unique<T>(self: readonly T[]): T[] {
   return result
 }
 export namespace unique {
-  export function* Iterable<T>(self: Iterable<T>): Generator<T> {
+  export function* Iterable<T>(self: Iterable<T>): Iterable<T> {
     const set = new Set<T>()
     for (const value of self) {
       if (!set.has(value)) {
@@ -292,7 +292,7 @@ export function uniqueBy<T, U>(self: readonly T[], by: (_: T) => U): T[] {
   return result
 }
 export namespace uniqueBy {
-  export function* Iterable<T, U>(self: Iterable<T>, by: (_: T) => U): Generator<T> {
+  export function* Iterable<T, U>(self: Iterable<T>, by: (_: T) => U): Iterable<T> {
     const set = new Set<U>()
     for (const value of self) {
       const temp = by(value)

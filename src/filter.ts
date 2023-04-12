@@ -9,9 +9,9 @@ export function filter<const T>(self: readonly T[], f: (_: T) => boolean): T[] {
   return self.filter(f) as any
 }
 export namespace filter {
-  export function Iterable<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): Generator<U>
-  export function Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T>
-  export function* Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Generator<T> {
+  export function Iterable<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): Iterable<U>
+  export function Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T>
+  export function* Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T> {
     for (const value of self) {
       if (f(value)) {
         yield value

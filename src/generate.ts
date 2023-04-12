@@ -214,7 +214,7 @@ export function rangeUntil<N extends number, M extends number>(n: N, m?: M): num
   return result as any
 }
 export namespace rangeUntil {
-  export function* Iterable(n: number): Generator<number> {
+  export function* Iterable(n: number): Iterable<number> {
     for (let i = 0; i < n; i++) {
       yield i
     }
@@ -270,7 +270,7 @@ export namespace repeat {
    * repeat.Iterable('a') yields 'a', 'a', 'a', ...
    * repeat.Iterable(1, 2) yields 1, 2, 1, 2, ...
    */
-  export function* Iterable<const T extends Tuple>(...values: T): Generator<T[number], void, undefined> {
+  export function* Iterable<const T extends Tuple>(...values: T): Iterable<T[number]> {
     while (true) yield* values
   }
 }
@@ -287,7 +287,7 @@ export function repeatApply<N extends number, T>(length: N, first: T, f: (_: T) 
   return result as any
 }
 export namespace repeatApply {
-  export function* Iterator<T>(first: T, f: (_: T) => T): Generator<T> {
+  export function* Iterator<T>(first: T, f: (_: T) => T): Iterable<T> {
     let value = first
     while (true) {
       yield value
