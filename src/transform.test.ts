@@ -103,4 +103,5 @@ test('unique', () => {
   expect(removeDuplicates([3, 1, 4, 1, 5, 9])).toStrictEqual([3, 1, 4, 5, 9])
   expect(removeDuplicates(repeat(10, 'me'))).toStrictEqual(['me'])
   expect(removeDuplicates([])).toStrictEqual([])
+  expect(removeDuplicates([null, null, null, undefined])).toStrictEqual([null, undefined])
 })

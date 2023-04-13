@@ -256,6 +256,12 @@ export namespace reverse {
   }
 }
 
+/**
+ * @example
+ * removeDuplicates(['a', 'b', 'a', 'c']) returns ['a', 'b', 'c']
+ * removeDuplicates([]) returns []
+ * removeDuplicates([undefined, null, null, null, undefined]) returns [undefined, null]
+ */
 export function removeDuplicates<T>(self: readonly T[]): T[] {
   const set = new Set<T>()
   const result = []
