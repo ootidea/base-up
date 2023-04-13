@@ -110,6 +110,7 @@ export {
   randomIntegerUntil,
   randomIntegerThrough,
   clamp,
+  roundAt,
   type IntegerRangeUntil,
   type IntegerRangeThrough,
 } from './number'
