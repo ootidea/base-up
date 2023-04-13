@@ -11,22 +11,26 @@ export {
   take,
   drop,
   type Drop,
+  dropLast,
+  type DropLast,
   reverse,
   type Reverse,
   removeDuplicates,
   removeDuplicatesBy,
 } from './transform'
-export { push, set, insertAt, removeAt, remove, removeAll, moveTo, update, unshift } from './collectionUpdate'
+export { push, set, insertAt, setAt, removeAt, remove, removeAll, moveTo, update, unshift } from './collectionUpdate'
 export { isEmpty, includes, everyKeys, every, everyValues, isNotEmpty, isUnique } from './collectionPredicate'
 export { slideWindow, cartesianProductOf, permutationOf, prefixesOf } from './combination'
 export { lexicographicLt, lexicographicLte, lteToComparator, ltToComparator } from './comparison'
 export {
   filter,
   firstOf,
+  type FirstOf,
   elementAt,
   modeOf,
   modeBy,
   lastOf,
+  type LastOf,
   lastIndexOf,
   indexesOf,
   indexOf,
@@ -79,6 +83,7 @@ export {
   isNotInstanceOf,
   type nullish,
   type Nominal,
+  type DiscriminatedUnion,
 } from './type'
 export {
   shuffle,
@@ -93,6 +98,7 @@ export {
   setOf,
   has,
   toggle,
+  setWhetherHas,
   isSubset,
   unionOf,
   intersectionOf,
@@ -105,6 +111,7 @@ export { mapOf, type NonEmptyMap, type ReadonlyNonEmptyMap } from './Map'
 export { getProperty, type NestedProperty, type PartialRecord } from './object'
 export {
   modOf,
+  isPrimeNumber,
   factorialOf,
   gcdOf,
   randomIntegerUntil,
@@ -117,4 +124,3 @@ export {
 export { toNumber, toString, type LiteralAutoComplete } from './string'
 export { pipe, call, identity, curry, applyFirst, bindAllButFirst, returnLast } from './Function'
 export { forever, type Promisable } from './Promise'
-export { type DiscriminatedUnion } from './type'
