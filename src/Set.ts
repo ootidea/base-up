@@ -19,6 +19,13 @@ export function setOf<const T extends Tuple>(...args: T): T extends readonly [] 
   return new Set(args) as any
 }
 
+/**
+ * Add the given value to the set, but remove it if it is already included.
+ * In other words, toggle the boolean value of whether an item is included in the set.
+ * @example
+ * toggle(setOf(1, 2, 3), 2) returns setOf(1, 3)
+ * toggle(setOf(1, 2, 3), 4) returns setOf(1, 2, 3, 4)
+ */
 export function toggle<T, U>(self: ReadonlySet<T>, value: U): Set<T | U> {
   const cloned = new Set(self)
   if (cloned.has(value as any)) {
@@ -45,6 +52,12 @@ export function has<T>(self: ReadonlySet<T>, value: T): boolean {
   return self.has(value as any)
 }
 
+/**
+ * Create a union set.
+ * @example
+ * unionOf(setOf(1, 2, 3), setOf(2, 3, 4)) returns setOf(1, 2, 3, 4)
+ * unionOf(setOf(1, 2, 3), setOf(2)) returns setOf(1, 2, 3)
+ */
 export function unionOf<T, U>(lhs: ReadonlyNonEmptySet<T>, rhs: ReadonlySet<U>): NonEmptySet<T | U>
 export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlyNonEmptySet<U>): NonEmptySet<T | U>
 export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T | U> {
@@ -55,6 +68,12 @@ export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T |
   return cloned
 }
 
+/**
+ * Create an intersection set.
+ * @example
+ * intersectionOf(setOf(1, 2, 3), setOf(2, 3, 4)) returns setOf(2, 3)
+ * intersectionOf(setOf(1, 2, 3), setOf(4, 5)) returns setOf()
+ */
 export function intersectionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T & U> {
   const result = new Set<T & U>()
   const [small, big] = sortBy([lhs, rhs], (set) => set.size)

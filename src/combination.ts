@@ -43,6 +43,11 @@ export function slideWindow<const T extends Tuple, N extends number>(self: T, n:
   return result as any
 }
 
+/**
+ * @example
+ * prefixesOf([1, 2, 3]) returns [[], [1], [1, 2], [1, 2, 3]]
+ * prefixesOf([]) returns [[]]
+ */
 export function prefixesOf<T>(self: readonly T[]): NonEmptyArray<readonly T[]> {
   const result: NonEmptyArray<readonly T[]> = [[]]
   const prefixes = []
