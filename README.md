@@ -1,6 +1,6 @@
 # base-up
 
-This is a modern utility library for TypeScript.  It provides a lot of generic functions and types that can be used in any project.
+`base-up` is a modern utility library for TypeScript.  
 
 <br>
 
