@@ -1,6 +1,5 @@
-import { FixedSizeArray, ReadonlyNonEmptyArray } from './Array'
+import { FixedSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
 import { includes } from './collectionPredicate'
-import { RangeThrough, RangeUntil } from './generate'
 
 /**
  * @example
@@ -154,7 +153,27 @@ export type Decrement<N extends number> = `${N}` extends `-${infer PN extends nu
  * IntegerRangeUntil<number, 9> is equivalent to number
  * IntegerRangeUntil<9, number> is equivalent to number
  */
-export type IntegerRangeUntil<N extends number, M extends number | undefined = undefined> = RangeUntil<N, M>[number]
+export type IntegerRangeUntil<N extends number, M extends number | undefined = undefined> = number extends N
+  ? number
+  : number extends M
+  ? number
+  : N extends N
+  ? M extends M
+    ? M extends number
+      ? `${N}` extends `-${infer PN extends number}`
+        ? `${M}` extends `-${infer PM extends number}`
+          ? [...FixedSizeArray<PN>, ...any] extends [...FixedSizeArray<PM>, ...any]
+            ? Neg<Exclude<_IntegerRangeThrough<PN>, _IntegerRangeThrough<PM>>>
+            : Neg<Exclude<_IntegerRangeUntil<PM>, _IntegerRangeUntil<PN>>>
+          : Neg<_IntegerRangeThrough<PN>> | _IntegerRangeUntil<M>
+        : `${M}` extends `-${infer PM extends number}`
+        ? _IntegerRangeThrough<N> | Neg<_IntegerRangeUntil<PM>>
+        : [...FixedSizeArray<N>, ...any] extends [...FixedSizeArray<M>, ...any]
+        ? Exclude<_IntegerRangeThrough<N>, _IntegerRangeThrough<M>>
+        : Exclude<_IntegerRangeUntil<M>, _IntegerRangeUntil<N>>
+      : IntegerRangeUntil<0, N>
+    : never
+  : never
 /**
  * @example
  * IntegerRangeThrough<3> is equivalent to 0 | 1 | 2 | 3
@@ -171,7 +190,33 @@ export type IntegerRangeUntil<N extends number, M extends number | undefined = u
  * IntegerRangeThrough<number, 9> is equivalent to number
  * IntegerRangeThrough<9, number> is equivalent to number
  */
-export type IntegerRangeThrough<N extends number, M extends number | undefined = undefined> = RangeThrough<N, M>[number]
+export type IntegerRangeThrough<N extends number, M extends number | undefined = undefined> = number extends N
+  ? number
+  : number extends M
+  ? number
+  : N extends N
+  ? M extends M
+    ? M extends number
+      ? `${N}` extends `-${infer PN extends number}`
+        ? `${M}` extends `-${infer PM extends number}`
+          ? [...FixedSizeArray<PN>, ...any] extends [...FixedSizeArray<PM>, ...any]
+            ? Neg<Exclude<_IntegerRangeThrough<PN>, _IntegerRangeUntil<PM>>>
+            : Neg<Exclude<_IntegerRangeThrough<PM>, _IntegerRangeUntil<PN>>>
+          : Neg<_IntegerRangeThrough<PN>> | _IntegerRangeThrough<M>
+        : `${M}` extends `-${infer PM extends number}`
+        ? _IntegerRangeThrough<N> | Neg<_IntegerRangeThrough<PM>>
+        : [...FixedSizeArray<N>, ...any] extends [...FixedSizeArray<M>, ...any]
+        ? Exclude<_IntegerRangeThrough<N>, _IntegerRangeUntil<M>>
+        : Exclude<_IntegerRangeThrough<M>, _IntegerRangeUntil<N>>
+      : IntegerRangeThrough<0, N>
+    : never
+  : never
+type _IntegerRangeUntil<N extends number, Result extends Tuple = []> = Result['length'] extends N
+  ? never
+  : Result['length'] | _IntegerRangeUntil<N, [...Result, any]>
+type _IntegerRangeThrough<N extends number, Result extends Tuple = []> = Result['length'] extends N
+  ? N
+  : Result['length'] | _IntegerRangeThrough<N, [...Result, any]>
 
 /**
  * @example
