@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { shuffle } from './Array'
 import { identity } from './Function'
 import { repeat } from './generate'

@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { cartesianProductOf, permutationOf, prefixesOf, slideWindow } from './combination'
 
 test('cartesianProductOf', () => {

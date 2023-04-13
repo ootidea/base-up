@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { rangeUntil } from './generate'
 import { mapOf } from './Map'
 import { groupBy, sumOf } from './other'

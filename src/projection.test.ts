@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { keysOf, numberKeysOf } from './projection'
 import { setOf } from './Set'
 

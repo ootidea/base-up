@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { differenceOf, intersectionOf, isDisjoint, isSubset, setOf, setWhetherHas, toggle, unionOf } from './Set'
 
 test('setOf', () => {

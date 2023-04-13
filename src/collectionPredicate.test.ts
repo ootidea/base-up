@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { every, isEmpty, isNotEmpty } from './collectionPredicate'
 
 test('isEmpty', () => {

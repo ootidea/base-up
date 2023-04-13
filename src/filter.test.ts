@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { elementAt, filter, indexesOf, lastOf, modeBy, modeOf } from './filter'
 import { rangeUntil, repeat } from './generate'
 import { setOf } from './Set'

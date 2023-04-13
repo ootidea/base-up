@@ -1,4 +1,5 @@
 import { fromEntries, rangeThrough, rangeUntil, repeat, repeatApply } from './generate'
+import { expect, test } from 'vitest'
 import { take } from './transform'
 
 test('rangeUntil', () => {

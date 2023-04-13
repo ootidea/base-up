@@ -1,4 +1,4 @@
-import { expect } from 'vitest'
+import { expect, test } from 'vitest'
 import { mapOf } from './Map'
 
 test('mapOf', () => {

@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { zip, zipAll, zipWith } from './fusion'
 import { rangeUntil, repeat } from './generate'
 

@@ -1,4 +1,4 @@
-import { expect } from 'vitest'
+import { expect, test } from 'vitest'
 import { insertAt, moveTo, push, removeAt, setAt, unshift } from './collectionUpdate'
 import { repeat } from './generate'
 import { take } from './transform'

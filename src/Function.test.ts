@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { bindAllButFirst, curry, pipe, returnLast } from './Function'
 import { rangeUntil } from './generate'
 import { take } from './transform'

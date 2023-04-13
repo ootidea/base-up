@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   build: {
@@ -7,8 +7,5 @@ export default defineConfig({
       formats: ['es', 'cjs'],
     },
     minify: false,
-  },
-  test: {
-    globals: true,
   },
 })

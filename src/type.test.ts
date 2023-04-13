@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { isInstanceOf } from './type'
 
 test('isInstanceOf', () => {
