@@ -243,7 +243,9 @@ export function sortBy<const T extends Tuple, U>(
  * Reverse<[]> is equivalent to []
  * Reverse<string[]> is equivalent to string[]
  */
-export type Reverse<T extends Tuple> = T extends readonly [infer H, ...infer L] ? [...Reverse<L>, H] : T
+export type Reverse<T extends Tuple> = T extends readonly [infer First, ...infer R, infer Last]
+  ? [Last, ...Reverse<R>, First]
+  : T
 
 export function reverse<const T extends Tuple>(self: T): Reverse<T> {
   return [...self].reverse() as Reverse<T>
