@@ -60,7 +60,8 @@ export function has<T>(self: ReadonlySet<T>, value: T): boolean {
  */
 export function unionOf<T, U>(lhs: ReadonlyNonEmptySet<T>, rhs: ReadonlySet<U>): NonEmptySet<T | U>
 export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlyNonEmptySet<U>): NonEmptySet<T | U>
-export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T | U> {
+export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T | U>
+export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>) {
   const cloned = new Set<T | U>(lhs)
   for (const value of rhs) {
     cloned.add(value)
@@ -74,8 +75,12 @@ export function unionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T |
  * intersectionOf(setOf(1, 2, 3), setOf(2, 3, 4)) returns setOf(2, 3)
  * intersectionOf(setOf(1, 2, 3), setOf(4, 5)) returns setOf()
  */
-export function intersectionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T & U> {
-  const result = new Set<T & U>()
+export function intersectionOf<T, U extends T>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<T>
+export function intersectionOf<T extends U, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<U>
+export function intersectionOf<T>(lhs: ReadonlySet<T>, rhs: ReadonlySet<T>): Set<T>
+export function intersectionOf<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): Set<never>
+export function intersectionOf<T>(lhs: ReadonlySet<T>, rhs: ReadonlySet<T>): Set<T> {
+  const result = new Set<T>()
   const [small, big] = sortBy([lhs, rhs], (set) => set.size)
   for (const value of small) {
     if (big.has(value as any)) {
