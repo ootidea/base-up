@@ -1,5 +1,6 @@
-import { fromEntries, rangeThrough, rangeUntil, repeat, repeatApply } from './generate'
 import { expect, test } from 'vitest'
+import { every, isUnique } from './collectionPredicate'
+import { fromEntries, rangeThrough, rangeUntil, repeat, repeatApply, uniqueRandomIntegersUntil } from './generate'
 import { take } from './transform'
 
 test('rangeUntil', () => {
@@ -24,6 +25,13 @@ test('rangeThrough', () => {
   expect(rangeThrough(-2, 2)).toStrictEqual([-2, -1, 0, 1, 2])
   expect(rangeThrough(-2, -5)).toStrictEqual([-2, -3, -4, -5])
   expect(rangeThrough(3, 3)).toStrictEqual([3])
+})
+
+test('uniqueRandomIntegersUntil', () => {
+  expect(uniqueRandomIntegersUntil(5, 3).length).toBe(3)
+  expect(every(uniqueRandomIntegersUntil(5, 3), (x) => 0 <= x && x < 5)).toBe(true)
+  expect(isUnique(uniqueRandomIntegersUntil(5, 3))).toBe(true)
+  expect(uniqueRandomIntegersUntil(1, 1)).toStrictEqual([0])
 })
 
 test('repeat', () => {

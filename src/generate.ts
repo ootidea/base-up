@@ -1,5 +1,6 @@
-import { FixedSizeArray, Tuple } from './Array'
-import { Drop, Reverse } from './transform'
+import { FixedSizeArray, shuffle, Tuple } from './Array'
+import { IntegerRangeUntil } from './number'
+import { Drop, Reverse, take } from './transform'
 
 /**
  * @example
@@ -237,6 +238,13 @@ export function rangeThrough<N extends number, M extends number>(n: N, m?: M): n
     }
   }
   return result as any
+}
+
+export function uniqueRandomIntegersUntil<const N extends number, const M extends number>(
+  n: N,
+  m: M
+): FixedSizeArray<M, IntegerRangeUntil<N>> {
+  return take(shuffle(rangeUntil(n)), m) as any
 }
 
 /**
