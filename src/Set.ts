@@ -113,7 +113,7 @@ export function isDisjoint<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): bool
   return true
 }
 
-/** isSubset(a, b) means a ⊆ b. */
-export function isSubset<T>(lhs: ReadonlySet<T>, rhs: ReadonlySet<T>): boolean {
+/** isSubsetOf(a, b) means a ⊆ b. */
+export function isSubsetOf<T>(lhs: ReadonlySet<T>, rhs: ReadonlySet<T>): boolean {
   return every.Iterable(lhs, (element) => rhs.has(element))
 }

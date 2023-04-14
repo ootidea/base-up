@@ -99,7 +99,7 @@ export {
   has,
   toggle,
   setWhetherHas,
-  isSubset,
+  isSubsetOf,
   unionOf,
   intersectionOf,
   differenceOf,

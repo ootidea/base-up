@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { differenceOf, intersectionOf, isDisjoint, isSubset, setOf, setWhetherHas, toggle, unionOf } from './Set'
+import { differenceOf, intersectionOf, isDisjoint, isSubsetOf, setOf, setWhetherHas, toggle, unionOf } from './Set'
 
 test('setOf', () => {
   expect(setOf(1, 2)).toStrictEqual(new Set([2, 1]))
@@ -35,9 +35,9 @@ test('isDisjoint', () => {
   expect(isDisjoint(setOf(1, 2, 3), setOf(4, 5))).toBe(true)
 })
 
-test('isSubset', () => {
-  expect(isSubset(setOf(1, 2), setOf(1, 2, 3))).toBe(true)
-  expect(isSubset(setOf(1, 2), setOf(1, 2))).toBe(true)
-  expect(isSubset(setOf(1, 2, 3), setOf(1, 2))).toBe(false)
-  expect(isSubset(setOf(1, 2, 3), setOf(3, 4, 5))).toBe(false)
+test('isSubsetOf', () => {
+  expect(isSubsetOf(setOf(1, 2), setOf(1, 2, 3))).toBe(true)
+  expect(isSubsetOf(setOf(1, 2), setOf(1, 2))).toBe(true)
+  expect(isSubsetOf(setOf(1, 2, 3), setOf(1, 2))).toBe(false)
+  expect(isSubsetOf(setOf(1, 2, 3), setOf(3, 4, 5))).toBe(false)
 })
