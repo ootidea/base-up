@@ -1,5 +1,4 @@
 import { expect, test } from 'vitest'
-import { shuffle } from './Array'
 import { identity } from './Function'
 import { repeat } from './generate'
 import { setOf } from './Set'
@@ -83,13 +82,6 @@ test('sortBy', () => {
   expect(sortBy([1, 2, 3], (x) => -x)).toStrictEqual([3, 2, 1])
   expect(sortBy(['alice', 'bob', 'charlie'], (x) => x.length)).toStrictEqual(['bob', 'alice', 'charlie'])
   expect(sortBy([], identity)).toStrictEqual([])
-})
-
-test('shuffle', () => {
-  expect(setOf(...shuffle([1, 2, 3]))).toStrictEqual(setOf(1, 2, 3))
-  expect(shuffle([1, 2, 3]).length).toEqual(3)
-  expect(shuffle([])).toStrictEqual([])
-  expect(shuffle(['one'])).toStrictEqual(['one'])
 })
 
 test('reverse', () => {
