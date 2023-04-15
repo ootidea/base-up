@@ -150,8 +150,11 @@ type PositiveIntegersThrough<N extends number> = number extends N
   : N extends 0
   ? []
   : N extends N
-  ? _PositiveIntegersUntil<FixedSizeArray<N>, []>
+  ? _PositiveIntegersThrough<FixedSizeArray<N>>
   : never
+type _PositiveIntegersThrough<T extends Tuple, R extends Tuple = []> = T extends readonly [any, ...infer L]
+  ? _PositiveIntegersThrough<L, [T['length'], ...R]>
+  : R
 
 /**
  * @example

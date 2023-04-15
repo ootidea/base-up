@@ -1,4 +1,4 @@
-import { IntegerRangeThrough, randomIntegerThrough } from './number'
+import { IntegerRangeThrough, randomIntegerThrough, ToDigits } from './number'
 import { Drop } from './transform'
 
 export type Tuple = readonly any[]
@@ -6,6 +6,41 @@ export type Tuple = readonly any[]
 export type NonEmptyArray<T> = [T, ...T[]] | [...T[], T]
 export type ReadonlyNonEmptyArray<T> = readonly [T, ...T[]] | readonly [...T[], T]
 
+/** Create a tuple by repeating the given tuple 10 times. */
+type TenTimes<T extends Tuple> = [...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T]
+/** TODO: */
+type DigitToFixedSizeArray<N extends number, T = unknown> = N extends 0
+  ? []
+  : N extends 1
+  ? [T]
+  : N extends 2
+  ? [T, T]
+  : N extends 3
+  ? [T, T, T]
+  : N extends 4
+  ? [T, T, T, T]
+  : N extends 5
+  ? [T, T, T, T, T]
+  : N extends 6
+  ? [T, T, T, T, T, T]
+  : N extends 7
+  ? [T, T, T, T, T, T, T]
+  : N extends 8
+  ? [T, T, T, T, T, T, T, T]
+  : N extends 9
+  ? [T, T, T, T, T, T, T, T, T]
+  : never
+/**
+ * @example
+ * DigitsToFixedSizeArray<[1, 2]> ie equivalent to [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+ * DigitsToFixedSizeArray<[0, 5]> ie equivalent to [1, 1, 1, 1, 1]
+ */
+type DigitsToFixedSizeArray<Digits extends readonly number[], T = unknown> = Digits extends [
+  ...infer R extends readonly number[],
+  infer Last extends number
+]
+  ? [...DigitToFixedSizeArray<Last, T>, ...TenTimes<DigitsToFixedSizeArray<R, T>>]
+  : []
 /**
  * @example
  * FixedSizeArray<3> is equivalent to [unknown, unknown, unknown]
@@ -18,14 +53,7 @@ export type ReadonlyNonEmptyArray<T> = readonly [T, ...T[]] | readonly [...T[], 
  * @example
  * FixedSizeArray<number, bigint> is equivalent to bigint[]
  */
-export type FixedSizeArray<N extends number, T = unknown> = number extends N
-  ? T[]
-  : N extends N
-  ? _FixedSizeArray<N, T>
-  : never
-type _FixedSizeArray<N extends number, T, Result extends readonly T[] = []> = Result['length'] extends N
-  ? Result
-  : _FixedSizeArray<N, T, [...Result, T]>
+export type FixedSizeArray<N extends number, T = unknown> = DigitsToFixedSizeArray<ToDigits<N>, T>
 
 /**
  * TODO: OrMoreSizeArray<50> is TS2589 error.
