@@ -101,11 +101,11 @@ export type RangeThrough<From extends number, To extends number | undefined = un
 type NaturalNumbersUntil<N extends number> = number extends N
   ? never
   : N extends N
-  ? _NaturalNumbersUntil<N, []>
+  ? Unlazy<_NaturalNumbersUntil<N, []>>
   : never
 type _NaturalNumbersUntil<N extends number, Acc extends Tuple> = Acc['length'] extends N
   ? Acc
-  : _NaturalNumbersUntil<N, [...Acc, Acc['length']]>
+  : Lazy<_NaturalNumbersUntil<N, [...Acc, Acc['length']]>>
 
 /**
  * @example
