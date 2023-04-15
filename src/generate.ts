@@ -1,6 +1,7 @@
 import { FixedSizeArray, shuffle, Tuple } from './Array'
 import { IntegerRangeUntil } from './number'
 import { Drop, Reverse, take } from './transform'
+import { Lazy, Unlazy } from './type'
 
 /**
  * @example
@@ -116,11 +117,14 @@ type _NaturalNumbersUntil<N extends number, Acc extends Tuple> = Acc['length'] e
 type NaturalNumbersThrough<N extends number> = number extends N
   ? never
   : N extends N
-  ? _NaturalNumbersThrough<N, []>
+  ? Unlazy<_NaturalNumbersThrough<FixedSizeArray<N>>>
   : never
-type _NaturalNumbersThrough<N extends number, Acc extends Tuple> = Acc['length'] extends N
-  ? [...Acc, Acc['length']]
-  : _NaturalNumbersThrough<N, [...Acc, Acc['length']]>
+type _NaturalNumbersThrough<Size extends Tuple, R extends Tuple = []> = Size extends readonly [
+  any,
+  ...infer L extends Tuple
+]
+  ? Lazy<_NaturalNumbersThrough<L, [Size['length'], ...R]>>
+  : [0, ...R]
 
 /**
  * @example
@@ -152,8 +156,8 @@ type PositiveIntegersThrough<N extends number> = number extends N
   : N extends N
   ? _PositiveIntegersThrough<FixedSizeArray<N>>
   : never
-type _PositiveIntegersThrough<T extends Tuple, R extends Tuple = []> = T extends readonly [any, ...infer L]
-  ? _PositiveIntegersThrough<L, [T['length'], ...R]>
+type _PositiveIntegersThrough<Size extends Tuple, R extends Tuple = []> = Size extends readonly [any, ...infer L]
+  ? _PositiveIntegersThrough<L, [Size['length'], ...R]>
   : R
 
 /**
