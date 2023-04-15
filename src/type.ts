@@ -120,10 +120,12 @@ export interface Lazy<T> {
 export type Unlazy<T> = T extends { [lazyKey]: unknown } ? Unlazy<ReduceLazy<T>> : T
 type ReduceLazy<T> = T extends { [lazyKey]: never }
   ? never
+  : T extends { [lazyKey]: { [lazyKey]: { [lazyKey]: { [lazyKey]: infer U } } } }
+  ? { [lazyKey]: ReduceLazy<U> }
   : T extends { [lazyKey]: { [lazyKey]: { [lazyKey]: infer U } } }
-  ? { [lazyKey]: ReduceLazy<U> }
+  ? U
   : T extends { [lazyKey]: { [lazyKey]: infer U } }
-  ? { [lazyKey]: ReduceLazy<U> }
+  ? U
   : T extends { [lazyKey]: infer U }
   ? U
   : T
