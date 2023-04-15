@@ -125,12 +125,12 @@ export type Increment<N extends number> = `${N}` extends `-${infer PN extends nu
   ? FixedSizeArray<PN> extends [any, ...infer L]
     ? Neg<L['length']>
     : never
-  : [any, ...FixedSizeArray<N>]['length'] extends infer R extends number
+  : [1, ...FixedSizeArray<N>]['length'] extends infer R extends number
   ? R
   : never
 
 export type Decrement<N extends number> = `${N}` extends `-${infer PN extends number}`
-  ? [any, ...FixedSizeArray<PN>]['length'] extends infer R extends number
+  ? [1, ...FixedSizeArray<PN>]['length'] extends infer R extends number
     ? Neg<R>
     : never
   : FixedSizeArray<N> extends [any, ...infer L]
@@ -211,12 +211,12 @@ export type IntegerRangeThrough<N extends number, M extends number | undefined =
       : IntegerRangeThrough<0, N>
     : never
   : never
-type _IntegerRangeUntil<N extends number, Result extends Tuple = []> = Result['length'] extends N
+type _IntegerRangeUntil<N extends number, Size extends Tuple = []> = Size['length'] extends N
   ? never
-  : Result['length'] | _IntegerRangeUntil<N, [...Result, any]>
-type _IntegerRangeThrough<N extends number, Result extends Tuple = []> = Result['length'] extends N
+  : Size['length'] | _IntegerRangeUntil<N, [1, ...Size]>
+type _IntegerRangeThrough<N extends number, Size extends Tuple = []> = Size['length'] extends N
   ? N
-  : Result['length'] | _IntegerRangeThrough<N, [...Result, any]>
+  : Size['length'] | _IntegerRangeThrough<N, [1, ...Size]>
 
 /**
  * @example

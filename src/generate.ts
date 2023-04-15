@@ -136,7 +136,7 @@ type PositiveIntegersUntil<N extends number> = number extends N
   : never
 type _PositiveIntegersUntil<Size extends Tuple, Acc extends Tuple> = Acc extends Size
   ? Acc
-  : _PositiveIntegersUntil<Size, [...Acc, [any, ...Acc]['length']]>
+  : _PositiveIntegersUntil<Size, [...Acc, [1, ...Acc]['length']]>
 
 /**
  * @example
@@ -260,9 +260,12 @@ export type RepeatArray<N extends number, A extends Tuple> = number extends N
   : N extends N
   ? _RepeatArray<N, A>
   : never
-type _RepeatArray<N extends number, A extends Tuple, L extends Tuple = [], R extends Tuple = []> = L['length'] extends N
-  ? R
-  : _RepeatArray<N, A, [...L, any], [...R, ...A]>
+type _RepeatArray<
+  N extends number,
+  A extends Tuple,
+  Size extends Tuple = [],
+  R extends Tuple = []
+> = Size['length'] extends N ? R : _RepeatArray<N, A, [1, ...Size], [...R, ...A]>
 
 /**
  * @example
