@@ -106,3 +106,24 @@ export type Nominal<Base, Tag extends symbol> = Base & Record<Tag, never>
  * { type: 'Rect'; width: number; height: number } | { type: 'Circle'; radius: number }
  */
 export type DiscriminatedUnion<T, K extends keyof T = keyof T> = K extends K ? { type: K } & T[K] : never
+
+declare const lazyKey: unique symbol
+/**
+ * TODO:
+ */
+export interface Lazy<T> {
+  [lazyKey]: T
+}
+/**
+ * TODO:
+ */
+export type Unlazy<T> = T extends { [lazyKey]: unknown } ? Unlazy<ReduceLazy<T>> : T
+type ReduceLazy<T> = T extends { [lazyKey]: never }
+  ? never
+  : T extends { [lazyKey]: { [lazyKey]: { [lazyKey]: infer U } } }
+  ? { [lazyKey]: ReduceLazy<U> }
+  : T extends { [lazyKey]: { [lazyKey]: infer U } }
+  ? { [lazyKey]: ReduceLazy<U> }
+  : T extends { [lazyKey]: infer U }
+  ? U
+  : T

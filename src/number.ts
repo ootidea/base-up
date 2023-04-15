@@ -114,6 +114,17 @@ export type Max<N extends number, M extends number> = `${N}` extends `-${infer P
   : M
 
 /**
+ * Convert a natural number type to an array of digits.
+ * @example
+ * Digits<123> is equivalent to [1, 2, 3]
+ * Digits<0> is equivalent to [0]
+ */
+export type ToDigits<N extends number> = _ToDigits<`${N}`>
+type _ToDigits<S extends string> = S extends `${infer First}${infer R}`
+  ? [First extends `${infer N extends number}` ? N : never, ..._ToDigits<R>]
+  : []
+
+/**
  * @example
  * Increment<0> is equivalent to 1
  * Increment<-1> is equivalent to 0
