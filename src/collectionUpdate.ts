@@ -113,6 +113,15 @@ export namespace remove {
   }
 }
 
+export namespace removeSuffix {
+  export function string(self: string, suffix: string): string {
+    if (self.endsWith(suffix)) {
+      return self.slice(0, -suffix.length)
+    }
+    return self
+  }
+}
+
 export function moveTo<T>(self: readonly T[], from: number, to: number): T[] {
   const cloned = [...self]
   const [removed] = cloned.splice(modOf(from, self.length), 1)

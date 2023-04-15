@@ -18,7 +18,19 @@ export {
   removeDuplicates,
   removeDuplicatesBy,
 } from './transform'
-export { push, set, insertAt, setAt, removeAt, remove, removeAll, moveTo, update, unshift } from './collectionUpdate'
+export {
+  push,
+  set,
+  insertAt,
+  setAt,
+  removeAt,
+  remove,
+  removeAll,
+  moveTo,
+  update,
+  unshift,
+  removeSuffix,
+} from './collectionUpdate'
 export { isEmpty, includes, everyKeys, every, everyValues, isNotEmpty, isUnique } from './collectionPredicate'
 export { slideWindow, cartesianProductOf, permutationOf, prefixesOf } from './combination'
 export { lexicographicLt, lexicographicLte, lteToComparator, ltToComparator } from './comparison'
