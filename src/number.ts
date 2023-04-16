@@ -1,4 +1,4 @@
-import { FixedSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
+import { FixedSizeArray, ReadonlyNonEmptyArray } from './Array'
 import { includes } from './collectionPredicate'
 import { RepeatString, ToNumber } from './string'
 
@@ -175,14 +175,14 @@ export type IntegerRangeUntil<N extends number, M extends number | undefined = u
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
           ? [...FixedSizeArray<PN>, ...any] extends [...FixedSizeArray<PM>, ...any]
-            ? Neg<Exclude<_IntegerRangeThrough<PN>, _IntegerRangeThrough<PM>>>
-            : Neg<Exclude<_IntegerRangeUntil<PM>, _IntegerRangeUntil<PN>>>
-          : Neg<_IntegerRangeThrough<PN>> | _IntegerRangeUntil<M>
+            ? Neg<Exclude<NaturalNumbersFrom0Through<PN>, NaturalNumbersFrom0Through<PM>>>
+            : Neg<Exclude<NaturalNumbersFrom0Until<PM>, NaturalNumbersFrom0Until<PN>>>
+          : Neg<NaturalNumbersFrom0Through<PN>> | NaturalNumbersFrom0Until<M>
         : `${M}` extends `-${infer PM extends number}`
-        ? _IntegerRangeThrough<N> | Neg<_IntegerRangeUntil<PM>>
+        ? NaturalNumbersFrom0Through<N> | Neg<NaturalNumbersFrom0Until<PM>>
         : [...FixedSizeArray<N>, ...any] extends [...FixedSizeArray<M>, ...any]
-        ? Exclude<_IntegerRangeThrough<N>, _IntegerRangeThrough<M>>
-        : Exclude<_IntegerRangeUntil<M>, _IntegerRangeUntil<N>>
+        ? Exclude<NaturalNumbersFrom0Through<N>, NaturalNumbersFrom0Through<M>>
+        : Exclude<NaturalNumbersFrom0Until<M>, NaturalNumbersFrom0Until<N>>
       : IntegerRangeUntil<0, N>
     : never
   : never
@@ -212,23 +212,17 @@ export type IntegerRangeThrough<N extends number, M extends number | undefined =
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
           ? [...FixedSizeArray<PN>, ...any] extends [...FixedSizeArray<PM>, ...any]
-            ? Neg<Exclude<_IntegerRangeThrough<PN>, _IntegerRangeUntil<PM>>>
-            : Neg<Exclude<_IntegerRangeThrough<PM>, _IntegerRangeUntil<PN>>>
-          : Neg<_IntegerRangeThrough<PN>> | _IntegerRangeThrough<M>
+            ? Neg<Exclude<NaturalNumbersFrom0Through<PN>, NaturalNumbersFrom0Until<PM>>>
+            : Neg<Exclude<NaturalNumbersFrom0Through<PM>, NaturalNumbersFrom0Until<PN>>>
+          : Neg<NaturalNumbersFrom0Through<PN>> | NaturalNumbersFrom0Through<M>
         : `${M}` extends `-${infer PM extends number}`
-        ? _IntegerRangeThrough<N> | Neg<_IntegerRangeThrough<PM>>
+        ? NaturalNumbersFrom0Through<N> | Neg<NaturalNumbersFrom0Through<PM>>
         : [...FixedSizeArray<N>, ...any] extends [...FixedSizeArray<M>, ...any]
-        ? Exclude<_IntegerRangeThrough<N>, _IntegerRangeUntil<M>>
-        : Exclude<_IntegerRangeThrough<M>, _IntegerRangeUntil<N>>
+        ? Exclude<NaturalNumbersFrom0Through<N>, NaturalNumbersFrom0Until<M>>
+        : Exclude<NaturalNumbersFrom0Through<M>, NaturalNumbersFrom0Until<N>>
       : IntegerRangeThrough<0, N>
     : never
   : never
-type _IntegerRangeUntil<N extends number, Size extends Tuple = []> = Size['length'] extends N
-  ? never
-  : Size['length'] | _IntegerRangeUntil<N, [1, ...Size]>
-type _IntegerRangeThrough<N extends number, Size extends Tuple = []> = Size['length'] extends N
-  ? N
-  : Size['length'] | _IntegerRangeThrough<N, [1, ...Size]>
 
 export type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 export type ArabicNumerals = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
@@ -273,6 +267,16 @@ type _NaturalNumbersFrom0Until<DigitArray extends readonly Digit[]> = DigitArray
       | `${DigitToRangeUntil<H>}${RepeatString<ArabicNumerals, L['length']> extends infer S extends string ? S : never}`
       | `${H}${_NaturalNumbersFrom0Until<L>}`
   : ''
+
+/**
+ * Generate a union type from 0 to the given number. It's orders of magnitude faster compared to a naive implementation.
+ * @example
+ * NaturalNumbersFrom0Through<0> is equivalent to 0
+ * NaturalNumbersFrom0Through<1> is equivalent to 1
+ * NaturalNumbersFrom0Through<2> is equivalent to 0 | 1 | 2
+ * NaturalNumbersFrom0Through<10000> is equivalent to 0 | 1 | 2 | ... | 10000
+ */
+export type NaturalNumbersFrom0Through<N extends number> = NaturalNumbersFrom0Until<N> | N
 
 /**
  * @example
