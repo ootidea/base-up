@@ -1,5 +1,6 @@
 import { FixedSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
 import { includes } from './collectionPredicate'
+import { RepeatString, ToNumber } from './string'
 
 /**
  * @example
@@ -114,14 +115,14 @@ export type Max<N extends number, M extends number> = `${N}` extends `-${infer P
   : M
 
 /**
- * Convert a natural number type to an array of digits.
+ * Convert a natural number type into an array type of its digits.
  * @example
- * Digits<123> is equivalent to [1, 2, 3]
- * Digits<0> is equivalent to [0]
+ * ToDigitArray<123> is equivalent to [1, 2, 3]
+ * ToDigitArray<0> is equivalent to [0]
  */
-export type ToDigits<N extends number> = _ToDigits<`${N}`>
-type _ToDigits<S extends string> = S extends `${infer First}${infer R}`
-  ? [First extends `${infer N extends number}` ? N : never, ..._ToDigits<R>]
+export type ToDigitArray<N extends number> = _ToDigitArray<`${N}`>
+type _ToDigitArray<S extends string> = S extends `${infer First}${infer R}`
+  ? [First extends `${infer N extends Digit}` ? N : never, ..._ToDigitArray<R>]
   : []
 
 /**
@@ -228,6 +229,50 @@ type _IntegerRangeUntil<N extends number, Size extends Tuple = []> = Size['lengt
 type _IntegerRangeThrough<N extends number, Size extends Tuple = []> = Size['length'] extends N
   ? N
   : Size['length'] | _IntegerRangeThrough<N, [1, ...Size]>
+
+export type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+export type ArabicNumerals = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+
+type DigitToRangeUntil<D extends Digit> = D extends 0
+  ? never
+  : D extends 1
+  ? 0
+  : D extends 2
+  ? 0 | 1
+  : D extends 3
+  ? 0 | 1 | 2
+  : D extends 4
+  ? 0 | 1 | 2 | 3
+  : D extends 5
+  ? 0 | 1 | 2 | 3 | 4
+  : D extends 6
+  ? 0 | 1 | 2 | 3 | 4 | 5
+  : D extends 7
+  ? 0 | 1 | 2 | 3 | 4 | 5 | 6
+  : D extends 8
+  ? 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
+  : D extends 9
+  ? 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+  : never
+
+/**
+ * Generate a union type from 0 to the given number minus 1. It's orders of magnitude faster compared to a naive implementation.
+ * @example
+ * NaturalNumbersFrom0Until<0> is equivalent to never
+ * NaturalNumbersFrom0Until<1> is equivalent to 0
+ * NaturalNumbersFrom0Until<2> is equivalent to 0 | 1
+ * NaturalNumbersFrom0Until<10000> is equivalent to 0 | 1 | 2 | ... | 9999
+ */
+export type NaturalNumbersFrom0Until<N extends number> = ToNumber<_NaturalNumbersFrom0Until<ToDigitArray<N>>>
+type _NaturalNumbersFrom0Until<DigitArray extends readonly Digit[]> = DigitArray extends readonly [
+  infer D extends Digit
+]
+  ? `${DigitToRangeUntil<D>}`
+  : DigitArray extends readonly [infer H extends Digit, ...infer L extends readonly Digit[]]
+  ?
+      | `${DigitToRangeUntil<H>}${RepeatString<ArabicNumerals, L['length']> extends infer S extends string ? S : never}`
+      | `${H}${_NaturalNumbersFrom0Until<L>}`
+  : ''
 
 /**
  * @example
