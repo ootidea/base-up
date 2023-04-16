@@ -117,13 +117,11 @@ export type Max<N extends number, M extends number> = `${N}` extends `-${infer P
 /**
  * Convert a natural number type into an array type of its digits.
  * @example
- * ToDigitArray<123> is equivalent to [1, 2, 3]
- * ToDigitArray<0> is equivalent to [0]
+ * ToDigitArray<123> is equivalent to ['1', '2', '3']
+ * ToDigitArray<0> is equivalent to ['0']
  */
 export type ToDigitArray<N extends number> = _ToDigitArray<`${N}`>
-type _ToDigitArray<S extends string> = S extends `${infer First}${infer R}`
-  ? [First extends `${infer N extends Digit}` ? N : never, ..._ToDigitArray<R>]
-  : []
+type _ToDigitArray<S extends string> = S extends `${infer H extends Digit}${infer L}` ? [H, ..._ToDigitArray<L>] : []
 
 /**
  * @example
@@ -224,29 +222,28 @@ export type IntegerRangeThrough<N extends number, M extends number | undefined =
     : never
   : never
 
-export type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-export type ArabicNumerals = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+export type Digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 
-type DigitToRangeUntil<D extends Digit> = D extends 0
+type DigitToRangeUntil<D extends Digit> = D extends '0'
   ? never
-  : D extends 1
-  ? 0
-  : D extends 2
-  ? 0 | 1
-  : D extends 3
-  ? 0 | 1 | 2
-  : D extends 4
-  ? 0 | 1 | 2 | 3
-  : D extends 5
-  ? 0 | 1 | 2 | 3 | 4
-  : D extends 6
-  ? 0 | 1 | 2 | 3 | 4 | 5
-  : D extends 7
-  ? 0 | 1 | 2 | 3 | 4 | 5 | 6
-  : D extends 8
-  ? 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
-  : D extends 9
-  ? 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+  : D extends '1'
+  ? '0'
+  : D extends '2'
+  ? '0' | '1'
+  : D extends '3'
+  ? '0' | '1' | '2'
+  : D extends '4'
+  ? '0' | '1' | '2' | '3'
+  : D extends '5'
+  ? '0' | '1' | '2' | '3' | '4'
+  : D extends '6'
+  ? '0' | '1' | '2' | '3' | '4' | '5'
+  : D extends '7'
+  ? '0' | '1' | '2' | '3' | '4' | '5' | '6'
+  : D extends '8'
+  ? '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7'
+  : D extends '9'
+  ? '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8'
   : never
 
 /**
@@ -264,7 +261,7 @@ type _NaturalNumbersFrom0Until<DigitArray extends readonly Digit[]> = DigitArray
   ? `${DigitToRangeUntil<D>}`
   : DigitArray extends readonly [infer H extends Digit, ...infer L extends readonly Digit[]]
   ?
-      | `${DigitToRangeUntil<H>}${RepeatString<ArabicNumerals, L['length']> extends infer S extends string ? S : never}`
+      | `${DigitToRangeUntil<H>}${RepeatString<Digit, L['length']> extends infer S extends string ? S : never}`
       | `${H}${_NaturalNumbersFrom0Until<L>}`
   : ''
 
