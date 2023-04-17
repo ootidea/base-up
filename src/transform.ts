@@ -1,4 +1,11 @@
-import { FixedSizeArray, NonEmptyArray, OrLessSizeArray, OrMoreSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
+import {
+  FixedLengthArray,
+  NonEmptyArray,
+  OrLessSizeArray,
+  OrMoreSizeArray,
+  ReadonlyNonEmptyArray,
+  Tuple,
+} from './Array'
 import { ltToComparator } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
@@ -90,7 +97,7 @@ export namespace take {
 export type Drop<T extends Tuple, N extends number = 1> = N extends N
   ? number extends N
     ? _Drop<T, OrLessSizeArray<T['length']>>
-    : _Drop<T, FixedSizeArray<N>>
+    : _Drop<T, FixedLengthArray<N>>
   : never
 type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]
   ? T extends readonly [any, ...infer TL]
@@ -135,7 +142,7 @@ export function drop<const T extends Tuple>(self: T, n: number = 1) {
 export type DropLast<T extends Tuple, N extends number = 1> = N extends N
   ? number extends N
     ? _DropLast<T, OrLessSizeArray<T['length']>>
-    : _DropLast<T, FixedSizeArray<N>>
+    : _DropLast<T, FixedLengthArray<N>>
   : never
 type _DropLast<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]
   ? T extends readonly [...infer TL, any]
@@ -204,7 +211,7 @@ export function join<T, const U extends Tuple>(self: readonly (readonly T[])[], 
 export function chunk<T, N extends number>(
   array: readonly T[],
   size: N
-): number extends N ? readonly T[][] : readonly FixedSizeArray<N, T>[] {
+): number extends N ? readonly T[][] : readonly FixedLengthArray<N, T>[] {
   if (size <= 0) {
     throw RangeError(`Size(${size}) must be greater than 0.`)
   }
@@ -226,14 +233,14 @@ export function padEnd<T, N extends number>(self: readonly T[], length: N, value
   return [...self, ...repeat(paddingSize, value)] as any
 }
 
-export function sort<const T extends Tuple>(self: T): FixedSizeArray<T['length'], T[number]> {
+export function sort<const T extends Tuple>(self: T): FixedLengthArray<T['length'], T[number]> {
   return sortBy(self, identity)
 }
 
 export function sortBy<const T extends Tuple, U>(
   self: T,
   by: (_: T[number]) => U
-): FixedSizeArray<T['length'], T[number]> {
+): FixedLengthArray<T['length'], T[number]> {
   return [...self].sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs))) as any
 }
 

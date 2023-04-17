@@ -1,4 +1,4 @@
-import { FixedSizeArray, shuffle, Tuple } from './Array'
+import { FixedLengthArray, shuffle, Tuple } from './Array'
 import { IntegerRangeUntil } from './number'
 import { Drop, Reverse, take } from './transform'
 import { Lazy, Unlazy } from './type'
@@ -39,13 +39,13 @@ export type RangeUntil<From extends number, To extends number | undefined = unde
     ? To extends To
       ? `${From}` extends `-${infer PN extends number}`
         ? `${To}` extends `-${infer PM extends number}`
-          ? [...FixedSizeArray<PM>, ...any] extends [...FixedSizeArray<PN>, ...any]
+          ? [...FixedLengthArray<PM>, ...any] extends [...FixedLengthArray<PN>, ...any]
             ? ToNegativeNumbers<Drop<NaturalNumbersUntil<PM>, PN>>
             : ToNegativeNumbers<Reverse<Drop<NaturalNumbersThrough<PN>, NaturalNumbersThrough<PM>['length']>>>
           : [...ToNegativeNumbers<Reverse<PositiveIntegersThrough<PN>>>, ...NaturalNumbersUntil<To>]
         : `${To}` extends `-${infer PM extends number}`
         ? [...Reverse<PositiveIntegersThrough<From>>, ...ToNegativeNumbers<NaturalNumbersUntil<PM>>]
-        : [...FixedSizeArray<To>, ...any] extends [...FixedSizeArray<From>, ...any]
+        : [...FixedLengthArray<To>, ...any] extends [...FixedLengthArray<From>, ...any]
         ? Drop<NaturalNumbersUntil<To>, From>
         : Reverse<Drop<NaturalNumbersThrough<From>, NaturalNumbersThrough<To>['length']>>
       : never
@@ -78,13 +78,13 @@ export type RangeThrough<From extends number, To extends number | undefined = un
     ? To extends To
       ? `${From}` extends `-${infer PN extends number}`
         ? `${To}` extends `-${infer PM extends number}`
-          ? [...FixedSizeArray<PM>, ...any] extends [...FixedSizeArray<PN>, ...any]
+          ? [...FixedLengthArray<PM>, ...any] extends [...FixedLengthArray<PN>, ...any]
             ? ToNegativeNumbers<Drop<NaturalNumbersThrough<PM>, PN>>
             : ToNegativeNumbers<Reverse<Drop<NaturalNumbersThrough<PN>, PM>>>
           : [...ToNegativeNumbers<Reverse<PositiveIntegersThrough<PN>>>, ...NaturalNumbersThrough<To>]
         : `${To}` extends `-${infer PM extends number}`
         ? [...Reverse<PositiveIntegersThrough<From>>, ...ToNegativeNumbers<NaturalNumbersThrough<PM>>]
-        : [...FixedSizeArray<To>, ...any] extends [...FixedSizeArray<From>, ...any]
+        : [...FixedLengthArray<To>, ...any] extends [...FixedLengthArray<From>, ...any]
         ? Drop<NaturalNumbersThrough<To>, From>
         : Reverse<Drop<NaturalNumbersThrough<From>, To>>
       : never
@@ -117,7 +117,7 @@ type _NaturalNumbersUntil<N extends number, Acc extends Tuple> = Acc['length'] e
 type NaturalNumbersThrough<N extends number> = number extends N
   ? never
   : N extends N
-  ? Unlazy<_NaturalNumbersThrough<FixedSizeArray<N>>>
+  ? Unlazy<_NaturalNumbersThrough<FixedLengthArray<N>>>
   : never
 type _NaturalNumbersThrough<Size extends Tuple, R extends Tuple = []> = Size extends readonly [
   any,
@@ -136,7 +136,7 @@ type _NaturalNumbersThrough<Size extends Tuple, R extends Tuple = []> = Size ext
 type PositiveIntegersUntil<N extends number> = number extends N
   ? never
   : N extends N
-  ? _PositiveIntegersUntil<Drop<FixedSizeArray<N>, 1>, []>
+  ? _PositiveIntegersUntil<Drop<FixedLengthArray<N>, 1>, []>
   : never
 type _PositiveIntegersUntil<Size extends Tuple, Acc extends Tuple> = Acc extends Size
   ? Acc
@@ -154,7 +154,7 @@ type PositiveIntegersThrough<N extends number> = number extends N
   : N extends 0
   ? []
   : N extends N
-  ? _PositiveIntegersThrough<FixedSizeArray<N>>
+  ? _PositiveIntegersThrough<FixedLengthArray<N>>
   : never
 type _PositiveIntegersThrough<Size extends Tuple, R extends Tuple = []> = Size extends readonly [any, ...infer L]
   ? _PositiveIntegersThrough<L, [Size['length'], ...R]>
@@ -182,7 +182,7 @@ type ToNegativeNumbers<T extends readonly number[]> = T extends readonly [
  * Protruded<[any], [bigint, never, void]> is equivalent to [never, void]
  * Protruded<[bigint, never, void], [any]> is equivalent to [never, void]
  * Protruded<[any, any, any], [bigint, never, void]> is equivalent to []
- * Protruded<FixedSizeArray<1>, FixedSizeArray<4>>['length'] is equivalent to 3
+ * Protruded<FixedLengthArray<1>, FixedLengthArray<4>>['length'] is equivalent to 3
  */
 export type Protruded<T extends Tuple, U extends Tuple> = T extends [any, ...infer TL]
   ? U extends [any, ...infer UL]
@@ -250,7 +250,7 @@ export function rangeThrough<N extends number, M extends number>(n: N, m?: M): n
 export function uniqueRandomIntegersUntil<const N extends number, const M extends number>(
   n: N,
   m: M
-): FixedSizeArray<M, IntegerRangeUntil<N>> {
+): FixedLengthArray<M, IntegerRangeUntil<N>> {
   return take(shuffle(rangeUntil(n)), m) as any
 }
 
@@ -293,7 +293,7 @@ export namespace repeat {
   }
 }
 
-export function repeatApply<N extends number, T>(length: N, first: T, f: (_: T) => T): FixedSizeArray<N, T> {
+export function repeatApply<N extends number, T>(length: N, first: T, f: (_: T) => T): FixedLengthArray<N, T> {
   if (length === 0) return [] as any
 
   const result: T[] = [first]

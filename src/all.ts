@@ -102,7 +102,7 @@ export {
   type Tuple,
   type NonEmptyArray,
   type ReadonlyNonEmptyArray,
-  type FixedSizeArray,
+  type FixedLengthArray,
   type OrMoreSizeArray,
   type OrLessSizeArray,
 } from './Array'

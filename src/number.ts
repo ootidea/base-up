@@ -1,4 +1,4 @@
-import { FixedSizeArray, ReadonlyNonEmptyArray } from './Array'
+import { FixedLengthArray, ReadonlyNonEmptyArray } from './Array'
 import { includes } from './collectionPredicate'
 import { RepeatString, ToNumber } from './string'
 
@@ -85,13 +85,13 @@ export type Trunc<N extends number> = number extends N
  */
 export type Min<N extends number, M extends number> = `${N}` extends `-${infer PN extends number}`
   ? `${M}` extends `-${infer PM extends number}`
-    ? [...FixedSizeArray<PN>, ...any] extends [...FixedSizeArray<PM>, ...any]
+    ? [...FixedLengthArray<PN>, ...any] extends [...FixedLengthArray<PM>, ...any]
       ? N
       : M
     : N
   : `${M}` extends `-${infer PM extends number}`
   ? M
-  : [...FixedSizeArray<N>, ...any] extends [...FixedSizeArray<M>, ...any]
+  : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
   ? M
   : N
 
@@ -104,13 +104,13 @@ export type Min<N extends number, M extends number> = `${N}` extends `-${infer P
  */
 export type Max<N extends number, M extends number> = `${N}` extends `-${infer PN extends number}`
   ? `${M}` extends `-${infer PM extends number}`
-    ? [...FixedSizeArray<PN>, ...any] extends [...FixedSizeArray<PM>, ...any]
+    ? [...FixedLengthArray<PN>, ...any] extends [...FixedLengthArray<PM>, ...any]
       ? M
       : N
     : M
   : `${M}` extends `-${infer PM extends number}`
   ? N
-  : [...FixedSizeArray<N>, ...any] extends [...FixedSizeArray<M>, ...any]
+  : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
   ? N
   : M
 
@@ -132,18 +132,18 @@ type _ToDigitArray<S extends string> = S extends `${infer H extends Digit}${infe
  * Increment<number> is equivalent to number
  */
 export type Increment<N extends number> = `${N}` extends `-${infer PN extends number}`
-  ? FixedSizeArray<PN> extends [any, ...infer L]
+  ? FixedLengthArray<PN> extends [any, ...infer L]
     ? Neg<L['length']>
     : never
-  : [1, ...FixedSizeArray<N>]['length'] extends infer R extends number
+  : [1, ...FixedLengthArray<N>]['length'] extends infer R extends number
   ? R
   : never
 
 export type Decrement<N extends number> = `${N}` extends `-${infer PN extends number}`
-  ? [1, ...FixedSizeArray<PN>]['length'] extends infer R extends number
+  ? [1, ...FixedLengthArray<PN>]['length'] extends infer R extends number
     ? Neg<R>
     : never
-  : FixedSizeArray<N> extends [any, ...infer L]
+  : FixedLengthArray<N> extends [any, ...infer L]
   ? L['length']
   : -1
 
@@ -172,13 +172,13 @@ export type IntegerRangeUntil<N extends number, M extends number | undefined = u
     ? M extends number
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
-          ? [...FixedSizeArray<PN>, ...any] extends [...FixedSizeArray<PM>, ...any]
+          ? [...FixedLengthArray<PN>, ...any] extends [...FixedLengthArray<PM>, ...any]
             ? Neg<Exclude<NaturalNumbersFrom0Through<PN>, NaturalNumbersFrom0Through<PM>>>
             : Neg<Exclude<NaturalNumbersFrom0Until<PM>, NaturalNumbersFrom0Until<PN>>>
           : Neg<NaturalNumbersFrom0Through<PN>> | NaturalNumbersFrom0Until<M>
         : `${M}` extends `-${infer PM extends number}`
         ? NaturalNumbersFrom0Through<N> | Neg<NaturalNumbersFrom0Until<PM>>
-        : [...FixedSizeArray<N>, ...any] extends [...FixedSizeArray<M>, ...any]
+        : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
         ? Exclude<NaturalNumbersFrom0Through<N>, NaturalNumbersFrom0Through<M>>
         : Exclude<NaturalNumbersFrom0Until<M>, NaturalNumbersFrom0Until<N>>
       : IntegerRangeUntil<0, N>
@@ -209,13 +209,13 @@ export type IntegerRangeThrough<N extends number, M extends number | undefined =
     ? M extends number
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
-          ? [...FixedSizeArray<PN>, ...any] extends [...FixedSizeArray<PM>, ...any]
+          ? [...FixedLengthArray<PN>, ...any] extends [...FixedLengthArray<PM>, ...any]
             ? Neg<Exclude<NaturalNumbersFrom0Through<PN>, NaturalNumbersFrom0Until<PM>>>
             : Neg<Exclude<NaturalNumbersFrom0Through<PM>, NaturalNumbersFrom0Until<PN>>>
           : Neg<NaturalNumbersFrom0Through<PN>> | NaturalNumbersFrom0Through<M>
         : `${M}` extends `-${infer PM extends number}`
         ? NaturalNumbersFrom0Through<N> | Neg<NaturalNumbersFrom0Through<PM>>
-        : [...FixedSizeArray<N>, ...any] extends [...FixedSizeArray<M>, ...any]
+        : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
         ? Exclude<NaturalNumbersFrom0Through<N>, NaturalNumbersFrom0Until<M>>
         : Exclude<NaturalNumbersFrom0Through<M>, NaturalNumbersFrom0Until<N>>
       : IntegerRangeThrough<0, N>

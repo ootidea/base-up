@@ -8,7 +8,7 @@ export type ReadonlyNonEmptyArray<T> = readonly [T, ...T[]] | readonly [...T[], 
 
 /** Create a tuple by repeating the given tuple 10 times. */
 type TenTimes<T extends Tuple> = [...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T]
-type DigitToFixedSizeArray<N extends Digit, T = unknown> = N extends '0'
+type DigitToFixedLengthArray<N extends Digit, T = unknown> = N extends '0'
   ? []
   : N extends '1'
   ? [T]
@@ -31,29 +31,29 @@ type DigitToFixedSizeArray<N extends Digit, T = unknown> = N extends '0'
   : never
 /**
  * @example
- * DigitArrayToFixedSizeArray<['2']> is equivalent to [unknown, unknown]
- * DigitArrayToFixedSizeArray<['0', '3']> ie equivalent to [unknown, unknown, unknown]
- * DigitArrayToFixedSizeArray<['1', '0']> ie equivalent to [unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown
+ * DigitArrayToFixedLengthArray<['2']> is equivalent to [unknown, unknown]
+ * DigitArrayToFixedLengthArray<['0', '3']> ie equivalent to [unknown, unknown, unknown]
+ * DigitArrayToFixedLengthArray<['1', '0']> ie equivalent to [unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown
  */
-type DigitArrayToFixedSizeArray<DigitArray extends readonly Digit[], T = unknown> = DigitArray extends [
+type DigitArrayToFixedLengthArray<DigitArray extends readonly Digit[], T = unknown> = DigitArray extends [
   ...infer R extends readonly Digit[],
   infer Last extends Digit
 ]
-  ? [...DigitToFixedSizeArray<Last, T>, ...TenTimes<DigitArrayToFixedSizeArray<R, T>>]
+  ? [...DigitToFixedLengthArray<Last, T>, ...TenTimes<DigitArrayToFixedLengthArray<R, T>>]
   : []
 /**
  * @example
- * FixedSizeArray<3> is equivalent to [unknown, unknown, unknown]
+ * FixedLengthArray<3> is equivalent to [unknown, unknown, unknown]
  * @example
- * FixedSizeArray<3, boolean> is equivalent to [boolean, boolean, boolean]
+ * FixedLengthArray<3, boolean> is equivalent to [boolean, boolean, boolean]
  * @example
- * FixedSizeArray<0, Set<number>> is equivalent to []
+ * FixedLengthArray<0, Set<number>> is equivalent to []
  * @example
- * FixedSizeArray<2 | 3, any> is equivalent to [any, any] | [any, any, any]
+ * FixedLengthArray<2 | 3, any> is equivalent to [any, any] | [any, any, any]
  * @example
- * FixedSizeArray<number, bigint> is equivalent to bigint[]
+ * FixedLengthArray<number, bigint> is equivalent to bigint[]
  */
-export type FixedSizeArray<N extends number, T = unknown> = DigitArrayToFixedSizeArray<ToDigitArray<N>, T>
+export type FixedLengthArray<N extends number, T = unknown> = DigitArrayToFixedLengthArray<ToDigitArray<N>, T>
 
 /**
  * TODO: OrMoreSizeArray<50> is TS2589 error.
@@ -66,12 +66,12 @@ export type FixedSizeArray<N extends number, T = unknown> = DigitArrayToFixedSiz
  */
 export type OrMoreSizeArray<N extends number, T = unknown> = _OrMoreSizeArray<N, IntegerRangeThrough<N>, T>
 type _OrMoreSizeArray<N extends number, M extends number, T> = M extends M
-  ? [...Drop<FixedSizeArray<N, T>, M>, ...T[], ...FixedSizeArray<M, T>]
+  ? [...Drop<FixedLengthArray<N, T>, M>, ...T[], ...FixedLengthArray<M, T>]
   : never
 
-export type OrLessSizeArray<N extends number, T = unknown> = FixedSizeArray<IntegerRangeThrough<N>, T>
+export type OrLessSizeArray<N extends number, T = unknown> = FixedLengthArray<IntegerRangeThrough<N>, T>
 
-export function shuffle<const T extends Tuple>(self: T): FixedSizeArray<T['length'], T[number]> {
+export function shuffle<const T extends Tuple>(self: T): FixedLengthArray<T['length'], T[number]> {
   const result: T[] = []
   for (let i = 0; i < self.length; ++i) {
     const j = randomIntegerThrough(i)

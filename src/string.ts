@@ -1,4 +1,4 @@
-import { FixedSizeArray, Tuple } from './Array'
+import { FixedLengthArray, Tuple } from './Array'
 
 type RemoveLeadingExtraZeros<S extends string> = S extends '0'
   ? '0'
@@ -49,7 +49,7 @@ export type RepeatString<S extends string, N extends number> = string extends S
   ? string
   : number extends N
   ? S[]
-  : _RepeatString<S, FixedSizeArray<N>>
+  : _RepeatString<S, FixedLengthArray<N>>
 type _RepeatString<S extends string, Size extends Tuple> = Size extends [any, ...infer L]
   ? `${S}${_RepeatString<S, L>}`
   : ''
