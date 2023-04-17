@@ -56,16 +56,16 @@ type DigitArrayToFixedLengthArray<DigitArray extends readonly Digit[], T = unkno
 export type FixedLengthArray<N extends number, T = unknown> = DigitArrayToFixedLengthArray<ToDigitArray<N>, T>
 
 /**
- * TODO: OrMoreSizeArray<50> is TS2589 error.
+ * TODO: MinLengthArray<50> is TS2589 error.
  *
  * @example
- * OrMoreSizeArray<1> is equivalent to [unknown, ...unknown[]] | [...unknown[], unknown]
- * OrMoreSizeArray<2, Date> is equivalent to [Date, Date, ...Date[]] | [Date, ...Date[], Date] | [...Date[], Date, Date]
- * OrMoreSizeArray<0, string> is equivalent to string[]
- * OrMoreSizeArray<number, string> is equivalent to string[]
+ * MinLengthArray<1> is equivalent to [unknown, ...unknown[]] | [...unknown[], unknown]
+ * MinLengthArray<2, Date> is equivalent to [Date, Date, ...Date[]] | [Date, ...Date[], Date] | [...Date[], Date, Date]
+ * MinLengthArray<0, string> is equivalent to string[]
+ * MinLengthArray<number, string> is equivalent to string[]
  */
-export type OrMoreSizeArray<N extends number, T = unknown> = _OrMoreSizeArray<N, IntegerRangeThrough<N>, T>
-type _OrMoreSizeArray<N extends number, M extends number, T> = M extends M
+export type MinLengthArray<N extends number, T = unknown> = _MinLengthArray<N, IntegerRangeThrough<N>, T>
+type _MinLengthArray<N extends number, M extends number, T> = M extends M
   ? [...Drop<FixedLengthArray<N, T>, M>, ...T[], ...FixedLengthArray<M, T>]
   : never
 

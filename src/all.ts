@@ -103,7 +103,7 @@ export {
   type NonEmptyArray,
   type ReadonlyNonEmptyArray,
   type FixedLengthArray,
-  type OrMoreSizeArray,
+  type MinLengthArray,
   type OrLessSizeArray,
 } from './Array'
 export {
