@@ -1,4 +1,4 @@
-import { FixedLengthArray, MinLengthArray, NonEmptyArray, OrLessSizeArray, ReadonlyNonEmptyArray, Tuple } from './Array'
+import { FixedLengthArray, MaxLengthArray, MinLengthArray, NonEmptyArray, ReadonlyNonEmptyArray, Tuple } from './Array'
 import { ltToComparator } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
@@ -52,7 +52,7 @@ export namespace flatten {
   }
 }
 
-export function take<T, N extends number>(self: Iterable<T>, n: N): OrLessSizeArray<N, T> {
+export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArray<N, T> {
   const result: T[] = []
   const iterator = self[Symbol.iterator]()
   for (let element = iterator.next(); !element.done && result.length < n; element = iterator.next()) {
@@ -89,7 +89,7 @@ export namespace take {
  */
 export type Drop<T extends Tuple, N extends number = 1> = N extends N
   ? number extends N
-    ? _Drop<T, OrLessSizeArray<T['length']>>
+    ? _Drop<T, MaxLengthArray<T['length']>>
     : _Drop<T, FixedLengthArray<N>>
   : never
 type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]
@@ -134,7 +134,7 @@ export function drop<const T extends Tuple>(self: T, n: number = 1) {
  */
 export type DropLast<T extends Tuple, N extends number = 1> = N extends N
   ? number extends N
-    ? _DropLast<T, OrLessSizeArray<T['length']>>
+    ? _DropLast<T, MaxLengthArray<T['length']>>
     : _DropLast<T, FixedLengthArray<N>>
   : never
 type _DropLast<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]

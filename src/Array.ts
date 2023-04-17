@@ -69,7 +69,7 @@ type _MinLengthArray<N extends number, M extends number, T> = M extends M
   ? [...Drop<FixedLengthArray<N, T>, M>, ...T[], ...FixedLengthArray<M, T>]
   : never
 
-export type OrLessSizeArray<N extends number, T = unknown> = FixedLengthArray<IntegerRangeThrough<N>, T>
+export type MaxLengthArray<N extends number, T = unknown> = FixedLengthArray<IntegerRangeThrough<N>, T>
 
 export function shuffle<const T extends Tuple>(self: T): FixedLengthArray<T['length'], T[number]> {
   const result: T[] = []
