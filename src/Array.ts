@@ -3,7 +3,7 @@ import { Drop } from './transform'
 
 export type Tuple = readonly any[]
 
-export type NonEmptyArray<T> = [T, ...T[]] | [...T[], T]
+export type NonEmptyArray<T = unknown> = [T, ...T[]] | [...T[], T]
 export type ReadonlyNonEmptyArray<T> = Readonly<NonEmptyArray<T>>
 
 /**
@@ -22,11 +22,13 @@ export type FixedLengthArray<N extends number, T = unknown> = number extends N
   ? T[]
   : DigitArrayToFixedLengthArray<ToDigitArray<N>, T>
 
+export type ReadonlyFixedLengthArray<N extends number, T = unknown> = Readonly<FixedLengthArray<N, T>>
+
 export function isFixedLengthArray<T, N extends number>(
   self: readonly T[],
   length: N
-): self is Readonly<FixedLengthArray<N, T>>
-export function isFixedLengthArray<N extends number>(self: unknown, length: N): self is Readonly<FixedLengthArray<N>>
+): self is ReadonlyFixedLengthArray<N, T>
+export function isFixedLengthArray<N extends number>(self: unknown, length: N): self is FixedLengthArray<N>
 export function isFixedLengthArray<N extends number>(self: unknown, length: N) {
   return self instanceof Array && self.length === length
 }
@@ -81,7 +83,34 @@ type _MinLengthArray<N extends number, M extends number, T> = M extends M
   ? [...Drop<FixedLengthArray<N, T>, M>, ...T[], ...FixedLengthArray<M, T>]
   : never
 
+export type ReadonlyMinLengthArray<N extends number, T = unknown> =
+  // For some reason, defining it as Readonly<MinLengthArray<N, T>> caused a type error, so I defined it using a different way.
+  _ReadonlyMinLengthArray<N, IntegerRangeThrough<N>, T>
+type _ReadonlyMinLengthArray<N extends number, M extends number, T> = M extends M
+  ? readonly [...Drop<FixedLengthArray<N, T>, M>, ...T[], ...FixedLengthArray<M, T>]
+  : never
+
+export function isMinLengthArray<T, N extends number>(
+  self: readonly T[],
+  length: N
+): self is ReadonlyMinLengthArray<N, T>
+export function isMinLengthArray<N extends number>(self: unknown, length: N): self is MinLengthArray<N>
+export function isMinLengthArray<N extends number>(self: unknown, length: N) {
+  return self instanceof Array && self.length >= length
+}
+
 export type MaxLengthArray<N extends number, T = unknown> = FixedLengthArray<IntegerRangeThrough<N>, T>
+
+export type ReadonlyMaxLengthArray<N extends number, T = unknown> = Readonly<MaxLengthArray<N, T>>
+
+export function isMaxLengthArray<T, N extends number>(
+  self: readonly T[],
+  length: N
+): self is ReadonlyMaxLengthArray<N, T>
+export function isMaxLengthArray<N extends number>(self: unknown, length: N): self is MaxLengthArray<N>
+export function isMaxLengthArray<N extends number>(self: unknown, length: N) {
+  return self instanceof Array && self.length <= length
+}
 
 export function shuffle<const T extends Tuple>(self: T): FixedLengthArray<T['length'], T[number]> {
   const result: T[] = []
