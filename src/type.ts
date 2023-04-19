@@ -1,11 +1,20 @@
 import { Tuple } from './Array'
 
+/**
+ * Determines whether the types are strictly the same or not.
+ * This was implemented with reference to: {@link https://github.com/microsoft/TypeScript/issues/27024#issuecomment-421529650}
+ */
 export type IsEqual<T, U, Then = true, Else = false> = (<R>() => R extends T ? 1 : 2) extends <R>() => R extends U
   ? 1
   : 2
   ? Then
   : Else
 
+/**
+ * @example
+ * assertTypeEquality<string, any>() results in a type error
+ * assertTypeEquality<123, 123>()  does not result in a type error
+ */
 export function assertTypeEquality<T, U>(
   ..._: IsEqual<T, U> extends true ? [] : ['Assertion failed:', T, 'is not equal to', U]
 ) {}
