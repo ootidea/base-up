@@ -1,9 +1,14 @@
-import { expect, test } from 'vitest'
+import { expect, expectTypeOf, test } from 'vitest'
 import { every, isEmpty, isNotEmpty } from './collectionPredicate'
 
 test('isEmpty', () => {
   expect(isEmpty([1, 2, 3])).toBe(false)
   expect(isEmpty([])).toBe(true)
+
+  expectTypeOf(isEmpty([1, 2, 3])).toEqualTypeOf<false>()
+  expectTypeOf(isEmpty([])).toEqualTypeOf<true>()
+  const array: number[] = []
+  expectTypeOf(isEmpty(array)).toEqualTypeOf<boolean>()
 })
 
 test('isNotEmpty', () => {
