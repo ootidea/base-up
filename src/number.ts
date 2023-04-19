@@ -10,15 +10,15 @@ export type NegativeInfinity = -1.8e308
  * @example
  * IsInteger<12.34> is equivalent to false
  * IsInteger<-12> is equivalent to true
- * IsInteger<0.1e-15> is equivalent to false
+ * IsInteger<1.2e-15> is equivalent to false
  * IsInteger<1e+100> is equivalent to true
  * @example
  * IsInteger<12, []> is equivalent to []
  * IsInteger<0.5, number, never> is equivalent to never
  */
-export type IsInteger<N extends number, Then = true, Else = false> = `${N}` extends
-  | `${string}.${string}`
-  | `${string}e-${string}`
+export type IsInteger<N extends number, Then = true, Else = false> = `${N}` extends `${string}e+${string}`
+  ? Then
+  : `${N}` extends `${string}.${string}` | `${string}e-${string}` | 'Infinity' | '-Infinity'
   ? Else
   : Then
 

@@ -3,12 +3,38 @@ import {
   clamp,
   factorialOf,
   gcdOf,
+  Infinity,
+  IsInteger,
   isPrimeNumber,
   modOf,
+  NegativeInfinity,
   randomIntegerThrough,
   randomIntegerUntil,
   roundAt,
 } from './number'
+import { assertTypeEquality } from './type'
+
+test('IsInteger', () => {
+  assertTypeEquality<IsInteger<3>, true>()
+  assertTypeEquality<IsInteger<-10>, true>()
+  assertTypeEquality<IsInteger<0>, true>()
+  assertTypeEquality<IsInteger<-0>, true>()
+  assertTypeEquality<IsInteger<0.5>, false>()
+  assertTypeEquality<IsInteger<-10.5>, false>()
+
+  assertTypeEquality<IsInteger<1e100>, true>()
+  assertTypeEquality<IsInteger<-1e100>, true>()
+  assertTypeEquality<IsInteger<1e-100>, false>()
+  assertTypeEquality<IsInteger<-1e-100>, false>()
+
+  assertTypeEquality<IsInteger<1.2e100>, true>()
+  assertTypeEquality<IsInteger<-1.2e100>, true>()
+  assertTypeEquality<IsInteger<1.2e-100>, false>()
+  assertTypeEquality<IsInteger<-1.2e-100>, false>()
+
+  assertTypeEquality<IsInteger<Infinity>, false>()
+  assertTypeEquality<IsInteger<NegativeInfinity>, false>()
+})
 
 test('randomIntegerTo', () => {
   expect(randomIntegerUntil(1)).toBe(0)
