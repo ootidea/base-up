@@ -53,7 +53,9 @@ type DigitArrayToFixedLengthArray<DigitArray extends readonly Digit[], T = unkno
  * @example
  * FixedLengthArray<number, bigint> is equivalent to bigint[]
  */
-export type FixedLengthArray<N extends number, T = unknown> = DigitArrayToFixedLengthArray<ToDigitArray<N>, T>
+export type FixedLengthArray<N extends number, T = unknown> = number extends N
+  ? T[]
+  : DigitArrayToFixedLengthArray<ToDigitArray<N>, T>
 
 /**
  * @example
