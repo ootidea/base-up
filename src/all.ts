@@ -130,6 +130,9 @@ export {
   randomIntegerThrough,
   clamp,
   roundAt,
+  type MaxNumber,
+  type Infinity,
+  type NegativeInfinity,
   type IntegerRangeUntil,
   type IntegerRangeThrough,
 } from './number'

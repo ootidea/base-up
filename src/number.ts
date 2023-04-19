@@ -2,6 +2,10 @@ import { FixedLengthArray, ReadonlyNonEmptyArray } from './Array'
 import { includes } from './collectionPredicate'
 import { RepeatString, ToNumber } from './string'
 
+export type MaxNumber = 1.7976931348623157e308
+export type Infinity = 1.8e308
+export type NegativeInfinity = -1.8e308
+
 /**
  * @example
  * IsInteger<12.34> is equivalent to false
