@@ -56,8 +56,6 @@ type DigitArrayToFixedLengthArray<DigitArray extends readonly Digit[], T = unkno
 export type FixedLengthArray<N extends number, T = unknown> = DigitArrayToFixedLengthArray<ToDigitArray<N>, T>
 
 /**
- * TODO: MinLengthArray<50> is TS2589 error.
- *
  * @example
  * MinLengthArray<1> is equivalent to [unknown, ...unknown[]] | [...unknown[], unknown]
  * MinLengthArray<2, Date> is equivalent to [Date, Date, ...Date[]] | [Date, ...Date[], Date] | [...Date[], Date, Date]
