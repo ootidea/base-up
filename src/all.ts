@@ -93,6 +93,8 @@ export {
   isNotFunction,
   isNotObject,
   isNotInstanceOf,
+  type IsEqual,
+  assertTypeEquality,
   type nullish,
   type Nominal,
   type DiscriminatedUnion,

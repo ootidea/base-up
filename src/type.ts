@@ -1,17 +1,14 @@
 import { Tuple } from './Array'
 
-/**
- * Union of all lowercase types in TypeScript, excluding unknown and any.
- * T | never is equivalent to T, so never is omitted.
- *
- * This helps to infer literal types as follows.
- * @example
- * function success<T extends readonly Known[]>(...args: T): T { return args }
- * function failures<T extends readonly any[]>(...args: T): T { return args }
- * success(1, 'a') is typed as [1, 'a']
- * failures(1, 'a') is typed as [number, string]
- */
-export type Known = null | undefined | void | boolean | number | bigint | string | symbol | object
+export type IsEqual<T, U, Then = true, Else = false> = (<R>() => R extends T ? 1 : 2) extends <R>() => R extends U
+  ? 1
+  : 2
+  ? Then
+  : Else
+
+export function assertTypeEquality<T, U>(
+  ..._: IsEqual<T, U> extends true ? [] : ['Assertion failed:', T, 'is not equal to', U]
+) {}
 
 export function assert<T, U extends T>(value: T, predicate: (value: T) => value is U): asserts value is U
 export function assert<T>(value: T, predicate: (value: T) => boolean): void
