@@ -107,6 +107,7 @@ export {
   type FixedLengthArray,
   type MinLengthArray,
   type MaxLengthArray,
+  isFixedLengthArray,
 } from './Array'
 export {
   setOf,
