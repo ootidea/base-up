@@ -42,13 +42,13 @@ export function toString(value: any): string {
  * RepeatString<'A' | 'B', 2> is equivalent to 'AA' | 'AB' | 'BA' | 'BB'
  * RepeatString<'A', 1 | 3> is equivalent to 'A' | 'AAA'
  * @example
- * RepeatString<'A', number> is equivalent to 'A'[]
  * RepeatString<string, 2> is equivalent to string
+ * RepeatString<'A', number> is equivalent to string
  */
 export type RepeatString<S extends string, N extends number> = string extends S
   ? string
   : number extends N
-  ? S[]
+  ? string
   : _RepeatString<S, FixedLengthArray<N>>
 type _RepeatString<S extends string, Size extends Tuple> = Size extends [any, ...infer L]
   ? `${S}${_RepeatString<S, L>}`
