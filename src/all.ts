@@ -81,6 +81,7 @@ export {
   isObject,
   isSymbol,
   isOneOf,
+  isNotOneOf,
   isInstanceOf,
   isNotUndefined,
   isNotNull,

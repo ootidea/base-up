@@ -88,6 +88,10 @@ export function isOneOf<const T extends Tuple>(...set: T): (value: unknown) => v
   return (value: unknown): value is T[number] => new Set(set).has(value as any)
 }
 
+export function isNotOneOf<const T extends Tuple>(...set: T): <U>(value: U | T[number]) => value is U {
+  return (value: unknown): value is T[number] => !new Set(set).has(value as any)
+}
+
 export function isInstanceOf<T extends abstract new (..._: any) => any>(
   value: unknown,
   ctor: T
