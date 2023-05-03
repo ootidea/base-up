@@ -35,16 +35,16 @@ export type Abs<N extends number> = N extends N ? (`${N}` extends `-${infer P ex
 
 /**
  * @example
- * Neg<1> is equivalent to -1
- * Neg<-0.5> is equivalent to 0.5
- * Neg<0> is equivalent to 0
- * Neg<-0> is equivalent to 0
- * Neg<1e+100> is equivalent to -1e+100
- * Neg<-1.2e-45> is equivalent to 1.2e-45
- * Neg<2 | -4> is equivalent to -2 | 4
- * Neg<number> is equivalent to number
+ * Negate<1> is equivalent to -1
+ * Negate<-0.5> is equivalent to 0.5
+ * Negate<0> is equivalent to 0
+ * Negate<-0> is equivalent to 0
+ * Negate<1e+100> is equivalent to -1e+100
+ * Negate<-1.2e-45> is equivalent to 1.2e-45
+ * Negate<2 | -4> is equivalent to -2 | 4
+ * Negate<number> is equivalent to number
  */
-export type Neg<N extends number> = N extends 0
+export type Negate<N extends number> = N extends 0
   ? 0
   : number extends N
   ? number
@@ -137,7 +137,7 @@ type _ToDigitArray<S extends string> = S extends `${infer H extends Digit}${infe
  */
 export type Increment<N extends number> = `${N}` extends `-${infer PN extends number}`
   ? FixedLengthArray<PN> extends [any, ...infer L]
-    ? Neg<L['length']>
+    ? Negate<L['length']>
     : never
   : [1, ...FixedLengthArray<N>]['length'] extends infer R extends number
   ? R
@@ -145,7 +145,7 @@ export type Increment<N extends number> = `${N}` extends `-${infer PN extends nu
 
 export type Decrement<N extends number> = `${N}` extends `-${infer PN extends number}`
   ? [1, ...FixedLengthArray<PN>]['length'] extends infer R extends number
-    ? Neg<R>
+    ? Negate<R>
     : never
   : FixedLengthArray<N> extends [any, ...infer L]
   ? L['length']
@@ -177,11 +177,11 @@ export type IntegerRangeUntil<N extends number, M extends number | undefined = u
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
           ? [...FixedLengthArray<PN>, ...any] extends [...FixedLengthArray<PM>, ...any]
-            ? Neg<Exclude<NaturalNumbersFrom0Through<PN>, NaturalNumbersFrom0Through<PM>>>
-            : Neg<Exclude<NaturalNumbersFrom0Until<PM>, NaturalNumbersFrom0Until<PN>>>
-          : Neg<NaturalNumbersFrom0Through<PN>> | NaturalNumbersFrom0Until<M>
+            ? Negate<Exclude<NaturalNumbersFrom0Through<PN>, NaturalNumbersFrom0Through<PM>>>
+            : Negate<Exclude<NaturalNumbersFrom0Until<PM>, NaturalNumbersFrom0Until<PN>>>
+          : Negate<NaturalNumbersFrom0Through<PN>> | NaturalNumbersFrom0Until<M>
         : `${M}` extends `-${infer PM extends number}`
-        ? NaturalNumbersFrom0Through<N> | Neg<NaturalNumbersFrom0Until<PM>>
+        ? NaturalNumbersFrom0Through<N> | Negate<NaturalNumbersFrom0Until<PM>>
         : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
         ? Exclude<NaturalNumbersFrom0Through<N>, NaturalNumbersFrom0Through<M>>
         : Exclude<NaturalNumbersFrom0Until<M>, NaturalNumbersFrom0Until<N>>
@@ -214,11 +214,11 @@ export type IntegerRangeThrough<N extends number, M extends number | undefined =
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
           ? [...FixedLengthArray<PN>, ...any] extends [...FixedLengthArray<PM>, ...any]
-            ? Neg<Exclude<NaturalNumbersFrom0Through<PN>, NaturalNumbersFrom0Until<PM>>>
-            : Neg<Exclude<NaturalNumbersFrom0Through<PM>, NaturalNumbersFrom0Until<PN>>>
-          : Neg<NaturalNumbersFrom0Through<PN>> | NaturalNumbersFrom0Through<M>
+            ? Negate<Exclude<NaturalNumbersFrom0Through<PN>, NaturalNumbersFrom0Until<PM>>>
+            : Negate<Exclude<NaturalNumbersFrom0Through<PM>, NaturalNumbersFrom0Until<PN>>>
+          : Negate<NaturalNumbersFrom0Through<PN>> | NaturalNumbersFrom0Through<M>
         : `${M}` extends `-${infer PM extends number}`
-        ? NaturalNumbersFrom0Through<N> | Neg<NaturalNumbersFrom0Through<PM>>
+        ? NaturalNumbersFrom0Through<N> | Negate<NaturalNumbersFrom0Through<PM>>
         : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
         ? Exclude<NaturalNumbersFrom0Through<N>, NaturalNumbersFrom0Until<M>>
         : Exclude<NaturalNumbersFrom0Through<M>, NaturalNumbersFrom0Until<N>>
