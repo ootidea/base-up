@@ -382,11 +382,11 @@ export function roundAt(value: number, nthDecimalPlace: number): number {
 }
 
 export function factorialOf(n: number): number {
-  if (n === 0) return 1
+  if (!Number.isInteger(n)) return NaN
   if (n < 0) return NaN
 
-  let result = n
-  for (let i = n - 1; i > 1; i--) {
+  let result = 1
+  for (let i = 2; i <= n; i++) {
     result *= i
   }
   return result

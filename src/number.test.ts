@@ -3,11 +3,11 @@ import {
   clamp,
   factorialOf,
   gcdOf,
-  Infinity,
+  type Infinity,
   IsInteger,
   isPrimeNumber,
   modOf,
-  NegativeInfinity,
+  type NegativeInfinity,
   randomIntegerThrough,
   randomIntegerUntil,
   roundAt,
@@ -121,6 +121,10 @@ test('factorialOf', () => {
   expect(factorialOf(1)).toBe(1)
   expect(factorialOf(0)).toBe(1)
   expect(factorialOf(-1)).toBeNaN()
+  expect(factorialOf(1.5)).toBeNaN()
+  expect(factorialOf(Infinity)).toBeNaN()
+  expect(factorialOf(-Infinity)).toBeNaN()
+  expect(factorialOf(NaN)).toBeNaN()
 })
 
 test('gcdOf', () => {
