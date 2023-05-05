@@ -11,8 +11,10 @@ export type NegativeInfinity = -1.8e308
  * IsInteger<12.34> is equivalent to false
  * IsInteger<-12> is equivalent to true
  * IsInteger<1.2e-15> is equivalent to false
- * IsInteger<1e+100> is equivalent to true
+ * IsInteger<1.2e+15> is equivalent to true
  * @example
+ * IsInteger<1.8e+308> is equivalent to false (Note that 1.8e+308 is Infinity)
+ * @example Customizing result values
  * IsInteger<12, []> is equivalent to []
  * IsInteger<0.5, number, never> is equivalent to never
  */
