@@ -361,13 +361,21 @@ export function clamp(min: number, value: number, max: number): number {
  * modOf(-2, -3) returns -2
  * modOf(-3, -3) returns -0
  * modOf(-4, -3) returns -1
+ * @example
+ * modOf(3.5, 2) returns 1.5
+ * modOf(0.5, 0.2) returns 0.09999999999999998
+ * @example
+ * modOf(Infinity, 2) returns NaN
+ * modOf(9, Infinity) returns NaN
  */
-export function modOf<const N extends number>(
-  a: number,
-  b: N
-): IsInteger<N> extends true ? IntegerRangeUntil<N> : number {
+export function modOf<const N extends number, const M extends number>(a: N, b: M): ModOf<N, M> {
   return (((a % b) + b) % b) as any
 }
+export type ModOf<N extends number, M extends number> = IsInteger<N> extends false
+  ? number
+  : IsInteger<M> extends false
+  ? number
+  : IntegerRangeUntil<M>
 
 /**
  * Round off to the n-th decimal place.

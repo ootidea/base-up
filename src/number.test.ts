@@ -104,6 +104,12 @@ test('modOf', () => {
   expect(modOf(-2, -3)).toBe(-2)
   expect(modOf(-3, -3)).toBe(-0)
   expect(modOf(-4, -3)).toBe(-1)
+
+  expect(modOf(3.5, 2)).toBe(1.5)
+  expect(modOf(0.5, 0.2)).toBe(0.09999999999999998)
+
+  expect(modOf(Infinity, 2)).toBeNaN()
+  expect(modOf(3, Infinity)).toBeNaN()
 })
 
 test('roundAt', () => {
