@@ -1,4 +1,4 @@
-import { FixedLengthArray, shuffle, Tuple } from './Array'
+import { FixedLengthArray, NonEmptyArray, shuffle, Tuple } from './Array'
 import { IntegerRangeUntil } from './number'
 import { Drop, Reverse, take } from './transform'
 import { Lazy, Unlazy } from './type'
@@ -67,13 +67,13 @@ export type RangeUntil<From extends number, To extends number | undefined = unde
  * RangeThrough<2 | -2> is equivalent to [0, 1, 2] | [0, -1, -2]
  * RangeThrough<1, 3 | 5> is equivalent to [1, 2, 3] | [1, 2, 3, 4, 5]
  * RangeThrough<0 | 2, 4> is equivalent to [0, 1, 2, 3, 4] | [2, 3, 4]
- * RangeThrough<number> is equivalent to number[]
+ * RangeThrough<number> is equivalent to [number, ...number[]] | [...number[], number]
  */
 export type RangeThrough<From extends number, To extends number | undefined = undefined> = To extends number
   ? number extends From
-    ? number[]
+    ? NonEmptyArray<number>
     : number extends To
-    ? number[]
+    ? NonEmptyArray<number>
     : From extends From
     ? To extends To
       ? `${From}` extends `-${infer PN extends number}`
