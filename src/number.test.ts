@@ -162,5 +162,6 @@ test('isPrimeNumber', () => {
   expect(isPrimeNumber(-1)).toBe(false)
   expect(isPrimeNumber(2.5)).toBe(false)
   expect(isPrimeNumber(Infinity)).toBe(false)
+  expect(isPrimeNumber(-Infinity)).toBe(false)
   expect(isPrimeNumber(NaN)).toBe(false)
 })

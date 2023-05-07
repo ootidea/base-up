@@ -480,11 +480,11 @@ function binaryGcdOf(a: number, b: number): number {
 export function isPrimeNumber(n: number): boolean {
   if (n <= 1 || !Number.isFinite(n) || !Number.isInteger(n)) return false
 
-  const BASE_PRIME_NUMBERS = [2, 3, 5, 7]
+  const BASE_PRIME_NUMBERS = [2, 3, 5, 7] as const
   const WHEEL = [
     2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, 6, 4, 6, 8, 4, 2, 4, 2, 4, 8, 6, 4, 6, 2, 4, 6, 2, 6, 6, 4, 2, 4, 6,
     2, 6, 4, 2, 4, 2, 10, 2, 10,
-  ]
+  ] as const
 
   if (includes(BASE_PRIME_NUMBERS, n)) return true
 
