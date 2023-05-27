@@ -2,7 +2,21 @@ import { expect, test } from 'vitest'
 import { identity } from './Function'
 import { repeat } from './generate'
 import { setOf } from './Set'
-import { chunk, flatten, join, map, padEnd, padStart, removeDuplicates, reverse, sort, sortBy, tail } from './transform'
+import {
+  chunk,
+  flatten,
+  join,
+  map,
+  padEnd,
+  padStart,
+  removeDuplicates,
+  Reverse,
+  reverse,
+  sort,
+  sortBy,
+  tail,
+} from './transform'
+import { assertTypeEquality } from './type'
 
 test('map', async () => {
   expect(map.Set(setOf(2, 1, 3), (x) => x + 10)).toStrictEqual(setOf(12, 11, 13))
@@ -90,6 +104,15 @@ test('reverse', () => {
   expect(reverse([])).toStrictEqual([])
 
   expect([...reverse.Iterable([1, 2, 3])]).toStrictEqual([3, 2, 1])
+})
+
+test('Reverse', () => {
+  assertTypeEquality<Reverse<[0, 1]>, [1, 0]>()
+  assertTypeEquality<Reverse<[0]>, [0]>()
+  assertTypeEquality<Reverse<[]>, []>()
+  assertTypeEquality<Reverse<[0, 1, ...2[]]>, [...2[], 1, 0]>()
+  assertTypeEquality<Reverse<[0, 1, ...number[], 9]>, [9, ...number[], 1, 0]>()
+  assertTypeEquality<Reverse<[0, 1] | [0]>, [0] | [1, 0]>()
 })
 
 test('unique', () => {
