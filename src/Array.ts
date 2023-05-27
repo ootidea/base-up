@@ -99,6 +99,14 @@ export function isMinLengthArray<N extends number>(self: unknown, length: N) {
   return self instanceof Array && self.length >= length
 }
 
+/**
+ * @example
+ * MaxLengthArray<2> is equivalent to [] | [unknown] | [unknown, unknown]
+ * MaxLengthArray<3, Date> is equivalent to [] | [Date] | [Date, Date] | [Date, Date, Date]
+ * MaxLengthArray<0, string> is equivalent to []
+ * @example
+ * MaxLengthArray<number, string> is equivalent to string[]
+ */
 export type MaxLengthArray<N extends number, T = unknown> = FixedLengthArray<IntegerRangeThrough<N>, T>
 
 export type ReadonlyMaxLengthArray<N extends number, T = unknown> = Readonly<MaxLengthArray<N, T>>
