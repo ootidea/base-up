@@ -1,9 +1,9 @@
 import { expect, test } from 'vitest'
-import { elementAt, filter, indexesOf, lastOf, modeBy, modeOf } from './filter'
+import { elementAt, filter, indexesOf, LastOf, lastOf, modeBy, modeOf } from './filter'
 import { rangeUntil, repeat } from './generate'
 import { setOf } from './Set'
 import { drop, dropLast, take } from './transform'
-import { isNotNull } from './type'
+import { assertTypeEquality, isNotNull } from './type'
 
 test('filter', () => {
   expect([...filter.Iterable([1, 2, 3], (n) => n % 2 === 0)]).toStrictEqual([2])
@@ -12,9 +12,21 @@ test('filter', () => {
   expect(filter.Set(setOf(null, 1, 2), isNotNull)).toStrictEqual(setOf(1, 2))
 })
 
-test('last', () => {
+test('lastOf', () => {
   expect(lastOf([1, 2, 3])).toBe(3)
   expect(lastOf([])).toBe(undefined)
+})
+
+test('LastOf', () => {
+  assertTypeEquality<LastOf<[bigint]>, bigint>()
+  assertTypeEquality<LastOf<[bigint, number]>, number>()
+  assertTypeEquality<LastOf<[]>, undefined>()
+  assertTypeEquality<LastOf<boolean[]>, boolean | undefined>()
+  assertTypeEquality<LastOf<[string, ...string[]]>, string>()
+  assertTypeEquality<LastOf<[boolean, ...string[]]>, boolean | string>()
+  assertTypeEquality<LastOf<[Date] | [Date, boolean]>, Date | boolean>()
+  assertTypeEquality<LastOf<[1?, 2?]>, 1 | 2 | undefined>()
+  assertTypeEquality<LastOf<[0, 1, 2?, ...3[]]>, 1 | 2 | 3>()
 })
 
 test('take', () => {

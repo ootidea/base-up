@@ -55,8 +55,10 @@ export namespace takeWhile {
  * FirstOf<[number, bigint]> is equivalent to number
  * FirstOf<[]> is equivalent to undefined
  * FirstOf<boolean[]> is equivalent to boolean | undefined
- * FirstOf<[...string[], string]> is equivalent to string
  * FirstOf<[...string[], number]> is equivalent to string | number
+ * @example
+ * FirstOf<[Date] | [Date, boolean]> is equivalent to Date
+ * FirstOf<[Date?, boolean?]> is equivalent to Date | undefined
  */
 export type FirstOf<T extends Tuple> = T extends readonly [infer First, ...any]
   ? First
@@ -82,18 +84,29 @@ export function firstOf<const T extends Tuple>(self: T): FirstOf<T> {
  * LastOf<boolean[]> is equivalent to boolean | undefined
  * LastOf<[string, ...string[]]> is equivalent to string
  * LastOf<[boolean, ...string[]]> is equivalent to boolean | string
+ * @example
+ * LastOf<[Date] | [Date, boolean]> is equivalent to Date | boolean
+ * LastOf<[Date?, boolean?]> is equivalent to Date | boolean | undefined
  */
 export type LastOf<T extends Tuple> = T extends readonly [...any, infer Last]
   ? Last
-  : T extends readonly [infer H, ...infer L]
-  ? _LastOf<H, L>
   : T extends []
   ? undefined
+  : T extends readonly [infer H, ...infer L]
+  ? _LastOf<H, L>
+  : T[number][] extends T
+  ? T[number] | undefined
+  : T extends readonly [(infer H)?, ...infer L]
+  ? H | LastOf<L>
   : T[0] | undefined
 type _LastOf<H, L extends Tuple> = L extends []
   ? H
   : L extends readonly [infer H2, ...infer L2]
   ? _LastOf<H2, L2>
+  : L[number][] extends L
+  ? H | L[0]
+  : L extends readonly [(infer H2)?, ...infer L2]
+  ? _LastOf<H | H2, L2>
   : H | L[0]
 export function lastOf<const T extends Tuple>(self: T): LastOf<T> {
   return self[self.length - 1]
