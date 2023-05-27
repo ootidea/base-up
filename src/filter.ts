@@ -60,8 +60,8 @@ export namespace takeWhile {
  */
 export type FirstOf<T extends Tuple> = T extends readonly [infer First, ...any]
   ? First
-  : T extends readonly [...infer U, infer L]
-  ? _FirstOf<U, L>
+  : T extends readonly [...infer U, infer Last]
+  ? _FirstOf<U, Last>
   : T extends []
   ? undefined
   : T[0] | undefined
@@ -85,16 +85,16 @@ export function firstOf<const T extends Tuple>(self: T): FirstOf<T> {
  */
 export type LastOf<T extends Tuple> = T extends readonly [...any, infer Last]
   ? Last
-  : T extends readonly [infer F, ...infer U]
-  ? _LastOf<F, U>
+  : T extends readonly [infer H, ...infer L]
+  ? _LastOf<H, L>
   : T extends []
   ? undefined
   : T[0] | undefined
-type _LastOf<F, T extends Tuple> = T extends []
-  ? F
-  : T extends readonly [infer F2, ...infer T2]
-  ? _LastOf<F2, T2>
-  : F | T[0]
+type _LastOf<H, L extends Tuple> = L extends []
+  ? H
+  : L extends readonly [infer H2, ...infer L2]
+  ? _LastOf<H2, L2>
+  : H | L[0]
 export function lastOf<const T extends Tuple>(self: T): LastOf<T> {
   return self[self.length - 1]
 }
