@@ -113,6 +113,8 @@ test('Reverse', () => {
   assertTypeEquality<Reverse<[0, 1, ...2[]]>, [...2[], 1, 0]>()
   assertTypeEquality<Reverse<[0, 1, ...number[], 9]>, [9, ...number[], 1, 0]>()
   assertTypeEquality<Reverse<[0, 1] | [0]>, [0] | [1, 0]>()
+  assertTypeEquality<Reverse<[0, 1?]>, [0] | [1, 0]>()
+  assertTypeEquality<Reverse<[0?, 1?]>, [] | [0] | [1, 0]>()
 })
 
 test('unique', () => {

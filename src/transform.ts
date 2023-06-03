@@ -252,6 +252,12 @@ export type Reverse<T extends Tuple> = T extends readonly [infer First, ...infer
   ? [...Reverse<R>, First]
   : T extends readonly [...infer R, infer Last]
   ? [Last, ...Reverse<R>]
+  : T extends []
+  ? []
+  : T[number][] extends T
+  ? T
+  : T extends readonly [(infer H)?, ...infer L]
+  ? Reverse<L> | [...Reverse<L>, H]
   : T
 
 export function reverse<const T extends Tuple>(self: T): Reverse<T> {
