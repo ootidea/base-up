@@ -237,30 +237,40 @@ export function rangeThrough<N extends number, M extends number>(n: N, m?: M): n
   return result as any
 }
 
+/**
+ * Generate an array of unique random natural numbers.
+ * @example
+ * uniqueRandomIntegersUntil(2, 2) returns [0, 1] or [1, 0]
+ * uniqueRandomIntegersUntil(2, 1) returns [0] or [1]
+ * uniqueRandomIntegersUntil(3, 1) returns [0] or [1] or [2]
+ * uniqueRandomIntegersUntil(3, 2) returns [0, 1] or [0, 2] or [1, 0] or [1, 2] or [2, 0] or [2, 1]
+ * @example
+ * uniqueRandomIntegersUntil(2, 2) is typed as [0 | 1, 0 | 1]
+ */
 export function uniqueRandomIntegersUntil<const N extends number, const M extends number>(
-  n: N,
-  m: M
+  upperBound: N,
+  length: M
 ): FixedLengthArray<M, IntegerRangeUntil<N>> {
-  if (m / n < 0.4) {
-    return retryWhile(n, m)
+  if (length / upperBound < 0.4) {
+    return retryWhile(upperBound, length)
   } else {
-    return takeShuffle(n, m)
+    return takeShuffle(upperBound, length)
   }
 }
 function takeShuffle<const N extends number, const M extends number>(
-  n: N,
-  m: M
+  upperBound: N,
+  length: M
 ): FixedLengthArray<M, IntegerRangeUntil<N>> {
-  return take(shuffle(rangeUntil(n)), m) as any
+  return take(shuffle(rangeUntil(upperBound)), length) as any
 }
 function retryWhile<const N extends number, const M extends number>(
-  n: N,
-  m: M
+  upperBound: N,
+  length: M
 ): FixedLengthArray<M, IntegerRangeUntil<N>> {
   const set = new Set<number>()
   const result: number[] = []
-  while (result.length < m) {
-    const randomInteger = randomIntegerUntil(n)
+  while (result.length < length) {
+    const randomInteger = randomIntegerUntil(upperBound)
     if (!set.has(randomInteger)) {
       result.push(randomInteger)
       set.add(randomInteger)
