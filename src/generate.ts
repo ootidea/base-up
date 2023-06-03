@@ -1,18 +1,8 @@
 import { FixedLengthArray, NonEmptyArray, shuffle, Tuple } from './Array'
-import { IntegerRangeUntil } from './number'
+import { IntegerRangeUntil, randomIntegerUntil } from './number'
 import { Drop, Reverse, take } from './transform'
 import { Lazy, Unlazy } from './type'
 
-/**
- * @example
- * RangeUntil<3> is equivalent to [0, 1, 2]
- * @example
- * RangeUntil<0> is equivalent to []
- * @example
- * RangeUntil<2 | 4> is equivalent to [0, 1] | [0, 1, 2, 3]
- * @example
- * RangeUntil<number> is equivalent to number[]
- */
 /**
  * @example
  * RangeUntil<3> is equivalent to [0, 1, 2]
@@ -251,7 +241,32 @@ export function uniqueRandomIntegersUntil<const N extends number, const M extend
   n: N,
   m: M
 ): FixedLengthArray<M, IntegerRangeUntil<N>> {
+  if (m / n < 0.4) {
+    return retryWhile(n, m)
+  } else {
+    return takeShuffle(n, m)
+  }
+}
+function takeShuffle<const N extends number, const M extends number>(
+  n: N,
+  m: M
+): FixedLengthArray<M, IntegerRangeUntil<N>> {
   return take(shuffle(rangeUntil(n)), m) as any
+}
+function retryWhile<const N extends number, const M extends number>(
+  n: N,
+  m: M
+): FixedLengthArray<M, IntegerRangeUntil<N>> {
+  const set = new Set<number>()
+  const result: number[] = []
+  while (result.length < m) {
+    const randomInteger = randomIntegerUntil(n)
+    if (!set.has(randomInteger)) {
+      result.push(randomInteger)
+      set.add(randomInteger)
+    }
+  }
+  return result as any
 }
 
 /**
