@@ -86,10 +86,10 @@ export type RangeThrough<From extends number, To extends number | undefined = un
  * NaturalNumbersUntil<3> is equivalent to [0, 1, 2]
  * NaturalNumbersUntil<0> is equivalent to []
  * NaturalNumbersUntil<1 | 2> is equivalent to [0] | [0, 1]
- * NaturalNumbersUntil<number> is equivalent to never
+ * NaturalNumbersUntil<number> is equivalent to number[]
  */
 type NaturalNumbersUntil<N extends number> = number extends N
-  ? never
+  ? number[]
   : N extends N
   ? Unlazy<_NaturalNumbersUntil<N, []>>
   : never
@@ -102,10 +102,10 @@ type _NaturalNumbersUntil<N extends number, Acc extends Tuple> = Acc['length'] e
  * NaturalNumbersThrough<3> is equivalent to [0, 1, 2, 3]
  * NaturalNumbersThrough<0> is equivalent to [0]
  * NaturalNumbersThrough<1 | 2> is equivalent to [0, 1] | [0, 1, 2]
- * NaturalNumbersThrough<number> is equivalent to never
+ * NaturalNumbersThrough<number> is equivalent to number[]
  */
 type NaturalNumbersThrough<N extends number> = number extends N
-  ? never
+  ? number[]
   : N extends N
   ? Unlazy<_NaturalNumbersThrough<FixedLengthArray<N>>>
   : never
@@ -121,10 +121,10 @@ type _NaturalNumbersThrough<Size extends Tuple, R extends Tuple = []> = Size ext
  * PositiveIntegersUntil<3> is equivalent to [1, 2]
  * PositiveIntegersUntil<1 | 2> is equivalent to [] | [1]
  * PositiveIntegersUntil<0> is equivalent to []
- * PositiveIntegersUntil<number> is equivalent to never
+ * PositiveIntegersUntil<number> is equivalent to number[]
  */
 type PositiveIntegersUntil<N extends number> = number extends N
-  ? never
+  ? number[]
   : N extends N
   ? _PositiveIntegersUntil<Drop<FixedLengthArray<N>, 1>, []>
   : never
@@ -137,10 +137,10 @@ type _PositiveIntegersUntil<Size extends Tuple, Acc extends Tuple> = Acc extends
  * PositiveIntegersThrough<3> is equivalent to [1, 2, 3]
  * PositiveIntegersThrough<1 | 2> is equivalent to [1] | [1, 2]
  * PositiveIntegersThrough<0> is equivalent to []
- * PositiveIntegersThrough<number> is equivalent to never
+ * PositiveIntegersThrough<number> is equivalent to number[]
  */
 type PositiveIntegersThrough<N extends number> = number extends N
-  ? never
+  ? number[]
   : N extends 0
   ? []
   : N extends N
