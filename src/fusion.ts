@@ -10,6 +10,14 @@ type UnwrapIterableAll<T extends Tuple> = T extends readonly [infer H, ...infer 
   : []
 
 type ZipArray<T extends readonly (readonly any[])[]> = UnwrapArrayAll<T>[]
+
+/**
+ * @example
+ * zip([1, 2, 3], ['a', 'b', 'c']) returns [[1, 'a'], [2, 'b'], [3, 'c']]
+ * zip([1, 2, 3], ['a', 'b']) returns [[1, 'a'], [2, 'b']]
+ * @example
+ * zip([1, 2, 3], ['a', 'b', 'c'], [true, false, true]) returns [[1, 'a', true], [2, 'b', false], [3, 'c', true]]
+ */
 export function zip<T extends readonly (readonly any[])[]>(...source: T): ZipArray<T> {
   const result = []
   const length = Math.min(...source.map((array) => array.length))

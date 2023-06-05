@@ -23,6 +23,18 @@ export function lteToComparator<T>(lte: (lhs: T, rhs: T) => boolean): (lhs: T, r
   }
 }
 
+/**
+ * Compare two iterables lexicographically.
+ * @returns true if lhs is lexicographically less than rhs.
+ * @example
+ * lexicographicLt([1, 2, 3], [1, 2, 4]) returns true
+ * lexicographicLt([1, 2, 3], [1, 2, 3]) returns false
+ * lexicographicLt([10], [3]) returns false
+ * lexicographicLt(['alice'], ['bob']) returns true
+ * lexicographicLt([], []) returns false
+ * @example Different length
+ * lexicographicLt([1, 2, 3], [1, 2]) returns false
+ */
 export function lexicographicLt<T>(lhs: Iterable<T>, rhs: Iterable<T>): boolean {
   for (const [lhsElement, rhsElement] of zipAll.Iterable(lhs, rhs)) {
     if (lhsElement === undefined) return true
