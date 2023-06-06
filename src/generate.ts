@@ -190,9 +190,8 @@ export type Protruded<T extends Tuple, U extends Tuple> = T extends [any, ...inf
  * rangeUntil(0) returns []
  * rangeUntil(0) is typed as []
  * @example
- * const n: number = 4
- * rangeUntil(n) returns [0, 1, 2, 3]
- * rangeUntil(n) is typed as number[]
+ * rangeUntil(4 as number) returns [0, 1, 2, 3]
+ * rangeUntil(4 as number) is typed as number[]
  */
 export function rangeUntil<To extends number>(to: To): RangeUntil<To>
 export function rangeUntil<From extends number, To extends number>(from: From, to: To): RangeUntil<From, To>
@@ -219,6 +218,17 @@ export namespace rangeUntil {
   }
 }
 
+/**
+ * @example
+ * rangeThrough(3) returns [0, 1, 2, 3]
+ * rangeThrough(3) is typed as [0, 1, 2, 3]
+ * @example
+ * rangeThrough(0) returns [0]
+ * rangeThrough(0) is typed as [0]
+ * @example
+ * rangeThrough(4 as number) returns [0, 1, 2, 3, 4]
+ * rangeThrough(4 as number) is typed as number[]
+ */
 export function rangeThrough<To extends number>(to: To): RangeThrough<To>
 export function rangeThrough<From extends number, To extends number>(from: From, to: To): RangeThrough<From, To>
 export function rangeThrough<N extends number, M extends number>(n: N, m?: M): number[] {
