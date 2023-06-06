@@ -86,6 +86,10 @@ export type Trunc<N extends number> = number extends N
 /**
  * Type-level function of N <= M.
  * It's orders of magnitude faster compared to a naive implementation.
+ * @param N - A natural number literal type
+ * @param M - A natural number literal type
+ * @returns true if N <= M, false otherwise
+ *
  * @example
  * LteNaturalNumber<3, 4> is equivalent to true
  * LteNaturalNumber<4, 4> is equivalent to true
