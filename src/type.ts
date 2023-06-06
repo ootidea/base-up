@@ -3,6 +3,22 @@ import { Tuple } from './Array'
 /**
  * Determines whether the types are strictly the same or not.
  * This was implemented with reference to: {@link https://github.com/microsoft/TypeScript/issues/27024#issuecomment-421529650}
+ * @example
+ * IsEqual<123, 123> is equivalent to true
+ * IsEqual<123, 456> is equivalent to false
+ * IsEqual<123, number> is equivalent to false
+ * IsEqual<void, undefined> is equivalent to false
+ * IsEqual<any, unknown> is equivalent to false
+ * IsEqual<never, any> is equivalent to false
+ * @example
+ * IsEqual<'a' | 'b', 'b' | 'a'> is equivalent to true
+ * IsEqual<1, 1 | never> is equivalent to true
+ * IsEqual<boolean, true | false> is equivalent to true
+ * @example
+ * IsEqual<[a: string], [b: string]> is equivalent to true
+ * IsEqual<[string?], [] | [string]> is equivalent to false
+ * @example
+ * IsEqual<{}, {}> is equivalent to true
  */
 export type IsEqual<T, U, Then = true, Else = false> = (<R>() => R extends T ? 1 : 2) extends <R>() => R extends U
   ? 1
@@ -118,15 +134,11 @@ export type Nominal<Base, Tag extends symbol> = Base & Record<Tag, never>
 export type DiscriminatedUnion<T, K extends keyof T = keyof T> = K extends K ? { type: K } & T[K] : never
 
 declare const lazyKey: unique symbol
-/**
- * TODO:
- */
+/** One of the utilities to avoid the recursion limit */
 export interface Lazy<T> {
   [lazyKey]: T
 }
-/**
- * TODO:
- */
+/** One of the utilities to avoid the recursion limit */
 export type Unlazy<T> = T extends { [lazyKey]: unknown } ? Unlazy<ReduceLazy<T>> : T
 type ReduceLazy<T> = T extends { [lazyKey]: never }
   ? never

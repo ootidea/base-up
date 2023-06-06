@@ -4,7 +4,6 @@ import { assertTypeEquality, IsEqual, isInstanceOf } from './type'
 test('IsEqual', () => {
   assertTypeEquality<IsEqual<'abc', 'abc'>, true>()
   assertTypeEquality<IsEqual<1, number>, false>()
-
   assertTypeEquality<IsEqual<any, unknown>, false>()
   assertTypeEquality<IsEqual<any, never>, false>()
   assertTypeEquality<IsEqual<unknown, never>, false>()
@@ -12,10 +11,11 @@ test('IsEqual', () => {
 
   assertTypeEquality<IsEqual<1 | 2, 2 | 1>, true>()
   assertTypeEquality<IsEqual<1 | never, 1>, true>()
-  assertTypeEquality<IsEqual<1 | 1, 1>, true>()
+  assertTypeEquality<IsEqual<boolean, true | false>, true>()
 
-  assertTypeEquality<IsEqual<{} & {}, {}>, true>()
-  assertTypeEquality<IsEqual<Record<'a', number>, { a: number }>, true>()
+  assertTypeEquality<IsEqual<[a: string], [b: string]>, true>()
+  assertTypeEquality<IsEqual<[string?], [] | [string]>, false>()
+  assertTypeEquality<IsEqual<[string, ...string[]], [...string[], string]>, false>()
 })
 
 test('isInstanceOf', () => {
