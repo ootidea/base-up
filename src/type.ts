@@ -100,6 +100,28 @@ export const isNotSymbol = <T>(value: T | symbol): value is T => typeof value !=
 export const isNotFunction = <T>(value: T | Function): value is T => typeof value !== 'function'
 export const isNotObject = <T>(value: T | symbol): value is T => typeof value !== 'object'
 
+/**
+ * @example
+ * isTruthy(false) returns false
+ * isTruthy(undefined) returns false
+ * isTruthy(null) returns false
+ * isTruthy(0) returns false
+ * isTruthy(0n) returns false
+ * isTruthy('') returns false
+ * isTruthy(NaN) returns false
+ * @example
+ * isTruthy(true) returns true
+ * isTruthy(1) returns true
+ * isTruthy(1n) returns true
+ * isTruthy('a') returns true
+ * isTruthy({}) returns true
+ * isTruthy([]) returns true
+ * isTruthy(() => {}) returns true
+ */
+export function isTruthy<T>(value: T | false | null | undefined | 0 | 0n | ''): value is T {
+  return Boolean(value)
+}
+
 export function isOneOf<const T extends Tuple>(...set: T): (value: unknown) => value is T[number] {
   return (value: unknown): value is T[number] => new Set(set).has(value as any)
 }
