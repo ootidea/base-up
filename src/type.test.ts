@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, expectTypeOf, test } from 'vitest'
 import { assertTypeEquality, IsEqual, isInstanceOf, isTruthy } from './type'
 
 test('IsEqual', () => {
@@ -33,6 +33,18 @@ test('isTruthy', () => {
   expect(isTruthy({})).toBe(true)
   expect(isTruthy([])).toBe(true)
   expect(isTruthy(() => {})).toBe(true)
+
+  expectTypeOf(isTruthy(false)).toEqualTypeOf<false>()
+  expectTypeOf(isTruthy(null)).toEqualTypeOf<false>()
+  expectTypeOf(isTruthy(undefined)).toEqualTypeOf<false>()
+  expectTypeOf(isTruthy(0)).toEqualTypeOf<false>()
+  expectTypeOf(isTruthy(0n)).toEqualTypeOf<false>()
+  expectTypeOf(isTruthy('')).toEqualTypeOf<false>()
+
+  expectTypeOf(isTruthy(1)).toEqualTypeOf<boolean>()
+  expectTypeOf(isTruthy(NaN)).toEqualTypeOf<boolean>()
+  expectTypeOf(isTruthy({})).toEqualTypeOf<boolean>()
+  expectTypeOf(isTruthy([])).toEqualTypeOf<boolean>()
 })
 
 test('isInstanceOf', () => {

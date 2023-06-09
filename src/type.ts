@@ -118,6 +118,8 @@ export const isNotObject = <T>(value: T | symbol): value is T => typeof value !=
  * isTruthy([]) returns true
  * isTruthy(() => {}) returns true
  */
+export function isTruthy(value: false | null | undefined | 0 | 0n | ''): false
+export function isTruthy<T>(value: T | false | null | undefined | 0 | 0n | ''): value is T
 export function isTruthy<T>(value: T | false | null | undefined | 0 | 0n | ''): value is T {
   return Boolean(value)
 }
