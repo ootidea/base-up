@@ -94,6 +94,7 @@ export {
   isNotFunction,
   isNotObject,
   isTruthy,
+  isFalsy,
   isNotInstanceOf,
   type IsEqual,
   assertTypeEquality,

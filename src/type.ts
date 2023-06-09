@@ -124,6 +124,30 @@ export function isTruthy<T>(value: T | false | null | undefined | 0 | 0n | ''): 
   return Boolean(value)
 }
 
+/**
+ * @example
+ * isFalsy(false) returns true
+ * isFalsy(undefined) returns true
+ * isFalsy(null) returns true
+ * isFalsy(0) returns true
+ * isFalsy(0n) returns true
+ * isFalsy('') returns true
+ * isFalsy(NaN) returns true
+ * @example
+ * isFalsy(true) returns false
+ * isFalsy(1) returns false
+ * isFalsy(1n) returns false
+ * isFalsy('a') returns false
+ * isFalsy({}) returns false
+ * isFalsy([]) returns false
+ * isFalsy(() => {}) returns false
+ */
+export function isFalsy(value: false | null | undefined | 0 | 0n | ''): true
+export function isFalsy(value: unknown): value is false | null | undefined | number | 0n | ''
+export function isFalsy(value: unknown) {
+  return !value
+}
+
 export function isOneOf<const T extends Tuple>(...set: T): (value: unknown) => value is T[number] {
   return (value: unknown): value is T[number] => new Set(set).has(value as any)
 }
