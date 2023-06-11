@@ -100,6 +100,7 @@ export {
   assertTypeEquality,
   type nullish,
   type Nominal,
+  type Simplify,
   type DiscriminatedUnion,
 } from './type'
 export {

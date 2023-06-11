@@ -173,13 +173,19 @@ export function isNotInstanceOf<T extends abstract new (..._: any) => any, U>(
 export type Nominal<Base, Tag extends symbol> = Base & Record<Tag, never>
 
 /**
+ * @example
+ * Simplify<{ name: string } & { age: number }> is equivalent to { name: string; age: number }
+ */
+export type Simplify<T> = { [K in keyof T]: T[K] } & {}
+
+/**
  * Utility for defining tagged union types.
  * @example
  * DiscriminatedUnion<{ Rect: { width: number; height: number }; Circle: { radius: number } }>
  * is equivalent to
  * { type: 'Rect'; width: number; height: number } | { type: 'Circle'; radius: number }
  */
-export type DiscriminatedUnion<T, K extends keyof T = keyof T> = K extends K ? { type: K } & T[K] : never
+export type DiscriminatedUnion<T, K extends keyof T = keyof T> = Simplify<K extends K ? { type: K } & T[K] : never>
 
 declare const lazyKey: unique symbol
 /** One of the utilities to avoid the recursion limit */
