@@ -7,7 +7,7 @@
  * keysOf({ 0: null, 1: 'time' }) returns ['0', '1']
  * keysOf({ 0: null, 1: 'time' }) is typed as ('0' | '1')[]
  */
-export function keysOf<T extends {}>(record: T): KeysOf<T>[] {
+export function keysOf<T extends object>(record: T): KeysOf<T>[] {
   return Object.keys(record) as any
 }
 export type KeysOf<T, K extends keyof T = keyof T> = K extends K
@@ -37,7 +37,7 @@ export function numberKeysOf<K extends number>(record: Record<K, unknown>): K[] 
  * valuesOf({ 0: false, 1: 'time' } as const) returns [false, 'time']
  * valuesOf({ 0: false, 1: 'time' } as const) is typed as (false | 'time')[]
  */
-export function valuesOf<T extends {}>(record: T): T[keyof T][] {
+export function valuesOf<T extends object>(record: T): T[keyof T][] {
   return Object.values(record) as any
 }
 

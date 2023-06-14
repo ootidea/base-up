@@ -23,7 +23,7 @@ export namespace isEmpty {
     return self.size === 0
   }
 
-  export function object(self: {}): boolean {
+  export function object(self: object): boolean {
     return Object.keys(self).length === 0
   }
 
@@ -54,7 +54,7 @@ export namespace isNotEmpty {
     return self.size > 0
   }
 
-  export function object(self: {}): boolean {
+  export function object(self: object): boolean {
     return Object.keys(self).length > 0
   }
 
