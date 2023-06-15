@@ -1,5 +1,5 @@
 import { expect, expectTypeOf, test } from 'vitest'
-import { assertTypeEquality, IsEqual, isFalsy, isInstanceOf, isTruthy } from './type'
+import { assertTypeEquality, IsEqual, isFalsy, isInstanceOf, IsOneOf, isTruthy } from './type'
 
 test('IsEqual', () => {
   assertTypeEquality<IsEqual<'abc', 'abc'>, true>()
@@ -16,6 +16,15 @@ test('IsEqual', () => {
   assertTypeEquality<IsEqual<[a: string], [b: string]>, true>()
   assertTypeEquality<IsEqual<[string?], [] | [string]>, false>()
   assertTypeEquality<IsEqual<[string, ...string[]], [...string[], string]>, false>()
+})
+
+test('IsOneOf', () => {
+  assertTypeEquality<IsOneOf<string, [string, number]>, true>()
+  assertTypeEquality<IsOneOf<string, [number, bigint]>, false>()
+  assertTypeEquality<IsOneOf<string, [any, unknown, never]>, false>()
+  assertTypeEquality<IsOneOf<string, [string | number]>, false>()
+  assertTypeEquality<IsOneOf<'text', [string]>, false>()
+  assertTypeEquality<IsOneOf<any, []>, false>()
 })
 
 test('isTruthy', () => {

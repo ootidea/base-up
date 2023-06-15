@@ -27,6 +27,22 @@ export type IsEqual<T, U, Then = true, Else = false> = (<R>() => R extends T ? 1
   : Else
 
 /**
+ * Determines whether the type is one of the types in the tuple.
+ * @example
+ * IsOneOf<string, [string, number, bigint]> is equivalent to true
+ * IsOneOf<string, [number, bigint]> is equivalent to false
+ * IsOneOf<string, [any, unknown, never]> is equivalent to false
+ * IsOneOf<string, [string | number]> is equivalent to false
+ * IsOneOf<'text', [string]> is equivalent to false
+ * IsOneOf<any, []> is equivalent to false
+ */
+export type IsOneOf<T, U extends Tuple, Then = true, Else = false> = U extends readonly [infer H, ...infer L]
+  ? IsEqual<T, H> extends true
+    ? Then
+    : IsOneOf<T, L>
+  : Else
+
+/**
  * @example
  * assertTypeEquality<string, any>() results in a type error
  * assertTypeEquality<123, 123>()  does not result in a type error

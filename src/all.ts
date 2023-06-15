@@ -97,6 +97,7 @@ export {
   isFalsy,
   isNotInstanceOf,
   type IsEqual,
+  type IsOneOf,
   assertTypeEquality,
   type nullish,
   type Nominal,
