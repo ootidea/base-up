@@ -64,6 +64,9 @@ export function valuesOf<const T extends {}>(record: T): T[keyof T][] {
 export function entriesOf<const T extends {}>(record: T): EntriesOf<T> {
   return Object.entries(record) as any
 }
-type EntriesOf<T, K extends keyof T = keyof T> = {} extends T
-  ? []
-  : (K extends string | number ? [`${K}`, T[K]] : never)[]
+type _EntriesOf<T> = keyof T extends infer K extends keyof T
+  ? K extends string | number
+    ? [`${K}`, T[K]]
+    : never
+  : never
+type EntriesOf<T> = IsEqual<_EntriesOf<T>, never, [], _EntriesOf<T>[]>
