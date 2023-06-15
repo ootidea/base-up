@@ -1,12 +1,43 @@
-import { expect, test } from 'vitest'
-import { keysOf, numberKeysOf } from './projection'
-import { setOf } from './Set'
+import { expect, expectTypeOf, test } from 'vitest'
+import { entriesOf, keysOf, numberKeysOf } from './projection'
 
-test('keys', () => {
-  expect(new Set(keysOf({ abc: 3, def: true }))).toStrictEqual(setOf('abc', 'def'))
-  expect(new Set(keysOf({ 0: '', 1: undefined, abc: null }))).toStrictEqual(setOf('0', '1', 'abc'))
+test('keysOf', () => {
+  expect(keysOf({ name: 'Bob', age: 30 })).toStrictEqual(['name', 'age'])
+  expectTypeOf(keysOf({ name: 'Bob', age: 30 })).toEqualTypeOf<('name' | 'age')[]>()
+  expect(keysOf({ 0: 'first', 1: undefined, 2: null })).toStrictEqual(['0', '1', '2'])
+  expectTypeOf(keysOf({ 0: 'first', 1: undefined, 2: null })).toEqualTypeOf<('0' | '1' | '2')[]>()
+  expect(keysOf({})).toStrictEqual([])
+  expectTypeOf(keysOf({})).toEqualTypeOf<[]>()
+  expect(keysOf({ [Symbol.iterator]: false })).toStrictEqual([])
+  expectTypeOf(keysOf({ [Symbol.iterator]: false })).toEqualTypeOf<[]>()
+  expect(keysOf([null, undefined])).toStrictEqual(['0', '1'])
+  expectTypeOf(keysOf([null, undefined])).toEqualTypeOf<('0' | '1')[]>()
+
+  expectTypeOf(keysOf([1, 2] as number[])).toEqualTypeOf<[]>()
+  expectTypeOf(keysOf({} as Record<any, any>)).toEqualTypeOf<[]>()
 })
 
-test('numberKeys', () => {
-  expect(new Set(numberKeysOf({ 10: [], 4: 'abc' }))).toStrictEqual(setOf(10, 4))
+test('numberKeysOf', () => {
+  expect(numberKeysOf({ 0: 'first', 1: 'second' })).toStrictEqual([0, 1])
+  expectTypeOf(numberKeysOf({ 0: 'first', 1: 'second' })).toEqualTypeOf<(0 | 1)[]>()
+
+  expect(numberKeysOf({})).toStrictEqual([])
+  expectTypeOf(numberKeysOf({})).toEqualTypeOf<[]>()
+})
+
+test('entriesOf', () => {
+  expect(entriesOf({ name: 'Bob', age: 60 })).toStrictEqual([
+    ['name', 'Bob'],
+    ['age', 60],
+  ])
+  expectTypeOf(entriesOf({ name: 'Bob', age: 60 })).toEqualTypeOf<(['name', 'Bob'] | ['age', 60])[]>()
+
+  expect(entriesOf({})).toStrictEqual([])
+  expectTypeOf(entriesOf({})).toEqualTypeOf<[]>()
+
+  expect(entriesOf({ 0: 'first' })).toStrictEqual([['0', 'first']])
+  expectTypeOf(entriesOf({ 0: 'first' })).toEqualTypeOf<['0', 'first'][]>()
+
+  expect(entriesOf({ normal: true, [Symbol.iterator]: true })).toStrictEqual([['normal', true]])
+  expectTypeOf(entriesOf({ normal: true, [Symbol.iterator]: true })).toEqualTypeOf<['normal', true][]>()
 })
