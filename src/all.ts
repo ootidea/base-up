@@ -148,8 +148,8 @@ export {
   clamp,
   roundAt,
   type MaxNumber,
-  type Infinity,
-  type NegativeInfinity,
+  Infinity,
+  NegativeInfinity,
   type IntegerRangeUntil,
   type IntegerRangeThrough,
 } from './number'

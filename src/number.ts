@@ -4,8 +4,11 @@ import { RepeatString, ToNumber } from './string'
 import { IsEqual } from './type'
 
 export type MaxNumber = 1.7976931348623157e308
-export type Infinity = 1.8e308
-export type NegativeInfinity = -1.8e308
+export type Infinity = 1e999
+export type NegativeInfinity = -1e999
+
+export const Infinity = globalThis.Infinity as Infinity
+export const NegativeInfinity = -globalThis.Infinity as NegativeInfinity
 
 /**
  * @example
