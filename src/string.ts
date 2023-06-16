@@ -60,3 +60,6 @@ type _RepeatString<S extends string, Size extends Tuple> = Size extends [any, ..
  * https://github.com/sindresorhus/type-fest/blob/main/source/literal-union.d.ts
  */
 export type LiteralAutoComplete<Literals extends Base, Base = string> = Literals | (Base & Record<never, never>)
+
+/** The types that can be interpolated within a template literal. */
+export type Interpolable = string | number | bigint | boolean | null | undefined

@@ -4,6 +4,9 @@ import { entriesOf, keysOf, numberKeysOf } from './projection'
 test('keysOf', () => {
   expect(keysOf({ name: 'Bob', age: 30 })).toStrictEqual(['name', 'age'])
   expectTypeOf(keysOf({ name: 'Bob', age: 30 })).toEqualTypeOf<('name' | 'age')[]>()
+  expectTypeOf(keysOf({ name: 'Bob', age: 30 } as Record<string, any>)).toEqualTypeOf<string[]>()
+  expect(keysOf({ name: 'Bob', age: 60, [Symbol.iterator]: false })).toStrictEqual(['name', 'age'])
+  expectTypeOf(keysOf({ name: 'Bob', age: 60, [Symbol.iterator]: false })).toEqualTypeOf<('name' | 'age')[]>()
   expect(keysOf({ 0: 'first', 1: undefined, 2: null })).toStrictEqual(['0', '1', '2'])
   expectTypeOf(keysOf({ 0: 'first', 1: undefined, 2: null })).toEqualTypeOf<('0' | '1' | '2')[]>()
   expect(keysOf({})).toStrictEqual([])
@@ -11,10 +14,18 @@ test('keysOf', () => {
   expect(keysOf({ [Symbol.iterator]: false })).toStrictEqual([])
   expectTypeOf(keysOf({ [Symbol.iterator]: false })).toEqualTypeOf<[]>()
   expect(keysOf([null, undefined])).toStrictEqual(['0', '1'])
-  expectTypeOf(keysOf([null, undefined])).toEqualTypeOf<('0' | '1')[]>()
+  expectTypeOf(keysOf([null, undefined])).toEqualTypeOf<['0', '1']>()
 
-  expectTypeOf(keysOf([1, 2] as number[])).toEqualTypeOf<[]>()
-  expectTypeOf(keysOf({} as Record<any, any>)).toEqualTypeOf<[]>()
+  expectTypeOf(keysOf([1, 2] as number[])).toEqualTypeOf<string[]>()
+  expectTypeOf(keysOf({} as Record<any, any>)).toEqualTypeOf<string[]>()
+
+  expect(keysOf('abc')).toStrictEqual(['0', '1', '2'])
+  expect(keysOf(123)).toStrictEqual([])
+  expect(keysOf(true)).toStrictEqual([])
+  expect(keysOf(/regexp/)).toStrictEqual([])
+  expect(keysOf(Symbol())).toStrictEqual([])
+  expect(keysOf(new Date())).toStrictEqual([])
+  expect(keysOf(new Set())).toStrictEqual([])
 })
 
 test('numberKeysOf', () => {

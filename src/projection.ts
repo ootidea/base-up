@@ -1,3 +1,6 @@
+import { Tuple, TupleMinLengthOf } from './Array'
+import { RangeUntil } from './generate'
+import { Interpolable } from './string'
 import { IsEqual } from './type'
 
 /**
@@ -21,10 +24,31 @@ import { IsEqual } from './type'
 export function keysOf<const T extends {}>(record: T): KeysOf<T> {
   return Object.keys(record) as any
 }
+export type KeysOf<T> = IsEqual<T, any> extends true
+  ? string[]
+  : IsEqual<T, never> extends true
+  ? never
+  : T extends Tuple
+  ? KeysOfTuple<T>
+  : _KeysOf<T> extends infer Keys
+  ? IsEqual<Keys, never, [], Keys[]>
+  : never
 // Remove symbol keys and convert number keys to string
-type _KeysOf<T> = keyof T extends infer K extends string | number ? `${K}` : never
-// Convert never[] to []
-type KeysOf<T> = IsEqual<_KeysOf<T>, never, [], _KeysOf<T>[]>
+type _KeysOf<T> = keyof T extends infer K
+  ? K extends string | number
+    ? IsEqual<K, never> extends true
+      ? never
+      : IsEqual<K, any> extends true
+      ? string
+      : `${K}`
+    : never
+  : never
+type KeysOfTuple<T extends Tuple> = IsEqual<Exclude<keyof T, keyof []>, never> extends true
+  ? string[]
+  : ToStringElements<RangeUntil<TupleMinLengthOf<T>>>
+type ToStringElements<T extends Tuple> = T extends readonly [infer H extends Interpolable, ...infer L]
+  ? [`${H}`, ...ToStringElements<L>]
+  : []
 
 /**
  * Get keys as type number from a record where key is type number.
