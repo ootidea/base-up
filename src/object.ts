@@ -1,5 +1,6 @@
 import { isNotEmpty } from './collectionPredicate'
 import { tail } from './transform'
+import { Simplify } from './type'
 
 export type NestedProperty<T, Ks extends readonly (keyof any)[]> = Ks extends []
   ? T
@@ -30,3 +31,44 @@ export function getNestedProperty<T extends object, Ks extends readonly (keyof a
 }
 
 export type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>
+
+/**
+ * @example
+ * RequiredKeysOf<{ a: 1; b?: 2; c: 3 }> is equivalent to 'a' | 'c'
+ * RequiredKeysOf<{ value: string; 0: boolean }> is equivalent to 'value' | 0
+ * RequiredKeysOf<{ a?: 1 }> is equivalent to never
+ * @example
+ * RequiredKeysOf<[0, 1?, 2?]> is equivalent to '0' | keyof []
+ */
+export type RequiredKeysOf<T> = keyof T extends infer K extends keyof T
+  ? K extends K
+    ? T extends Record<K, any>
+      ? K
+      : never
+    : never
+  : never
+
+/**
+ * @example
+ * OptionalKeysOf<{ a: 1; b?: 2; c: 3 }> is equivalent to 'b'
+ * OptionalKeysOf<{ value?: string; 0?: boolean }> is equivalent to 'value' | 0
+ * OptionalKeysOf<{ a: 1 }> is equivalent to never
+ * @example Optional elements of a tuple
+ * OptionalKeysOf<[0, 1?, 2?]> is equivalent to '1' | '2'
+ */
+export type OptionalKeysOf<T> = keyof T extends infer K extends keyof T
+  ? K extends K
+    ? T extends Record<K, any>
+      ? never
+      : K
+    : never
+  : never
+
+/**
+ * @example
+ * AtLeastOneProperty<{ a: 1; b?: 2; c: 3 }> is equivalent to { a: 1; b?: 2; c?: 3 } | { a?: 1; b?: 2; c: 3 }
+ * AtLeastOneProperty<{ a: 1; b?: 2 }> is equivalent to { a: 1; b?: 2 }
+ * AtLeastOneProperty<{ b?: 2 }> is equivalent to never
+ * AtLeastOneProperty<{}> is equivalent to never
+ */
+export type AtLeastOneProperty<T> = Simplify<Partial<T> & { [K in RequiredKeysOf<T>]: Pick<T, K> }[RequiredKeysOf<T>]>

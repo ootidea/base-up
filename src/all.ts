@@ -137,7 +137,14 @@ export {
   type ReadonlyNonEmptySet,
 } from './Set'
 export { mapOf, type NonEmptyMap, type ReadonlyNonEmptyMap } from './Map'
-export { getNestedProperty, type NestedProperty, type PartialRecord } from './object'
+export {
+  getNestedProperty,
+  type NestedProperty,
+  type PartialRecord,
+  RequiredKeysOf,
+  OptionalKeysOf,
+  AtLeastOneProperty,
+} from './object'
 export {
   modOf,
   isPrimeNumber,
