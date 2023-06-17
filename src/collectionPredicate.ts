@@ -1,6 +1,6 @@
 import { ReadonlyNonEmptyArray, Tuple } from './Array'
 import { ReadonlyNonEmptyMap } from './Map'
-import { keysOf, valuesOf } from './projection'
+import { valuesOf } from './projection'
 import { ReadonlyNonEmptySet } from './Set'
 
 export function isEmpty(self: []): true
@@ -79,26 +79,6 @@ export namespace every {
       if (!f(value)) return false
     }
     return true
-  }
-}
-
-export function everyKeys<K extends string, U extends K>(
-  self: Record<K, unknown>,
-  f: (key: K) => key is U
-  // @ts-ignore
-): self is Record<U, unknown>
-export function everyKeys<K extends string>(self: Record<K, unknown>, f: (key: K) => boolean): boolean
-export function everyKeys<K extends string>(self: Record<K, unknown>, f: (key: K) => boolean): boolean {
-  return keysOf(self).every(f)
-}
-export namespace everyKeys {
-  export function Map<K, U extends K>(
-    self: ReadonlyMap<K, unknown>,
-    f: (key: K) => key is U
-  ): self is ReadonlyMap<U, unknown>
-  export function Map<K>(self: ReadonlyMap<K, unknown>, f: (key: K) => boolean): boolean
-  export function Map<K>(self: ReadonlyMap<K, unknown>, f: (key: K) => boolean): boolean {
-    return every.Iterable(self.keys(), f)
   }
 }
 

@@ -31,7 +31,7 @@ export {
   unshift,
   removeSuffix,
 } from './collectionUpdate'
-export { isEmpty, includes, everyKeys, every, everyValues, isNotEmpty, isUnique } from './collectionPredicate'
+export { isEmpty, includes, every, everyValues, isNotEmpty, isUnique } from './collectionPredicate'
 export { slideWindow, cartesianProductOf, permutationOf, prefixesOf } from './combination'
 export { lexicographicLt, lexicographicLte, lteToComparator, ltToComparator } from './comparison'
 export {
