@@ -3,7 +3,7 @@ import {
   clamp,
   factorialOf,
   gcdOf,
-  type Infinity,
+  Infinity,
   IsInteger,
   isPrimeNumber,
   modOf,
