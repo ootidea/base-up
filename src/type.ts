@@ -15,6 +15,9 @@ import { Tuple } from './Array'
  * IsEqual<1, 1 | never> is equivalent to true
  * IsEqual<boolean, true | false> is equivalent to true
  * @example
+ * IsEqual<string & {}, string> is equivalent to false
+ * IsEqual<string & {}, {}> is equivalent to false
+ * @example
  * IsEqual<[a: string], [b: string]> is equivalent to true
  * IsEqual<[string?], [] | [string]> is equivalent to false
  * @example
@@ -272,7 +275,9 @@ export type IsStringLiteral<T extends string> = IsUnion<T> extends true
  * is equivalent to
  * { type: 'Rect'; width: number; height: number } | { type: 'Circle'; radius: number }
  */
-export type DiscriminatedUnion<T, K extends keyof T = keyof T> = Simplify<K extends K ? { type: K } & T[K] : never>
+export type DiscriminatedUnion<T, D extends keyof any = 'type'> = {
+  [K in keyof T]: Simplify<Record<D, K> & T[K]>
+}[keyof T]
 
 declare const lazyKey: unique symbol
 /** One of the utilities to avoid the recursion limit */

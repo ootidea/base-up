@@ -7,6 +7,15 @@ export type NestedProperty<T, Ks extends readonly (keyof any)[]> = Ks extends []
   ? NestedProperty<T[H], R>
   : undefined
 
+/**
+ * @example
+ * getNestedProperty({ a: 123 }, 'a') returns 123
+ * getNestedProperty({ a: 123, b: { c: 'nested' } }, 'b', 'c') returns 'nested'
+ * @example
+ * getNestedProperty({ a: 123 }, 'z', 'x') returns undefined
+ * @example Empty path
+ * getNestedProperty({ a: 123 }) returns { a: 123 }
+ */
 export function getNestedProperty<T extends object, Ks extends readonly (keyof any)[]>(
   self: T,
   ...keys: Ks

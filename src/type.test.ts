@@ -1,6 +1,7 @@
 import { expect, expectTypeOf, test } from 'vitest'
 import {
   assertTypeEquality,
+  DiscriminatedUnion,
   IsEqual,
   isFalsy,
   isInstanceOf,
@@ -8,6 +9,7 @@ import {
   IsStringLiteral,
   IsTemplateLiteral,
   isTruthy,
+  Simplify,
 } from './type'
 
 test('IsEqual', () => {
@@ -21,6 +23,9 @@ test('IsEqual', () => {
   assertTypeEquality<IsEqual<1 | 2, 2 | 1>, true>()
   assertTypeEquality<IsEqual<1 | never, 1>, true>()
   assertTypeEquality<IsEqual<boolean, true | false>, true>()
+
+  assertTypeEquality<IsEqual<string & {}, string>, false>()
+  assertTypeEquality<IsEqual<string & {}, {}>, false>()
 
   assertTypeEquality<IsEqual<[a: string], [b: string]>, true>()
   assertTypeEquality<IsEqual<[string?], [] | [string]>, false>()
@@ -118,4 +123,17 @@ test('IsStringLiteral', () => {
   assertTypeEquality<IsStringLiteral<`${boolean}`>, false>()
   assertTypeEquality<IsStringLiteral<`${number}`>, false>()
   assertTypeEquality<IsStringLiteral<`${bigint}`>, false>()
+})
+
+test('DiscriminatedUnion', () => {
+  assertTypeEquality<
+    DiscriminatedUnion<{ Rect: { width: number; height: number }; Circle: { radius: number } }>,
+    { type: 'Rect'; width: number; height: number } | { type: 'Circle'; radius: number }
+  >()
+  assertTypeEquality<DiscriminatedUnion<{ Circle: [] }>, Simplify<{ type: 'Circle' } & []>>()
+  assertTypeEquality<DiscriminatedUnion<{}>, never>()
+  assertTypeEquality<
+    DiscriminatedUnion<{ [Symbol.iterator]: { radius: number } }>,
+    { type: typeof Symbol.iterator; radius: number }
+  >()
 })

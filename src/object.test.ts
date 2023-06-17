@@ -12,4 +12,6 @@ test('getProperty', () => {
 
   expect(getNestedProperty({ 0: 'a', 5: 'b' }, 0)).toBe('a')
   expect(getNestedProperty({ 0: 'a', 5: 'b' }, 5)).toBe('b')
+
+  expect(getNestedProperty({ a: 123 })).toStrictEqual({ a: 123 })
 })
