@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest'
-import { elementAt, filter, indexesOf, LastOf, lastOf, modeBy, modeOf } from './filter'
+import { removeSuffix } from './collectionUpdate'
+import { elementAt, filter, FirstOf, firstOf, indexesOf, LastOf, lastOf, modeBy, modeOf } from './filter'
 import { rangeUntil, repeat } from './generate'
 import { setOf } from './Set'
 import { drop, dropLast, take } from './transform'
@@ -10,6 +11,27 @@ test('filter', () => {
 
   expect(filter.Set(setOf(0, 1, 2), (x) => x > 0)).toStrictEqual(setOf(1, 2))
   expect(filter.Set(setOf(null, 1, 2), isNotNull)).toStrictEqual(setOf(1, 2))
+})
+
+test('firstOf', () => {
+  expect(firstOf([1, 2, 3])).toBe(1)
+  expect(firstOf([])).toBe(undefined)
+})
+
+test('FirstOf', () => {
+  assertTypeEquality<FirstOf<[bigint]>, bigint>()
+  assertTypeEquality<FirstOf<[bigint, number]>, bigint>()
+  assertTypeEquality<FirstOf<[]>, undefined>()
+  assertTypeEquality<FirstOf<boolean[]>, boolean | undefined>()
+  assertTypeEquality<FirstOf<never[]>, undefined>()
+  assertTypeEquality<FirstOf<[...string[], string]>, string>()
+  assertTypeEquality<FirstOf<[...string[], boolean]>, string | boolean>()
+  assertTypeEquality<FirstOf<[Date] | [boolean, Date]>, Date | boolean>()
+  assertTypeEquality<FirstOf<[1?]>, 1 | undefined>()
+  assertTypeEquality<FirstOf<[1?, 2?]>, 1 | 2 | undefined>()
+  assertTypeEquality<FirstOf<[1?, ...2[]]>, 1 | 2 | undefined>()
+  assertTypeEquality<FirstOf<any>, any>()
+  assertTypeEquality<FirstOf<never>, never>()
 })
 
 test('lastOf', () => {
