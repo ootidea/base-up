@@ -1,5 +1,4 @@
 import { expect, test } from 'vitest'
-import { removeSuffix } from './collectionUpdate'
 import { elementAt, filter, FirstOf, firstOf, indexesOf, LastOf, lastOf, modeBy, modeOf } from './filter'
 import { rangeUntil, repeat } from './generate'
 import { setOf } from './Set'
@@ -30,6 +29,8 @@ test('FirstOf', () => {
   assertTypeEquality<FirstOf<[1?]>, 1 | undefined>()
   assertTypeEquality<FirstOf<[1?, 2?]>, 1 | 2 | undefined>()
   assertTypeEquality<FirstOf<[1?, ...2[]]>, 1 | 2 | undefined>()
+
+  assertTypeEquality<FirstOf<[1] | [2]>, 1 | 2>()
   assertTypeEquality<FirstOf<any>, any>()
   assertTypeEquality<FirstOf<never>, never>()
 })
@@ -51,6 +52,8 @@ test('LastOf', () => {
   assertTypeEquality<LastOf<[1, 2?]>, 1 | 2>()
   assertTypeEquality<LastOf<[1?, 2?]>, 1 | 2 | undefined>()
   assertTypeEquality<LastOf<[0, 1, 2?, ...3[]]>, 1 | 2 | 3>()
+
+  assertTypeEquality<LastOf<[1] | [2]>, 1 | 2>()
   assertTypeEquality<LastOf<any>, any>()
   assertTypeEquality<LastOf<never>, never>()
 })
