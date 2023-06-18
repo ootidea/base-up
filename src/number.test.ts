@@ -11,6 +11,7 @@ import {
   randomIntegerThrough,
   randomIntegerUntil,
   roundAt,
+  Trunc,
 } from './number'
 import { assertTypeEquality } from './type'
 
@@ -41,6 +42,26 @@ test('IsInteger', () => {
   assertTypeEquality<IsInteger<number>, boolean>()
   assertTypeEquality<IsInteger<any>, boolean>()
   assertTypeEquality<IsInteger<never>, never>()
+})
+
+test('Trunc', () => {
+  assertTypeEquality<Trunc<1>, 1>()
+  assertTypeEquality<Trunc<1.5>, 1>()
+  assertTypeEquality<Trunc<-1.5>, -1>()
+  assertTypeEquality<Trunc<0>, 0>()
+  assertTypeEquality<Trunc<1e100>, 1e100>()
+  assertTypeEquality<Trunc<-1e100>, -1e100>()
+  assertTypeEquality<Trunc<1.5e100>, 1.5e100>()
+  assertTypeEquality<Trunc<-1.5e100>, -1.5e100>()
+  assertTypeEquality<Trunc<1e-100>, 0>()
+  assertTypeEquality<Trunc<-1e-100>, 0>()
+  assertTypeEquality<Trunc<Infinity>, Infinity>()
+  assertTypeEquality<Trunc<NegativeInfinity>, NegativeInfinity>()
+
+  assertTypeEquality<Trunc<0 | 1.5>, 0 | 1>()
+  assertTypeEquality<Trunc<number>, number>()
+  assertTypeEquality<Trunc<any>, number>()
+  assertTypeEquality<Trunc<never>, never>()
 })
 
 test('randomIntegerTo', () => {
