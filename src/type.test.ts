@@ -6,8 +6,6 @@ import {
   isFalsy,
   isInstanceOf,
   IsOneOf,
-  IsStringLiteral,
-  IsTemplateLiteral,
   isTruthy,
   Simplify,
 } from './type'
@@ -92,37 +90,6 @@ test('isInstanceOf', () => {
   expect(isInstanceOf(/a/, RegExp)).toBe(true)
   expect(isInstanceOf('2021-09-27T15:08:10.78', Date)).toBe(false)
   expect(isInstanceOf({}, Object)).toBe(true)
-})
-
-test('IsTemplateLiteral', () => {
-  assertTypeEquality<IsTemplateLiteral<`${number}`>, true>()
-  assertTypeEquality<IsTemplateLiteral<`${bigint}`>, true>()
-  assertTypeEquality<IsTemplateLiteral<`Hi, ${string}`>, true>()
-  assertTypeEquality<IsTemplateLiteral<`${number}px`>, true>()
-  assertTypeEquality<IsTemplateLiteral<`#${bigint}:`>, true>()
-  assertTypeEquality<IsTemplateLiteral<`${number}` | `${bigint}`>, false>()
-  assertTypeEquality<IsTemplateLiteral<'abc'>, false>()
-  assertTypeEquality<IsTemplateLiteral<``>, false>()
-  assertTypeEquality<IsTemplateLiteral<`${null}`>, false>()
-  assertTypeEquality<IsTemplateLiteral<`${undefined}`>, false>()
-  assertTypeEquality<IsTemplateLiteral<`${boolean}`>, false>()
-  assertTypeEquality<IsTemplateLiteral<string>, false>()
-  assertTypeEquality<IsTemplateLiteral<any>, false>()
-  assertTypeEquality<IsTemplateLiteral<never>, false>()
-})
-
-test('IsStringLiteral', () => {
-  assertTypeEquality<IsStringLiteral<'a'>, true>()
-  assertTypeEquality<IsStringLiteral<''>, true>()
-  assertTypeEquality<IsStringLiteral<string>, false>()
-  assertTypeEquality<IsStringLiteral<never>, false>()
-  assertTypeEquality<IsStringLiteral<any>, false>()
-  assertTypeEquality<IsStringLiteral<'a' | 'b'>, false>()
-  assertTypeEquality<IsStringLiteral<`${null}`>, true>()
-  assertTypeEquality<IsStringLiteral<`${undefined}`>, true>()
-  assertTypeEquality<IsStringLiteral<`${boolean}`>, false>()
-  assertTypeEquality<IsStringLiteral<`${number}`>, false>()
-  assertTypeEquality<IsStringLiteral<`${bigint}`>, false>()
 })
 
 test('DiscriminatedUnion', () => {

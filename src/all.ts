@@ -100,8 +100,6 @@ export {
   type IsOneOf,
   type UnionToIntersection,
   type IsUnion,
-  type IsTemplateLiteral,
-  type IsStringLiteral,
   assertTypeEquality,
   type nullish,
   type Nominal,
@@ -160,6 +158,13 @@ export {
   type IntegerRangeUntil,
   type IntegerRangeThrough,
 } from './number'
-export { toNumber, toString, type LiteralAutoComplete } from './string'
+export {
+  toNumber,
+  toString,
+  type LiteralAutoComplete,
+  IsStringLiteral,
+  IsTemplateLiteral,
+  RepeatString,
+} from './string'
 export { pipe, call, identity, curry, applyFirst, bindAllButFirst, returnLast } from './Function'
 export { forever, type Promisable } from './Promise'

@@ -220,55 +220,6 @@ export type UnionToIntersection<T> = (T extends T ? (arg: T) => any : never) ext
 export type IsUnion<T, Then = true, Else = false> = IsEqual<T, UnionToIntersection<T>, Else, Then>
 
 /**
- * @example
- * IsTemplateLiteral<`Hi, ${string}`> is equivalent to true
- * IsTemplateLiteral<`${number}`> is equivalent to true
- * IsTemplateLiteral<`${bigint}`> is equivalent to true
- * IsTemplateLiteral<`${boolean}`> is equivalent to false
- * IsTemplateLiteral<`${null}`> is equivalent to false
- * IsTemplateLiteral<`${undefined}`> is equivalent to false
- * IsTemplateLiteral<string> is equivalent to false
- * IsTemplateLiteral<never> is equivalent to false
- * IsTemplateLiteral<any> is equivalent to false
- * IsTemplateLiteral<''> is equivalent to false
- * IsTemplateLiteral<'a'> is equivalent to false
- * IsTemplateLiteral<'a' | 'b'> is equivalent to false
- */
-export type IsTemplateLiteral<T extends string, Then = true, Else = false> = IsUnion<T> extends true
-  ? Else
-  : IsEqual<T, never> extends true
-  ? Else
-  : T extends `${infer H}${infer L}`
-  ? IsOneOf<H, [string, `${number}`, `${bigint}`]> extends true
-    ? Then
-    : IsEqual<L, string> extends true
-    ? Then
-    : IsTemplateLiteral<L, Then, Else>
-  : Else
-
-/**
- * @example
- * IsStringLiteral<'a'> is equivalent to true
- * IsStringLiteral<''> is equivalent to true
- * IsStringLiteral<string> is equivalent to false
- * IsStringLiteral<never> is equivalent to false
- * IsStringLiteral<any> is equivalent to false
- * IsStringLiteral<'a' | 'b'> is equivalent to false
- * IsStringLiteral<`${null}`> is equivalent to true
- * IsStringLiteral<`${undefined}`> is equivalent to true
- * IsStringLiteral<`${boolean}`> is equivalent to false
- * IsStringLiteral<`${number}`> is equivalent to false
- * IsStringLiteral<`${bigint}`> is equivalent to false
- */
-export type IsStringLiteral<T extends string> = IsUnion<T> extends true
-  ? false
-  : IsOneOf<T, [string, never, any]> extends true
-  ? false
-  : T extends string
-  ? IsTemplateLiteral<T, false, true>
-  : false
-
-/**
  * Utility for defining tagged union types.
  * @example
  * DiscriminatedUnion<{ Rect: { width: number; height: number }; Circle: { radius: number } }>
