@@ -117,6 +117,7 @@ export {
   ReadonlyFixedLengthArray,
   ReadonlyMinLengthArray,
   ReadonlyMaxLengthArray,
+  UnionToTuple,
   isFixedLengthArray,
   isMinLengthArray,
   isMaxLengthArray,

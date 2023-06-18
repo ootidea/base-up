@@ -1,6 +1,6 @@
 import { Digit, IntegerRangeThrough, randomIntegerThrough, ToDigitArray } from './number'
 import { Drop } from './transform'
-import { IsEqual, IsOneOf } from './type'
+import { IsEqual, IsOneOf, UnionToIntersection } from './type'
 
 export type Tuple = readonly any[]
 
@@ -159,4 +159,8 @@ type _TupleMinLengthOf<T extends Tuple> = T extends readonly [infer H, ...infer 
   ? [H, ..._TupleMinLengthOf<L>]
   : T extends readonly [...infer L, infer H]
   ? [..._TupleMinLengthOf<L>, H]
+  : []
+
+export type UnionToTuple<T> = UnionToIntersection<T extends T ? (_: T) => T : never> extends (_: any) => infer U
+  ? [...UnionToTuple<Exclude<T, U>>, U]
   : []
