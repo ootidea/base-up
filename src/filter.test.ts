@@ -22,11 +22,15 @@ test('LastOf', () => {
   assertTypeEquality<LastOf<[bigint, number]>, number>()
   assertTypeEquality<LastOf<[]>, undefined>()
   assertTypeEquality<LastOf<boolean[]>, boolean | undefined>()
+  assertTypeEquality<LastOf<never[]>, undefined>()
   assertTypeEquality<LastOf<[string, ...string[]]>, string>()
   assertTypeEquality<LastOf<[boolean, ...string[]]>, boolean | string>()
   assertTypeEquality<LastOf<[Date] | [Date, boolean]>, Date | boolean>()
+  assertTypeEquality<LastOf<[1, 2?]>, 1 | 2>()
   assertTypeEquality<LastOf<[1?, 2?]>, 1 | 2 | undefined>()
   assertTypeEquality<LastOf<[0, 1, 2?, ...3[]]>, 1 | 2 | 3>()
+  assertTypeEquality<LastOf<any>, any>()
+  assertTypeEquality<LastOf<never>, never>()
 })
 
 test('take', () => {
