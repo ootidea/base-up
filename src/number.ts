@@ -1,7 +1,7 @@
 import { FixedLengthArray, ReadonlyNonEmptyArray } from './Array'
 import { includes } from './collectionPredicate'
 import { RepeatString, ToNumber } from './string'
-import { IsEqual } from './type'
+import { IsEqual, IsOneOf } from './type'
 
 export type MaxNumber = 1.7976931348623157e308
 export type Infinity = 1e999
@@ -22,11 +22,15 @@ export const NegativeInfinity: NegativeInfinity = -globalThis.Infinity as Negati
  * IsInteger<12, []> is equivalent to []
  * IsInteger<0.5, number, never> is equivalent to never
  */
-export type IsInteger<N extends number, Then = true, Else = false> = `${N}` extends `${string}e+${string}`
-  ? Then
-  : `${N}` extends `${string}.${string}` | `${string}e-${string}` | 'Infinity' | '-Infinity'
-  ? Else
-  : Then
+export type IsInteger<N extends number, Then = true, Else = false> = N extends N
+  ? IsOneOf<N, [number, any]> extends true
+    ? boolean
+    : `${N}` extends `${string}e+${string}`
+    ? Then
+    : `${N}` extends `${string}.${string}` | `${string}e-${string}` | 'Infinity' | '-Infinity'
+    ? Else
+    : Then
+  : never
 
 /**
  * @example

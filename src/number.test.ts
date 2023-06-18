@@ -34,6 +34,13 @@ test('IsInteger', () => {
 
   assertTypeEquality<IsInteger<Infinity>, false>()
   assertTypeEquality<IsInteger<NegativeInfinity>, false>()
+
+  assertTypeEquality<IsInteger<1 | 2>, true>()
+  assertTypeEquality<IsInteger<1 | 2.5>, true | false>()
+  assertTypeEquality<IsInteger<1.5 | 2.5>, false>()
+  assertTypeEquality<IsInteger<number>, boolean>()
+  assertTypeEquality<IsInteger<any>, boolean>()
+  assertTypeEquality<IsInteger<never>, never>()
 })
 
 test('randomIntegerTo', () => {
