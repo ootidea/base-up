@@ -1,4 +1,4 @@
-import { IsEqual } from './type'
+import { IsEqual, IsOneOf } from './type'
 
 /**
  * @example
@@ -15,3 +15,14 @@ export type Not<T extends boolean> = IsEqual<T, never> extends true
   : IsEqual<T, false> extends true
   ? true
   : boolean
+
+/**
+ * @example
+ * IsBooleanLiteral<true> is equivalent to true
+ * IsBooleanLiteral<false> is equivalent to true
+ * IsBooleanLiteral<true | false> is equivalent to false
+ * IsBooleanLiteral<boolean> is equivalent to false
+ * IsBooleanLiteral<any> is equivalent to false
+ * IsBooleanLiteral<never> is equivalent to false
+ */
+export type IsBooleanLiteral<T extends boolean> = IsOneOf<T, [true, false]>
