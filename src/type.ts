@@ -42,7 +42,7 @@ export type IsEqual<T, U, Then = true, Else = false> = (<R>() => R extends T ? 1
 export type IsOneOf<T, U extends Tuple, Then = true, Else = false> = U extends readonly [infer H, ...infer L]
   ? IsEqual<T, H> extends true
     ? Then
-    : IsOneOf<T, L>
+    : IsOneOf<T, L, Then, Else>
   : Else
 
 /**

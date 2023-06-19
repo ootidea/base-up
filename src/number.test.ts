@@ -5,6 +5,7 @@ import {
   gcdOf,
   Infinity,
   IsInteger,
+  IsNumberLiteral,
   isPrimeNumber,
   modOf,
   type NegativeInfinity,
@@ -14,6 +15,24 @@ import {
   Trunc,
 } from './number'
 import { assertTypeEquality } from './type'
+
+test('IsNumberLiteral', () => {
+  assertTypeEquality<IsNumberLiteral<0>, true>()
+  assertTypeEquality<IsNumberLiteral<1.5>, true>()
+  assertTypeEquality<IsNumberLiteral<-1.5>, true>()
+  assertTypeEquality<IsNumberLiteral<1.5e100>, true>()
+  assertTypeEquality<IsNumberLiteral<-1.5e100>, true>()
+  assertTypeEquality<IsNumberLiteral<1.5e-100>, true>()
+  assertTypeEquality<IsNumberLiteral<-1.5e-100>, true>()
+  assertTypeEquality<IsNumberLiteral<Infinity>, true>()
+  assertTypeEquality<IsNumberLiteral<NegativeInfinity>, true>()
+  assertTypeEquality<IsNumberLiteral<1 & {}>, true>()
+
+  assertTypeEquality<IsNumberLiteral<1 | 2>, false>()
+  assertTypeEquality<IsNumberLiteral<number>, false>()
+  assertTypeEquality<IsNumberLiteral<any>, false>()
+  assertTypeEquality<IsNumberLiteral<never>, false>()
+})
 
 test('IsInteger', () => {
   assertTypeEquality<IsInteger<3>, true>()

@@ -110,6 +110,4 @@ export type IsStringLiteral<T extends string> = IsUnion<T> extends true
   ? false
   : IsOneOf<T, [string, never, any]> extends true
   ? false
-  : T extends string
-  ? IsTemplateLiteral<T, false, true>
-  : false
+  : IsTemplateLiteral<T, false, true>

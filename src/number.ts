@@ -1,7 +1,7 @@
 import { FixedLengthArray, ReadonlyNonEmptyArray } from './Array'
 import { includes } from './collectionPredicate'
 import { RepeatString, ToNumber } from './string'
-import { IsEqual, IsOneOf } from './type'
+import { IsEqual, IsOneOf, IsUnion } from './type'
 
 export type MaxNumber = 1.7976931348623157e308
 export type Infinity = 1e999
@@ -9,6 +9,22 @@ export type NegativeInfinity = -1e999
 
 export const Infinity: Infinity = globalThis.Infinity as Infinity
 export const NegativeInfinity: NegativeInfinity = -globalThis.Infinity as NegativeInfinity
+
+/**
+ * @example
+ * IsNumberLiteral<0> is equivalent to true
+ * IsNumberLiteral<1e100> is equivalent to true
+ * IsNumberLiteral<Infinity> is equivalent to true
+ * IsNumberLiteral<number> is equivalent to false
+ * IsNumberLiteral<1 | 2> is equivalent to false
+ * IsNumberLiteral<any> is equivalent to false
+ * IsNumberLiteral<never> is equivalent to false
+ */
+export type IsNumberLiteral<T extends number> = IsUnion<T> extends true
+  ? false
+  : IsOneOf<T, [number, never, any]> extends true
+  ? false
+  : true
 
 /**
  * @example
