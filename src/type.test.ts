@@ -92,6 +92,30 @@ test('isInstanceOf', () => {
   expect(isInstanceOf({}, Object)).toBe(true)
 })
 
+test('Simplify', () => {
+  assertTypeEquality<Simplify<{ name: string } & { age: number }>, { name: string; age: number }>()
+  assertTypeEquality<Simplify<{}>, {}>()
+  assertTypeEquality<IsEqual<Simplify<string & {}>, string>, false>()
+
+  assertTypeEquality<Simplify<1>, 1>()
+  assertTypeEquality<Simplify<null>, null>()
+  assertTypeEquality<Simplify<any>, any>()
+  assertTypeEquality<Simplify<unknown>, unknown>()
+  assertTypeEquality<Simplify<never>, never>()
+
+  assertTypeEquality<Simplify<1 | 2>, 1 | 2>()
+  assertTypeEquality<
+    Simplify<{ size: number } | ({ name: string } & { age: number })>,
+    { size: number } | { name: string; age: number }
+  >()
+
+  assertTypeEquality<Simplify<any[]>, any[]>()
+  assertTypeEquality<Simplify<readonly any[]>, readonly any[]>()
+  assertTypeEquality<Simplify<[1, 2]>, [1, 2]>()
+  assertTypeEquality<Simplify<[1, ...2[]]>, [1, ...2[]]>()
+  assertTypeEquality<Simplify<[1?]>, [1?]>()
+})
+
 test('DiscriminatedUnion', () => {
   assertTypeEquality<
     DiscriminatedUnion<{ Rect: { width: number; height: number }; Circle: { radius: number } }>,
