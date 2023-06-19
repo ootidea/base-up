@@ -194,6 +194,7 @@ export type Nominal<Base, Tag extends symbol> = Base & Record<Tag, never>
 /**
  * @example
  * Simplify<{ name: string } & { age: number }> is equivalent to { name: string; age: number }
+ * Simplify<{ a: 1 } | ({ b: 2 } & { c: 3 })> is equivalent to { a: 1 } | { b: 2; c: 3 }
  */
 export type Simplify<T> = T extends T ? (IsOneOf<T, [any, unknown]> extends true ? T : { [K in keyof T]: T[K] }) : never
 
