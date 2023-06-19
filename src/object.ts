@@ -1,3 +1,4 @@
+import { UnionToTuple } from './Array'
 import { isNotEmpty } from './collectionPredicate'
 import { tail } from './transform'
 import { Simplify } from './type'
@@ -42,6 +43,31 @@ export type OptionalKeysOf<T> = keyof T extends infer K extends keyof T
  * AtLeastOneProperty<{}> is equivalent to never
  */
 export type AtLeastOneProperty<T> = Simplify<Partial<T> & { [K in RequiredKeysOf<T>]: Pick<T, K> }[RequiredKeysOf<T>]>
+
+/**
+ * @example
+ * CountProperties<{ name: string; age: number }> is equivalent to 2
+ * CountProperties<{ name?: string; age?: number }> is equivalent to 2
+ * CountProperties<{ none: never }> is equivalent to 1
+ * CountProperties<{}> is equivalent to 0
+ * CountProperties<Record<never, any>> is equivalent to 0
+ * @example
+ * assertTypeEquality<CountProperties<{ size: number } | { name: string; age: number }>, 1 | 2>()
+ * assertTypeEquality<CountProperties<Record<string, any>, number>()
+ * assertTypeEquality<CountProperties<any, number>()
+ * assertTypeEquality<CountProperties<never>, never>()
+ */
+export type CountProperties<T> = T extends T
+  ? keyof T extends infer K
+    ? string extends K
+      ? number
+      : number extends K
+      ? number
+      : symbol extends K
+      ? number
+      : UnionToTuple<keyof T>['length']
+    : never
+  : never
 
 export type NestedProperty<T, Ks extends readonly (keyof any)[]> = Ks extends []
   ? T

@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { AtLeastOneProperty, getNestedProperty, OptionalKeysOf, RequiredKeysOf } from './object'
+import { AtLeastOneProperty, CountProperties, getNestedProperty, OptionalKeysOf, RequiredKeysOf } from './object'
 import { assertTypeEquality } from './type'
 
 test('RequiredKeysOf', () => {
@@ -27,6 +27,19 @@ test('AtLeastOneProperty', () => {
   assertTypeEquality<AtLeastOneProperty<{ a: 1; b?: 2 }>, { a: 1; b?: 2 }>()
   assertTypeEquality<AtLeastOneProperty<{ b?: 2 }>, never>()
   assertTypeEquality<AtLeastOneProperty<{}>, never>()
+})
+
+test('CountProperties', () => {
+  assertTypeEquality<CountProperties<{ name: string; age: number }>, 2>()
+  assertTypeEquality<CountProperties<{ name?: string; age?: number }>, 2>()
+  assertTypeEquality<CountProperties<{ none: never }>, 1>()
+  assertTypeEquality<CountProperties<{}>, 0>()
+  assertTypeEquality<CountProperties<Record<never, any>>, 0>()
+  assertTypeEquality<CountProperties<{ size: number } | { name: string; age: number }>, 1 | 2>()
+  assertTypeEquality<CountProperties<Record<string, any>>, number>()
+  assertTypeEquality<CountProperties<Record<string | 0, any>>, number>()
+  assertTypeEquality<CountProperties<any>, number>()
+  assertTypeEquality<CountProperties<never>, never>()
 })
 
 test('getProperty', () => {
