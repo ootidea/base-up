@@ -62,6 +62,7 @@ export {
   type RangeUntil,
   type RangeThrough,
   type RepeatArray,
+  uniqueRandomIntegersUntil,
 } from './generate'
 export { sumOf, groupBy } from './other'
 export { keysOf, numberKeysOf, valuesOf, entriesOf } from './projection'
@@ -158,6 +159,12 @@ export {
   NegativeInfinity,
   type IntegerRangeUntil,
   type IntegerRangeThrough,
+  IsNumberLiteral,
+  Trunc,
+  Min,
+  Max,
+  IsInteger,
+  Negate,
 } from './number'
 export {
   toNumber,
@@ -165,6 +172,7 @@ export {
   type LiteralAutoComplete,
   IsStringLiteral,
   IsTemplateLiteral,
+  Interpolable,
   RepeatString,
 } from './string'
 export { pipe, call, identity, curry, applyFirst, bindAllButFirst, returnLast } from './Function'
