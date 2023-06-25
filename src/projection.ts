@@ -51,6 +51,34 @@ type ToStringElements<T extends Tuple> = T extends readonly [infer H extends Int
   : []
 
 /**
+ * Get all keys of an object including inherited keys.
+ * It behaves similarly to the typeof operator.
+ * @example
+ * allKeysOf({ name: 'Bob', age: 60 }) returns new Set(['name', 'age'])
+ * allKeysOf({}) returns new Set()
+ * allKeysOf({ 0: false, 1: true }) returns new Set(['0', '1'])
+ * allKeysOf({ [Symbol.iterator]: false }) returns new Set([Symbol.iterator])
+ */
+export function allKeysOf(objectLike: unknown): Set<string | symbol> {
+  const result: Set<string | symbol> = new Set()
+  const basePrototype = Object.getPrototypeOf({})
+
+  let current = objectLike
+  while (current !== basePrototype) {
+    for (const ownPropertyName of Object.getOwnPropertyNames(current)) {
+      if (ownPropertyName !== 'constructor') {
+        result.add(ownPropertyName)
+      }
+    }
+    for (const ownPropertySymbol of Object.getOwnPropertySymbols(current)) {
+      result.add(ownPropertySymbol)
+    }
+    current = Object.getPrototypeOf(current)
+  }
+  return result
+}
+
+/**
  * Get keys as type number from a record where key is type number.
  * @example
  * numberKeysOf({ 0: 'first', 1: 'second' } as const) returns [0, 1]

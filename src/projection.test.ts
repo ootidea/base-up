@@ -1,5 +1,5 @@
-import { expect, expectTypeOf, test } from 'vitest'
-import { entriesOf, keysOf, numberKeysOf } from './projection'
+import { describe, expect, expectTypeOf, test } from 'vitest'
+import { allKeysOf, entriesOf, keysOf, numberKeysOf } from './projection'
 
 test('keysOf', () => {
   expect(keysOf({ name: 'Bob', age: 30 })).toStrictEqual(['name', 'age'])
@@ -26,6 +26,29 @@ test('keysOf', () => {
   expect(keysOf(Symbol())).toStrictEqual([])
   expect(keysOf(new Date())).toStrictEqual([])
   expect(keysOf(new Set())).toStrictEqual([])
+})
+
+describe('allKeysOf', () => {
+  test('string keys', () => {
+    expect(allKeysOf({ name: 'Bob', age: 30 })).toStrictEqual(new Set(['name', 'age']))
+    expect(allKeysOf({})).toStrictEqual(new Set())
+    expect(allKeysOf(123)).toStrictEqual(
+      new Set(['toExponential', 'toFixed', 'toPrecision', 'toString', 'valueOf', 'toLocaleString'])
+    )
+    class A {
+      a = 1
+    }
+    class B extends A {
+      b = 2
+    }
+    expect(allKeysOf(new B())).toStrictEqual(new Set(['a', 'b']))
+  })
+  test('number keys', () => {
+    expect(allKeysOf({ 0: false, 1: true })).toStrictEqual(new Set(['0', '1']))
+  })
+  test('symbol keys', () => {
+    expect(allKeysOf({ [Symbol.iterator]: false })).toStrictEqual(new Set([Symbol.iterator]))
+  })
 })
 
 test('numberKeysOf', () => {

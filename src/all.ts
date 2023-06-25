@@ -65,7 +65,7 @@ export {
   uniqueRandomIntegersUntil,
 } from './generate'
 export { sumOf, groupBy } from './other'
-export { keysOf, numberKeysOf, valuesOf, entriesOf } from './projection'
+export { keysOf, allKeysOf, numberKeysOf, valuesOf, entriesOf } from './projection'
 export {
   assert,
   assertEquals,
