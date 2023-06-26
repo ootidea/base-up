@@ -66,6 +66,12 @@ test('take', () => {
   expect(take(repeat.Iterable(true), 0)).toStrictEqual([])
 })
 
+test('take.string', () => {
+  expect(take.string('abc', 2)).toStrictEqual('ab')
+  expect(take.string('abc', 0)).toStrictEqual('')
+  expect(take.string('abc', 4)).toStrictEqual('abc')
+})
+
 test('drop', () => {
   expect(drop([1, 2, 3])).toStrictEqual([2, 3])
   expect(drop([1, 2, 3], -1 as number)).toStrictEqual([1, 2, 3])

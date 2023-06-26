@@ -71,6 +71,16 @@ export namespace take {
       i++
     }
   }
+
+  /**
+   * @example
+   * take.string('abc', 2) returns 'ab'
+   * take.string('abc', 0) returns ''
+   * take.string('abc', 4) returns 'abc'
+   */
+  export function string(self: string, n: number): string {
+    return self.slice(0, n)
+  }
 }
 
 /**
