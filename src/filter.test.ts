@@ -82,6 +82,12 @@ test('drop', () => {
   expect(drop([1, 2, 3], 4)).toStrictEqual([])
 })
 
+test('drop.string', () => {
+  expect(drop.string('abc', 2)).toStrictEqual('c')
+  expect(drop.string('abc', 0)).toStrictEqual('abc')
+  expect(drop.string('abc', 4)).toStrictEqual('')
+})
+
 test('dropLast', () => {
   expect(dropLast([1, 2, 3])).toStrictEqual([1, 2])
   expect(dropLast([1, 2, 3], -1 as number)).toStrictEqual([1, 2, 3])

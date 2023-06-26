@@ -127,6 +127,17 @@ export function drop<const T extends Tuple, N extends number>(self: T, n: N): Dr
 export function drop<const T extends Tuple>(self: T, n: number = 1) {
   return self.slice(Math.max(n, 0))
 }
+export namespace drop {
+  /**
+   * @example
+   * drop.string('abc', 2) returns 'c'
+   * drop.string('abc', 0) returns 'abc'
+   * drop.string('abc', 4) returns ''
+   */
+  export function string(self: string, n: number = 1): string {
+    return self.slice(Math.max(n, 0))
+  }
+}
 
 /**
  * @example
