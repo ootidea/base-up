@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { IsStringLiteral, IsTemplateLiteral, toNumber, toString } from './string'
+import { IsStringLiteral, IsTemplateLiteral, Split, toNumber, toString } from './string'
 import { assertTypeEquality } from './type'
 
 test('toNumber', () => {
@@ -51,4 +51,18 @@ test('IsStringLiteral', () => {
   assertTypeEquality<IsStringLiteral<`${boolean}`>, false>()
   assertTypeEquality<IsStringLiteral<`${number}`>, false>()
   assertTypeEquality<IsStringLiteral<`${bigint}`>, false>()
+})
+
+test('Split', () => {
+  assertTypeEquality<Split<'12:34', ':'>, ['12', '34']>()
+  assertTypeEquality<Split<'12:34:56', ':'>, ['12', '34', '56']>()
+  assertTypeEquality<Split<'12:34', '@'>, ['12:34']>()
+  assertTypeEquality<Split<'//', '/'>, ['', '', '']>()
+
+  assertTypeEquality<Split<'', 'a'>, ['']>()
+  assertTypeEquality<Split<'', ''>, ['']>()
+  assertTypeEquality<Split<'12:34', ''>, ['1', '2', ':', '3', '4']>()
+
+  assertTypeEquality<Split<`${number}:${number}`, ':'>, [`${number}`, `${number}`]>()
+  assertTypeEquality<Split<`0${number}:1${number}`, ':'>, [`0${number}`, `1${number}`]>()
 })

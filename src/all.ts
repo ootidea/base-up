@@ -175,6 +175,7 @@ export {
   IsTemplateLiteral,
   Interpolable,
   RepeatString,
+  Split,
 } from './string'
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'

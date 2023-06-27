@@ -111,3 +111,18 @@ export type IsStringLiteral<T extends string> = IsUnion<T> extends true
   : IsOneOf<T, [string, never, any]> extends true
   ? false
   : IsTemplateLiteral<T, false, true>
+
+/**
+ * @example
+ * Split<'12:34', ':'> is equivalent to ['12', '34']
+ * Split<'12:34:56', ':'> is equivalent to ['12', '34', '56']
+ * Split<'12:34', '@'> is equivalent to ['12:34']
+ * Split<'//', '/'> is equivalent to ['', '', '']
+ * Split<'12:34', ''> is equivalent to ['1', '2', ':', '3', '4']
+ * Split<`${number}:${number}`, ':'> is equivalent to [`${number}`, `${number}`]
+ */
+export type Split<T extends string, Delimiter extends string> = T extends `${infer H}${Delimiter}${infer L}`
+  ? `${Delimiter}${L}` extends ''
+    ? [H]
+    : [H, ...Split<L, Delimiter>]
+  : [T]
