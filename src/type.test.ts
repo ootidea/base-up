@@ -7,6 +7,7 @@ import {
   isInstanceOf,
   IsOneOf,
   isTruthy,
+  Nominal,
   Simplify,
 } from './type'
 
@@ -90,6 +91,19 @@ test('isInstanceOf', () => {
   expect(isInstanceOf(/a/, RegExp)).toBe(true)
   expect(isInstanceOf('2021-09-27T15:08:10.78', Date)).toBe(false)
   expect(isInstanceOf({}, Object)).toBe(true)
+})
+
+test('Nominal', () => {
+  type UserId = Nominal<number, 'UserId'>
+  type PostId = Nominal<number, 'PostId'>
+
+  const userId: UserId = 1 as UserId
+  const rawNumber: number = 1
+
+  expectTypeOf(userId).toMatchTypeOf<number>()
+  expectTypeOf(userId).toMatchTypeOf<UserId>()
+  expectTypeOf(userId).not.toMatchTypeOf<PostId>()
+  expectTypeOf(rawNumber).not.toMatchTypeOf<UserId>()
 })
 
 test('Simplify', () => {
