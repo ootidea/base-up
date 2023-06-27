@@ -101,6 +101,7 @@ export {
   type IsOneOf,
   type UnionToIntersection,
   type IsUnion,
+  ToBasePrimitiveType,
   assertTypeEquality,
   type nullish,
   type Nominal,

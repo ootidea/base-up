@@ -9,6 +9,7 @@ import {
   isTruthy,
   Nominal,
   Simplify,
+  ToBasePrimitiveType,
 } from './type'
 
 test('IsEqual', () => {
@@ -128,6 +129,34 @@ test('Simplify', () => {
   assertTypeEquality<Simplify<[1, 2]>, [1, 2]>()
   assertTypeEquality<Simplify<[1, ...2[]]>, [1, ...2[]]>()
   assertTypeEquality<Simplify<[1?]>, [1?]>()
+})
+
+test('ToBasePrimitiveType', () => {
+  assertTypeEquality<ToBasePrimitiveType<'a'>, string>()
+  assertTypeEquality<ToBasePrimitiveType<1>, number>()
+  assertTypeEquality<ToBasePrimitiveType<1n>, bigint>()
+  assertTypeEquality<ToBasePrimitiveType<true>, boolean>()
+  const mySymbol = Symbol()
+  assertTypeEquality<ToBasePrimitiveType<typeof mySymbol>, symbol>()
+  assertTypeEquality<ToBasePrimitiveType<null>, null>()
+  assertTypeEquality<ToBasePrimitiveType<undefined>, undefined>()
+
+  assertTypeEquality<ToBasePrimitiveType<string>, string>()
+  assertTypeEquality<ToBasePrimitiveType<number>, number>()
+  assertTypeEquality<ToBasePrimitiveType<bigint>, bigint>()
+  assertTypeEquality<ToBasePrimitiveType<boolean>, boolean>()
+  assertTypeEquality<ToBasePrimitiveType<symbol>, symbol>()
+  assertTypeEquality<ToBasePrimitiveType<object>, object>()
+  assertTypeEquality<ToBasePrimitiveType<never>, never>()
+  assertTypeEquality<ToBasePrimitiveType<unknown>, unknown>()
+  assertTypeEquality<ToBasePrimitiveType<any>, any>()
+
+  assertTypeEquality<ToBasePrimitiveType<1 | 'a'>, number | string>()
+
+  assertTypeEquality<ToBasePrimitiveType<{}>, {}>()
+  assertTypeEquality<ToBasePrimitiveType<{ a: 1 }>, { a: 1 }>()
+  assertTypeEquality<ToBasePrimitiveType<[]>, []>()
+  assertTypeEquality<ToBasePrimitiveType<1[]>, 1[]>()
 })
 
 test('DiscriminatedUnion', () => {

@@ -222,6 +222,32 @@ export type UnionToIntersection<T> = (T extends T ? (arg: T) => any : never) ext
 export type IsUnion<T, Then = true, Else = false> = IsEqual<T, UnionToIntersection<T>, Else, Then>
 
 /**
+ * @example
+ * ToBasePrimitiveType<'a'> is equivalent to string
+ * ToBasePrimitiveType<1> is equivalent to number
+ * ToBasePrimitiveType<true> is equivalent to boolean
+ * ToBasePrimitiveType<undefined> is equivalent to undefined
+ * ToBasePrimitiveType<null> is equivalent to null
+ * @example
+ * ToBasePrimitiveType<1 | 'a'> is equivalent to number | string
+ */
+export type ToBasePrimitiveType<T> = T extends T
+  ? IsOneOf<T, [any, never, boolean]> extends true
+    ? T
+    : T extends string
+    ? string
+    : T extends number
+    ? number
+    : T extends bigint
+    ? bigint
+    : T extends boolean
+    ? boolean
+    : T extends symbol
+    ? symbol
+    : T
+  : never
+
+/**
  * Utility for defining tagged union types.
  * @example
  * DiscriminatedUnion<{ Rect: { width: number; height: number }; Circle: { radius: number } }>
