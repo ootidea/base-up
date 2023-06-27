@@ -1,5 +1,5 @@
 import { FixedLengthArray, Tuple } from './Array'
-import { IsEqual, IsOneOf, IsUnion } from './type'
+import { IsEqual, IsOneOf, IsUnion, ToBasePrimitiveType } from './type'
 
 type RemoveLeadingExtraZeros<S extends string> = S extends '0'
   ? '0'
@@ -60,7 +60,7 @@ type _RepeatString<S extends string, Size extends Tuple> = Size extends [any, ..
  * Unlike a literal union type, it also accepts values other than the specified literals.
  * https://github.com/sindresorhus/type-fest/blob/main/source/literal-union.d.ts
  */
-export type LiteralAutoComplete<Literals extends Base, Base = string> = Literals | (Base & {})
+export type LiteralAutoComplete<Literals> = Literals | (ToBasePrimitiveType<Literals> & {})
 
 /** The types that can be interpolated within a template literal. */
 export type Interpolable = string | number | bigint | boolean | null | undefined
