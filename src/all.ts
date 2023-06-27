@@ -175,5 +175,7 @@ export {
   Interpolable,
   RepeatString,
 } from './string'
+export { IsBigintLiteral } from './bigint'
+export { IsBooleanLiteral } from './boolean'
 export { pipe, call, identity, curry, applyFirst, bindAllButFirst, returnLast } from './Function'
 export { forever, type Promisable } from './Promise'
