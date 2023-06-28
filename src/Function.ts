@@ -6,15 +6,6 @@ export function curry<const H, const L extends Tuple, const R>(f: (h: H, ...l: L
       f(h, ...l)
 }
 
-export function bindAllButFirst<const T>(
-  filter: <const T>(self: readonly T[], f: (_: T) => boolean) => T[],
-  f: (_: T) => boolean
-): (self: readonly T[]) => T[]
-export function bindAllButFirst<const T, const U>(
-  map: <const T, const U>(self: readonly T[], f: (_: T) => U) => U[],
-  f: (_: T) => U
-): (self: readonly T[]) => U[]
-export function bindAllButFirst<const H, const L extends Tuple, const R>(f: (h: H, ...l: L) => R, ...l: L): (h: H) => R
 export function bindAllButFirst<const H, const L extends Tuple, const R>(
   f: (h: H, ...l: L) => R,
   ...l: L
