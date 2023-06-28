@@ -4,6 +4,8 @@ import {
   factorialOf,
   gcdOf,
   Infinity,
+  IntegerRangeThrough,
+  IntegerRangeUntil,
   IsInteger,
   IsNumberLiteral,
   isPrimeNumber,
@@ -83,7 +85,53 @@ test('Trunc', () => {
   assertTypeEquality<Trunc<never>, never>()
 })
 
-test('randomIntegerTo', () => {
+test('IntegerRangeUntil', () => {
+  assertTypeEquality<IntegerRangeUntil<3>, 0 | 1 | 2>()
+  assertTypeEquality<IntegerRangeUntil<0>, never>()
+  assertTypeEquality<IntegerRangeUntil<-3>, 0 | -1 | -2>()
+
+  assertTypeEquality<IntegerRangeUntil<2, 5>, 2 | 3 | 4>()
+  assertTypeEquality<IntegerRangeUntil<5, 2>, 5 | 4 | 3>()
+  assertTypeEquality<IntegerRangeUntil<-2, 2>, -2 | -1 | 0 | 1>()
+  assertTypeEquality<IntegerRangeUntil<2, -2>, 2 | 1 | 0 | -1>()
+  assertTypeEquality<IntegerRangeUntil<-2, -5>, -2 | -3 | -4>()
+  assertTypeEquality<IntegerRangeUntil<-5, -2>, -5 | -4 | -3>()
+  assertTypeEquality<IntegerRangeUntil<2, 2>, never>()
+  assertTypeEquality<IntegerRangeUntil<-2, -2>, never>()
+
+  assertTypeEquality<IntegerRangeUntil<1 | 3>, 0 | 1 | 2>()
+  assertTypeEquality<IntegerRangeUntil<-2 | 2>, -1 | 0 | 1>()
+  assertTypeEquality<IntegerRangeUntil<number>, number>()
+  assertTypeEquality<IntegerRangeUntil<Infinity>, number>()
+  assertTypeEquality<IntegerRangeUntil<NegativeInfinity>, number>()
+  assertTypeEquality<IntegerRangeUntil<any>, number>()
+  assertTypeEquality<IntegerRangeUntil<never>, number>()
+})
+
+test('IntegerRangeThrough', () => {
+  assertTypeEquality<IntegerRangeThrough<2>, 0 | 1 | 2>()
+  assertTypeEquality<IntegerRangeThrough<0>, 0>()
+  assertTypeEquality<IntegerRangeThrough<-2>, 0 | -1 | -2>()
+
+  assertTypeEquality<IntegerRangeThrough<2, 4>, 2 | 3 | 4>()
+  assertTypeEquality<IntegerRangeThrough<4, 2>, 4 | 3 | 2>()
+  assertTypeEquality<IntegerRangeThrough<-2, 2>, -2 | -1 | 0 | 1 | 2>()
+  assertTypeEquality<IntegerRangeThrough<2, -2>, 2 | 1 | 0 | -1 | -2>()
+  assertTypeEquality<IntegerRangeThrough<-2, -4>, -2 | -3 | -4>()
+  assertTypeEquality<IntegerRangeThrough<-4, -2>, -4 | -3 | -2>()
+  assertTypeEquality<IntegerRangeThrough<2, 2>, 2>()
+  assertTypeEquality<IntegerRangeThrough<-2, -2>, -2>()
+
+  assertTypeEquality<IntegerRangeThrough<1 | 2>, 0 | 1 | 2>()
+  assertTypeEquality<IntegerRangeThrough<-1 | 1>, -1 | 0 | 1>()
+  assertTypeEquality<IntegerRangeThrough<number>, number>()
+  assertTypeEquality<IntegerRangeThrough<Infinity>, number>()
+  assertTypeEquality<IntegerRangeThrough<NegativeInfinity>, number>()
+  assertTypeEquality<IntegerRangeThrough<any>, number>()
+  assertTypeEquality<IntegerRangeThrough<never>, number>()
+})
+
+test('randomIntegerUntil', () => {
   expect(randomIntegerUntil(1)).toBe(0)
   expect(randomIntegerUntil(3) < 3).toBe(true)
   expect(0 <= randomIntegerUntil(3)).toBe(true)
