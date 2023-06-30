@@ -88,6 +88,12 @@ test('drop.string', () => {
   expect(drop.string('abc', 4)).toStrictEqual('')
 })
 
+test('drop.Iterable', () => {
+  expect([...drop.Iterable([0, 1, 2], 2)]).toStrictEqual([2])
+  expect([...drop.Iterable([0, 1, 2], 0)]).toStrictEqual([0, 1, 2])
+  expect([...drop.Iterable([0, 1, 2], 4)]).toStrictEqual([])
+})
+
 test('dropLast', () => {
   expect(dropLast([1, 2, 3])).toStrictEqual([1, 2])
   expect(dropLast([1, 2, 3], -1 as number)).toStrictEqual([1, 2, 3])

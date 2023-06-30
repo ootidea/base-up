@@ -137,6 +137,17 @@ export namespace drop {
   export function string(self: string, n: number = 1): string {
     return self.slice(Math.max(n, 0))
   }
+
+  export function* Iterable<T>(self: Iterable<T>, n: number = 1): Iterable<T> {
+    const iterator = self[Symbol.iterator]()
+    for (let i = 0; i < n; i++) {
+      iterator.next()
+    }
+    for (let element = iterator.next(); !element.done; element = iterator.next()) {
+      yield element.value
+    }
+    iterator.return?.()
+  }
 }
 
 /**
@@ -195,8 +206,8 @@ export function tail<T>(self: readonly T[]): T[] | undefined {
 export namespace tail {
   export function* Iterable<T>(self: Iterable<T>): Iterable<T> {
     const iterator = self[Symbol.iterator]()
-    let element = iterator.next()
-    for (element = iterator.next(); !element.done; element = iterator.next()) {
+    iterator.next()
+    for (let element = iterator.next(); !element.done; element = iterator.next()) {
       yield element.value
     }
     iterator.return?.()
