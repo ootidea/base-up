@@ -135,30 +135,30 @@ export function shuffle<const T extends Tuple>(self: T): FixedLengthArray<T['len
 
 /**
  * @example
- * TupleMinLengthOf<['one', 'two']> is equivalent to 2
- * TupleMinLengthOf<[1, 2, 3]> is equivalent to 3
- * TupleMinLengthOf<[]> is equivalent to 0
- * TupleMinLengthOf<string[]> is equivalent to 0
+ * MinLengthOf<['one', 'two']> is equivalent to 2
+ * MinLengthOf<[1, 2, 3]> is equivalent to 3
+ * MinLengthOf<[]> is equivalent to 0
+ * MinLengthOf<string[]> is equivalent to 0
  * @example
- * TupleMinLengthOf<[1, ...0[]]> is equivalent to 1
- * TupleMinLengthOf<[...0[], 1]> is equivalent to 1
- * TupleMinLengthOf<[1, ...0[], 2]> is equivalent to 2
+ * MinLengthOf<[1, ...0[]]> is equivalent to 1
+ * MinLengthOf<[...0[], 1]> is equivalent to 1
+ * MinLengthOf<[1, ...0[], 2]> is equivalent to 2
  * @example
- * TupleMinLengthOf<[1, 2?, 3?]> is equivalent to 1
- * TupleMinLengthOf<[1, 2?, ...3[]]> is equivalent to 1
+ * MinLengthOf<[1, 2?, 3?]> is equivalent to 1
+ * MinLengthOf<[1, 2?, ...3[]]> is equivalent to 1
  * @example
- * TupleMinLengthOf<any> is equivalent to 0
- * TupleMinLengthOf<never> is equivalent to never
+ * MinLengthOf<any> is equivalent to 0
+ * MinLengthOf<never> is equivalent to never
  */
-export type TupleMinLengthOf<T extends Tuple> = IsOneOf<T, any> extends true
+export type MinLengthOf<T extends Tuple> = IsOneOf<T, any> extends true
   ? 0
   : IsEqual<T, never> extends true
   ? never
-  : _TupleMinLengthOf<T>['length']
-type _TupleMinLengthOf<T extends Tuple> = T extends readonly [infer H, ...infer L]
-  ? [H, ..._TupleMinLengthOf<L>]
+  : _MinLengthOf<T>['length']
+type _MinLengthOf<T extends Tuple> = T extends readonly [infer H, ...infer L]
+  ? [H, ..._MinLengthOf<L>]
   : T extends readonly [...infer L, infer H]
-  ? [..._TupleMinLengthOf<L>, H]
+  ? [..._MinLengthOf<L>, H]
   : []
 
 export type UnionToTuple<T> = UnionToIntersection<T extends T ? (_: T) => T : never> extends (_: any) => infer U

@@ -1,4 +1,4 @@
-import { Tuple, TupleMinLengthOf } from './Array'
+import { MinLengthOf, Tuple } from './Array'
 import { RangeUntil } from './generate'
 import { Interpolable } from './string'
 import { IsEqual } from './type'
@@ -45,7 +45,7 @@ type _KeysOf<T> = keyof T extends infer K
   : never
 type KeysOfTuple<T extends Tuple> = IsEqual<Exclude<keyof T, keyof []>, never> extends true
   ? string[]
-  : ToStringElements<RangeUntil<TupleMinLengthOf<T>>>
+  : ToStringElements<RangeUntil<MinLengthOf<T>>>
 type ToStringElements<T extends Tuple> = T extends readonly [infer H extends Interpolable, ...infer L]
   ? [`${H}`, ...ToStringElements<L>]
   : []
