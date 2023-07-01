@@ -1,4 +1,5 @@
-import { FixedLengthArray, MaxLengthArray, MinLengthArray, NonEmptyArray, ReadonlyNonEmptyArray, Tuple } from './Array'
+import { MaxLengthArray, MinLengthArray, NonEmptyArray, ReadonlyNonEmptyArray, Tuple } from './Array'
+import { FixedLengthArray } from './Array/FixedLengthArray'
 import { ltToComparator } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'

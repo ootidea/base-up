@@ -1,18 +1,7 @@
 import { expect, expectTypeOf, test } from 'vitest'
-import { FixedLengthArray, shuffle, UnionToTuple } from './Array'
+import { shuffle, UnionToTuple } from './Array'
 import { setOf } from './Set'
 import { assertTypeEquality } from './type'
-
-test('FixedLengthArray', () => {
-  assertTypeEquality<FixedLengthArray<1>, [unknown]>()
-  assertTypeEquality<FixedLengthArray<2, boolean>, [boolean, boolean]>()
-  assertTypeEquality<FixedLengthArray<0>, []>()
-
-  assertTypeEquality<FixedLengthArray<0 | 2, any>, [] | [any, any]>()
-  assertTypeEquality<FixedLengthArray<number>, unknown[]>()
-  assertTypeEquality<FixedLengthArray<any>, unknown[]>()
-  assertTypeEquality<FixedLengthArray<never>, never>()
-})
 
 test('shuffle', () => {
   expect(setOf(...shuffle([1, 2, 3]))).toStrictEqual(setOf(1, 2, 3))

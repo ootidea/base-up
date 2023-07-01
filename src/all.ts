@@ -113,17 +113,15 @@ export {
   type Tuple,
   type NonEmptyArray,
   type ReadonlyNonEmptyArray,
-  type FixedLengthArray,
   type MinLengthArray,
   type MaxLengthArray,
-  ReadonlyFixedLengthArray,
   ReadonlyMinLengthArray,
   ReadonlyMaxLengthArray,
   UnionToTuple,
-  isFixedLengthArray,
   isMinLengthArray,
   isMaxLengthArray,
 } from './Array'
+export { ReadonlyFixedLengthArray, FixedLengthArray, isFixedLengthArray } from './Array/FixedLengthArray'
 export {
   setOf,
   has,
