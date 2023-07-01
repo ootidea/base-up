@@ -355,6 +355,41 @@ type _NaturalNumbersFrom0Until<DigitArray extends readonly Digit[]> = DigitArray
  */
 export type NaturalNumbersFrom0Through<N extends number> = NaturalNumbersFrom0Until<N> | N
 
+export function isInIntegerRangeUntil<N extends number, M extends number>(
+  value: number,
+  n: N,
+  m: M
+): value is IntegerRangeUntil<N, M> {
+  return Number.isInteger(value) && n <= value && value < m
+}
+export namespace isInIntegerRangeUntil {
+  /**
+   * filter(someNumbers, isInIntegerRangeUntil.chain(0, 5))
+   */
+  export function chain<N extends number, M extends number>(
+    n: N,
+    m: M
+  ): (value: number) => value is IntegerRangeUntil<N, M> {
+    return (value): value is IntegerRangeUntil<N, M> => isInIntegerRangeUntil(value, n, m)
+  }
+}
+
+export function isInIntegerRangeThrough<N extends number, M extends number>(
+  value: number,
+  n: N,
+  m: M
+): value is IntegerRangeThrough<N, M> {
+  return Number.isInteger(value) && n <= value && value <= m
+}
+export namespace isInIntegerRangeThrough {
+  export function chain<N extends number, M extends number>(
+    n: N,
+    m: M
+  ): (value: number) => value is IntegerRangeThrough<N, M> {
+    return (value): value is IntegerRangeThrough<N, M> => isInIntegerRangeThrough(value, n, m)
+  }
+}
+
 /**
  * @example
  * randomIntegerUntil(3) returns 0, 1 or 2
