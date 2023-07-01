@@ -62,9 +62,9 @@ export function assert<T>(value: T, predicate: (value: T) => boolean) {
   }
 }
 
-export function assertEquals<T, U extends T>(lhs: T, rhs: U): asserts lhs is U
-export function assertEquals<T extends U, U>(lhs: T, rhs: U): asserts rhs is T
-export function assertEquals<T, U>(lhs: T, rhs: U) {
+export function assertEqual<T, U extends T>(lhs: T, rhs: U): asserts lhs is U
+export function assertEqual<T extends U, U>(lhs: T, rhs: U): asserts rhs is T
+export function assertEqual<T, U>(lhs: T, rhs: U) {
   if (lhs !== (rhs as any)) {
     throw new Error()
   }

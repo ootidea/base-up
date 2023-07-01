@@ -68,7 +68,7 @@ export { sumOf, groupBy } from './other'
 export { keysOf, allKeysOf, numberKeysOf, valuesOf, entriesOf } from './projection'
 export {
   assert,
-  assertEquals,
+  assertEqual,
   assertInstanceOf,
   assertNeverType,
   isBoolean,
