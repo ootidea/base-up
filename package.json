@@ -18,6 +18,8 @@
     "filter",
     "take",
     "drop",
+    "takeLast",
+    "dropLast",
     "shuffle",
     "sort",
     "join",
@@ -33,10 +35,12 @@
     "assert",
     "lexicographic-order",
     "pipe",
+    "method-chaining",
     "curry",
     "modulo",
     "prime-test",
-    "wheel-factorization"
+    "wheel-factorization",
+    "nullish"
   ],
   "homepage": "https://github.com/ootidea/base-up#readme",
   "bugs": {

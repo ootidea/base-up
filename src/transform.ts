@@ -12,6 +12,12 @@ export function map<T, U>(self: readonly T[], f: (_: T) => U): U[] {
   return self.map(f)
 }
 export namespace map {
+  export function chain<const T, const U>(
+    f: (_: T) => U
+  ): { (_: ReadonlyNonEmptyArray<T>): NonEmptyArray<U>; (_: readonly T[]): U[] } {
+    return (self: any) => map(self, f)
+  }
+
   export function* Iterable<T, U>(self: Iterable<T>, f: (_: T) => U): Iterable<U> {
     for (const value of self) {
       yield f(value)
