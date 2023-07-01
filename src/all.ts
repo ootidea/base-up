@@ -108,14 +108,6 @@ export {
   type Simplify,
   type DiscriminatedUnion,
 } from './type'
-export {
-  shuffle,
-  type Tuple,
-  type MaxLengthArray,
-  ReadonlyMaxLengthArray,
-  UnionToTuple,
-  isMaxLengthArray,
-} from './Array'
 export { ReadonlyFixedLengthArray, FixedLengthArray, isFixedLengthArray } from './Array/FixedLengthArray'
 export {
   NonEmptyArray,
@@ -124,6 +116,7 @@ export {
   ReadonlyMinLengthArray,
   isMinLengthArray,
 } from './Array/MinLengthArray'
+export { MaxLengthArray, ReadonlyMaxLengthArray, isMaxLengthArray } from './Array/MaxLengthArray'
 export {
   setOf,
   has,
@@ -181,3 +174,6 @@ export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'
 export { pipe, call, identity, curry, applyFirst, bindAllButFirst, returnLast } from './Function'
 export { forever, type Promisable } from './Promise'
+export { UnionToTuple } from './Array/other'
+export { shuffle } from './Array/other'
+export { Tuple } from './Array/other'

@@ -1,5 +1,5 @@
-import { Tuple } from './Array'
 import { FixedLengthArray } from './Array/FixedLengthArray'
+import { Tuple } from './Array/other'
 import { IsEqual, IsOneOf, IsUnion, ToBasePrimitiveType } from './type'
 
 type RemoveLeadingExtraZeros<S extends string> = S extends '0'

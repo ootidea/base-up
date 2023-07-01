@@ -1,7 +1,7 @@
 import { expect, expectTypeOf, test } from 'vitest'
-import { shuffle, UnionToTuple } from './Array'
-import { setOf } from './Set'
-import { assertTypeEquality } from './type'
+import { setOf } from '../Set'
+import { assertTypeEquality } from '../type'
+import { shuffle, UnionToTuple } from './other'
 
 test('shuffle', () => {
   expect(setOf(...shuffle([1, 2, 3]))).toStrictEqual(setOf(1, 2, 3))

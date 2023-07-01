@@ -1,4 +1,4 @@
-import { UnionToTuple } from './Array'
+import { UnionToTuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
 import { tail } from './transform'
 import { Simplify } from './type'

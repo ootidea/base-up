@@ -1,5 +1,5 @@
-import { Tuple } from './Array'
 import { ReadonlyNonEmptyArray } from './Array/MinLengthArray'
+import { Tuple } from './Array/other'
 import { ReadonlyNonEmptyMap } from './Map'
 import { valuesOf } from './projection'
 import { ReadonlyNonEmptySet } from './Set'

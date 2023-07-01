@@ -1,5 +1,5 @@
-import { Tuple } from '../Array'
 import { Digit, ToDigitArray } from '../number'
+import { Tuple } from './other'
 
 /**
  * @example

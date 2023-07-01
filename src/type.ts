@@ -1,4 +1,4 @@
-import { Tuple } from './Array'
+import { Tuple } from './Array/other'
 
 /**
  * Determines whether the types are strictly the same or not.

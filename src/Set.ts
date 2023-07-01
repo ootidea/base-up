@@ -1,4 +1,4 @@
-import { Tuple } from './Array'
+import { Tuple } from './Array/other'
 import { every } from './collectionPredicate'
 import { sortBy } from './transform'
 import { Nominal } from './type'

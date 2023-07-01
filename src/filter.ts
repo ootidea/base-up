@@ -1,5 +1,5 @@
-import { Tuple } from './Array'
 import { ReadonlyNonEmptyArray } from './Array/MinLengthArray'
+import { Tuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
 import { update } from './collectionUpdate'
 import { newSet } from './Set'

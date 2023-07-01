@@ -1,5 +1,5 @@
-import { Tuple } from './Array'
 import { NonEmptyArray } from './Array/MinLengthArray'
+import { Tuple } from './Array/other'
 import { removeAt } from './collectionUpdate'
 import { rangeUntil } from './generate'
 
