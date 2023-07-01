@@ -1,5 +1,5 @@
-import { ReadonlyNonEmptyArray } from './Array'
 import { FixedLengthArray } from './Array/FixedLengthArray'
+import { ReadonlyNonEmptyArray } from './Array/MinLengthArray'
 import { includes } from './collectionPredicate'
 import { RepeatString, ToNumber } from './string'
 import { IsEqual, IsOneOf, IsUnion } from './type'

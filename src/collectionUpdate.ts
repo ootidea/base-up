@@ -1,4 +1,5 @@
-import { NonEmptyArray, Tuple } from './Array'
+import { Tuple } from './Array'
+import { NonEmptyArray } from './Array/MinLengthArray'
 import { newMap } from './Map'
 import { modOf } from './number'
 

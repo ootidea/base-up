@@ -1,5 +1,6 @@
-import { NonEmptyArray, shuffle, Tuple } from './Array'
+import { shuffle, Tuple } from './Array'
 import { FixedLengthArray } from './Array/FixedLengthArray'
+import { NonEmptyArray } from './Array/MinLengthArray'
 import { IntegerRangeUntil, randomIntegerUntil } from './number'
 import { Drop, Reverse, take } from './transform'
 import { Lazy, Unlazy } from './type'

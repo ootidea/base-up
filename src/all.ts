@@ -111,17 +111,19 @@ export {
 export {
   shuffle,
   type Tuple,
-  type NonEmptyArray,
-  type ReadonlyNonEmptyArray,
-  type MinLengthArray,
   type MaxLengthArray,
-  ReadonlyMinLengthArray,
   ReadonlyMaxLengthArray,
   UnionToTuple,
-  isMinLengthArray,
   isMaxLengthArray,
 } from './Array'
 export { ReadonlyFixedLengthArray, FixedLengthArray, isFixedLengthArray } from './Array/FixedLengthArray'
+export {
+  NonEmptyArray,
+  ReadonlyNonEmptyArray,
+  MinLengthArray,
+  ReadonlyMinLengthArray,
+  isMinLengthArray,
+} from './Array/MinLengthArray'
 export {
   setOf,
   has,

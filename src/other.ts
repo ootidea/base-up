@@ -1,4 +1,4 @@
-import { NonEmptyArray } from './Array'
+import { NonEmptyArray } from './Array/MinLengthArray'
 import { push, update } from './collectionUpdate'
 
 export function groupBy<T, U>(self: readonly T[], by: (_: T) => U): Map<U, NonEmptyArray<T>> {
