@@ -115,6 +115,21 @@ export function includes<const T extends Tuple>(
 ): value is T[number] {
   return self.includes(value as any, fromIndex)
 }
+export namespace includes {
+  export function Iterable<T>(self: Iterable<T>, value: unknown): value is T {
+    for (const element of self) {
+      if (element === value) return true
+    }
+    return false
+  }
+
+  export function string(self: string, value: '', position?: number | undefined): true
+  export function string(self: '', value: string, position?: number | undefined): false
+  export function string(self: string, value: string, position?: number | undefined): boolean
+  export function string(self: string, value: string, position?: number | undefined): boolean {
+    return self.includes(value, position)
+  }
+}
 
 export function isUnique(self: []): true
 export function isUnique<T>(self: Iterable<T>): boolean
