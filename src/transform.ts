@@ -15,7 +15,7 @@ export function map<T, U>(self: readonly T[], f: (_: T) => U): U[] {
   return self.map(f)
 }
 export namespace map {
-  export function chain<const T, const U>(
+  export function defer<const T, const U>(
     f: (_: T) => U
   ): { (_: ReadonlyNonEmptyArray<T>): NonEmptyArray<U>; (_: readonly T[]): U[] } {
     return (self: any) => map(self, f)

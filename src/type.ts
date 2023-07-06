@@ -183,11 +183,11 @@ export function isInstanceOf<T extends abstract new (..._: any) => any>(
 }
 export namespace isInstanceOf {
   /**
-   * isInstanceOf.chain(Class)(value) is equivalent to isInstanceOf(value, Class).
+   * isInstanceOf.defer(Class)(value) is equivalent to isInstanceOf(value, Class).
    * @example
-   * isInstanceOf.chain(RegExp)(/a/) returns true
+   * isInstanceOf.defer(RegExp)(/a/) returns true
    */
-  export function chain<T extends abstract new (..._: any) => any>(ctor: T) {
+  export function defer<T extends abstract new (..._: any) => any>(ctor: T) {
     return (value: unknown): value is InstanceType<T> => value instanceof ctor
   }
 }

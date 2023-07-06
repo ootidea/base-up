@@ -94,11 +94,11 @@ test('isInstanceOf', () => {
   expect(isInstanceOf({}, Object)).toBe(true)
 })
 
-test('isInstanceOf.chain', () => {
-  expect(isInstanceOf.chain(Array)([])).toBe(true)
-  expect(isInstanceOf.chain(RegExp)(/a/)).toBe(true)
-  expect(isInstanceOf.chain(Date)('2021-09-27T15:08:10.78')).toBe(false)
-  expect(isInstanceOf.chain(Object)({})).toBe(true)
+test('isInstanceOf.defer', () => {
+  expect(isInstanceOf.defer(Array)([])).toBe(true)
+  expect(isInstanceOf.defer(RegExp)(/a/)).toBe(true)
+  expect(isInstanceOf.defer(Date)('2021-09-27T15:08:10.78')).toBe(false)
+  expect(isInstanceOf.defer(Object)({})).toBe(true)
 })
 
 test('Nominal', () => {

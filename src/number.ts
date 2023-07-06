@@ -365,9 +365,9 @@ export function isInIntegerRangeUntil<N extends number, M extends number>(
 }
 export namespace isInIntegerRangeUntil {
   /**
-   * filter(someNumbers, isInIntegerRangeUntil.chain(0, 5))
+   * filter(someNumbers, isInIntegerRangeUntil.defer(0, 5))
    */
-  export function chain<N extends number, M extends number>(
+  export function defer<N extends number, M extends number>(
     n: N,
     m: M
   ): (value: number) => value is IntegerRangeUntil<N, M> {
@@ -383,7 +383,7 @@ export function isInIntegerRangeThrough<N extends number, M extends number>(
   return Number.isInteger(value) && n <= value && value <= m
 }
 export namespace isInIntegerRangeThrough {
-  export function chain<N extends number, M extends number>(
+  export function defer<N extends number, M extends number>(
     n: N,
     m: M
   ): (value: number) => value is IntegerRangeThrough<N, M> {
