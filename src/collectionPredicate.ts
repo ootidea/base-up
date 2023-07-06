@@ -117,8 +117,8 @@ export function includes<const T extends Tuple>(
 }
 
 export function isUnique(self: []): true
-export function isUnique<T>(self: readonly T[]): boolean
-export function isUnique<T>(self: readonly T[]): boolean {
+export function isUnique<T>(self: Iterable<T>): boolean
+export function isUnique<T>(self: Iterable<T>): boolean {
   const set = new Set<T>()
   for (const value of self) {
     if (set.has(value)) return false
@@ -126,15 +126,4 @@ export function isUnique<T>(self: readonly T[]): boolean {
     set.add(value)
   }
   return true
-}
-export namespace isUnique {
-  export function Iterable<T>(self: Iterable<T>): boolean {
-    const set = new Set<T>()
-    for (const value of self) {
-      if (set.has(value)) return false
-
-      set.add(value)
-    }
-    return true
-  }
 }
