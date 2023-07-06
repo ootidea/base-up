@@ -199,8 +199,8 @@ export function isNotInstanceOf<T extends abstract new (..._: any) => any, U>(
   return !(value instanceof ctor)
 }
 
-declare const NOMINAL_DEFAULT_TAG: unique symbol
-export type Nominal<Base, Tag extends keyof any = typeof NOMINAL_DEFAULT_TAG> = Base & Record<Tag, never>
+declare const DEFAULT_BRAND: unique symbol
+export type Branded<T, Brand extends keyof any = typeof DEFAULT_BRAND> = T & Record<Brand, never>
 
 /**
  * @example

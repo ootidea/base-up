@@ -1,13 +1,13 @@
 import { expect, expectTypeOf, test } from 'vitest'
 import {
   assertTypeEquality,
+  Branded,
   DiscriminatedUnion,
   IsEqual,
   isFalsy,
   isInstanceOf,
   IsOneOf,
   isTruthy,
-  Nominal,
   Simplify,
   ToBasePrimitiveType,
 } from './type'
@@ -101,9 +101,9 @@ test('isInstanceOf.defer', () => {
   expect(isInstanceOf.defer(Object)({})).toBe(true)
 })
 
-test('Nominal', () => {
-  type UserId = Nominal<number, 'UserId'>
-  type PostId = Nominal<number, 'PostId'>
+test('Branded', () => {
+  type UserId = Branded<number, 'UserId'>
+  type PostId = Branded<number, 'PostId'>
 
   const userId: UserId = 1 as UserId
   const rawNumber: number = 1

@@ -104,7 +104,7 @@ export {
   ToBasePrimitiveType,
   assertTypeEquality,
   type nullish,
-  type Nominal,
+  type Branded,
   type Simplify,
   type DiscriminatedUnion,
 } from './type'

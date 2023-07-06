@@ -1,8 +1,8 @@
-import { Nominal } from './type'
+import { Branded } from './type'
 
 declare const NON_EMPTY_MAP_TAG: unique symbol
-export type NonEmptyMap<K, T> = Nominal<Map<K, T>, typeof NON_EMPTY_MAP_TAG>
-export type ReadonlyNonEmptyMap<K, T> = Nominal<ReadonlyMap<K, T>, typeof NON_EMPTY_MAP_TAG>
+export type NonEmptyMap<K, T> = Branded<Map<K, T>, typeof NON_EMPTY_MAP_TAG>
+export type ReadonlyNonEmptyMap<K, T> = Branded<ReadonlyMap<K, T>, typeof NON_EMPTY_MAP_TAG>
 
 /**
  * Wrapper function for the Map constructor.

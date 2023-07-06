@@ -1,11 +1,11 @@
 import { Tuple } from './Array/other'
 import { every } from './collectionPredicate'
 import { sortBy } from './transform'
-import { Nominal } from './type'
+import { Branded } from './type'
 
 declare const NON_EMPTY_SET_TAG: unique symbol
-export type NonEmptySet<T> = Nominal<Set<T>, typeof NON_EMPTY_SET_TAG>
-export type ReadonlyNonEmptySet<T> = Nominal<ReadonlySet<T>, typeof NON_EMPTY_SET_TAG>
+export type NonEmptySet<T> = Branded<Set<T>, typeof NON_EMPTY_SET_TAG>
+export type ReadonlyNonEmptySet<T> = Branded<ReadonlySet<T>, typeof NON_EMPTY_SET_TAG>
 
 /**
  * Wrapper function for the Set constructor.
