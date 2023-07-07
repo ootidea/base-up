@@ -1,4 +1,4 @@
-import { Digit, ToDigitArray } from '../number'
+import { Digit, ToDigitArray } from '../number/other'
 import { Tuple } from './other'
 
 /**

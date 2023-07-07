@@ -1,6 +1,6 @@
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { Tuple } from './Array/other'
-import { Digit, Infinity, Negate, NegativeInfinity } from './number'
+import { Digit, Infinity, Negate, NegativeInfinity } from './number/other'
 import { IsEqual, IsOneOf, IsUnion, ToBasePrimitiveType } from './type'
 
 export type ToNumber<S extends string> = S extends 'Infinity'

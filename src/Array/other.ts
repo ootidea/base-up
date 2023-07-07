@@ -1,4 +1,4 @@
-import { randomIntegerThrough } from '../number'
+import { randomIntegerThrough } from '../number/other'
 import { IsEqual, IsOneOf, UnionToIntersection } from '../type'
 import { FixedLengthArray } from './FixedLengthArray'
 

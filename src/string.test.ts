@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { Infinity, NegativeInfinity } from './number'
+import { Infinity, NegativeInfinity } from './number/other'
 import { IsStringLiteral, IsTemplateLiteral, Split, ToNumber, toNumber, toString } from './string'
 import { assertTypeEquality } from './type'
 

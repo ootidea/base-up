@@ -1,13 +1,12 @@
-import { FixedLengthArray } from './Array/FixedLengthArray'
-import { ReadonlyNonEmptyArray } from './Array/MinLengthArray'
-import { includes } from './collectionPredicate'
-import { RepeatString, ToNumber } from './string'
-import { IsEqual, IsOneOf, IsUnion } from './type'
+import { FixedLengthArray } from '../Array/FixedLengthArray'
+import { ReadonlyNonEmptyArray } from '../Array/MinLengthArray'
+import { includes } from '../collectionPredicate'
+import { RepeatString, ToNumber } from '../string'
+import { IsEqual, IsOneOf, IsUnion } from '../type'
 
 export type MaxNumber = 1.7976931348623157e308
 export type Infinity = 1e999
 export type NegativeInfinity = -1e999
-
 export const Infinity: Infinity = globalThis.Infinity as Infinity
 export const NegativeInfinity: NegativeInfinity = -globalThis.Infinity as NegativeInfinity
 
@@ -265,6 +264,7 @@ export type IntegerRangeUntil<N extends number, M extends number | undefined = u
       : IntegerRangeUntil<0, N>
     : never
   : never
+
 /**
  * @example
  * IntegerRangeThrough<3> is equivalent to 0 | 1 | 2 | 3
@@ -481,6 +481,7 @@ export function clamp(min: number, value: number, max: number): number {
 export function modOf<const N extends number, const M extends number>(a: N, b: M): ModOf<N, M> {
   return (((a % b) + b) % b) as any
 }
+
 export type ModOf<N extends number, M extends number> = IsInteger<N> extends false
   ? number
   : IsInteger<M> extends false
@@ -520,6 +521,7 @@ export function gcdOf(...values: ReadonlyNonEmptyArray<number>): number {
   }
   return result
 }
+
 function binaryGcdOf(a: number, b: number): number {
   if (b === 0) return a
 

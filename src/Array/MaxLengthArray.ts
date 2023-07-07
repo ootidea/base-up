@@ -1,4 +1,4 @@
-import { IntegerRangeThrough } from '../number'
+import { IntegerRangeThrough } from '../number/other'
 import { FixedLengthArray } from './FixedLengthArray'
 
 /**

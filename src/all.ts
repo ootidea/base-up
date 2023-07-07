@@ -159,7 +159,7 @@ export {
   Max,
   IsInteger,
   Negate,
-} from './number'
+} from './number/other'
 export {
   toNumber,
   toString,

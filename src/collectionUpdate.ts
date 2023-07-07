@@ -1,7 +1,7 @@
 import { NonEmptyArray } from './Array/MinLengthArray'
 import { Tuple } from './Array/other'
 import { newMap } from './Map'
-import { modOf } from './number'
+import { modOf } from './number/other'
 
 export function push<const T extends Tuple, const U extends Tuple>(self: T, ...args: U): [...T, ...U] {
   return [...self, ...args] as any
