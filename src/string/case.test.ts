@@ -10,6 +10,9 @@ test('SplitToWords', () => {
   assertTypeEquality<SplitToWords<'SCREAMING_SNAKE_CASE'>, ['SCREAMING', 'SNAKE', 'CASE']>()
   assertTypeEquality<SplitToWords<'Title Case'>, ['Title', 'Case']>()
   assertTypeEquality<SplitToWords<'block__element--modifier'>, ['block', 'element', 'modifier']>()
+  assertTypeEquality<SplitToWords<'XMLHttpRequest'>, ['XML', 'Http', 'Request']>()
+  assertTypeEquality<SplitToWords<'innerHTML'>, ['inner', 'HTML']>()
+  assertTypeEquality<SplitToWords<'getXCoordinate'>, ['get', 'X', 'Coordinate']>()
 
   assertTypeEquality<SplitToWords<'camelCase' | 'PascalCase'>, ['camel', 'Case'] | ['Pascal', 'Case']>()
   assertTypeEquality<SplitToWords<''>, []>()
@@ -26,6 +29,9 @@ test('ToSnakeCase', () => {
   assertTypeEquality<ToKebabCase<'SCREAMING_SNAKE_CASE'>, 'screaming-snake-case'>()
   assertTypeEquality<ToKebabCase<'Title Case'>, 'title-case'>()
   assertTypeEquality<ToKebabCase<'block__element--modifier'>, 'block-element-modifier'>()
+  assertTypeEquality<ToKebabCase<'XMLHttpRequest'>, 'xml-http-request'>()
+  assertTypeEquality<ToKebabCase<'innerHTML'>, 'inner-html'>()
+  assertTypeEquality<ToKebabCase<'getXCoordinate'>, 'get-x-coordinate'>()
 
   assertTypeEquality<ToKebabCase<'camelCase' | 'PascalCase'>, 'camel-case' | 'pascal-case'>()
   assertTypeEquality<ToKebabCase<''>, ''>()

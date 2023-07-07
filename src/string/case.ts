@@ -84,6 +84,8 @@ type _SplitToWords<
   Result extends string[] = []
 > = T extends `${infer H1 extends LowercaseLetter}${infer H2 extends UppercaseLetter}${infer L}`
   ? _SplitToWords<`${H2}${L}`, D, '', [...Result, `${Acc}${H1}`]>
+  : T extends `${infer H1 extends UppercaseLetter}${infer H2 extends LowercaseLetter}${infer L}`
+  ? _SplitToWords<`${H2}${L}`, D, H1, Acc extends '' ? Result : [...Result, Acc]>
   : T extends `${D}${infer L}`
   ? _SplitToWords<L, D, '', Acc extends '' ? Result : [...Result, Acc]>
   : T extends `${infer H1}${infer L}`
