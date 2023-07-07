@@ -45,6 +45,24 @@ export type IsOneOf<T, U extends Tuple, Then = true, Else = false> = U extends r
     : IsOneOf<T, L, Then, Else>
   : Else
 
+export function isOneOf<const T extends Tuple>(self: unknown, ...values: T): self is T[number] {
+  return new Set(values).has(self)
+}
+export namespace isOneOf {
+  export function defer<const T extends Tuple>(...values: T): (self: unknown) => self is T[number] {
+    return (self: unknown): self is T[number] => new Set(values).has(self)
+  }
+}
+
+export function isNotOneOf<const T extends Tuple, const U>(self: T[number] | U, ...values: T): self is U {
+  return !new Set(values).has(self)
+}
+export namespace isNotOneOf {
+  export function defer<const T extends Tuple>(...values: T): <const U>(self: T[number] | U) => self is U {
+    return <const U>(self: T[number] | U): self is U => !new Set(values).has(self)
+  }
+}
+
 /**
  * @example
  * assertTypeEquality<string, any>() results in a type error
@@ -165,14 +183,6 @@ export function isFalsy(value: false | null | undefined | 0 | 0n | ''): true
 export function isFalsy(value: unknown): value is false | null | undefined | number | 0n | ''
 export function isFalsy(value: unknown) {
   return !value
-}
-
-export function isOneOf<const T extends Tuple>(...set: T): (value: unknown) => value is T[number] {
-  return (value: unknown): value is T[number] => new Set(set).has(value as any)
-}
-
-export function isNotOneOf<const T extends Tuple>(...set: T): <U>(value: U | T[number]) => value is U {
-  return (value: unknown): value is T[number] => !new Set(set).has(value as any)
 }
 
 export function isInstanceOf<T extends abstract new (..._: any) => any>(

@@ -6,6 +6,8 @@ import {
   IsEqual,
   isFalsy,
   isInstanceOf,
+  isNotOneOf,
+  isOneOf,
   IsOneOf,
   isTruthy,
   Simplify,
@@ -39,6 +41,26 @@ test('IsOneOf', () => {
   assertTypeEquality<IsOneOf<string, [string | number]>, false>()
   assertTypeEquality<IsOneOf<'text', [string]>, false>()
   assertTypeEquality<IsOneOf<any, []>, false>()
+})
+
+test('isOneOf', () => {
+  expect(isOneOf('a', 'a', 0, true)).toBe(true)
+  expect(isOneOf('Z', 'a', 0, true)).toBe(false)
+})
+
+test('isOneOf.defer', () => {
+  expect(isOneOf.defer('a', 0, true)('a')).toBe(true)
+  expect(isOneOf.defer('a', 0, true)('Z')).toBe(false)
+})
+
+test('isNotOneOf', () => {
+  expect(isNotOneOf('a', 'a', 0, true)).toBe(false)
+  expect(isNotOneOf('Z', 'a', 0, true)).toBe(true)
+})
+
+test('isNotOneOf.defer', () => {
+  expect(isNotOneOf.defer('a', 0, true)('a')).toBe(false)
+  expect(isNotOneOf.defer('a', 0, true)('Z')).toBe(true)
 })
 
 test('isTruthy', () => {
