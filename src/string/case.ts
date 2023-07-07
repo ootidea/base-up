@@ -69,54 +69,57 @@ export function isLowercaseLetter(self: string): self is LowercaseLetter {
  * Splits a string in formats like snake_case or PascalCase into words.
  * Words such as 'iPhone' are not correctly recognized.
  * @example
- * SplitToWords<''> is equivalent to []
- * SplitToWords<'kebab-case'> is equivalent to ['kebab', 'case']
- * SplitToWords<'snake_case'> is equivalent to ['snake', 'case']
- * SplitToWords<'PascalCase'> is equivalent to ['Pascal', 'Case']
- * SplitToWords<'camelCase'> is equivalent to ['camel', 'Case']
- * SplitToWords<'SCREAMING_SNAKE_CASE'> is equivalent to ['SCREAMING', 'SNAKE', 'CASE']
- * SplitToWords<'Title Case'> is equivalent to ['Title', 'Case']
+ * SplitIntoWords<''> is equivalent to []
+ * SplitIntoWords<'kebab-case'> is equivalent to ['kebab', 'case']
+ * SplitIntoWords<'snake_case'> is equivalent to ['snake', 'case']
+ * SplitIntoWords<'PascalCase'> is equivalent to ['Pascal', 'Case']
+ * SplitIntoWords<'camelCase'> is equivalent to ['camel', 'Case']
+ * SplitIntoWords<'SCREAMING_SNAKE_CASE'> is equivalent to ['SCREAMING', 'SNAKE', 'CASE']
+ * SplitIntoWords<'Title Case'> is equivalent to ['Title', 'Case']
  * @example
- * SplitToWords<'block__element--modifier'> is equivalent to ['block', 'element', 'modifier']
- * SplitToWords<`abc_${string}_xyz`> is equivalent to ['abc', string, 'xyz']
+ * SplitIntoWords<'block__element--modifier'> is equivalent to ['block', 'element', 'modifier']
+ * SplitIntoWords<`abc_${string}_xyz`> is equivalent to ['abc', string, 'xyz']
  * @example
- * SplitToWords<'iPhone'> is equivalent to ['i', 'Phone']
+ * SplitIntoWords<'iPhone'> is equivalent to ['i', 'Phone']
  */
-export type SplitToWords<T extends string, D extends string = '-' | '_' | ' '> = IsOneOf<T, [string, any]> extends true
+export type SplitIntoWords<T extends string, D extends string = '-' | '_' | ' '> = IsOneOf<
+  T,
+  [string, any]
+> extends true
   ? string[]
-  : _SplitToWords<T, D>
-type _SplitToWords<
+  : _SplitIntoWords<T, D>
+type _SplitIntoWords<
   T extends string,
   D extends string,
   Acc extends string = '',
   Result extends string[] = []
 > = T extends `${infer H1 extends LowercaseLetter}${infer H2 extends UppercaseLetter}${infer L}`
-  ? _SplitToWords<`${H2}${L}`, D, '', [...Result, `${Acc}${H1}`]>
+  ? _SplitIntoWords<`${H2}${L}`, D, '', [...Result, `${Acc}${H1}`]>
   : T extends `${infer H1 extends UppercaseLetter}${infer H2 extends LowercaseLetter}${infer L}`
-  ? _SplitToWords<`${H2}${L}`, D, H1, Acc extends '' ? Result : [...Result, Acc]>
+  ? _SplitIntoWords<`${H2}${L}`, D, H1, Acc extends '' ? Result : [...Result, Acc]>
   : T extends `${D}${infer L}`
-  ? _SplitToWords<L, D, '', Acc extends '' ? Result : [...Result, Acc]>
+  ? _SplitIntoWords<L, D, '', Acc extends '' ? Result : [...Result, Acc]>
   : T extends `${infer H1}${infer L}`
-  ? _SplitToWords<L, D, `${Acc}${H1}`, Result>
+  ? _SplitIntoWords<L, D, `${Acc}${H1}`, Result>
   : Acc extends ''
   ? Result
   : [...Result, Acc]
 
 /**
  * @example
- * splitToWords('camelCase') returns ['camel', 'Case']
- * splitToWords('PascalCase') returns ['Pascal', 'Case']
- * splitToWords('snake_case') returns ['snake', 'case']
- * splitToWords('SCREAMING_SNAKE_CASE') returns ['SCREAMING', 'SNAKE', 'CASE']
- * splitToWords('Title Case') returns ['Title', 'Case']
+ * splitIntoWords('camelCase') returns ['camel', 'Case']
+ * splitIntoWords('PascalCase') returns ['Pascal', 'Case']
+ * splitIntoWords('snake_case') returns ['snake', 'case']
+ * splitIntoWords('SCREAMING_SNAKE_CASE') returns ['SCREAMING', 'SNAKE', 'CASE']
+ * splitIntoWords('Title Case') returns ['Title', 'Case']
  * @example
- * splitToWords('block__element--modifier') returns ['block', 'element', 'modifier']
- * splitToWords('XMLHttpRequest') returns ['XML', 'Http', 'Request']
- * splitToWords('innerHTML') returns ['inner', 'HTML']
- * splitToWords('getXCoordinate') returns ['get', 'X', 'Coordinate']
- * splitToWords('') returns []
+ * splitIntoWords('block__element--modifier') returns ['block', 'element', 'modifier']
+ * splitIntoWords('XMLHttpRequest') returns ['XML', 'Http', 'Request']
+ * splitIntoWords('innerHTML') returns ['inner', 'HTML']
+ * splitIntoWords('getXCoordinate') returns ['get', 'X', 'Coordinate']
+ * splitIntoWords('') returns []
  */
-export function splitToWords<const T extends string>(self: T): SplitToWords<T> {
+export function splitIntoWords<const T extends string>(self: T): SplitIntoWords<T> {
   const result = []
   let current: string = self
   let acc = ''
@@ -156,4 +159,4 @@ export function splitToWords<const T extends string>(self: T): SplitToWords<T> {
  */
 export type ToKebabCase<T extends string> = IsOneOf<T, [string, any]> extends true
   ? string
-  : Lowercase<Join<SplitToWords<T>, '-'>>
+  : Lowercase<Join<SplitIntoWords<T>, '-'>>

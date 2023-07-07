@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { assertTypeEquality } from '../type'
-import { isLowercaseLetter, isUppercaseLetter, splitToWords, SplitToWords, ToKebabCase } from './case'
+import { isLowercaseLetter, isUppercaseLetter, SplitIntoWords, splitIntoWords, ToKebabCase } from './case'
 
 test('isUppercaseLetter', () => {
   expect(isUppercaseLetter('A')).toBe(true)
@@ -18,39 +18,39 @@ test('isLowercaseLetter', () => {
   expect(isLowercaseLetter('a ')).toBe(false)
 })
 
-test('SplitToWords', () => {
-  assertTypeEquality<SplitToWords<'camelCase'>, ['camel', 'Case']>()
-  assertTypeEquality<SplitToWords<'PascalCase'>, ['Pascal', 'Case']>()
-  assertTypeEquality<SplitToWords<'kebab-case'>, ['kebab', 'case']>()
-  assertTypeEquality<SplitToWords<'snake_case'>, ['snake', 'case']>()
-  assertTypeEquality<SplitToWords<'SCREAMING_SNAKE_CASE'>, ['SCREAMING', 'SNAKE', 'CASE']>()
-  assertTypeEquality<SplitToWords<'Title Case'>, ['Title', 'Case']>()
-  assertTypeEquality<SplitToWords<'block__element--modifier'>, ['block', 'element', 'modifier']>()
-  assertTypeEquality<SplitToWords<'XMLHttpRequest'>, ['XML', 'Http', 'Request']>()
-  assertTypeEquality<SplitToWords<'innerHTML'>, ['inner', 'HTML']>()
-  assertTypeEquality<SplitToWords<'getXCoordinate'>, ['get', 'X', 'Coordinate']>()
+test('SplitIntoWords', () => {
+  assertTypeEquality<SplitIntoWords<'camelCase'>, ['camel', 'Case']>()
+  assertTypeEquality<SplitIntoWords<'PascalCase'>, ['Pascal', 'Case']>()
+  assertTypeEquality<SplitIntoWords<'kebab-case'>, ['kebab', 'case']>()
+  assertTypeEquality<SplitIntoWords<'snake_case'>, ['snake', 'case']>()
+  assertTypeEquality<SplitIntoWords<'SCREAMING_SNAKE_CASE'>, ['SCREAMING', 'SNAKE', 'CASE']>()
+  assertTypeEquality<SplitIntoWords<'Title Case'>, ['Title', 'Case']>()
+  assertTypeEquality<SplitIntoWords<'block__element--modifier'>, ['block', 'element', 'modifier']>()
+  assertTypeEquality<SplitIntoWords<'XMLHttpRequest'>, ['XML', 'Http', 'Request']>()
+  assertTypeEquality<SplitIntoWords<'innerHTML'>, ['inner', 'HTML']>()
+  assertTypeEquality<SplitIntoWords<'getXCoordinate'>, ['get', 'X', 'Coordinate']>()
 
-  assertTypeEquality<SplitToWords<'camelCase' | 'PascalCase'>, ['camel', 'Case'] | ['Pascal', 'Case']>()
-  assertTypeEquality<SplitToWords<''>, []>()
-  assertTypeEquality<SplitToWords<string>, string[]>()
-  assertTypeEquality<SplitToWords<any>, string[]>()
-  assertTypeEquality<SplitToWords<never>, never>()
+  assertTypeEquality<SplitIntoWords<'camelCase' | 'PascalCase'>, ['camel', 'Case'] | ['Pascal', 'Case']>()
+  assertTypeEquality<SplitIntoWords<''>, []>()
+  assertTypeEquality<SplitIntoWords<string>, string[]>()
+  assertTypeEquality<SplitIntoWords<any>, string[]>()
+  assertTypeEquality<SplitIntoWords<never>, never>()
 })
 
-test('splitToWords', () => {
-  expect(splitToWords('camelCase')).toStrictEqual(['camel', 'Case'])
-  expect(splitToWords('PascalCase')).toStrictEqual(['Pascal', 'Case'])
-  expect(splitToWords('kebab-case')).toStrictEqual(['kebab', 'case'])
-  expect(splitToWords('snake_case')).toStrictEqual(['snake', 'case'])
-  expect(splitToWords('SCREAMING_SNAKE_CASE')).toStrictEqual(['SCREAMING', 'SNAKE', 'CASE'])
-  expect(splitToWords('Title Case')).toStrictEqual(['Title', 'Case'])
-  expect(splitToWords('block__element--modifier')).toStrictEqual(['block', 'element', 'modifier'])
-  expect(splitToWords('XMLHttpRequest')).toStrictEqual(['XML', 'Http', 'Request'])
-  expect(splitToWords('innerHTML')).toStrictEqual(['inner', 'HTML'])
-  expect(splitToWords('getXCoordinate')).toStrictEqual(['get', 'X', 'Coordinate'])
+test('splitIntoWords', () => {
+  expect(splitIntoWords('camelCase')).toStrictEqual(['camel', 'Case'])
+  expect(splitIntoWords('PascalCase')).toStrictEqual(['Pascal', 'Case'])
+  expect(splitIntoWords('kebab-case')).toStrictEqual(['kebab', 'case'])
+  expect(splitIntoWords('snake_case')).toStrictEqual(['snake', 'case'])
+  expect(splitIntoWords('SCREAMING_SNAKE_CASE')).toStrictEqual(['SCREAMING', 'SNAKE', 'CASE'])
+  expect(splitIntoWords('Title Case')).toStrictEqual(['Title', 'Case'])
+  expect(splitIntoWords('block__element--modifier')).toStrictEqual(['block', 'element', 'modifier'])
+  expect(splitIntoWords('XMLHttpRequest')).toStrictEqual(['XML', 'Http', 'Request'])
+  expect(splitIntoWords('innerHTML')).toStrictEqual(['inner', 'HTML'])
+  expect(splitIntoWords('getXCoordinate')).toStrictEqual(['get', 'X', 'Coordinate'])
 
-  expect(splitToWords('')).toStrictEqual([])
-  expect(splitToWords('---')).toStrictEqual([])
+  expect(splitIntoWords('')).toStrictEqual([])
+  expect(splitIntoWords('---')).toStrictEqual([])
 })
 
 test('ToSnakeCase', () => {
