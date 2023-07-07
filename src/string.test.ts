@@ -115,7 +115,7 @@ test('Join', () => {
 
 test('Split', () => {
   assertTypeEquality<Split<'12:34', ':'>, ['12', '34']>()
-  assertTypeEquality<Split<'12:34:56', ':'>, ['12', '34', '56']>()
+  assertTypeEquality<Split<'a, b, c', ', '>, ['a', 'b', 'c']>()
   assertTypeEquality<Split<'12:34', '@'>, ['12:34']>()
   assertTypeEquality<Split<'//', '/'>, ['', '', '']>()
 
