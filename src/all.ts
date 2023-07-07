@@ -146,7 +146,6 @@ export {
   gcdOf,
   randomIntegerUntil,
   randomIntegerThrough,
-  clamp,
   roundAt,
   type MaxNumber,
   Infinity,
@@ -155,11 +154,10 @@ export {
   type IntegerRangeThrough,
   IsNumberLiteral,
   Trunc,
-  Min,
-  Max,
   IsInteger,
   Negate,
 } from './number/other'
+export { clamp, Min, Max } from './number/compare'
 export {
   toNumber,
   toString,
