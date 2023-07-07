@@ -104,7 +104,7 @@ test('IntegerRangeUntil', () => {
   assertTypeEquality<IntegerRangeUntil<Infinity>, number>()
   assertTypeEquality<IntegerRangeUntil<NegativeInfinity>, number>()
   assertTypeEquality<IntegerRangeUntil<any>, number>()
-  assertTypeEquality<IntegerRangeUntil<never>, number>()
+  assertTypeEquality<IntegerRangeUntil<never>, never>()
 })
 
 test('IntegerRangeThrough', () => {
@@ -127,7 +127,7 @@ test('IntegerRangeThrough', () => {
   assertTypeEquality<IntegerRangeThrough<Infinity>, number>()
   assertTypeEquality<IntegerRangeThrough<NegativeInfinity>, number>()
   assertTypeEquality<IntegerRangeThrough<any>, number>()
-  assertTypeEquality<IntegerRangeThrough<never>, number>()
+  assertTypeEquality<IntegerRangeThrough<never>, never>()
 })
 
 test('randomIntegerUntil', () => {

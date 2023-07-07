@@ -155,13 +155,11 @@ export type Decrement<N extends number> = `${N}` extends `-${infer PN extends nu
  * IntegerRangeUntil<number, 9> is equivalent to number
  * IntegerRangeUntil<9, number> is equivalent to number
  */
-export type IntegerRangeUntil<N extends number, M extends number | undefined = undefined> = number extends N
-  ? number
-  : number extends M
-  ? number
-  : N extends N
+export type IntegerRangeUntil<N extends number, M extends number | undefined = undefined> = N extends N
   ? M extends M
-    ? M extends number
+    ? IsOneOf<N, [number, any, Infinity, NegativeInfinity]> extends true
+      ? number
+      : M extends number
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
           ? [...FixedLengthArray<PN>, ...any] extends [...FixedLengthArray<PM>, ...any]
@@ -193,13 +191,11 @@ export type IntegerRangeUntil<N extends number, M extends number | undefined = u
  * IntegerRangeThrough<number, 9> is equivalent to number
  * IntegerRangeThrough<9, number> is equivalent to number
  */
-export type IntegerRangeThrough<N extends number, M extends number | undefined = undefined> = number extends N
-  ? number
-  : number extends M
-  ? number
-  : N extends N
+export type IntegerRangeThrough<N extends number, M extends number | undefined = undefined> = N extends N
   ? M extends M
-    ? M extends number
+    ? IsOneOf<N, [number, any, Infinity, NegativeInfinity]> extends true
+      ? number
+      : M extends number
       ? `${N}` extends `-${infer PN extends number}`
         ? `${M}` extends `-${infer PM extends number}`
           ? [...FixedLengthArray<PN>, ...any] extends [...FixedLengthArray<PM>, ...any]
