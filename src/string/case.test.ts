@@ -1,6 +1,22 @@
-import { test } from 'vitest'
+import { expect, test } from 'vitest'
 import { assertTypeEquality } from '../type'
-import { SplitToWords, ToKebabCase } from './case'
+import { isLowercaseLetter, isUppercaseLetter, SplitToWords, ToKebabCase } from './case'
+
+test('isUppercaseLetter', () => {
+  expect(isUppercaseLetter('A')).toBe(true)
+  expect(isUppercaseLetter('a')).toBe(false)
+  expect(isUppercaseLetter('1')).toBe(false)
+  expect(isUppercaseLetter('AB')).toBe(false)
+  expect(isUppercaseLetter('A ')).toBe(false)
+})
+
+test('isLowercaseLetter', () => {
+  expect(isLowercaseLetter('a')).toBe(true)
+  expect(isLowercaseLetter('A')).toBe(false)
+  expect(isLowercaseLetter('1')).toBe(false)
+  expect(isLowercaseLetter('ab')).toBe(false)
+  expect(isLowercaseLetter('a ')).toBe(false)
+})
 
 test('SplitToWords', () => {
   assertTypeEquality<SplitToWords<'camelCase'>, ['camel', 'Case']>()

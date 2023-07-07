@@ -169,7 +169,14 @@ export {
   Interpolable,
   RepeatString,
 } from './string/other'
-export { ToKebabCase, SplitToWords } from './string/case'
+export {
+  UppercaseLetter,
+  LowercaseLetter,
+  isUppercaseLetter,
+  isLowercaseLetter,
+  ToKebabCase,
+  SplitToWords,
+} from './string/case'
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'
 export { pipe, call, identity, curry, returnLast } from './Function'

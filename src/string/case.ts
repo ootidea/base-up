@@ -29,6 +29,10 @@ export type UppercaseLetter =
   | 'Y'
   | 'Z'
 
+export function isUppercaseLetter(self: string): self is UppercaseLetter {
+  return self.length === 1 && 'A' <= self && self <= 'Z'
+}
+
 export type LowercaseLetter =
   | 'a'
   | 'b'
@@ -56,6 +60,10 @@ export type LowercaseLetter =
   | 'x'
   | 'y'
   | 'z'
+
+export function isLowercaseLetter(self: string): self is LowercaseLetter {
+  return self.length === 1 && 'a' <= self && self <= 'z'
+}
 
 /**
  * Splits a string in formats like snake_case or PascalCase into words.
