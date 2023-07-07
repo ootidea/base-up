@@ -168,9 +168,8 @@ export {
   IsTemplateLiteral,
   Interpolable,
   RepeatString,
-  SplitToWords,
-  ToKebabCase,
 } from './string/other'
+export { ToKebabCase, SplitToWords } from './string/case'
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'
 export { pipe, call, identity, curry, applyFirst, bindAllButFirst, returnLast } from './Function'
