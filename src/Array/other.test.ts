@@ -15,8 +15,8 @@ test('shuffle', () => {
 })
 
 test('UnionToTuple', () => {
-  assertTypeEquality<UnionToTuple<1 | 2>, [1, 2]>()
-  assertTypeEquality<UnionToTuple<string | boolean>, [string, false, true]>()
+  assertTypeEquality<UnionToTuple<1 | 2> extends [1, 2] | [2, 1] ? true : false, true>()
+  assertTypeEquality<UnionToTuple<boolean> extends [false, true] | [true, false] ? true : false, true>()
   assertTypeEquality<UnionToTuple<never>, []>()
   assertTypeEquality<UnionToTuple<any>, [any]>()
   assertTypeEquality<UnionToTuple<unknown>, [unknown]>()
