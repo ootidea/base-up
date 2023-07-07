@@ -1,6 +1,6 @@
 import { MinLengthOf, Tuple } from './Array/other'
 import { RangeUntil } from './generate'
-import { Interpolable } from './string'
+import { Interpolable } from './string/other'
 import { IsEqual } from './type'
 
 /**

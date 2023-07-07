@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
-import { Infinity, NegativeInfinity } from './number/other'
-import { IsStringLiteral, IsTemplateLiteral, SplitToWords, ToKebabCase, toNumber, ToNumber, toString } from './string'
-import { assertTypeEquality } from './type'
+import { Infinity, NegativeInfinity } from '../number/other'
+import { assertTypeEquality } from '../type'
+import { IsStringLiteral, IsTemplateLiteral, SplitToWords, ToKebabCase, ToNumber, toNumber, toString } from './other'
 
 test('toNumber', () => {
   expect(toNumber('-1')).toBe(-1)

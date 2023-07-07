@@ -1,8 +1,8 @@
-import { FixedLengthArray } from './Array/FixedLengthArray'
-import { Tuple } from './Array/other'
-import { Digit, Infinity, Negate, NegativeInfinity } from './number/other'
-import { Join } from './transform'
-import { IsEqual, IsOneOf, IsUnion, ToBasePrimitiveType } from './type'
+import { FixedLengthArray } from '../Array/FixedLengthArray'
+import { Tuple } from '../Array/other'
+import { Digit, Infinity, Negate, NegativeInfinity } from '../number/other'
+import { Join } from '../transform'
+import { IsEqual, IsOneOf, IsUnion, ToBasePrimitiveType } from '../type'
 
 export type ToNumber<S extends string> = S extends 'Infinity'
   ? Infinity
@@ -150,6 +150,7 @@ export type UppercaseLetter =
   | 'X'
   | 'Y'
   | 'Z'
+
 export type LowercaseLetter =
   | 'a'
   | 'b'

@@ -170,7 +170,7 @@ export {
   RepeatString,
   SplitToWords,
   ToKebabCase,
-} from './string'
+} from './string/other'
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'
 export { pipe, call, identity, curry, applyFirst, bindAllButFirst, returnLast } from './Function'

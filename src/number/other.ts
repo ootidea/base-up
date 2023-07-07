@@ -1,7 +1,7 @@
 import { FixedLengthArray } from '../Array/FixedLengthArray'
 import { ReadonlyNonEmptyArray } from '../Array/MinLengthArray'
 import { includes } from '../collectionPredicate'
-import { RepeatString, ToNumber } from '../string'
+import { RepeatString, ToNumber } from '../string/other'
 import { IsOneOf, IsUnion } from '../type'
 
 export type MaxNumber = 1.7976931348623157e308
