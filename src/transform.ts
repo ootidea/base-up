@@ -223,6 +223,22 @@ export namespace tail {
   }
 }
 
+/**
+ * @example
+ * Join<['a', 'b', 'c']> is equivalent to 'a,b,c'
+ * Join<['a', 'b', 'c'], ''> is equivalent to 'abc'
+ * Join<['a', 'b', 'c'], '-' | '.'> is equivalent to 'a-b-c' | 'a.b.c'
+ */
+export type Join<T extends readonly string[], Delimiter extends string = ','> = T extends readonly [
+  infer U extends string
+]
+  ? U
+  : T extends [infer H extends string, ...infer L extends readonly string[]]
+  ? `${H}${Delimiter}${Join<L, Delimiter>}`
+  : T extends []
+  ? ''
+  : string
+
 export namespace join {
   export function Array<T, const U extends Tuple>(self: readonly (readonly T[])[], ...values: U): (T | U[number])[] {
     const result: (T | U[number])[] = []
@@ -235,6 +251,21 @@ export namespace join {
     return result
   }
 }
+
+/**
+ * @example
+ * Split<'12:34', ':'> is equivalent to ['12', '34']
+ * Split<'12:34:56', ':'> is equivalent to ['12', '34', '56']
+ * Split<'12:34', '@'> is equivalent to ['12:34']
+ * Split<'//', '/'> is equivalent to ['', '', '']
+ * Split<'12:34', ''> is equivalent to ['1', '2', ':', '3', '4']
+ * Split<`${number}:${number}`, ':'> is equivalent to [`${number}`, `${number}`]
+ */
+export type Split<T extends string, Delimiter extends string> = T extends `${infer H}${Delimiter}${infer L}`
+  ? `${Delimiter}${L}` extends ''
+    ? [H]
+    : [H, ...Split<L, Delimiter>]
+  : [T]
 
 /**
  * @example

@@ -1,16 +1,6 @@
 import { expect, test } from 'vitest'
 import { Infinity, NegativeInfinity } from './number/other'
-import {
-  IsStringLiteral,
-  IsTemplateLiteral,
-  Join,
-  Split,
-  SplitToWords,
-  ToKebabCase,
-  toNumber,
-  ToNumber,
-  toString,
-} from './string'
+import { IsStringLiteral, IsTemplateLiteral, SplitToWords, ToKebabCase, toNumber, ToNumber, toString } from './string'
 import { assertTypeEquality } from './type'
 
 test('toNumber', () => {
@@ -95,36 +85,6 @@ test('IsStringLiteral', () => {
   assertTypeEquality<IsStringLiteral<`${boolean}`>, false>()
   assertTypeEquality<IsStringLiteral<`${number}`>, false>()
   assertTypeEquality<IsStringLiteral<`${bigint}`>, false>()
-})
-
-test('Join', () => {
-  assertTypeEquality<Join<[]>, ''>()
-  assertTypeEquality<Join<['a']>, 'a'>()
-  assertTypeEquality<Join<['a', 'b']>, 'a,b'>()
-
-  assertTypeEquality<Join<['a', 'b'], '.' | '/'>, 'a.b' | 'a/b'>()
-  assertTypeEquality<Join<['a', 'b'], string>, `a${string}b`>()
-  assertTypeEquality<Join<['a' | '0', 'b']>, 'a,b' | '0,b'>()
-  assertTypeEquality<Join<['a', 'b'] | ['0']>, 'a,b' | '0'>()
-
-  assertTypeEquality<Join<string[]>, string>()
-  assertTypeEquality<Join<'1'[]>, string>()
-  assertTypeEquality<Join<any>, string>()
-  assertTypeEquality<Join<never>, never>()
-})
-
-test('Split', () => {
-  assertTypeEquality<Split<'12:34', ':'>, ['12', '34']>()
-  assertTypeEquality<Split<'a, b, c', ', '>, ['a', 'b', 'c']>()
-  assertTypeEquality<Split<'12:34', '@'>, ['12:34']>()
-  assertTypeEquality<Split<'//', '/'>, ['', '', '']>()
-
-  assertTypeEquality<Split<'', 'a'>, ['']>()
-  assertTypeEquality<Split<'', ''>, ['']>()
-  assertTypeEquality<Split<'12:34', ''>, ['1', '2', ':', '3', '4']>()
-
-  assertTypeEquality<Split<`${number}:${number}`, ':'>, [`${number}`, `${number}`]>()
-  assertTypeEquality<Split<`0${number}:1${number}`, ':'>, [`0${number}`, `1${number}`]>()
 })
 
 test('SplitToWords', () => {

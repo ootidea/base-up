@@ -5,6 +5,7 @@ import { setOf } from './Set'
 import {
   chunk,
   flatten,
+  Join,
   join,
   map,
   padEnd,
@@ -14,6 +15,7 @@ import {
   reverse,
   sort,
   sortBy,
+  Split,
   tail,
 } from './transform'
 import { assertTypeEquality } from './type'
@@ -46,6 +48,22 @@ test('tail', () => {
   expect(tail([])).toStrictEqual(undefined)
 })
 
+test('Join', () => {
+  assertTypeEquality<Join<[]>, ''>()
+  assertTypeEquality<Join<['a']>, 'a'>()
+  assertTypeEquality<Join<['a', 'b']>, 'a,b'>()
+
+  assertTypeEquality<Join<['a', 'b'], '.' | '/'>, 'a.b' | 'a/b'>()
+  assertTypeEquality<Join<['a', 'b'], string>, `a${string}b`>()
+  assertTypeEquality<Join<['a' | '0', 'b']>, 'a,b' | '0,b'>()
+  assertTypeEquality<Join<['a', 'b'] | ['0']>, 'a,b' | '0'>()
+
+  assertTypeEquality<Join<string[]>, string>()
+  assertTypeEquality<Join<'1'[]>, string>()
+  assertTypeEquality<Join<any>, string>()
+  assertTypeEquality<Join<never>, never>()
+})
+
 test('join.Array', () => {
   expect(
     join.Array(
@@ -59,6 +77,20 @@ test('join.Array', () => {
   ).toStrictEqual([1, 2, 0, 4, 5, 6, 0, 7, 8])
   expect(join.Array([['a', 'b'], ['c']], true, 1)).toStrictEqual(['a', 'b', true, 1, 'c'])
   expect(join.Array([], '-')).toStrictEqual([])
+})
+
+test('Split', () => {
+  assertTypeEquality<Split<'12:34', ':'>, ['12', '34']>()
+  assertTypeEquality<Split<'a, b, c', ', '>, ['a', 'b', 'c']>()
+  assertTypeEquality<Split<'12:34', '@'>, ['12:34']>()
+  assertTypeEquality<Split<'//', '/'>, ['', '', '']>()
+
+  assertTypeEquality<Split<'', 'a'>, ['']>()
+  assertTypeEquality<Split<'', ''>, ['']>()
+  assertTypeEquality<Split<'12:34', ''>, ['1', '2', ':', '3', '4']>()
+
+  assertTypeEquality<Split<`${number}:${number}`, ':'>, [`${number}`, `${number}`]>()
+  assertTypeEquality<Split<`0${number}:1${number}`, ':'>, [`0${number}`, `1${number}`]>()
 })
 
 test('chunk', () => {

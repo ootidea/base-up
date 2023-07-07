@@ -2,6 +2,8 @@ export {
   map,
   flatten,
   join,
+  Join,
+  Split,
   sortBy,
   sort,
   tail,
@@ -166,8 +168,6 @@ export {
   IsTemplateLiteral,
   Interpolable,
   RepeatString,
-  Join,
-  Split,
   SplitToWords,
   ToKebabCase,
 } from './string'
