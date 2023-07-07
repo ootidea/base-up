@@ -1,12 +1,46 @@
 import { expect, test } from 'vitest'
-import { IsStringLiteral, IsTemplateLiteral, Split, toNumber, toString } from './string'
+import { Infinity, NegativeInfinity } from './number'
+import { IsStringLiteral, IsTemplateLiteral, Split, ToNumber, toNumber, toString } from './string'
 import { assertTypeEquality } from './type'
 
 test('toNumber', () => {
-  expect(toNumber('1.0')).toBe(1)
   expect(toNumber('-1')).toBe(-1)
+  expect(toNumber('1.0')).toBe(1)
+  expect(toNumber('-1.2')).toBe(-1.2)
+  expect(toNumber('001')).toBe(1)
+  expect(toNumber('-00')).toBe(-0)
+  expect(toNumber('1e+100')).toBe(1e100)
+  expect(toNumber('1e-100')).toBe(1e-100)
+  expect(toNumber('-1e+100')).toBe(-1e100)
+  expect(toNumber('-1e-100')).toBe(-1e-100)
+  expect(toNumber('Infinity')).toBe(Infinity)
+  expect(toNumber('-Infinity')).toBe(-Infinity)
+
+  expect(toNumber('1px')).toBeNaN()
   expect(toNumber('1_234')).toBeNaN()
   expect(toNumber('1,234')).toBeNaN()
+})
+
+test('ToNumber', () => {
+  assertTypeEquality<ToNumber<'0'>, 0>()
+  assertTypeEquality<ToNumber<'1'>, 1>()
+  assertTypeEquality<ToNumber<'-1'>, -1>()
+  assertTypeEquality<ToNumber<'1e+100'>, 1e100>()
+  assertTypeEquality<ToNumber<'1e-100'>, 1e-100>()
+  assertTypeEquality<ToNumber<'-1e+100'>, -1e100>()
+  assertTypeEquality<ToNumber<'-1e-100'>, -1e-100>()
+  assertTypeEquality<ToNumber<'Infinity'>, Infinity>()
+  assertTypeEquality<ToNumber<'-Infinity'>, NegativeInfinity>()
+
+  assertTypeEquality<ToNumber<'00'>, 0>()
+  assertTypeEquality<ToNumber<'001'>, 1>()
+  assertTypeEquality<ToNumber<'-0'>, 0>()
+  assertTypeEquality<ToNumber<'-00'>, 0>()
+  assertTypeEquality<ToNumber<'-001'>, -1>()
+  assertTypeEquality<ToNumber<'1_234'>, number>()
+  assertTypeEquality<ToNumber<'1,234'>, number>()
+  assertTypeEquality<ToNumber<'1px'>, number>()
+  assertTypeEquality<ToNumber<'abc'>, number>()
 })
 
 test('toString', () => {

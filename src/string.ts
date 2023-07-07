@@ -1,13 +1,22 @@
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { Tuple } from './Array/other'
+import { Digit, Infinity, Negate, NegativeInfinity } from './number'
 import { IsEqual, IsOneOf, IsUnion, ToBasePrimitiveType } from './type'
 
-type RemoveLeadingExtraZeros<S extends string> = S extends '0'
-  ? '0'
-  : S extends `0${infer R}`
-  ? RemoveLeadingExtraZeros<R>
-  : S
-export type ToNumber<S extends string> = RemoveLeadingExtraZeros<S> extends `${infer N extends number}` ? N : number
+export type ToNumber<S extends string> = S extends 'Infinity'
+  ? Infinity
+  : S extends '-Infinity'
+  ? NegativeInfinity
+  : S extends `-${infer U}`
+  ? RemoveLeadingExtraZeros<U> extends `${infer N extends number}`
+    ? Negate<N>
+    : number
+  : RemoveLeadingExtraZeros<S> extends `${infer N extends number}`
+  ? N
+  : number
+type RemoveLeadingExtraZeros<T extends string> = T extends `0${infer U extends Digit}${infer L}`
+  ? RemoveLeadingExtraZeros<`${U}${L}`>
+  : T
 
 /**
  * @example
