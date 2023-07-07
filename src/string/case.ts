@@ -104,6 +104,47 @@ type _SplitToWords<
 
 /**
  * @example
+ * splitToWords('camelCase') returns ['camel', 'Case']
+ * splitToWords('PascalCase') returns ['Pascal', 'Case']
+ * splitToWords('snake_case') returns ['snake', 'case']
+ * splitToWords('SCREAMING_SNAKE_CASE') returns ['SCREAMING', 'SNAKE', 'CASE']
+ * splitToWords('Title Case') returns ['Title', 'Case']
+ * @example
+ * splitToWords('block__element--modifier') returns ['block', 'element', 'modifier']
+ * splitToWords('XMLHttpRequest') returns ['XML', 'Http', 'Request']
+ * splitToWords('innerHTML') returns ['inner', 'HTML']
+ * splitToWords('getXCoordinate') returns ['get', 'X', 'Coordinate']
+ * splitToWords('') returns []
+ */
+export function splitToWords<const T extends string>(self: T): SplitToWords<T> {
+  const result = []
+  let current: string = self
+  let acc = ''
+  while (current.length > 0) {
+    if (current.length >= 2 && isLowercaseLetter(current[0]!) && isUppercaseLetter(current[1]!)) {
+      result.push(`${acc}${current[0]!}`)
+      acc = ''
+      current = current.slice(1)
+    } else if (current.length >= 2 && isUppercaseLetter(current[0]!) && isLowercaseLetter(current[1]!)) {
+      if (acc.length > 0) result.push(acc)
+
+      acc = current[0]!
+      current = current.slice(1)
+    } else if (current.startsWith('-') || current.startsWith('_') || current.startsWith(' ')) {
+      if (acc.length > 0) result.push(acc)
+      acc = ''
+      current = current.slice(1)
+    } else {
+      acc += current[0]!
+      current = current.slice(1)
+    }
+  }
+  if (acc.length > 0) result.push(acc)
+  return result as any
+}
+
+/**
+ * @example
  * ToKebabCase<'camelCase'> is equivalent to 'camel-case'
  * ToKebabCase<'PascalCase'> is equivalent to 'pascal-case'
  * ToKebabCase<'snake_case'> is equivalent to 'snake-case'

@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { assertTypeEquality } from '../type'
-import { isLowercaseLetter, isUppercaseLetter, SplitToWords, ToKebabCase } from './case'
+import { isLowercaseLetter, isUppercaseLetter, splitToWords, SplitToWords, ToKebabCase } from './case'
 
 test('isUppercaseLetter', () => {
   expect(isUppercaseLetter('A')).toBe(true)
@@ -35,6 +35,22 @@ test('SplitToWords', () => {
   assertTypeEquality<SplitToWords<string>, string[]>()
   assertTypeEquality<SplitToWords<any>, string[]>()
   assertTypeEquality<SplitToWords<never>, never>()
+})
+
+test('splitToWords', () => {
+  expect(splitToWords('camelCase')).toStrictEqual(['camel', 'Case'])
+  expect(splitToWords('PascalCase')).toStrictEqual(['Pascal', 'Case'])
+  expect(splitToWords('kebab-case')).toStrictEqual(['kebab', 'case'])
+  expect(splitToWords('snake_case')).toStrictEqual(['snake', 'case'])
+  expect(splitToWords('SCREAMING_SNAKE_CASE')).toStrictEqual(['SCREAMING', 'SNAKE', 'CASE'])
+  expect(splitToWords('Title Case')).toStrictEqual(['Title', 'Case'])
+  expect(splitToWords('block__element--modifier')).toStrictEqual(['block', 'element', 'modifier'])
+  expect(splitToWords('XMLHttpRequest')).toStrictEqual(['XML', 'Http', 'Request'])
+  expect(splitToWords('innerHTML')).toStrictEqual(['inner', 'HTML'])
+  expect(splitToWords('getXCoordinate')).toStrictEqual(['get', 'X', 'Coordinate'])
+
+  expect(splitToWords('')).toStrictEqual([])
+  expect(splitToWords('---')).toStrictEqual([])
 })
 
 test('ToSnakeCase', () => {

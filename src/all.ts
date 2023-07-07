@@ -176,6 +176,7 @@ export {
   isLowercaseLetter,
   ToKebabCase,
   SplitToWords,
+  splitToWords,
 } from './string/case'
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'
