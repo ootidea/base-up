@@ -31,10 +31,25 @@ test('includes', () => {
   expectTypeOf(includes([], 0n)).toEqualTypeOf<false>()
 })
 
+test('includes.defer', () => {
+  expect(includes.defer(1)([1, 2, 3])).toBe(true)
+  expect(includes.defer('a')([1, 2, 3])).toBe(false)
+  expect(includes.defer(1, 4)([1, 2, 3])).toBe(false)
+
+  expect(includes.defer(0n)([])).toBe(false)
+  expectTypeOf(includes.defer(0n)([])).toEqualTypeOf<false>()
+})
+
 test('includes.Iterator', () => {
   expect(includes.Iterable([1, 2, 3], 1)).toBe(true)
   expect(includes.Iterable([1, 2, 3], 'a')).toBe(false)
   expect(includes.Iterable('abc', 'a')).toBe(true)
+})
+
+test('includes.Iterator.defer', () => {
+  expect(includes.Iterable.defer(1)([1, 2, 3])).toBe(true)
+  expect(includes.Iterable.defer('a')([1, 2, 3])).toBe(false)
+  expect(includes.Iterable.defer('a')('abc')).toBe(true)
 })
 
 test('includes.string', () => {
@@ -47,6 +62,18 @@ test('includes.string', () => {
   expectTypeOf(includes.string('', '')).toEqualTypeOf<true>()
   expect(includes.string('', 'a')).toBe(false)
   expectTypeOf(includes.string('', 'a')).toEqualTypeOf<false>()
+})
+
+test('includes.string.defer', () => {
+  expect(includes.string.defer('a')('abc')).toBe(true)
+  expect(includes.string.defer('A')('abc')).toBe(false)
+
+  expect(includes.string.defer('')('a')).toBe(true)
+  expectTypeOf(includes.string.defer('')('a')).toEqualTypeOf<true>()
+  expect(includes.string.defer('')('')).toBe(true)
+  expectTypeOf(includes.string.defer('')('')).toEqualTypeOf<true>()
+  expect(includes.string.defer('a')('')).toBe(false)
+  expectTypeOf(includes.string.defer('a')('')).toEqualTypeOf<false>()
 })
 
 test('isUnique', () => {

@@ -116,11 +116,25 @@ export function includes<const T extends Tuple>(
   return self.includes(value as any, fromIndex)
 }
 export namespace includes {
+  export function defer(value: unknown, fromIndex?: number | undefined) {
+    function result(self: []): false
+    function result<T extends Tuple>(self: T): boolean
+    function result<T extends Tuple>(self: T) {
+      return includes(self, value, fromIndex)
+    }
+    return result
+  }
+
   export function Iterable<T>(self: Iterable<T>, value: unknown): value is T {
     for (const element of self) {
       if (element === value) return true
     }
     return false
+  }
+  export namespace Iterable {
+    export function defer(value: unknown) {
+      return <T>(self: Iterable<T>) => includes.Iterable(self, value)
+    }
   }
 
   export function string(self: string, value: '', position?: number | undefined): true
@@ -128,6 +142,13 @@ export namespace includes {
   export function string(self: string, value: string, position?: number | undefined): boolean
   export function string(self: string, value: string, position?: number | undefined): boolean {
     return self.includes(value, position)
+  }
+  export namespace string {
+    export function defer(value: '', position?: number | undefined): (self: string) => true
+    export function defer(value: string, position?: number | undefined): { (self: ''): false; (self: string): boolean }
+    export function defer(value: string, position?: number | undefined): (self: string) => boolean {
+      return (self: string) => includes.string(self, value, position)
+    }
   }
 }
 
