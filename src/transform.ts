@@ -223,15 +223,17 @@ export namespace tail {
   }
 }
 
-export function join<T, const U extends Tuple>(self: readonly (readonly T[])[], ...values: U): (T | U[number])[] {
-  const result: (T | U[number])[] = []
-  for (let i = 0; i < self.length; i++) {
-    if (i > 0) {
-      result.push(...values)
+export namespace join {
+  export function Array<T, const U extends Tuple>(self: readonly (readonly T[])[], ...values: U): (T | U[number])[] {
+    const result: (T | U[number])[] = []
+    for (let i = 0; i < self.length; i++) {
+      if (i > 0) {
+        result.push(...values)
+      }
+      result.push(...self[i]!)
     }
-    result.push(...self[i]!)
+    return result
   }
-  return result
 }
 
 /**

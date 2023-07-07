@@ -46,9 +46,9 @@ test('tail', () => {
   expect(tail([])).toStrictEqual(undefined)
 })
 
-test('join', () => {
+test('join.Array', () => {
   expect(
-    join(
+    join.Array(
       [
         [1, 2],
         [4, 5, 6],
@@ -57,8 +57,8 @@ test('join', () => {
       0
     )
   ).toStrictEqual([1, 2, 0, 4, 5, 6, 0, 7, 8])
-  expect(join([['a', 'b'], ['c']], true, 1)).toStrictEqual(['a', 'b', true, 1, 'c'])
-  expect(join([], '-')).toStrictEqual([])
+  expect(join.Array([['a', 'b'], ['c']], true, 1)).toStrictEqual(['a', 'b', true, 1, 'c'])
+  expect(join.Array([], '-')).toStrictEqual([])
 })
 
 test('chunk', () => {
