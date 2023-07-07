@@ -1,6 +1,16 @@
 import { expect, test } from 'vitest'
 import { Infinity, NegativeInfinity } from './number/other'
-import { IsStringLiteral, IsTemplateLiteral, Split, ToNumber, toNumber, toString } from './string'
+import {
+  IsStringLiteral,
+  IsTemplateLiteral,
+  Join,
+  Split,
+  SplitToWords,
+  ToKebabCase,
+  toNumber,
+  ToNumber,
+  toString,
+} from './string'
 import { assertTypeEquality } from './type'
 
 test('toNumber', () => {
@@ -87,6 +97,22 @@ test('IsStringLiteral', () => {
   assertTypeEquality<IsStringLiteral<`${bigint}`>, false>()
 })
 
+test('Join', () => {
+  assertTypeEquality<Join<[]>, ''>()
+  assertTypeEquality<Join<['a']>, 'a'>()
+  assertTypeEquality<Join<['a', 'b']>, 'a,b'>()
+
+  assertTypeEquality<Join<['a', 'b'], '.' | '/'>, 'a.b' | 'a/b'>()
+  assertTypeEquality<Join<['a', 'b'], string>, `a${string}b`>()
+  assertTypeEquality<Join<['a' | '0', 'b']>, 'a,b' | '0,b'>()
+  assertTypeEquality<Join<['a', 'b'] | ['0']>, 'a,b' | '0'>()
+
+  assertTypeEquality<Join<string[]>, string>()
+  assertTypeEquality<Join<'1'[]>, string>()
+  assertTypeEquality<Join<any>, string>()
+  assertTypeEquality<Join<never>, never>()
+})
+
 test('Split', () => {
   assertTypeEquality<Split<'12:34', ':'>, ['12', '34']>()
   assertTypeEquality<Split<'12:34:56', ':'>, ['12', '34', '56']>()
@@ -99,4 +125,37 @@ test('Split', () => {
 
   assertTypeEquality<Split<`${number}:${number}`, ':'>, [`${number}`, `${number}`]>()
   assertTypeEquality<Split<`0${number}:1${number}`, ':'>, [`0${number}`, `1${number}`]>()
+})
+
+test('SplitToWords', () => {
+  assertTypeEquality<SplitToWords<'camelCase'>, ['camel', 'Case']>()
+  assertTypeEquality<SplitToWords<'PascalCase'>, ['Pascal', 'Case']>()
+  assertTypeEquality<SplitToWords<'kebab-case'>, ['kebab', 'case']>()
+  assertTypeEquality<SplitToWords<'snake_case'>, ['snake', 'case']>()
+  assertTypeEquality<SplitToWords<'SCREAMING_SNAKE_CASE'>, ['SCREAMING', 'SNAKE', 'CASE']>()
+  assertTypeEquality<SplitToWords<'Title Case'>, ['Title', 'Case']>()
+  assertTypeEquality<SplitToWords<'block__element--modifier'>, ['block', 'element', 'modifier']>()
+
+  assertTypeEquality<SplitToWords<'camelCase' | 'PascalCase'>, ['camel', 'Case'] | ['Pascal', 'Case']>()
+  assertTypeEquality<SplitToWords<''>, []>()
+  assertTypeEquality<SplitToWords<string>, string[]>()
+  assertTypeEquality<SplitToWords<any>, string[]>()
+  assertTypeEquality<SplitToWords<never>, never>()
+})
+
+test('ToSnakeCase', () => {
+  assertTypeEquality<ToKebabCase<'camelCase'>, 'camel-case'>()
+  assertTypeEquality<ToKebabCase<'PascalCase'>, 'pascal-case'>()
+  assertTypeEquality<ToKebabCase<'kebab-case'>, 'kebab-case'>()
+  assertTypeEquality<ToKebabCase<'snake_case'>, 'snake-case'>()
+  assertTypeEquality<ToKebabCase<'SCREAMING_SNAKE_CASE'>, 'screaming-snake-case'>()
+  assertTypeEquality<ToKebabCase<'Title Case'>, 'title-case'>()
+  assertTypeEquality<ToKebabCase<'block__element--modifier'>, 'block-element-modifier'>()
+
+  assertTypeEquality<ToKebabCase<'camelCase' | 'PascalCase'>, 'camel-case' | 'pascal-case'>()
+  assertTypeEquality<ToKebabCase<''>, ''>()
+  assertTypeEquality<ToKebabCase<'---'>, ''>()
+  assertTypeEquality<ToKebabCase<string>, string>()
+  assertTypeEquality<ToKebabCase<any>, string>()
+  assertTypeEquality<ToKebabCase<never>, never>()
 })

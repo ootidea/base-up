@@ -166,7 +166,10 @@ export {
   IsTemplateLiteral,
   Interpolable,
   RepeatString,
+  Join,
   Split,
+  SplitToWords,
+  ToKebabCase,
 } from './string'
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'
