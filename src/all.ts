@@ -172,7 +172,7 @@ export {
 export { ToKebabCase, SplitToWords } from './string/case'
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'
-export { pipe, call, identity, curry, applyFirst, bindAllButFirst, returnLast } from './Function'
+export { pipe, call, identity, curry, returnLast } from './Function'
 export { forever, type Promisable } from './Promise'
 export { UnionToTuple } from './Array/other'
 export { shuffle } from './Array/other'

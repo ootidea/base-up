@@ -1,17 +1,11 @@
 import { expect, test } from 'vitest'
-import { bindAllButFirst, curry, pipe, returnLast } from './Function'
+import { curry, pipe, returnLast } from './Function'
 import { rangeUntil } from './generate'
-import { take } from './transform'
 
 test('curry', () => {
   const plus = (a: number, b: string) => a + b
 
   expect(curry(plus)(123)('abc')).toBe('123abc')
-})
-
-test('bindAllButFirst', () => {
-  const unary = bindAllButFirst(take, 3)
-  expect(unary([1, 2, 3, 4, 5])).toStrictEqual([1, 2, 3])
 })
 
 test('returnLast', () => {

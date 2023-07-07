@@ -6,17 +6,6 @@ export function curry<const H, const L extends Tuple, const R>(f: (h: H, ...l: L
       f(h, ...l)
 }
 
-export function bindAllButFirst<const H, const L extends Tuple, const R>(
-  f: (h: H, ...l: L) => R,
-  ...l: L
-): (h: H) => R {
-  return (h: H) => f(h, ...l)
-}
-
-export function applyFirst<const H, const L extends Tuple, const R>(f: (h: H, ...l: L) => R, h: H): (...l: L) => R {
-  return (...l: L) => f(h, ...l)
-}
-
 export function call<const T>(f: () => T): T {
   return f()
 }
