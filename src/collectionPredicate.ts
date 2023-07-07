@@ -152,7 +152,7 @@ export namespace includes {
   }
 }
 
-export function isUnique(self: []): true
+export function isUnique(self: [] | ''): true
 export function isUnique<T>(self: Iterable<T>): boolean
 export function isUnique<T>(self: Iterable<T>): boolean {
   const set = new Set<T>()

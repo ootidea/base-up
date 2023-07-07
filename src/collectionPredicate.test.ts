@@ -82,6 +82,8 @@ test('isUnique', () => {
 
   expect(isUnique([])).toBe(true)
   expectTypeOf(isUnique([])).toEqualTypeOf<true>()
+  expect(isUnique('')).toBe(true)
+  expectTypeOf(isUnique('')).toEqualTypeOf<true>()
 
   expect(isUnique('abc')).toBe(true)
   expect(isUnique('abca')).toBe(false)
