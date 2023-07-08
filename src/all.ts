@@ -12,11 +12,11 @@ export {
   padStart,
   take,
   drop,
-  type Drop,
+  Drop,
   dropLast,
-  type DropLast,
+  DropLast,
   reverse,
-  type Reverse,
+  Reverse,
   removeDuplicates,
   removeDuplicatesBy,
 } from './transform'
@@ -39,12 +39,12 @@ export { lexicographicLt, lexicographicLte, lteToComparator, ltToComparator } fr
 export {
   filter,
   firstOf,
-  type FirstOf,
+  FirstOf,
   elementAt,
   modeOf,
   modeBy,
   lastOf,
-  type LastOf,
+  LastOf,
   lastIndexOf,
   indexesOf,
   indexOf,
@@ -61,9 +61,9 @@ export {
   repeat,
   repeatApply,
   fromEntries,
-  type RangeUntil,
-  type RangeThrough,
-  type RepeatArray,
+  RangeUntil,
+  RangeThrough,
+  RepeatArray,
   uniqueRandomIntegersUntil,
 } from './generate'
 export { sumOf, groupBy } from './other'
@@ -73,14 +73,14 @@ export {
   assertEqual,
   assertInstanceOf,
   assertNeverType,
-  type UnionToIntersection,
-  type IsUnion,
+  UnionToIntersection,
+  IsUnion,
   ToBasePrimitiveType,
   assertTypeEquality,
-  type nullish,
-  type Branded,
-  type Simplify,
-  type DiscriminatedUnion,
+  nullish,
+  Branded,
+  Simplify,
+  DiscriminatedUnion,
 } from './type'
 export {
   isNull,
@@ -133,17 +133,17 @@ export {
   intersectionOf,
   differenceOf,
   isDisjoint,
-  type NonEmptySet,
-  type ReadonlyNonEmptySet,
+  NonEmptySet,
+  ReadonlyNonEmptySet,
 } from './Set'
-export { mapOf, type NonEmptyMap, type ReadonlyNonEmptyMap } from './Map'
+export { mapOf, NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
 export {
   RequiredKeysOf,
   OptionalKeysOf,
   AtLeastOneProperty,
   getNestedProperty,
-  type NestedProperty,
-  type PartialRecord,
+  NestedProperty,
+  PartialRecord,
 } from './object'
 export {
   modOf,
@@ -153,11 +153,11 @@ export {
   randomIntegerUntil,
   randomIntegerThrough,
   roundAt,
-  type MaxNumber,
+  MaxNumber,
   Infinity,
   NegativeInfinity,
-  type IntegerRangeUntil,
-  type IntegerRangeThrough,
+  IntegerRangeUntil,
+  IntegerRangeThrough,
   IsNumberLiteral,
   Trunc,
   IsInteger,
@@ -167,7 +167,7 @@ export { clamp, Min, Max } from './number/compare'
 export {
   toNumber,
   toString,
-  type LiteralAutoComplete,
+  LiteralAutoComplete,
   IsStringLiteral,
   IsTemplateLiteral,
   Interpolable,
@@ -190,4 +190,4 @@ export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'
 export { pipe, call, identity, curry, returnLast } from './Function'
 export { JsonValue } from './Json'
-export { forever, type Promisable } from './Promise'
+export { forever, Promisable } from './Promise'
