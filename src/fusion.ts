@@ -1,5 +1,5 @@
 import { Tuple } from './Array/other'
-import { IntegerRangeUntil } from './number/other'
+import { IntegerRangeUntil } from './number/range'
 
 type UnwrapArrayAll<T extends Tuple> = T extends readonly [infer H, ...infer L]
   ? [H extends readonly (infer U)[] ? U : H, ...UnwrapArrayAll<L>]

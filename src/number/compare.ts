@@ -1,6 +1,7 @@
 import { FixedLengthArray } from '../Array/FixedLengthArray'
 import { IsEqual } from '../typePredicate'
-import { Digit, DigitToRangeUntil } from './other'
+import { Digit } from './other'
+import { DigitToRangeUntil } from './range'
 
 /**
  * Type-level function of N <= M.

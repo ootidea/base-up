@@ -150,19 +150,23 @@ export {
   isPrimeNumber,
   factorialOf,
   gcdOf,
-  randomIntegerUntil,
-  randomIntegerThrough,
   roundAt,
   MaxNumber,
   Infinity,
   NegativeInfinity,
-  IntegerRangeUntil,
-  IntegerRangeThrough,
   IsNumberLiteral,
   Trunc,
   IsInteger,
   Negate,
 } from './number/other'
+export {
+  IntegerRangeUntil,
+  IntegerRangeThrough,
+  isInIntegerRangeUntil,
+  isInIntegerRangeThrough,
+  randomIntegerUntil,
+  randomIntegerThrough,
+} from './number/range'
 export { clamp, Min, Max } from './number/compare'
 export {
   toNumber,
