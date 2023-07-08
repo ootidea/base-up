@@ -102,6 +102,8 @@ export type _Take<T extends Tuple, N extends number, R extends Tuple = []> = R['
     : never
   : never
 
+export function take<T extends Tuple, N extends number>(self: T, n: N): Take<T, N>
+export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArray<N, T>
 export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArray<N, T> {
   const result: T[] = []
   const iterator = self[Symbol.iterator]()

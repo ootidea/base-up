@@ -17,6 +17,7 @@ import {
   sortBy,
   Split,
   tail,
+  take,
   Take,
 } from './transform'
 import { assertTypeEquality } from './type'
@@ -57,6 +58,13 @@ test('Take', () => {
   assertTypeEquality<Take<[1, ...any], 2>, [1] | [1, any]>()
   assertTypeEquality<Take<any, 2>, [] | [any] | [any, any]>()
   assertTypeEquality<Take<never, 2>, never>()
+})
+
+test('take', () => {
+  expect(take([1, 2, 3], 0)).toStrictEqual([])
+  expect(take([1, 2, 3], 2)).toStrictEqual([1, 2])
+  expect(take([1, 2, 3], 4)).toStrictEqual([1, 2, 3])
+  expect(take('abc', 2)).toStrictEqual(['a', 'b'])
 })
 
 test('tail', () => {
