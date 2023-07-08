@@ -61,3 +61,26 @@ type RemoveElementsThatMightNotExist<T extends Tuple> = T extends readonly [infe
 export type UnionToTuple<T> = UnionToIntersection<T extends T ? (_: T) => T : never> extends (_: any) => infer U
   ? [...UnionToTuple<Exclude<T, U>>, U]
   : []
+
+/**
+ * @example
+ * SplitTupleAroundRest<[1, 2, ...3[], 4, 5]> is equivalent to { before: [1, 2], rest: 3[], after: [4, 5] }
+ * SplitTupleAroundRest<[1, 2?, ...3[]]> is equivalent to { before: [1, 2?], rest: 3[], after: [] }
+ * SplitTupleAroundRest<Date[]> is equivalent to { before: [], rest: Date[], after: [] }
+ * SplitTupleAroundRest<[]> is equivalent to { before: [], rest: [], after: [] }
+ */
+export type SplitTupleAroundRest<
+  T extends Tuple,
+  Before extends Tuple = [],
+  After extends Tuple = []
+> = T extends readonly [infer H, ...infer L]
+  ? SplitTupleAroundRest<L, [...Before, H], After>
+  : T extends readonly [...infer L, infer H]
+  ? SplitTupleAroundRest<L, Before, [H, ...After]>
+  : IsTuple<T> extends false
+  ? { before: Before; rest: T; after: After }
+  : T extends readonly []
+  ? { before: Before; rest: T; after: After }
+  : T extends readonly [(infer H)?, ...infer L]
+  ? SplitTupleAroundRest<L, [...Before, H?], After>
+  : never

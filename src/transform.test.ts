@@ -17,6 +17,7 @@ import {
   sortBy,
   Split,
   tail,
+  Take,
 } from './transform'
 import { assertTypeEquality } from './type'
 
@@ -40,6 +41,22 @@ test('flatten', () => {
   expect(flatten.Set(setOf(setOf(1, 2, 3), setOf(3, 4), setOf(4, 5, 6)))).toStrictEqual(setOf(1, 2, 3, 4, 5, 6))
   expect(flatten.Set(setOf(setOf(1, 2, 3), setOf(), setOf(4)))).toStrictEqual(setOf(1, 2, 3, 4))
   expect(flatten.Set(setOf())).toStrictEqual(setOf())
+})
+
+test('Take', () => {
+  assertTypeEquality<Take<[1, 2, 3], 0>, []>()
+  assertTypeEquality<Take<[1, 2, 3], 2>, [1, 2]>()
+  assertTypeEquality<Take<[1, 2, 3], 4>, [1, 2, 3]>()
+  assertTypeEquality<Take<[1, ...2[]], 3>, [1] | [1, 2] | [1, 2, 2]>()
+  assertTypeEquality<Take<1[], 2>, [] | [1] | [1, 1]>()
+  assertTypeEquality<Take<[...1[], 2], 3>, [2] | [1, 2] | [1, 1, 2] | [1, 1, 1]>()
+  assertTypeEquality<
+    Take<[1, 2, ...3[], 4, 5], 5>,
+    [1, 2, 4, 5] | [1, 2, 3, 4, 5] | [1, 2, 3, 3, 4] | [1, 2, 3, 3, 3]
+  >()
+  assertTypeEquality<Take<[1, ...any], 2>, [1] | [1, any]>()
+  assertTypeEquality<Take<any, 2>, [] | [any] | [any, any]>()
+  assertTypeEquality<Take<never, 2>, never>()
 })
 
 test('tail', () => {

@@ -1,13 +1,16 @@
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { MaxLengthArray } from './Array/MaxLengthArray'
 import { MinLengthArray, NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
-import { Tuple } from './Array/other'
+import { IsTuple, SplitTupleAroundRest, Tuple } from './Array/other'
 import { ltToComparator } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
 import { newMap, NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
+import { Subtract } from './number/other'
+import { IntegerRangeThrough } from './number/range'
 import { newPromise } from './Promise'
 import { newSet, NonEmptySet, ReadonlyNonEmptySet } from './Set'
+import { IsEqual } from './typePredicate'
 
 export function map<T, U>(self: ReadonlyNonEmptyArray<T>, f: (_: T) => U): NonEmptyArray<U>
 export function map<T, U>(self: readonly T[], f: (_: T) => U): U[]
@@ -60,6 +63,44 @@ export namespace flatten {
     return result
   }
 }
+
+/**
+ * @example
+ * Take<[0, 1, 2], 0> is equivalent to []
+ * Take<[0, 1, 2], 1> is equivalent to [0]
+ * Take<[0, 1, 2], 2> is equivalent to [0, 1]
+ * Take<[0, 1, 2], 3> is equivalent to [0, 1, 2]
+ * Take<[0, 1, 2], 4> is equivalent to [0, 1, 2]
+ * @example
+ * Take<Date[], 2> is equivalent to [Date, Date] | [Date] | []
+ * Take<[number, ...string[]], 2> is equivalent to [number, string] | [number]
+ * Take<[...Date[], bigint], 2> is equivalent to [Date, Date] | [Date, bigint] | [bigint]
+ * @example
+ * Take<[0, 1, 2], 1 | 2> is equivalent to [0] | [0, 1]
+ * Take<[0, 1, 2], number> is equivalent to [] | [0] | [0, 1] | [0, 1, 2]
+ */
+export type Take<T extends Tuple, N extends number> = IsEqual<T, any> extends true
+  ? MaxLengthArray<N, any>
+  : _Take<T, N>
+export type _Take<T extends Tuple, N extends number, R extends Tuple = []> = R['length'] extends N
+  ? R
+  : T extends readonly [infer H, ...infer L]
+  ? _Take<L, N, [...R, H]>
+  : T extends readonly []
+  ? R
+  : Subtract<N, R['length']> extends infer S extends number
+  ? IsTuple<T> extends false
+    ? [...R, ...MaxLengthArray<S, T[number]>]
+    : IntegerRangeThrough<S> extends infer M extends number
+    ? M extends M
+      ? [
+          ...R,
+          ...FixedLengthArray<M, SplitTupleAroundRest<T>['rest'][0]>,
+          ...Take<SplitTupleAroundRest<T>['after'], Subtract<S, M>>
+        ]
+      : never
+    : never
+  : never
 
 export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArray<N, T> {
   const result: T[] = []
