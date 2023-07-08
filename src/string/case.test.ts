@@ -3,6 +3,7 @@ import { assertTypeEquality } from '../type'
 import {
   isLowercaseLetter,
   isUppercaseLetter,
+  SnakeCasedPropertiesDeep,
   SplitIntoWords,
   splitIntoWords,
   toKebabCase,
@@ -112,4 +113,21 @@ test('toKebabCase', () => {
   expect(toKebabCase('XMLHttpRequest')).toBe('xml-http-request')
   expect(toKebabCase('innerHTML')).toBe('inner-html')
   expect(toKebabCase('getXCoordinate')).toBe('get-x-coordinate')
+})
+
+test('SnakeCasedPropertiesDeep', () => {
+  assertTypeEquality<SnakeCasedPropertiesDeep<{ getX: number }>, { get_x: number }>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<{ 0: { getY: number } }>, { 0: { get_y: number } }>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<{ [Symbol.iterator]: undefined }>, { [Symbol.iterator]: undefined }>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<{ readonly a: any }>, { readonly a: any }>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<{ a?: 1 }>, { a?: 1 }>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<{ readonly a?: 1 }>, { readonly a?: 1 }>()
+
+  assertTypeEquality<SnakeCasedPropertiesDeep<{ getX: number }[]>, { get_x: number }[]>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<readonly boolean[]>, readonly boolean[]>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<readonly [1, 2]>, readonly [1, 2]>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<[string, { getX: number }]>, [string, { get_x: number }]>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<[[{ getX: number }]]>, [[{ get_x: number }]]>()
+
+  assertTypeEquality<SnakeCasedPropertiesDeep<Record<number, 1>>, Record<number, 1>>()
 })

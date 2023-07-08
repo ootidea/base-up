@@ -180,6 +180,7 @@ export {
   ToSnakeCase,
   ToKebabCase,
   toKebabCase,
+  SnakeCasedPropertiesDeep,
 } from './string/case'
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'

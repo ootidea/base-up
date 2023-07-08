@@ -1,3 +1,4 @@
+import { Tuple } from '../Array/other'
 import { Join } from '../transform'
 import { IsOneOf } from '../type'
 
@@ -204,3 +205,31 @@ export type ToKebabCase<T extends string> = IsOneOf<T, [string, any]> extends tr
 export function toKebabCase<const T extends string>(self: T): ToKebabCase<T> {
   return splitIntoWords(self).join('-').toLowerCase() as any
 }
+
+export type SnakeCasedPropertiesDeep<T extends object> = T extends T
+  ? T extends Function
+    ? T
+    : T extends Tuple
+    ? SnakeCasedPropertiesDeepTuple<T>
+    : {
+        [K in keyof T as K extends string ? ToSnakeCase<K> : K]: T[K] extends object
+          ? SnakeCasedPropertiesDeep<T[K]>
+          : T[K]
+      }
+  : never
+type SnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends T
+  ? T extends any[]
+    ? _SnakeCasedPropertiesDeepTuple<T>
+    : Readonly<_SnakeCasedPropertiesDeepTuple<T>>
+  : never
+type _SnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [infer H, ...infer L]
+  ? [H extends object ? SnakeCasedPropertiesDeep<H> : H, ..._SnakeCasedPropertiesDeepTuple<L>]
+  : T extends readonly [...infer L, infer H]
+  ? [..._SnakeCasedPropertiesDeepTuple<L>, H extends object ? SnakeCasedPropertiesDeep<H> : H]
+  : T extends readonly []
+  ? []
+  : T[number][] extends T
+  ? SnakeCasedPropertiesDeep<T[number]>[]
+  : T extends readonly [(infer H)?, ...infer L]
+  ? [(H extends object ? SnakeCasedPropertiesDeep<H> : H)?, ..._SnakeCasedPropertiesDeepTuple<L>]
+  : never
