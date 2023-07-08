@@ -185,6 +185,7 @@ export {
   LowercaseLetter,
   isUppercaseLetter,
   isLowercaseLetter,
+  capitalize,
   SplitIntoWords,
   splitIntoWords,
   ToSnakeCase,
@@ -192,8 +193,11 @@ export {
   ToKebabCase,
   toKebabCase,
   ToCamelCase,
+  toCamelCase,
   SnakeCasedPropertiesDeep,
   snakeCasedPropertiesDeep,
+  CamelCasedPropertiesDeep,
+  camelCasedPropertiesDeep,
 } from './string/case'
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'

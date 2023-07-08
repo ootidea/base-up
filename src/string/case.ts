@@ -67,6 +67,20 @@ export function isLowercaseLetter(self: string): self is LowercaseLetter {
 }
 
 /**
+ * Convert the first character to uppercase.
+ * @example
+ * capitalize('hello') returns 'Hello'
+ * capitalize('HTML') returns 'HTML'
+ * capitalize('') returns ''
+ * capitalize('123') returns '123'
+ */
+export function capitalize<const T extends string>(self: T): Capitalize<T> {
+  if (self === '') return '' as any
+
+  return (self[0]!.toUpperCase() + self.slice(1)) as any
+}
+
+/**
  * Splits a string in formats like snake_case or PascalCase into words.
  * Words such as 'iPhone' are not correctly recognized.
  * @example
@@ -250,6 +264,26 @@ type PascalizeAll<T extends readonly string[]> = T extends readonly [
 
 /**
  * @example
+ * toCamelCase('PascalCase') returns 'pascalCase'
+ * toCamelCase('snake_case') returns 'snakeCase'
+ * toCamelCase('kebab-case') returns 'kebabCase'
+ * toCamelCase('SCREAMING_SNAKE_CASE') returns 'screamingSnakeCase'
+ * toCamelCase('Title Case') returns 'titleCase'
+ * @example
+ * toCamelCase('block__element--modifier') returns 'blockElementModifier'
+ * toCamelCase('XMLHttpRequest') returns 'xmlHttpRequest'
+ * toCamelCase('innerHTML') returns 'innerHtml'
+ * toCamelCase('getXCoordinate') returns 'getXCoordinate'
+ */
+export function toCamelCase<const T extends string>(self: T): ToCamelCase<T> {
+  const [first, ...rest] = splitIntoWords(self)
+  if (first === undefined) return '' as any
+
+  return [first.toLowerCase(), ...rest.map((word) => capitalize(word.toLowerCase()))].join('') as any
+}
+
+/**
+ * @example
  * SnakeCasedPropertiesDeep<{ firstName: string, lastName: string }> is equivalent to { first_name: string, last_name: string }
  * SnakeCasedPropertiesDeep<{ nested: { firstName: string } }> is equivalent to { nested: { first_name: string } }
  * SnakeCasedPropertiesDeep<{ tags: { createdAt: number }[] }> is equivalent to { tags: { created_at: number }[] }
@@ -308,6 +342,72 @@ export function snakeCasedPropertiesDeep<T extends object>(self: T): SnakeCasedP
     const value = result[key]
     result[snakeCase] = isObject(value) ? snakeCasedPropertiesDeep(value) : value
     if (key !== snakeCase) {
+      delete result[key]
+    }
+  }
+  return result
+}
+
+/**
+ * @example
+ * CamelCasedPropertiesDeep<{ first_name: string, last_name: string }> is equivalent to { firstName: string, lastName: string }
+ * CamelCasedPropertiesDeep<{ nested: { first_name: string } }> is equivalent to { nested: { firstName: string } }
+ * CamelCasedPropertiesDeep<{ tags: { created_at: number }[] }> is equivalent to { tags: { createdAt: number }[] }
+ * CamelCasedPropertiesDeep<{ first_name: string }[]> is equivalent to { firstName: string }[]
+ * @example keep modifiers
+ * CamelCasedPropertiesDeep<{ readonly first_name?: string }> is equivalent to { readonly firstName?: string }
+ * CamelCasedPropertiesDeep<readonly string[]> is equivalent to readonly string[]
+ */
+export type CamelCasedPropertiesDeep<T extends object> = T extends T
+  ? IsEqual<T, any> extends true
+    ? T
+    : T extends Function
+    ? T
+    : T extends Tuple
+    ? CamelCasedPropertiesDeepTuple<T>
+    : {
+        [K in keyof T as K extends string ? ToCamelCase<K> : K]: T[K] extends object
+          ? CamelCasedPropertiesDeep<T[K]>
+          : T[K]
+      }
+  : never
+type CamelCasedPropertiesDeepTuple<T extends Tuple> = T extends T
+  ? T extends any[]
+    ? _CamelCasedPropertiesDeepTuple<T>
+    : Readonly<_CamelCasedPropertiesDeepTuple<T>>
+  : never
+type _CamelCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [infer H, ...infer L]
+  ? [H extends object ? CamelCasedPropertiesDeep<H> : H, ..._CamelCasedPropertiesDeepTuple<L>]
+  : T extends readonly [...infer L, infer H]
+  ? [..._CamelCasedPropertiesDeepTuple<L>, H extends object ? CamelCasedPropertiesDeep<H> : H]
+  : T extends readonly []
+  ? []
+  : T[number][] extends T
+  ? CamelCasedPropertiesDeep<T[number]>[]
+  : T extends readonly [(infer H)?, ...infer L]
+  ? [(H extends object ? CamelCasedPropertiesDeep<H> : H)?, ..._CamelCasedPropertiesDeepTuple<L>]
+  : never
+
+/**
+ * @example
+ * camelCasedPropertiesDeep({ first_name: 'John', last_name: 'Smith' }) returns { firstName: 'John', lastName: 'Smith' }
+ * camelCasedPropertiesDeep({ nested: { first_name: 'John' } }) returns { nested: { firstName: 'John' } }
+ * camelCasedPropertiesDeep({ tags: [{ created_at: 1 }] }) returns { tags: [{ createdAt: 1 }] }
+ * camelCasedPropertiesDeep([{ first_name: 'John' }]) returns [{ firstName: 'John' }]
+ */
+export function camelCasedPropertiesDeep<T extends object>(self: T): CamelCasedPropertiesDeep<T> {
+  if (self instanceof Function) return self as any
+
+  if (self instanceof Array) {
+    return self.map((value: unknown) => (isObject(value) ? camelCasedPropertiesDeep(value) : value)) as any
+  }
+
+  const result: any = { ...self }
+  for (const key of Object.keys(self)) {
+    const camelCase = toCamelCase(key)
+    const value = result[key]
+    result[camelCase] = isObject(value) ? camelCasedPropertiesDeep(value) : value
+    if (key !== camelCase) {
       delete result[key]
     }
   }
