@@ -186,4 +186,5 @@ export {
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'
 export { pipe, call, identity, curry, returnLast } from './Function'
+export { JsonValue } from './Json'
 export { forever, type Promisable } from './Promise'
