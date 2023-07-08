@@ -141,7 +141,7 @@ type ReduceLazy<T> = T extends { [lazyKey]: never }
   : T
 
 export type JsonValue = null | boolean | number | string | JsonValueArray | JsonValueObject
-interface JsonValueArray extends Array<JsonValue> {}
+interface JsonValueArray extends ReadonlyArray<JsonValue> {}
 interface JsonValueObject {
   [key: string]: JsonValue
 }
@@ -162,7 +162,7 @@ export type PlainValue =
   | symbol
   | PlainValueArray
   | PlainValueObject
-interface PlainValueArray extends Array<PlainValue> {}
+interface PlainValueArray extends ReadonlyArray<PlainValue> {}
 interface PlainValueObject {
   [key: keyof any]: PlainValue
 }
@@ -178,7 +178,7 @@ export type NonClassValue =
   | Function
   | NonClassValueArray
   | NonClassValueObject
-interface NonClassValueArray extends Array<NonClassValue> {}
+interface NonClassValueArray extends ReadonlyArray<NonClassValue> {}
 interface NonClassValueObject {
   [key: keyof any]: NonClassValue
 }
