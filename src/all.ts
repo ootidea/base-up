@@ -174,9 +174,10 @@ export {
   LowercaseLetter,
   isUppercaseLetter,
   isLowercaseLetter,
-  ToKebabCase,
   SplitIntoWords,
   splitIntoWords,
+  ToKebabCase,
+  toKebabCase,
 } from './string/case'
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'

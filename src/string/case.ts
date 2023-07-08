@@ -166,3 +166,20 @@ export function splitIntoWords<const T extends string, const D extends readonly 
 export type ToKebabCase<T extends string> = IsOneOf<T, [string, any]> extends true
   ? string
   : Lowercase<Join<SplitIntoWords<T>, '-'>>
+
+/**
+ * @example
+ * toKebabCase('camelCase') returns 'camel-case'
+ * toKebabCase('PascalCase') returns 'pascal-case'
+ * toKebabCase('snake_case') returns 'snake-case'
+ * toKebabCase('SCREAMING_SNAKE_CASE') returns 'screaming-snake-case'
+ * toKebabCase('Title Case') returns 'title-case'
+ * @example
+ * toKebabCase('block__element--modifier') returns 'block-element-modifier'
+ * toKebabCase('XMLHttpRequest') returns 'xml-http-request'
+ * toKebabCase('innerHTML') returns 'inner-html'
+ * toKebabCase('getXCoordinate') returns 'get-x-coordinate'
+ */
+export function toKebabCase<const T extends string>(self: T): ToKebabCase<T> {
+  return splitIntoWords(self).join('-').toLowerCase() as any
+}
