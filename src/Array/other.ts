@@ -58,6 +58,13 @@ type RemoveElementsThatMightNotExist<T extends Tuple> = T extends readonly [infe
   ? [...RemoveElementsThatMightNotExist<L>, H]
   : []
 
+/**
+ * @example
+ * UnionToTuple<1 | 2> is equivalent to [1, 2] or [2, 1]
+ * UnionToTuple<boolean> is equivalent to [false, true] or [true, false]
+ * UnionToTuple<never> is equivalent to []
+ * UnionToTuple<any> is equivalent to [any]
+ */
 export type UnionToTuple<T> = UnionToIntersection<T extends T ? (_: T) => T : never> extends (_: any) => infer U
   ? [...UnionToTuple<Exclude<T, U>>, U]
   : []
