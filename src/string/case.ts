@@ -1,6 +1,6 @@
 import { Tuple } from '../Array/other'
 import { Join } from '../transform'
-import { IsOneOf } from '../type'
+import { IsEqual, IsOneOf } from '../type'
 
 export type UppercaseLetter =
   | 'A'
@@ -207,7 +207,9 @@ export function toKebabCase<const T extends string>(self: T): ToKebabCase<T> {
 }
 
 export type SnakeCasedPropertiesDeep<T extends object> = T extends T
-  ? T extends Function
+  ? IsEqual<T, any> extends true
+    ? T
+    : T extends Function
     ? T
     : T extends Tuple
     ? SnakeCasedPropertiesDeepTuple<T>
