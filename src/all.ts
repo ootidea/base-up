@@ -82,6 +82,8 @@ export {
   Branded,
   Simplify,
   DiscriminatedUnion,
+  JsonValue,
+  IsClass,
 } from './type'
 export {
   isNull,
@@ -194,5 +196,4 @@ export {
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'
 export { pipe, call, identity, curry, returnLast } from './Function'
-export { JsonValue } from './Json'
 export { forever, Promisable } from './Promise'

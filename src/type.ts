@@ -139,3 +139,51 @@ type ReduceLazy<T> = T extends { [lazyKey]: never }
   : T extends { [lazyKey]: infer U }
   ? U
   : T
+
+export type JsonValue = null | boolean | number | string | JsonValueArray | JsonValueObject
+interface JsonValueArray extends Array<JsonValue> {}
+interface JsonValueObject {
+  [key: string]: JsonValue
+}
+
+/**
+ * A superset of {@link JsonValue}.
+ * It includes types undefined, bigint, and symbol.
+ * Keys for objects can be of type number and symbol.
+ * Just like JSON, it does not include function and class types.
+ */
+export type PlainValue =
+  | null
+  | undefined
+  | boolean
+  | number
+  | bigint
+  | string
+  | symbol
+  | PlainValueArray
+  | PlainValueObject
+interface PlainValueArray extends Array<PlainValue> {}
+interface PlainValueObject {
+  [key: keyof any]: PlainValue
+}
+
+export type NonClassValue =
+  | null
+  | undefined
+  | boolean
+  | number
+  | bigint
+  | string
+  | symbol
+  | Function
+  | NonClassValueArray
+  | NonClassValueObject
+interface NonClassValueArray extends Array<NonClassValue> {}
+interface NonClassValueObject {
+  [key: keyof any]: NonClassValue
+}
+
+export type IsClass<T> = T extends NonClassValue
+  ? // In the scope of our current analysis, only the Blob type exhibits unique characteristics.
+    IsEqual<T, Blob>
+  : true
