@@ -183,7 +183,9 @@ interface NonClassValueObject {
   [key: keyof any]: NonClassValue
 }
 
-export type IsClass<T> = T extends NonClassValue
+export type IsClass<T> = IsOneOf<T, [any, unknown, never, void]> extends true
+  ? false
+  : T extends NonClassValue
   ? // In the scope of our current analysis, only the Blob type exhibits unique characteristics.
     IsEqual<T, Blob>
   : true
