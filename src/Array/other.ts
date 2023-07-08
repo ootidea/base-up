@@ -1,6 +1,6 @@
 import { randomIntegerThrough } from '../number/range'
 import { UnionToIntersection } from '../type'
-import { IsEqual } from '../typePredicate'
+import { IsEqual, IsOneOf } from '../typePredicate'
 import { FixedLengthArray } from './FixedLengthArray'
 
 export type Tuple = readonly any[]
@@ -26,7 +26,9 @@ export function shuffle<const T extends Tuple>(self: T): FixedLengthArray<T['len
  * IsTuple<number[]> is equivalent to false
  * IsTuple<readonly any[]> is equivalent to false
  */
-export type IsTuple<T extends Tuple> = T extends T ? (T[number][] extends T ? false : true) : never
+export type IsTuple<T extends Tuple> = T extends T
+  ? IsOneOf<T, [any, T[number][], readonly T[number][]], false, true>
+  : never
 
 /**
  * @example

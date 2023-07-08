@@ -29,6 +29,7 @@ test('IsTuple', () => {
   assertTypeEquality<IsTuple<[...0[], 1]>, true>()
   assertTypeEquality<IsTuple<[1, 2?, 3?]>, true>()
   assertTypeEquality<IsTuple<[1, 2?, ...3[]]>, true>()
+  assertTypeEquality<IsTuple<[1?, ...any]>, true>()
 
   assertTypeEquality<IsTuple<number[]>, false>()
   assertTypeEquality<IsTuple<readonly any[]>, false>()
