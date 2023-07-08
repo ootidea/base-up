@@ -30,6 +30,18 @@ export type IsEqual<T, U, Then = true, Else = false> = (<R>() => R extends T ? 1
   ? Then
   : Else
 
+export function equals<const T, const U extends T>(self: T, other: U): self is U
+export function equals<const T extends U, const U>(self: T, other: U): other is T
+export function equals<const T, const U>(self: T, other: U): false
+export function equals(self: unknown, other: unknown) {
+  return self === other
+}
+export namespace equals {
+  export function defer<const T>(other: T): (self: unknown) => self is T {
+    return (self: unknown): self is T => self === other
+  }
+}
+
 /**
  * Determines whether the type is one of the types in the tuple.
  * @example

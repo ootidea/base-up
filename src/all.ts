@@ -111,6 +111,7 @@ export {
   isOneOf,
   isNotOneOf,
   IsEqual,
+  equals,
 } from './typePredicate'
 export { Tuple, shuffle, UnionToTuple, IsTuple, MinLengthOf } from './Array/other'
 export { ReadonlyFixedLengthArray, FixedLengthArray, isFixedLengthArray } from './Array/FixedLengthArray'
