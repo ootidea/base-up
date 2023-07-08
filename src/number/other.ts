@@ -143,6 +143,39 @@ export type Decrement<N extends number> = `${N}` extends `-${infer PN extends nu
 export type Digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 
 /**
+ * '9': Infinity
+ * '8': Positive e+ exponential notation
+ * '7': Positive non-exponential notation
+ * '6': Positive e- exponential notation
+ * '5': 0
+ * '4': Negative e- exponential notation
+ * '3': Negative non-exponential notation
+ * '2': Negative e+ exponential notation
+ * '1': -Infinity
+ */
+export type NumberRankOf<T extends number> = T extends T
+  ? IsOneOf<T, [number, any]> extends true
+    ? never
+    : T extends NegativeInfinity
+    ? '1'
+    : `${T}` extends `-${string}e+${string}`
+    ? '2'
+    : `${T}` extends `-${string}e-${string}`
+    ? '4'
+    : `${T}` extends `-${string}`
+    ? '3'
+    : T extends 0
+    ? '5'
+    : T extends Infinity
+    ? '9'
+    : `${T}` extends `${string}e+${string}`
+    ? '8'
+    : `${T}` extends `${string}e-${string}`
+    ? '6'
+    : '7'
+  : never
+
+/**
  * Function to calculate modulo instead of reminder.
  * Unlike the % operator, the modOf function handles negative numbers differently, such that the result has the same sign as the divisor.
  *
