@@ -3,11 +3,13 @@ import { assertTypeEquality } from '../type'
 import {
   isLowercaseLetter,
   isUppercaseLetter,
+  snakeCasedPropertiesDeep,
   SnakeCasedPropertiesDeep,
   SplitIntoWords,
   splitIntoWords,
   toKebabCase,
   ToKebabCase,
+  toSnakeCase,
   ToSnakeCase,
 } from './case'
 
@@ -82,6 +84,19 @@ test('ToSnakeCase', () => {
   assertTypeEquality<ToSnakeCase<never>, never>()
 })
 
+test('toSnakeCase', () => {
+  expect(toSnakeCase('camelCase')).toBe('camel_case')
+  expect(toSnakeCase('PascalCase')).toBe('pascal_case')
+  expect(toSnakeCase('kebab-case')).toBe('kebab_case')
+  expect(toSnakeCase('snake_case')).toBe('snake_case')
+  expect(toSnakeCase('SCREAMING_SNAKE_CASE')).toBe('screaming_snake_case')
+  expect(toSnakeCase('Title Case')).toBe('title_case')
+  expect(toSnakeCase('block__element--modifier')).toBe('block_element_modifier')
+  expect(toSnakeCase('XMLHttpRequest')).toBe('xml_http_request')
+  expect(toSnakeCase('innerHTML')).toBe('inner_html')
+  expect(toSnakeCase('getXCoordinate')).toBe('get_x_coordinate')
+})
+
 test('ToKebabCase', () => {
   assertTypeEquality<ToKebabCase<'camelCase'>, 'camel-case'>()
   assertTypeEquality<ToKebabCase<'PascalCase'>, 'pascal-case'>()
@@ -130,4 +145,11 @@ test('SnakeCasedPropertiesDeep', () => {
   assertTypeEquality<SnakeCasedPropertiesDeep<[[{ getX: number }]]>, [[{ get_x: number }]]>()
 
   assertTypeEquality<SnakeCasedPropertiesDeep<Record<number, 1>>, Record<number, 1>>()
+})
+
+test('snakeCasedPropertiesDeep', () => {
+  expect(snakeCasedPropertiesDeep({ getX: 1 })).toStrictEqual({ get_x: 1 })
+  expect(snakeCasedPropertiesDeep({ nested: { getY: 1 } })).toStrictEqual({ nested: { get_y: 1 } })
+  expect(snakeCasedPropertiesDeep({ [Symbol.iterator]: () => {} })).toStrictEqual({ [Symbol.iterator]: () => {} })
+  expect(snakeCasedPropertiesDeep([{ getX: 1 }])).toStrictEqual([{ get_x: 1 }])
 })

@@ -1,6 +1,6 @@
 import { Tuple } from '../Array/other'
 import { Join } from '../transform'
-import { IsEqual, IsOneOf } from '../type'
+import { IsEqual, isObject, IsOneOf } from '../type'
 
 export type UppercaseLetter =
   | 'A'
@@ -173,6 +173,23 @@ export type ToSnakeCase<T extends string> = IsOneOf<T, [string, any]> extends tr
 
 /**
  * @example
+ * toSnakeCase('camelCase') returns 'camel_case'
+ * toSnakeCase('PascalCase') returns 'pascal_case'
+ * toSnakeCase('kebab-case') returns 'kebab_case'
+ * toSnakeCase('SCREAMING_SNAKE_CASE') returns 'screaming_snake_case'
+ * toSnakeCase('Title Case') returns 'title_case'
+ * @example
+ * toSnakeCase('block__element--modifier') returns 'block_element_modifier'
+ * toSnakeCase('XMLHttpRequest') returns 'xml_http_request'
+ * toSnakeCase('innerHTML') returns 'inner_html'
+ * toSnakeCase('getXCoordinate') returns 'get_x_coordinate'
+ */
+export function toSnakeCase<const T extends string>(self: T): ToSnakeCase<T> {
+  return splitIntoWords(self).join('_').toLowerCase() as any
+}
+
+/**
+ * @example
  * ToKebabCase<'camelCase'> is equivalent to 'camel-case'
  * ToKebabCase<'PascalCase'> is equivalent to 'pascal-case'
  * ToKebabCase<'snake_case'> is equivalent to 'snake-case'
@@ -235,3 +252,22 @@ type _SnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [infer
   : T extends readonly [(infer H)?, ...infer L]
   ? [(H extends object ? SnakeCasedPropertiesDeep<H> : H)?, ..._SnakeCasedPropertiesDeepTuple<L>]
   : never
+
+export function snakeCasedPropertiesDeep<T extends object>(self: T): SnakeCasedPropertiesDeep<T> {
+  if (self instanceof Function) return self as any
+
+  if (self instanceof Array) {
+    return self.map((value: unknown) => (isObject(value) ? snakeCasedPropertiesDeep(value) : value)) as any
+  }
+
+  const result: any = { ...self }
+  for (const key of Object.keys(self)) {
+    const snakeCase = toSnakeCase(key)
+    const value = result[key]
+    result[snakeCase] = isObject(value) ? snakeCasedPropertiesDeep(value) : value
+    if (key !== snakeCase) {
+      delete result[key]
+    }
+  }
+  return result
+}
