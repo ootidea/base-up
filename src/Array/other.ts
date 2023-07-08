@@ -18,6 +18,17 @@ export function shuffle<const T extends Tuple>(self: T): FixedLengthArray<T['len
 
 /**
  * @example
+ * IsTuple<[]> is equivalent to true
+ * IsTuple<[1, 2, 3]> is equivalent to true
+ * IsTuple<[1, ...0[]]> is equivalent to true
+ * IsTuple<[1, 2?, 3?]> is equivalent to true
+ * IsTuple<number[]> is equivalent to false
+ * IsTuple<readonly any[]> is equivalent to false
+ */
+export type IsTuple<T extends Tuple> = T extends T ? (T[number][] extends T ? false : true) : never
+
+/**
+ * @example
  * MinLengthOf<['one', 'two']> is equivalent to 2
  * MinLengthOf<[1, 2, 3]> is equivalent to 3
  * MinLengthOf<[]> is equivalent to 0

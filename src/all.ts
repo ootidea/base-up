@@ -110,6 +110,7 @@ export {
   type Simplify,
   type DiscriminatedUnion,
 } from './type'
+export { Tuple, shuffle, UnionToTuple, IsTuple, MinLengthOf } from './Array/other'
 export { ReadonlyFixedLengthArray, FixedLengthArray, isFixedLengthArray } from './Array/FixedLengthArray'
 export {
   NonEmptyArray,
@@ -184,6 +185,3 @@ export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'
 export { pipe, call, identity, curry, returnLast } from './Function'
 export { forever, type Promisable } from './Promise'
-export { UnionToTuple } from './Array/other'
-export { shuffle } from './Array/other'
-export { Tuple } from './Array/other'
