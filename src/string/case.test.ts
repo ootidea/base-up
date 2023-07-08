@@ -131,25 +131,25 @@ test('toKebabCase', () => {
 })
 
 test('SnakeCasedPropertiesDeep', () => {
-  assertTypeEquality<SnakeCasedPropertiesDeep<{ getX: number }>, { get_x: number }>()
-  assertTypeEquality<SnakeCasedPropertiesDeep<{ 0: { getY: number } }>, { 0: { get_y: number } }>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<{ createdAt: number }>, { created_at: number }>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<{ 0: { createdAt: number } }>, { 0: { created_at: number } }>()
   assertTypeEquality<SnakeCasedPropertiesDeep<{ [Symbol.iterator]: undefined }>, { [Symbol.iterator]: undefined }>()
   assertTypeEquality<SnakeCasedPropertiesDeep<{ readonly a: any }>, { readonly a: any }>()
   assertTypeEquality<SnakeCasedPropertiesDeep<{ a?: 1 }>, { a?: 1 }>()
   assertTypeEquality<SnakeCasedPropertiesDeep<{ readonly a?: 1 }>, { readonly a?: 1 }>()
 
-  assertTypeEquality<SnakeCasedPropertiesDeep<{ getX: number }[]>, { get_x: number }[]>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<{ createdAt: number }[]>, { created_at: number }[]>()
   assertTypeEquality<SnakeCasedPropertiesDeep<readonly boolean[]>, readonly boolean[]>()
   assertTypeEquality<SnakeCasedPropertiesDeep<readonly [1, 2]>, readonly [1, 2]>()
-  assertTypeEquality<SnakeCasedPropertiesDeep<[string, { getX: number }]>, [string, { get_x: number }]>()
-  assertTypeEquality<SnakeCasedPropertiesDeep<[[{ getX: number }]]>, [[{ get_x: number }]]>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<[string, { createdAt: number }]>, [string, { created_at: number }]>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<[[{ createdAt: number }]]>, [[{ created_at: number }]]>()
 
   assertTypeEquality<SnakeCasedPropertiesDeep<Record<number, 1>>, Record<number, 1>>()
 })
 
 test('snakeCasedPropertiesDeep', () => {
-  expect(snakeCasedPropertiesDeep({ getX: 1 })).toStrictEqual({ get_x: 1 })
-  expect(snakeCasedPropertiesDeep({ nested: { getY: 1 } })).toStrictEqual({ nested: { get_y: 1 } })
-  expect(snakeCasedPropertiesDeep({ [Symbol.iterator]: () => {} })).toStrictEqual({ [Symbol.iterator]: () => {} })
-  expect(snakeCasedPropertiesDeep([{ getX: 1 }])).toStrictEqual([{ get_x: 1 }])
+  expect(snakeCasedPropertiesDeep({ createdAt: 1 })).toStrictEqual({ created_at: 1 })
+  expect(snakeCasedPropertiesDeep({ nested: { createdAt: 1 } })).toStrictEqual({ nested: { created_at: 1 } })
+  expect(snakeCasedPropertiesDeep({ [Symbol.iterator]: undefined })).toStrictEqual({ [Symbol.iterator]: undefined })
+  expect(snakeCasedPropertiesDeep([{ createdAt: 1 }])).toStrictEqual([{ created_at: 1 }])
 })
