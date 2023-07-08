@@ -1,7 +1,7 @@
 import { expect, expectTypeOf, test } from 'vitest'
 import { setOf } from '../Set'
 import { assertTypeEquality } from '../type'
-import { shuffle, UnionToTuple } from './other'
+import { MinLengthOf, shuffle, UnionToTuple } from './other'
 
 test('shuffle', () => {
   expect(setOf(...shuffle([1, 2, 3]))).toStrictEqual(setOf(1, 2, 3))
@@ -20,4 +20,21 @@ test('UnionToTuple', () => {
   assertTypeEquality<UnionToTuple<never>, []>()
   assertTypeEquality<UnionToTuple<any>, [any]>()
   assertTypeEquality<UnionToTuple<unknown>, [unknown]>()
+})
+
+test('MinLengthOf', () => {
+  assertTypeEquality<MinLengthOf<[]>, 0>()
+  assertTypeEquality<MinLengthOf<[string]>, 1>()
+  assertTypeEquality<MinLengthOf<[string, number]>, 2>()
+  assertTypeEquality<MinLengthOf<[string, ...number[]]>, 1>()
+  assertTypeEquality<MinLengthOf<[...number[], string]>, 1>()
+  assertTypeEquality<MinLengthOf<[string, ...number[], string]>, 2>()
+  assertTypeEquality<MinLengthOf<[string, number?, string?]>, 1>()
+  assertTypeEquality<MinLengthOf<[string, number?, ...string[]]>, 1>()
+
+  assertTypeEquality<MinLengthOf<[] | [string]>, 0 | 1>()
+  assertTypeEquality<MinLengthOf<any[]>, 0>()
+  assertTypeEquality<MinLengthOf<readonly 1[]>, 0>()
+  assertTypeEquality<MinLengthOf<any>, 0>()
+  assertTypeEquality<MinLengthOf<never>, never>()
 })

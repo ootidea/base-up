@@ -1,5 +1,5 @@
 import { randomIntegerThrough } from '../number/other'
-import { IsEqual, IsOneOf, UnionToIntersection } from '../type'
+import { IsEqual, UnionToIntersection } from '../type'
 import { FixedLengthArray } from './FixedLengthArray'
 
 export type Tuple = readonly any[]
@@ -33,7 +33,7 @@ export function shuffle<const T extends Tuple>(self: T): FixedLengthArray<T['len
  * MinLengthOf<any> is equivalent to 0
  * MinLengthOf<never> is equivalent to never
  */
-export type MinLengthOf<T extends Tuple> = IsOneOf<T, any> extends true
+export type MinLengthOf<T extends Tuple> = IsEqual<T, any> extends true
   ? 0
   : IsEqual<T, never> extends true
   ? never
