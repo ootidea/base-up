@@ -154,13 +154,34 @@ export function splitIntoWords<const T extends string, const D extends readonly 
 
 /**
  * @example
+ * ToSnakeCase<'camelCase'> is equivalent to 'camel_case'
+ * ToSnakeCase<'PascalCase'> is equivalent to 'pascal_case'
+ * ToSnakeCase<'kebab-case'> is equivalent to 'kebab_case'
+ * ToSnakeCase<'SCREAMING_SNAKE_CASE'> is equivalent to 'screaming_snake_case'
+ * ToSnakeCase<'Title Case'> is equivalent to 'title_case'
+ * @example
+ * ToSnakeCase<'block__element--modifier'> is equivalent to 'block_element_modifier'
+ * ToSnakeCase<'XMLHttpRequest'> is equivalent to 'xml_http_request'
+ * ToSnakeCase<'innerHTML'> is equivalent to 'inner_html'
+ * ToSnakeCase<'getXCoordinate'> is equivalent to 'get_x_coordinate'
+ * ToSnakeCase<'camelCase' | 'PascalCase'> is equivalent to 'camel_case' | 'pascal_case'
+ */
+export type ToSnakeCase<T extends string> = IsOneOf<T, [string, any]> extends true
+  ? string
+  : Lowercase<Join<SplitIntoWords<T>, '_'>>
+
+/**
+ * @example
  * ToKebabCase<'camelCase'> is equivalent to 'camel-case'
  * ToKebabCase<'PascalCase'> is equivalent to 'pascal-case'
  * ToKebabCase<'snake_case'> is equivalent to 'snake-case'
  * ToKebabCase<'SCREAMING_SNAKE_CASE'> is equivalent to 'screaming-snake-case'
  * ToKebabCase<'Title Case'> is equivalent to 'title-case'
- * ToKebabCase<'block__element--modifier'> is equivalent to 'block-element-modifier'
  * @example
+ * ToKebabCase<'block__element--modifier'> is equivalent to 'block-element-modifier'
+ * ToKebabCase<'XMLHttpRequest'> is equivalent to 'xml-http-request'
+ * ToKebabCase<'innerHTML'> is equivalent to 'inner-html'
+ * ToKebabCase<'getXCoordinate'> is equivalent to 'get-x-coordinate'
  * ToKebabCase<'camelCase' | 'PascalCase'> is equivalent to 'camel-case' | 'pascal-case'
  */
 export type ToKebabCase<T extends string> = IsOneOf<T, [string, any]> extends true

@@ -176,6 +176,7 @@ export {
   isLowercaseLetter,
   SplitIntoWords,
   splitIntoWords,
+  ToSnakeCase,
   ToKebabCase,
   toKebabCase,
 } from './string/case'

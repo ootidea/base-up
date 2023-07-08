@@ -1,6 +1,14 @@
 import { expect, test } from 'vitest'
 import { assertTypeEquality } from '../type'
-import { isLowercaseLetter, isUppercaseLetter, SplitIntoWords, splitIntoWords, toKebabCase, ToKebabCase } from './case'
+import {
+  isLowercaseLetter,
+  isUppercaseLetter,
+  SplitIntoWords,
+  splitIntoWords,
+  toKebabCase,
+  ToKebabCase,
+  ToSnakeCase,
+} from './case'
 
 test('isUppercaseLetter', () => {
   expect(isUppercaseLetter('A')).toBe(true)
@@ -51,6 +59,26 @@ test('splitIntoWords', () => {
 
   expect(splitIntoWords('')).toStrictEqual([])
   expect(splitIntoWords('---')).toStrictEqual([])
+})
+
+test('ToSnakeCase', () => {
+  assertTypeEquality<ToSnakeCase<'camelCase'>, 'camel_case'>()
+  assertTypeEquality<ToSnakeCase<'PascalCase'>, 'pascal_case'>()
+  assertTypeEquality<ToSnakeCase<'kebab-case'>, 'kebab_case'>()
+  assertTypeEquality<ToSnakeCase<'snake_case'>, 'snake_case'>()
+  assertTypeEquality<ToSnakeCase<'SCREAMING_SNAKE_CASE'>, 'screaming_snake_case'>()
+  assertTypeEquality<ToSnakeCase<'Title Case'>, 'title_case'>()
+  assertTypeEquality<ToSnakeCase<'block__element--modifier'>, 'block_element_modifier'>()
+  assertTypeEquality<ToSnakeCase<'XMLHttpRequest'>, 'xml_http_request'>()
+  assertTypeEquality<ToSnakeCase<'innerHTML'>, 'inner_html'>()
+  assertTypeEquality<ToSnakeCase<'getXCoordinate'>, 'get_x_coordinate'>()
+
+  assertTypeEquality<ToSnakeCase<'camelCase' | 'PascalCase'>, 'camel_case' | 'pascal_case'>()
+  assertTypeEquality<ToSnakeCase<''>, ''>()
+  assertTypeEquality<ToSnakeCase<'---'>, ''>()
+  assertTypeEquality<ToSnakeCase<string>, string>()
+  assertTypeEquality<ToSnakeCase<any>, string>()
+  assertTypeEquality<ToSnakeCase<never>, never>()
 })
 
 test('ToKebabCase', () => {
