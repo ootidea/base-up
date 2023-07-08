@@ -37,11 +37,11 @@ export type MinLengthOf<T extends Tuple> = IsOneOf<T, any> extends true
   ? 0
   : IsEqual<T, never> extends true
   ? never
-  : _MinLengthOf<T>['length']
-type _MinLengthOf<T extends Tuple> = T extends readonly [infer H, ...infer L]
-  ? [H, ..._MinLengthOf<L>]
+  : RemoveElementsThatMightNotExist<T>['length']
+type RemoveElementsThatMightNotExist<T extends Tuple> = T extends readonly [infer H, ...infer L]
+  ? [H, ...RemoveElementsThatMightNotExist<L>]
   : T extends readonly [...infer L, infer H]
-  ? [..._MinLengthOf<L>, H]
+  ? [...RemoveElementsThatMightNotExist<L>, H]
   : []
 
 export type UnionToTuple<T> = UnionToIntersection<T extends T ? (_: T) => T : never> extends (_: any) => infer U
