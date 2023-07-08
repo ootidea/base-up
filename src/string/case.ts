@@ -119,7 +119,10 @@ type _SplitIntoWords<
  * splitIntoWords('getXCoordinate') returns ['get', 'X', 'Coordinate']
  * splitIntoWords('') returns []
  */
-export function splitIntoWords<const T extends string>(self: T): SplitIntoWords<T> {
+export function splitIntoWords<const T extends string, const D extends readonly string[] = ['-', '_', ' ']>(
+  self: T,
+  delimiters: D = ['-', '_', ' '] as any
+): SplitIntoWords<T, D[number]> {
   const result = []
   let current: string = self
   let acc = ''
@@ -133,13 +136,16 @@ export function splitIntoWords<const T extends string>(self: T): SplitIntoWords<
 
       acc = current[0]!
       current = current.slice(1)
-    } else if (current.startsWith('-') || current.startsWith('_') || current.startsWith(' ')) {
-      if (acc.length > 0) result.push(acc)
-      acc = ''
-      current = current.slice(1)
     } else {
-      acc += current[0]!
-      current = current.slice(1)
+      const matchedDelimiter = delimiters.find((delimiter) => current.startsWith(delimiter))
+      if (matchedDelimiter !== undefined) {
+        if (acc.length > 0) result.push(acc)
+        acc = ''
+        current = current.slice(matchedDelimiter.length)
+      } else {
+        acc += current[0]!
+        current = current.slice(1)
+      }
     }
   }
   if (acc.length > 0) result.push(acc)
