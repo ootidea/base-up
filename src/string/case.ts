@@ -223,6 +223,16 @@ export function toKebabCase<const T extends string>(self: T): ToKebabCase<T> {
   return splitIntoWords(self).join('-').toLowerCase() as any
 }
 
+/**
+ * @example
+ * SnakeCasedPropertiesDeep<{ firstName: string, lastName: string }> is equivalent to { first_name: string, last_name: string }
+ * SnakeCasedPropertiesDeep<{ nested: { firstName: string } }> is equivalent to { nested: { first_name: string } }
+ * SnakeCasedPropertiesDeep<{ tags: { createdAt: number }[] }> is equivalent to { tags: { created_at: number }[] }
+ * SnakeCasedPropertiesDeep<{ firstName: string }[]> is equivalent to { first_name: string }[]
+ * @example keep modifiers
+ * SnakeCasedPropertiesDeep<{ readonly firstName?: string }> is equivalent to { readonly first_name?: string }
+ * SnakeCasedPropertiesDeep<readonly string[]> is equivalent to readonly string[]
+ */
 export type SnakeCasedPropertiesDeep<T extends object> = T extends T
   ? IsEqual<T, any> extends true
     ? T
@@ -253,6 +263,13 @@ type _SnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [infer
   ? [(H extends object ? SnakeCasedPropertiesDeep<H> : H)?, ..._SnakeCasedPropertiesDeepTuple<L>]
   : never
 
+/**
+ * @example
+ * snakeCasedPropertiesDeep({ firstName: 'John', lastName: 'Smith' }) returns { first_name: 'John', last_name: 'Smith' }
+ * snakeCasedPropertiesDeep({ nested: { firstName: 'John' } }) returns { nested: { first_name: 'John' } }
+ * snakeCasedPropertiesDeep({ tags: [{ createdAt: 1 }] }) returns { tags: [{ created_at: 1 }] }
+ * snakeCasedPropertiesDeep([{ firstName: 'John' }]) returns [{ first_name: 'John' }]
+ */
 export function snakeCasedPropertiesDeep<T extends object>(self: T): SnakeCasedPropertiesDeep<T> {
   if (self instanceof Function) return self as any
 
