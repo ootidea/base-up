@@ -225,6 +225,31 @@ export function toKebabCase<const T extends string>(self: T): ToKebabCase<T> {
 
 /**
  * @example
+ * ToCamelCase<'PascalCase'> is equivalent to 'pascalCase'
+ * ToCamelCase<'snake_case'> is equivalent to 'snakeCase'
+ * ToCamelCase<'kebab-case'> is equivalent to 'kebabCase'
+ * ToCamelCase<'SCREAMING_SNAKE_CASE'> is equivalent to 'screamingSnakeCase'
+ * ToCamelCase<'Title Case'> is equivalent to 'titleCase'
+ * @example
+ * ToCamelCase<'block__element--modifier'> is equivalent to 'blockElementModifier'
+ * ToCamelCase<'XMLHttpRequest'> is equivalent to 'xmlHttpRequest'
+ * ToCamelCase<'innerHTML'> is equivalent to 'innerHtml'
+ * ToCamelCase<'getXCoordinate'> is equivalent to 'getXCoordinate'
+ */
+export type ToCamelCase<T extends string> = IsOneOf<T, [string, any]> extends true
+  ? string
+  : SplitIntoWords<T> extends readonly [infer H extends string, ...infer L extends readonly string[]]
+  ? Join<[Lowercase<H>, ...PascalizeAll<L>], ''>
+  : ''
+type PascalizeAll<T extends readonly string[]> = T extends readonly [
+  infer H extends string,
+  ...infer L extends readonly string[]
+]
+  ? [Capitalize<Lowercase<H>>, ...PascalizeAll<L>]
+  : []
+
+/**
+ * @example
  * SnakeCasedPropertiesDeep<{ firstName: string, lastName: string }> is equivalent to { first_name: string, last_name: string }
  * SnakeCasedPropertiesDeep<{ nested: { firstName: string } }> is equivalent to { nested: { first_name: string } }
  * SnakeCasedPropertiesDeep<{ tags: { createdAt: number }[] }> is equivalent to { tags: { created_at: number }[] }

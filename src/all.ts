@@ -188,8 +188,10 @@ export {
   SplitIntoWords,
   splitIntoWords,
   ToSnakeCase,
+  toSnakeCase,
   ToKebabCase,
   toKebabCase,
+  ToCamelCase,
   SnakeCasedPropertiesDeep,
   snakeCasedPropertiesDeep,
 } from './string/case'

@@ -7,6 +7,7 @@ import {
   SnakeCasedPropertiesDeep,
   SplitIntoWords,
   splitIntoWords,
+  ToCamelCase,
   toKebabCase,
   ToKebabCase,
   toSnakeCase,
@@ -128,6 +129,19 @@ test('toKebabCase', () => {
   expect(toKebabCase('XMLHttpRequest')).toBe('xml-http-request')
   expect(toKebabCase('innerHTML')).toBe('inner-html')
   expect(toKebabCase('getXCoordinate')).toBe('get-x-coordinate')
+})
+
+test('ToCamelCase', () => {
+  assertTypeEquality<ToCamelCase<'camelCase'>, 'camelCase'>()
+  assertTypeEquality<ToCamelCase<'PascalCase'>, 'pascalCase'>()
+  assertTypeEquality<ToCamelCase<'kebab-case'>, 'kebabCase'>()
+  assertTypeEquality<ToCamelCase<'snake_case'>, 'snakeCase'>()
+  assertTypeEquality<ToCamelCase<'SCREAMING_SNAKE_CASE'>, 'screamingSnakeCase'>()
+  assertTypeEquality<ToCamelCase<'Title Case'>, 'titleCase'>()
+  assertTypeEquality<ToCamelCase<'block__element--modifier'>, 'blockElementModifier'>()
+  assertTypeEquality<ToCamelCase<'XMLHttpRequest'>, 'xmlHttpRequest'>()
+  assertTypeEquality<ToCamelCase<'innerHTML'>, 'innerHtml'>()
+  assertTypeEquality<ToCamelCase<'getXCoordinate'>, 'getXCoordinate'>()
 })
 
 test('SnakeCasedPropertiesDeep', () => {
