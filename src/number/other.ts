@@ -1,5 +1,6 @@
 import { FixedLengthArray } from '../Array/FixedLengthArray'
 import { ReadonlyNonEmptyArray } from '../Array/MinLengthArray'
+import { Tuple } from '../Array/other'
 import { includes } from '../collectionPredicate'
 import { IsUnion } from '../type'
 import { IsOneOf } from '../typePredicate'
@@ -139,6 +140,16 @@ export type Decrement<N extends number> = `${N}` extends `-${infer PN extends nu
   : FixedLengthArray<N> extends [any, ...infer L]
   ? L['length']
   : -1
+
+export type Subtract<N extends number, M extends number> = _SubtractNaturalNumber<
+  FixedLengthArray<N>,
+  FixedLengthArray<M>
+>
+type _SubtractNaturalNumber<N extends Tuple, M extends Tuple> = N extends readonly [any, ...infer NL]
+  ? M extends readonly [any, ...infer ML]
+    ? _SubtractNaturalNumber<NL, ML>
+    : N['length']
+  : Negate<M['length']>
 
 export type Digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
 
