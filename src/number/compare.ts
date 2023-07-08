@@ -1,5 +1,5 @@
 import { FixedLengthArray } from '../Array/FixedLengthArray'
-import { IsEqual } from '../type'
+import { IsEqual } from '../typePredicate'
 import { Digit, DigitToRangeUntil } from './other'
 
 /**

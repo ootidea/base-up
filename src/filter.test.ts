@@ -3,7 +3,8 @@ import { elementAt, filter, FirstOf, firstOf, indexesOf, LastOf, lastOf, modeBy,
 import { rangeUntil, repeat } from './generate'
 import { setOf } from './Set'
 import { drop, dropLast, take } from './transform'
-import { assertTypeEquality, isNotNull } from './type'
+import { assertTypeEquality } from './type'
+import { isNotNull } from './typePredicate'
 
 test('filter', () => {
   expect([...filter.Iterable([1, 2, 3], (n) => n % 2 === 0)]).toStrictEqual([2])

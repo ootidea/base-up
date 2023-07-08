@@ -1,4 +1,5 @@
-import { IsOneOf, IsUnion } from './type'
+import { IsUnion } from './type'
+import { IsOneOf } from './typePredicate'
 
 /**
  * @example

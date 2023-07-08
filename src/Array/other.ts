@@ -1,5 +1,6 @@
 import { randomIntegerThrough } from '../number/other'
-import { IsEqual, UnionToIntersection } from '../type'
+import { UnionToIntersection } from '../type'
+import { IsEqual } from '../typePredicate'
 import { FixedLengthArray } from './FixedLengthArray'
 
 export type Tuple = readonly any[]

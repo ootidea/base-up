@@ -1,6 +1,6 @@
 import { Tuple } from '../Array/other'
 import { Join } from '../transform'
-import { IsEqual, isObject, IsOneOf } from '../type'
+import { IsEqual, isObject, IsOneOf } from '../typePredicate'
 
 export type UppercaseLetter =
   | 'A'

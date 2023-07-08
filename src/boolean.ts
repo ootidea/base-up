@@ -1,4 +1,4 @@
-import { IsEqual, IsOneOf } from './type'
+import { IsEqual, IsOneOf } from './typePredicate'
 
 /**
  * @example
