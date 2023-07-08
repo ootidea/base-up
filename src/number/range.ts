@@ -75,27 +75,18 @@ export type IntegerRangeThrough<N extends number, M extends number | undefined =
     : never
   : never
 
-export type DigitToRangeUntil<D extends Digit> = D extends '0'
-  ? never
-  : D extends '1'
-  ? '0'
-  : D extends '2'
-  ? '0' | '1'
-  : D extends '3'
-  ? '0' | '1' | '2'
-  : D extends '4'
-  ? '0' | '1' | '2' | '3'
-  : D extends '5'
-  ? '0' | '1' | '2' | '3' | '4'
-  : D extends '6'
-  ? '0' | '1' | '2' | '3' | '4' | '5'
-  : D extends '7'
-  ? '0' | '1' | '2' | '3' | '4' | '5' | '6'
-  : D extends '8'
-  ? '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7'
-  : D extends '9'
-  ? '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8'
-  : never
+export type DigitToRangeUntil = {
+  ['0']: never
+  ['1']: '0'
+  ['2']: '0' | '1'
+  ['3']: '0' | '1' | '2'
+  ['4']: '0' | '1' | '2' | '3'
+  ['5']: '0' | '1' | '2' | '3' | '4'
+  ['6']: '0' | '1' | '2' | '3' | '4' | '5'
+  ['7']: '0' | '1' | '2' | '3' | '4' | '5' | '6'
+  ['8']: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7'
+  ['9']: '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8'
+}
 
 /**
  * Generate a union type from 0 to the given number minus 1. It's orders of magnitude faster compared to a naive implementation.
@@ -109,10 +100,10 @@ export type NaturalNumbersFrom0Until<N extends number> = ToNumber<_NaturalNumber
 type _NaturalNumbersFrom0Until<DigitArray extends readonly Digit[]> = DigitArray extends readonly [
   infer D extends Digit
 ]
-  ? `${DigitToRangeUntil<D>}`
+  ? `${DigitToRangeUntil[D]}`
   : DigitArray extends readonly [infer H extends Digit, ...infer L extends readonly Digit[]]
   ?
-      | `${DigitToRangeUntil<H>}${RepeatString<Digit, L['length']> extends infer S extends string ? S : never}`
+      | `${DigitToRangeUntil[H]}${RepeatString<Digit, L['length']> extends infer S extends string ? S : never}`
       | `${H}${_NaturalNumbersFrom0Until<L>}`
   : ''
 

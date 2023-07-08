@@ -51,7 +51,7 @@ type _LteNaturalNumberLexicographic<Lhs extends readonly Digit[], Rhs extends re
     : false
   : true
 
-type LtDigit<Lhs extends Digit, Rhs extends Digit> = Lhs extends DigitToRangeUntil<Rhs> ? true : false
+type LtDigit<Lhs extends Digit, Rhs extends Digit> = Lhs extends DigitToRangeUntil[Rhs] ? true : false
 
 /**
  * @example
