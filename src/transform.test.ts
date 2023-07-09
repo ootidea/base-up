@@ -113,6 +113,14 @@ test('Join', () => {
   assertTypeEquality<Join<never>, never>()
 })
 
+test('join', () => {
+  expect(join(['a', 'b', 'c'])).toStrictEqual('a,b,c')
+  expect(join(['a', 'b'], ' + ')).toStrictEqual('a + b')
+  expect(join(['a', 'b', 'c'], '')).toStrictEqual('abc')
+  expect(join(['xyz'])).toStrictEqual('xyz')
+  expect(join([])).toStrictEqual('')
+})
+
 test('join.Array', () => {
   expect(
     join.Array(

@@ -267,12 +267,18 @@ export type Join<T extends readonly string[], Delimiter extends string = ','> = 
   infer U extends string
 ]
   ? U
-  : T extends [infer H extends string, ...infer L extends readonly string[]]
+  : T extends readonly [infer H extends string, ...infer L extends readonly string[]]
   ? `${H}${Delimiter}${Join<L, Delimiter>}`
-  : T extends []
+  : T extends readonly []
   ? ''
   : string
 
+export function join<const T extends readonly string[], Delimiter extends string = ','>(
+  self: T,
+  delimiter: Delimiter = ',' as any
+): Join<T, Delimiter> {
+  return self.join(delimiter) as any
+}
 export namespace join {
   export function Array<T, const U extends Tuple>(self: readonly (readonly T[])[], ...values: U): (T | U[number])[] {
     const result: (T | U[number])[] = []
