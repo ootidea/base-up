@@ -359,6 +359,13 @@ export function sortBy<const T extends Tuple, U>(
 ): FixedLengthArray<T['length'], T[number]> {
   return [...self].sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs))) as any
 }
+export namespace sortBy {
+  export function defer<E, U>(
+    by: (_: E) => U
+  ): <const T extends readonly E[]>(self: T) => FixedLengthArray<T['length'], E> {
+    return (self: readonly E[]) => [...self].sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs))) as any
+  }
+}
 
 /**
  * @example

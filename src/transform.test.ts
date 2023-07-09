@@ -162,6 +162,12 @@ test('sortBy', () => {
   expect(sortBy([], identity)).toStrictEqual([])
 })
 
+test('sortBy.defer', () => {
+  expect(sortBy.defer((x: number) => -x)([1, 2, 3])).toStrictEqual([3, 2, 1])
+  expect(sortBy.defer((x: string) => x.length)(['alice', 'bob', 'charlie'])).toStrictEqual(['bob', 'alice', 'charlie'])
+  expect(sortBy.defer(identity)([])).toStrictEqual([])
+})
+
 test('reverse', () => {
   expect(reverse([1, 2, 3])).toStrictEqual([3, 2, 1])
   expect(reverse([1])).toStrictEqual([1])
