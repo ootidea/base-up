@@ -1,9 +1,11 @@
 import { expect, test } from 'vitest'
+import { MinLengthArray, NonEmptyArray } from './Array/MinLengthArray'
 import { identity } from './Function'
 import { repeat } from './generate'
 import { setOf } from './Set'
 import {
   chunk,
+  Drop,
   flatten,
   Join,
   join,
@@ -16,7 +18,6 @@ import {
   sort,
   sortBy,
   Split,
-  tail,
   take,
   Take,
 } from './transform'
@@ -74,10 +75,26 @@ test('take.defer', () => {
   expect(take.defer(2)('abc')).toStrictEqual(['a', 'b'])
 })
 
-test('tail', () => {
-  expect(tail([1, 2, 3])).toStrictEqual([2, 3])
-  expect(tail([1])).toStrictEqual([])
-  expect(tail([])).toStrictEqual(undefined)
+test('Drop', () => {
+  assertTypeEquality<Drop<[1, 2, 3]>, [2, 3]>()
+  assertTypeEquality<Drop<[1, 2, 3], 2>, [3]>()
+  assertTypeEquality<Drop<[]>, []>()
+
+  assertTypeEquality<Drop<[...Date[], Date, Date], 2>, Date[]>()
+  assertTypeEquality<Drop<[...Date[], URL], 2>, [...Date[], URL]>()
+  assertTypeEquality<Drop<NonEmptyArray<string>>, string[]>()
+  assertTypeEquality<Drop<NonEmptyArray<string>, 2>, string[]>()
+  assertTypeEquality<Drop<MinLengthArray<2, string>, 2>, string[]>()
+  assertTypeEquality<Drop<MinLengthArray<2, string>>, NonEmptyArray<string>>()
+
+  assertTypeEquality<Drop<string[], 3>, string[]>()
+  assertTypeEquality<Drop<any, 3>, any>()
+  assertTypeEquality<Drop<never, 3>, never>()
+
+  // assertTypeEquality<Drop<[1?, 2?]>, [] | [2]>()
+
+  // assertTypeEquality<Drop<readonly [1, 2, 3]>, readonly [2, 3]>()
+  assertTypeEquality<Drop<readonly string[], 3>, readonly string[]>()
 })
 
 test('Join', () => {

@@ -1,4 +1,4 @@
-import { ReadonlyNonEmptyArray } from './Array/MinLengthArray'
+import { NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
 import { Tuple } from './Array/other'
 import { ReadonlyNonEmptyMap } from './Map'
 import { valuesOf } from './projection'
@@ -35,10 +35,11 @@ export namespace isEmpty {
   }
 }
 
-export function isNotEmpty(self: []): false
+export function isNotEmpty(self: readonly []): false
 export function isNotEmpty<T>(self: ReadonlyNonEmptyArray<T>): true
+export function isNotEmpty<T>(self: T[]): self is NonEmptyArray<T>
 export function isNotEmpty<T>(self: readonly T[]): self is ReadonlyNonEmptyArray<T>
-export function isNotEmpty<T>(self: readonly T[]): self is ReadonlyNonEmptyArray<T> {
+export function isNotEmpty<T>(self: readonly T[]) {
   return self.length > 0
 }
 export namespace isNotEmpty {

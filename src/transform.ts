@@ -163,6 +163,10 @@ export type Drop<T extends Tuple, N extends number = 1> = N extends N
 type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]
   ? T extends readonly [any, ...infer TL]
     ? _Drop<TL, NL>
+    : T extends readonly [...infer TL, infer H]
+    ? IsEqual<TL[number], H> extends true
+      ? _Drop<TL, NL>
+      : T
     : T extends []
     ? []
     : T
@@ -180,7 +184,7 @@ type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer
  * drop([0, 1, 2], 0) is equivalent to [0, 1, 2]
  * drop([0, 1, 2], -1) is equivalent to [0, 1, 2]
  */
-export function drop<const T extends Tuple>(self: T): Drop<T, 1>
+export function drop<const T extends Tuple>(self: T): Drop<T>
 export function drop<const T extends Tuple, N extends number>(self: T, n: N): Drop<T, N>
 export function drop<const T extends Tuple>(self: T, n: number = 1) {
   return self.slice(Math.max(n, 0))
@@ -251,25 +255,6 @@ export function dropLast<const T extends Tuple>(self: T): DropLast<T, 1>
 export function dropLast<const T extends Tuple, N extends number>(self: T, n: N): DropLast<T, N>
 export function dropLast<const T extends Tuple>(self: T, n: number = 1) {
   return self.slice(0, Math.max(self.length - n, 0))
-}
-
-/** @deprecated */
-export function tail<T>(self: ReadonlyNonEmptyArray<T>): T[]
-export function tail<T>(self: readonly T[]): T[] | undefined
-export function tail<T>(self: readonly T[]): T[] | undefined {
-  if (self.length === 0) return undefined
-
-  return self.slice(1)
-}
-export namespace tail {
-  export function* Iterable<T>(self: Iterable<T>): Iterable<T> {
-    const iterator = self[Symbol.iterator]()
-    iterator.next()
-    for (let element = iterator.next(); !element.done; element = iterator.next()) {
-      yield element.value
-    }
-    iterator.return?.()
-  }
 }
 
 /**

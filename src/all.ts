@@ -6,7 +6,6 @@ export {
   Split,
   sortBy,
   sort,
-  tail,
   chunk,
   padEnd,
   padStart,

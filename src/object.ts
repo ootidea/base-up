@@ -1,6 +1,6 @@
 import { UnionToTuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
-import { tail } from './transform'
+import { drop } from './transform'
 import { Simplify } from './type'
 
 /**
@@ -92,7 +92,7 @@ export function getNestedProperty<T extends object, Ks extends readonly (keyof a
 
   const firstKey = keys[0]
   if (firstKey in self) {
-    return getNestedProperty((self as any)[firstKey], ...tail(keys)) as any
+    return getNestedProperty((self as any)[firstKey], ...(drop(keys) as any)) as any
   }
   return undefined as any
 }
