@@ -136,7 +136,7 @@ type _SplitIntoWords<
  */
 export function splitIntoWords<const T extends string, const D extends readonly string[] = ['-', '_', ' ']>(
   self: T,
-  delimiters: D = ['-', '_', ' '] as any
+  separators: D = ['-', '_', ' '] as any
 ): SplitIntoWords<T, D[number]> {
   const result = []
   let current: string = self
@@ -152,11 +152,11 @@ export function splitIntoWords<const T extends string, const D extends readonly 
       acc = current[0]!
       current = current.slice(1)
     } else {
-      const matchedDelimiter = delimiters.find((delimiter) => current.startsWith(delimiter))
-      if (matchedDelimiter !== undefined) {
+      const matchedSeparator = separators.find((separator) => current.startsWith(separator))
+      if (matchedSeparator !== undefined) {
         if (acc.length > 0) result.push(acc)
         acc = ''
-        current = current.slice(matchedDelimiter.length)
+        current = current.slice(matchedSeparator.length)
       } else {
         acc += current[0]!
         current = current.slice(1)

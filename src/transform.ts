@@ -263,21 +263,21 @@ export function dropLast<const T extends Tuple>(self: T, n: number = 1) {
  * Join<['a', 'b', 'c'], ''> is equivalent to 'abc'
  * Join<['a', 'b', 'c'], '-' | '.'> is equivalent to 'a-b-c' | 'a.b.c'
  */
-export type Join<T extends readonly string[], Delimiter extends string = ','> = T extends readonly [
+export type Join<T extends readonly string[], Separator extends string = ','> = T extends readonly [
   infer U extends string
 ]
   ? U
   : T extends readonly [infer H extends string, ...infer L extends readonly string[]]
-  ? `${H}${Delimiter}${Join<L, Delimiter>}`
+  ? `${H}${Separator}${Join<L, Separator>}`
   : T extends readonly []
   ? ''
   : string
 
-export function join<const T extends readonly string[], Delimiter extends string = ','>(
+export function join<const T extends readonly string[], Separator extends string = ','>(
   self: T,
-  delimiter: Delimiter = ',' as any
-): Join<T, Delimiter> {
-  return self.join(delimiter) as any
+  separator: Separator = ',' as any
+): Join<T, Separator> {
+  return self.join(separator) as any
 }
 export namespace join {
   export function Array<T, const U extends Tuple>(self: readonly (readonly T[])[], ...values: U): (T | U[number])[] {
@@ -301,10 +301,10 @@ export namespace join {
  * Split<'12:34', ''> is equivalent to ['1', '2', ':', '3', '4']
  * Split<`${number}:${number}`, ':'> is equivalent to [`${number}`, `${number}`]
  */
-export type Split<T extends string, Delimiter extends string> = T extends `${infer H}${Delimiter}${infer L}`
-  ? `${Delimiter}${L}` extends ''
+export type Split<T extends string, Separator extends string> = T extends `${infer H}${Separator}${infer L}`
+  ? `${Separator}${L}` extends ''
     ? [H]
-    : [H, ...Split<L, Delimiter>]
+    : [H, ...Split<L, Separator>]
   : [T]
 
 /**
