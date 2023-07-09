@@ -1,7 +1,9 @@
+import { FixedLengthArray } from './Array/FixedLengthArray'
 import { NonEmptyArray } from './Array/MinLengthArray'
 import { Tuple } from './Array/other'
 import { newMap } from './Map'
 import { modOf } from './number/other'
+import { IsEqual } from './typePredicate'
 
 export function push<const T extends Tuple, const U extends Tuple>(self: T, ...args: U): [...T, ...U] {
   return [...self, ...args] as any
@@ -53,11 +55,22 @@ export namespace insertAt {
   }
 }
 
-// TODO: support tuple
-export function removeAt<T>(self: readonly T[], i: number): T[] {
+export type RemoveAt<T extends Tuple, N extends number> = IsEqual<T, any> extends true
+  ? any[]
+  : _RemoveAt<T, FixedLengthArray<N>>
+export type _RemoveAt<T extends Tuple, N extends Tuple, Acc extends Tuple = []> = T extends readonly [
+  infer H,
+  ...infer L
+]
+  ? N extends readonly [any, ...infer M]
+    ? _RemoveAt<L, M, [...Acc, H]>
+    : [...Acc, ...L]
+  : [...Acc, ...T]
+
+export function removeAt<const T extends Tuple, N extends number>(self: T, i: N): RemoveAt<T, N> {
   const cloned = [...self]
   cloned.splice(modOf(i, cloned.length), 1)
-  return cloned
+  return cloned as any
 }
 export namespace removeAt {
   export function* Iterable<T>(self: Iterable<T>, at: number): Iterable<T> {

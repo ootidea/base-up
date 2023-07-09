@@ -25,6 +25,7 @@ export {
   set,
   insertAt,
   setAt,
+  RemoveAt,
   removeAt,
   remove,
   removeAll,

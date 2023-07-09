@@ -1,7 +1,8 @@
 import { expect, test } from 'vitest'
-import { insertAt, moveTo, push, removeAt, setAt, unshift } from './collectionUpdate'
+import { insertAt, moveTo, push, RemoveAt, removeAt, setAt, unshift } from './collectionUpdate'
 import { repeat } from './generate'
 import { take } from './transform'
+import { assertTypeEquality } from './type'
 
 test('push', () => {
   expect([...push.Iterable([3, 2, 1], 0)]).toStrictEqual([3, 2, 1, 0])
@@ -41,6 +42,24 @@ test('removeAt', () => {
   expect(removeAt([0, 1, 2], -2)).toStrictEqual([0, 2])
   expect(removeAt([0, 1, 2], -3)).toStrictEqual([1, 2])
   expect(removeAt([0, 1, 2], -4)).toStrictEqual([0, 1])
+})
+
+test('RemoveAt', () => {
+  assertTypeEquality<RemoveAt<[0, 1, 2], 0>, [1, 2]>()
+  assertTypeEquality<RemoveAt<[0, 1, 2], 1>, [0, 2]>()
+  assertTypeEquality<RemoveAt<[0, 1, 2], 2>, [0, 1]>()
+  assertTypeEquality<RemoveAt<[0, 1, 2], 5>, [0, 1, 2]>()
+  assertTypeEquality<RemoveAt<[], 5>, []>()
+  assertTypeEquality<RemoveAt<[0, ...1[]], 2>, [0, ...1[]]>()
+  // assertTypeEquality<RemoveAt<[0, ...1[], 2], 2>, [0, ...1[], 2] | [0, 1]>()
+  // assertTypeEquality<RemoveAt<[0, 1?, 2?], 2>, [0] | [0, 1]>()
+
+  assertTypeEquality<RemoveAt<['a', 'b'] | [0, 1, 2], 1>, ['a'] | [0, 2]>()
+  assertTypeEquality<RemoveAt<[0, 1, 2], 1 | 2>, [0, 2] | [0, 1]>()
+
+  assertTypeEquality<RemoveAt<any[], 5>, any[]>()
+  assertTypeEquality<RemoveAt<any, 5>, any[]>()
+  assertTypeEquality<RemoveAt<never, 5>, never>()
 })
 
 test('moveTo', () => {
