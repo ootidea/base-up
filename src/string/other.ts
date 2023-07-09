@@ -40,10 +40,10 @@ export function toNumber<const T extends string>(text: T): ToNumber<T> {
   return Number(text) as any
 }
 
-export function toString<T extends string | number | bigint | boolean | null | undefined>(value: T): `${T}`
-export function toString(value: any): string
-export function toString(value: any): string {
-  return String(value)
+export type ToString<T> = T extends Interpolable ? `${T}` : string
+
+export function toString<const T>(value: T): ToString<T> {
+  return String(value) as any
 }
 
 /**

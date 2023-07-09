@@ -173,6 +173,7 @@ export {
 export { clamp, Min, Max } from './number/compare'
 export {
   toNumber,
+  ToString,
   toString,
   LiteralAutoComplete,
   IsStringLiteral,
