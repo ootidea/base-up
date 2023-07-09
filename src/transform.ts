@@ -114,6 +114,12 @@ export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArr
   return result as any
 }
 export namespace take {
+  export function defer<N extends number>(
+    n: N
+  ): { <const T extends Tuple>(_: T): Take<T, N>; <T>(_: Iterable<T>): MaxLengthArray<N, T> } {
+    return (self: any) => take(self, n)
+  }
+
   export function* Iterable<T>(self: Iterable<T>, n: number): Iterable<T> {
     let i = 0
     for (const value of self) {

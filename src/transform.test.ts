@@ -67,6 +67,13 @@ test('take', () => {
   expect(take('abc', 2)).toStrictEqual(['a', 'b'])
 })
 
+test('take.defer', () => {
+  expect(take.defer(0)([1, 2, 3])).toStrictEqual([])
+  expect(take.defer(2)([1, 2, 3])).toStrictEqual([1, 2])
+  expect(take.defer(4)([1, 2, 3])).toStrictEqual([1, 2, 3])
+  expect(take.defer(2)('abc')).toStrictEqual(['a', 'b'])
+})
+
 test('tail', () => {
   expect(tail([1, 2, 3])).toStrictEqual([2, 3])
   expect(tail([1])).toStrictEqual([])
