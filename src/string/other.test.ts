@@ -1,7 +1,19 @@
 import { expect, test } from 'vitest'
 import { Infinity, NegativeInfinity } from '../number/other'
 import { assertTypeEquality } from '../type'
-import { IsStringLiteral, IsTemplateLiteral, ToNumber, toNumber, toString } from './other'
+import {
+  IsStringLiteral,
+  IsTemplateLiteral,
+  ToNumber,
+  toNumber,
+  toString,
+  trim,
+  Trim,
+  trimEnd,
+  TrimEnd,
+  trimStart,
+  TrimStart,
+} from './other'
 
 test('toNumber', () => {
   expect(toNumber('-1')).toBe(-1)
@@ -85,4 +97,58 @@ test('IsStringLiteral', () => {
   assertTypeEquality<IsStringLiteral<`${boolean}`>, false>()
   assertTypeEquality<IsStringLiteral<`${number}`>, false>()
   assertTypeEquality<IsStringLiteral<`${bigint}`>, false>()
+})
+
+test('TrimStart', () => {
+  assertTypeEquality<TrimStart<''>, ''>()
+  assertTypeEquality<TrimStart<'   0'>, '0'>()
+  assertTypeEquality<TrimStart<'\nabc\n'>, 'abc\n'>()
+  assertTypeEquality<TrimStart<`\r${number}px`>, `${number}px`>()
+
+  assertTypeEquality<TrimStart<' abc' | '\t123'>, 'abc' | '123'>()
+  assertTypeEquality<TrimStart<string>, string>()
+  assertTypeEquality<TrimStart<any>, string>()
+  assertTypeEquality<TrimStart<never>, never>()
+})
+
+test('trimStart', () => {
+  expect(trimStart('   abc')).toBe('abc')
+  expect(trimStart('\nabc\n')).toBe('abc\n')
+  expect(trimStart('')).toBe('')
+})
+
+test('TrimEnd', () => {
+  assertTypeEquality<TrimEnd<''>, ''>()
+  assertTypeEquality<TrimEnd<'0   '>, '0'>()
+  assertTypeEquality<TrimEnd<'abc\n'>, 'abc'>()
+  assertTypeEquality<TrimEnd<`${number}px\r`>, `${number}px`>()
+
+  assertTypeEquality<TrimEnd<'abc ' | '123\t'>, 'abc' | '123'>()
+  assertTypeEquality<TrimEnd<string>, string>()
+  assertTypeEquality<TrimEnd<any>, string>()
+  assertTypeEquality<TrimEnd<never>, never>()
+})
+
+test('trimEnd', () => {
+  expect(trimEnd('abc   ')).toBe('abc')
+  expect(trimEnd('\nabc\n')).toBe('\nabc')
+  expect(trimEnd('')).toBe('')
+})
+
+test('Trim', () => {
+  assertTypeEquality<Trim<''>, ''>()
+  assertTypeEquality<Trim<' abc '>, 'abc'>()
+  assertTypeEquality<Trim<`\r${number}px`>, `${number}px`>()
+  assertTypeEquality<Trim<`${number}px\r`>, `${number}px`>()
+
+  assertTypeEquality<Trim<' abc ' | '\t123\t'>, 'abc' | '123'>()
+  assertTypeEquality<Trim<string>, string>()
+  assertTypeEquality<Trim<any>, string>()
+  assertTypeEquality<Trim<never>, never>()
+})
+
+test('trim', () => {
+  expect(trim(' abc ')).toBe('abc')
+  expect(trim('\nabc\n')).toBe('abc')
+  expect(trim('')).toBe('')
 })

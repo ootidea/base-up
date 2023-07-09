@@ -179,6 +179,12 @@ export {
   IsTemplateLiteral,
   Interpolable,
   RepeatString,
+  TrimStart,
+  trimStart,
+  TrimEnd,
+  trimEnd,
+  Trim,
+  trim,
 } from './string/other'
 export {
   UppercaseLetter,

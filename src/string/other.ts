@@ -122,3 +122,61 @@ export type IsStringLiteral<T extends string> = IsUnion<T> extends true
   : IsOneOf<T, [string, never, any]> extends true
   ? false
   : IsTemplateLiteral<T, false, true>
+
+type CharactersSubjectToRemoveByTrim = ' ' | '\t' | '\n' | '\r' | '\f' | '\v' | '\uFEFF' | '\xA0'
+
+/**
+ * @example
+ * TrimStart<'  abc  '> is equivalent to 'abc  '
+ * TrimStart<'\n\t\r\uFEFF\xA0'> is equivalent to ''
+ */
+export type TrimStart<T extends string> = IsEqual<T, any> extends true
+  ? string
+  : T extends `${CharactersSubjectToRemoveByTrim}${infer L}`
+  ? TrimStart<L>
+  : T
+
+/**
+ * @example
+ * trimStart('  abc  ') returns 'abc  '
+ * trimStart('\n\t\r\uFEFF\xA0') returns ''
+ */
+export function trimStart<const T extends string>(self: T): TrimStart<T> {
+  return self.trimStart() as any
+}
+
+/**
+ * @example
+ * TrimEnd<'  abc  '> is equivalent to '  abc'
+ * TrimEnd<'\n\t\r\uFEFF\xA0'> is equivalent to ''
+ */
+export type TrimEnd<T extends string> = IsEqual<T, any> extends true
+  ? string
+  : T extends `${infer L}${CharactersSubjectToRemoveByTrim}`
+  ? TrimEnd<L>
+  : T
+
+/**
+ * @example
+ * trimEnd('  abc  ') returns '  abc'
+ * trimEnd('\n\t\r\uFEFF\xA0') returns ''
+ */
+export function trimEnd<const T extends string>(self: T): TrimEnd<T> {
+  return self.trimEnd() as any
+}
+
+/**
+ * @example
+ * TrimStart<'  abc  '> is equivalent to 'abc'
+ * TrimStart<'\n\t\r\uFEFF\xA0'> is equivalent to ''
+ */
+export type Trim<T extends string> = TrimStart<TrimEnd<T>>
+
+/**
+ * @example
+ * trim('  abc  ') returns 'abc'
+ * trim('\n\t\r\uFEFF\xA0') returns ''
+ */
+export function trim<const T extends string>(self: T): Trim<T> {
+  return self.trim() as any
+}
