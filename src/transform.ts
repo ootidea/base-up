@@ -176,13 +176,13 @@ type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer
  * If the second argument is omitted, it removes only one element.
  *
  * @example
- * drop([0, 1, 2]) is equivalent to [1, 2]
- * drop([0, 1, 2], 2) is equivalent to [2]
- * drop([0, 1, 2], 3) is equivalent to []
+ * drop([0, 1, 2]) returns [1, 2]
+ * drop([0, 1, 2], 2) returns [2]
+ * drop([0, 1, 2], 3) returns []
  * @example
- * drop([0, 1, 2], 4) is equivalent to []
- * drop([0, 1, 2], 0) is equivalent to [0, 1, 2]
- * drop([0, 1, 2], -1) is equivalent to [0, 1, 2]
+ * drop([0, 1, 2], 4) returns []
+ * drop([0, 1, 2], 0) returns [0, 1, 2]
+ * drop([0, 1, 2], -1) returns [0, 1, 2]
  */
 export function drop<const T extends Tuple>(self: T): Drop<T>
 export function drop<const T extends Tuple, N extends number>(self: T, n: N): Drop<T, N>
@@ -243,13 +243,13 @@ type _DropLast<T extends Tuple, N extends Tuple> = N extends readonly [any, ...i
  * If the second argument is omitted, it removes only one element.
  *
  * @example
- * dropLast([0, 1, 2]) is equivalent to [0, 1]
- * dropLast([0, 1, 2], 2) is equivalent to [0]
- * dropLast([0, 1, 2], 3) is equivalent to []
+ * dropLast([0, 1, 2]) returns [0, 1]
+ * dropLast([0, 1, 2], 2) returns [0]
+ * dropLast([0, 1, 2], 3) returns []
  * @example
- * dropLast([0, 1, 2], 4) is equivalent to []
- * dropLast([0, 1, 2], 0) is equivalent to [0, 1, 2]
- * dropLast([0, 1, 2], -1) is equivalent to [0, 1, 2]
+ * dropLast([0, 1, 2], 4) returns []
+ * dropLast([0, 1, 2], 0) returns [0, 1, 2]
+ * dropLast([0, 1, 2], -1) returns [0, 1, 2]
  */
 export function dropLast<const T extends Tuple>(self: T): DropLast<T, 1>
 export function dropLast<const T extends Tuple, N extends number>(self: T, n: N): DropLast<T, N>
