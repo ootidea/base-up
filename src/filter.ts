@@ -4,12 +4,19 @@ import { isNotEmpty } from './collectionPredicate'
 import { update } from './collectionUpdate'
 import { newSet } from './Set'
 
-export function filter<const T, const U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
-export function filter<const T>(self: readonly T[], f: (_: T) => boolean): T[]
-export function filter<const T>(self: readonly T[], f: (_: T) => boolean): T[] {
+export function filter(self: [], f: (_: any) => boolean): []
+export function filter<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
+export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[]
+export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[] {
   return self.filter(f) as any
 }
 export namespace filter {
+  export function defer<T, U extends T>(f: (_: T) => _ is U): { (self: []): []; (self: readonly T[]): U[] }
+  export function defer<T>(f: (_: T) => boolean): { (self: []): []; (self: readonly T[]): T[] }
+  export function defer<T>(f: (_: T) => boolean) {
+    return (self: readonly T[]) => self.filter(f)
+  }
+
   export function Iterable<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): Iterable<U>
   export function Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T>
   export function* Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T> {

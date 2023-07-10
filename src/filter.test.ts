@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest'
+import { expect, expectTypeOf, test } from 'vitest'
 import { elementAt, filter, FirstOf, firstOf, indexesOf, LastOf, lastOf, modeBy, modeOf } from './filter'
 import { rangeUntil, repeat } from './generate'
 import { setOf } from './Set'
@@ -7,8 +7,22 @@ import { assertTypeEquality } from './type'
 import { isNotNull } from './typePredicate'
 
 test('filter', () => {
+  expect(filter([1, 2, 3], (n) => n % 2 === 0)).toStrictEqual([2])
+  expect(filter([], (n) => n % 2 === 1)).toStrictEqual([])
+  expectTypeOf(filter([], (n) => n % 2 === 1)).toEqualTypeOf<[]>()
+  expect(filter([1, null, 3], isNotNull)).toStrictEqual([1, 3])
+  expectTypeOf(filter([1, null, 3], isNotNull)).toEqualTypeOf<number[]>()
+})
+test('filter.defer', () => {
+  expect(filter.defer(isNotNull)([1, null, 3])).toStrictEqual([1, 3])
+  expectTypeOf(filter.defer(isNotNull<number>)([1, null, 3])).toEqualTypeOf<number[]>()
+  expect(filter.defer(isNotNull)([])).toStrictEqual([])
+  expectTypeOf(filter.defer(isNotNull)([])).toEqualTypeOf<[]>()
+})
+test('filter.Iterable', () => {
   expect([...filter.Iterable([1, 2, 3], (n) => n % 2 === 0)]).toStrictEqual([2])
-
+})
+test('filter.Set', () => {
   expect(filter.Set(setOf(0, 1, 2), (x) => x > 0)).toStrictEqual(setOf(1, 2))
   expect(filter.Set(setOf(null, 1, 2), isNotNull)).toStrictEqual(setOf(1, 2))
 })
