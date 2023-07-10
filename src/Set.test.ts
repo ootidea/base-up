@@ -10,6 +10,13 @@ test('toggle', () => {
   expect(toggle(setOf(1, 2, 3), 9)).toStrictEqual(setOf(1, 2, 3, 9))
   expect(toggle(setOf(1, 2, 3), null)).toStrictEqual(setOf(1, 2, 3, null))
 })
+test('toggle.mutable', () => {
+  const set = setOf(1, 2, 3)
+  toggle.mutable(set, 2)
+  expect(set).toStrictEqual(setOf(1, 3))
+  toggle.mutable(set, 4)
+  expect(set).toStrictEqual(setOf(1, 3, 4))
+})
 
 test('setWhetherHas', () => {
   expect(setWhetherHas(setOf(1, 2, 3), 2, false)).toStrictEqual(setOf(1, 3))

@@ -35,6 +35,22 @@ export function toggle<T, U>(self: ReadonlySet<T>, value: U): Set<T | U> {
   }
   return cloned
 }
+export namespace toggle {
+  /**
+   * @example
+   * const set = new Set([1, 2, 3])
+   * toggle.mutable(set, 2) // set is now equivalent to Set([1, 3])
+   * toggle.mutable(set, 4) // set is now equivalent to Set([1, 3, 4])
+   */
+  export function mutable<T>(self: Set<T>, value: T): Set<T> {
+    if (self.has(value)) {
+      self.delete(value)
+    } else {
+      self.add(value)
+    }
+    return self
+  }
+}
 
 export function setWhetherHas<T, U>(self: ReadonlySet<T>, value: U, has: boolean): Set<T | U> {
   const cloned = new Set(self)
