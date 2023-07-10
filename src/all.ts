@@ -64,7 +64,7 @@ export {
   fromEntries,
   RangeUntil,
   RangeThrough,
-  RepeatArray,
+  Repeat,
   uniqueRandomIntegersUntil,
 } from './generate'
 export { sumOf, groupBy } from './other'

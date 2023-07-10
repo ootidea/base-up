@@ -293,30 +293,30 @@ function retryWhile<const N extends number, const M extends number>(
 
 /**
  * @example
- * RepeatArray<3, ['a', 'b']> is typed as ['a', 'b', 'a', 'b', 'a', 'b']
- * RepeatArray<0, ['a', 'b']> is typed as []
+ * Repeat<3, ['a', 'b']> is typed as ['a', 'b', 'a', 'b', 'a', 'b']
+ * Repeat<0, ['a', 'b']> is typed as []
  * @example
- * RepeatArray<0 | 1, ['a', 'b']> is typed as [] | ['a', 'b']
- * RepeatArray<number, ['a', 'b']> is typed as readonly ('a' | 'b')[]
+ * Repeat<0 | 1, ['a', 'b']> is typed as [] | ['a', 'b']
+ * Repeat<number, ['a', 'b']> is typed as ('a' | 'b')[]
  */
-export type RepeatArray<N extends number, A extends Tuple> = number extends N
-  ? readonly A[number][]
+export type Repeat<N extends number, A extends Tuple> = number extends N
+  ? A[number][]
   : N extends N
-  ? _RepeatArray<N, A>
+  ? _Repeat<N, A>
   : never
-type _RepeatArray<
+type _Repeat<
   N extends number,
   A extends Tuple,
   Size extends Tuple = [],
   R extends Tuple = []
-> = Size['length'] extends N ? R : _RepeatArray<N, A, [1, ...Size], [...R, ...A]>
+> = Size['length'] extends N ? R : _Repeat<N, A, [1, ...Size], [...R, ...A]>
 
 /**
  * @example
  * repeat(3, 'a') returns ['a', 'a', 'a']
  * repeat(2, true, false) returns [true, false, true, false]
  */
-export function repeat<N extends number, const T extends Tuple>(count: N, ...values: T): RepeatArray<N, T> {
+export function repeat<N extends number, const T extends Tuple>(count: N, ...values: T): Repeat<N, T> {
   return Array.from({ length: count * values.length }, (_, i) => values[i % values.length]) as any
 }
 export namespace repeat {

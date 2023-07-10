@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest'
+import { assertTypeEquality, Repeat } from './all'
 import { every, isUnique } from './collectionPredicate'
 import { fromEntries, rangeThrough, rangeUntil, repeat, repeatApply, uniqueRandomIntegersUntil } from './generate'
 import { take } from './transform'
@@ -32,6 +33,17 @@ test('uniqueRandomIntegersUntil', () => {
   expect(every(uniqueRandomIntegersUntil(5, 3), (x) => 0 <= x && x < 5)).toBe(true)
   expect(isUnique(uniqueRandomIntegersUntil(5, 3))).toBe(true)
   expect(uniqueRandomIntegersUntil(1, 1)).toStrictEqual([0])
+})
+
+test('Repeat', () => {
+  assertTypeEquality<Repeat<2, [string]>, [string, string]>()
+  assertTypeEquality<Repeat<2, [1, 2]>, [1, 2, 1, 2]>()
+  assertTypeEquality<Repeat<0, [Date]>, []>()
+  assertTypeEquality<Repeat<3, []>, []>()
+  assertTypeEquality<Repeat<1 | 2, ['abc']>, ['abc'] | ['abc', 'abc']>()
+  assertTypeEquality<Repeat<never, [1, 2]>, never>()
+  assertTypeEquality<Repeat<number, [1, 2]>, (1 | 2)[]>()
+  assertTypeEquality<Repeat<any, [1, 2]>, (1 | 2)[]>()
 })
 
 test('repeat', () => {
