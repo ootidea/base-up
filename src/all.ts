@@ -179,7 +179,6 @@ export {
   IsStringLiteral,
   IsTemplateLiteral,
   Interpolable,
-  RepeatString,
   TrimStart,
   trimStart,
   TrimEnd,

@@ -310,6 +310,25 @@ type _Repeat<
   Size extends Tuple = [],
   R extends Tuple = []
 > = Size['length'] extends N ? R : _Repeat<N, A, [1, ...Size], [...R, ...A]>
+export namespace Repeat {
+  /**
+   * @example
+   * Repeat.String<'Abc', 2> is equivalent to 'AbcAbc'
+   * Repeat.String<'A', 0> is equivalent to ''
+   * @example
+   * Repeat.String<'A' | 'B', 2> is equivalent to 'AA' | 'AB' | 'BA' | 'BB'
+   * Repeat.String<'A', 1 | 3> is equivalent to 'A' | 'AAA'
+   * @example
+   * Repeat.String<string, 2> is equivalent to string
+   * Repeat.String<'A', number> is equivalent to string
+   */
+  export type String<S extends string, N extends number> = string extends S
+    ? string
+    : number extends N
+    ? string
+    : _String<S, FixedLengthArray<N>>
+  type _String<S extends string, Size extends Tuple> = Size extends [any, ...infer L] ? `${S}${_String<S, L>}` : ''
+}
 
 /**
  * @example

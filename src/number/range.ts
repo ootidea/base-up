@@ -1,5 +1,6 @@
 import { FixedLengthArray } from '../Array/FixedLengthArray'
-import { RepeatString, ToNumber } from '../string/other'
+import { Repeat } from '../generate'
+import { ToNumber } from '../string/other'
 import { IsOneOf } from '../typePredicate'
 import { Digit, Infinity, Negate, NegativeInfinity, ToDigitArray } from './other'
 
@@ -103,7 +104,7 @@ type _NaturalNumbersFrom0Until<DigitArray extends readonly Digit[]> = DigitArray
   ? `${DigitToRangeUntil[D]}`
   : DigitArray extends readonly [infer H extends Digit, ...infer L extends readonly Digit[]]
   ?
-      | `${DigitToRangeUntil[H]}${RepeatString<Digit, L['length']> extends infer S extends string ? S : never}`
+      | `${DigitToRangeUntil[H]}${Repeat.String<Digit, L['length']> extends infer S extends string ? S : never}`
       | `${H}${_NaturalNumbersFrom0Until<L>}`
   : ''
 

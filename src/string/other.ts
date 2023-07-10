@@ -1,5 +1,3 @@
-import { FixedLengthArray } from '../Array/FixedLengthArray'
-import { Tuple } from '../Array/other'
 import { Digit, Infinity, Negate, NegativeInfinity } from '../number/other'
 import { IsUnion, ToBasePrimitiveType } from '../type'
 import { IsEqual, IsOneOf } from '../typePredicate'
@@ -45,26 +43,6 @@ export type ToString<T> = T extends Interpolable ? `${T}` : string
 export function toString<const T>(value: T): ToString<T> {
   return String(value) as any
 }
-
-/**
- * @example
- * RepeatString<'Abc', 2> is equivalent to 'AbcAbc'
- * RepeatString<'A', 0> is equivalent to ''
- * @example
- * RepeatString<'A' | 'B', 2> is equivalent to 'AA' | 'AB' | 'BA' | 'BB'
- * RepeatString<'A', 1 | 3> is equivalent to 'A' | 'AAA'
- * @example
- * RepeatString<string, 2> is equivalent to string
- * RepeatString<'A', number> is equivalent to string
- */
-export type RepeatString<S extends string, N extends number> = string extends S
-  ? string
-  : number extends N
-  ? string
-  : _RepeatString<S, FixedLengthArray<N>>
-type _RepeatString<S extends string, Size extends Tuple> = Size extends [any, ...infer L]
-  ? `${S}${_RepeatString<S, L>}`
-  : ''
 
 /**
  * A type for enabling automatic completion of specific literals in an editor.
