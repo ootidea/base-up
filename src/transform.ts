@@ -2,6 +2,7 @@ import { FixedLengthArray } from './Array/FixedLengthArray'
 import { MaxLengthArray } from './Array/MaxLengthArray'
 import { MinLengthArray, NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
 import { IsTuple, SplitTupleAroundRest, Tuple } from './Array/other'
+import { PrefixesOf } from './combination'
 import { ltToComparator } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
@@ -10,7 +11,7 @@ import { Subtract } from './number/other'
 import { IntegerRangeThrough } from './number/range'
 import { newPromise } from './Promise'
 import { newSet, NonEmptySet, ReadonlyNonEmptySet } from './Set'
-import { IsEqual } from './typePredicate'
+import { IsEqual, IsOneOf } from './typePredicate'
 
 export function map<T, U>(self: ReadonlyNonEmptyArray<T>, f: (_: T) => U): NonEmptyArray<U>
 export function map<T, U>(self: readonly T[], f: (_: T) => U): U[]
@@ -81,7 +82,11 @@ export namespace flatten {
  */
 export type Take<T extends Tuple, N extends number> = IsEqual<T, any> extends true
   ? MaxLengthArray<N, any>
-  : _Take<T, N>
+  : IsOneOf<N, [number, any]> extends true
+  ? PrefixesOf<T>[number]
+  : N extends N
+  ? _Take<T, N>
+  : never
 export type _Take<T extends Tuple, N extends number, R extends Tuple = []> = R['length'] extends N
   ? R
   : T extends readonly [infer H, ...infer L]

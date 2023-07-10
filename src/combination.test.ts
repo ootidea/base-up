@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest'
-import { cartesianProductOf, permutationOf, prefixesOf, slideWindow } from './combination'
+import { cartesianProductOf, permutationOf, PrefixesOf, prefixesOf, slideWindow } from './combination'
+import { assertTypeEquality } from './type'
 
 test('cartesianProductOf', () => {
   expect(cartesianProductOf([0, 1], ['a', 'b'])).toStrictEqual([
@@ -57,6 +58,12 @@ test('slideWindow', () => {
   expect(slideWindow([1, 2, 3], 0)).toStrictEqual([[], [], [], []])
   expect(slideWindow([1, 2, 3], 4)).toStrictEqual([])
   expect(slideWindow([], 0)).toStrictEqual([[]])
+})
+
+test('PrefixesOf', () => {
+  assertTypeEquality<PrefixesOf<[1, 2, 3]>, [[], [1], [1, 2], [1, 2, 3]]>()
+  // assertTypeEquality<PrefixesOf<[1, ...2[]]>, [[], [1], ...[1, ...2[]][]]>()
+  assertTypeEquality<PrefixesOf<string[]>, string[][]>()
 })
 
 test('prefixesOf', () => {

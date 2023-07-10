@@ -50,7 +50,7 @@ test('Take', () => {
   assertTypeEquality<Take<[1, 2, 3], 2>, [1, 2]>()
   assertTypeEquality<Take<[1, 2, 3], 4>, [1, 2, 3]>()
   assertTypeEquality<Take<[1, ...2[]], 3>, [1] | [1, 2] | [1, 2, 2]>()
-  assertTypeEquality<Take<1[], 2>, [] | [1] | [1, 1]>()
+  assertTypeEquality<Take<Date[], 2>, [] | [Date] | [Date, Date]>()
   assertTypeEquality<Take<[...1[], 2], 3>, [2] | [1, 2] | [1, 1, 2] | [1, 1, 1]>()
   assertTypeEquality<
     Take<[1, 2, ...3[], 4, 5], 5>,
@@ -58,6 +58,11 @@ test('Take', () => {
   >()
   assertTypeEquality<Take<[1, ...any], 2>, [1] | [1, any]>()
   assertTypeEquality<Take<any, 2>, [] | [any] | [any, any]>()
+
+  assertTypeEquality<Take<[1, 2, 3], 0 | 1>, [] | [1]>()
+  assertTypeEquality<Take<[1, 2, 3], never>, never>()
+  assertTypeEquality<Take<[1, 2, 3], number>, [] | [1] | [1, 2] | [1, 2, 3]>()
+  assertTypeEquality<Take<[1, 2, 3], any>, [] | [1] | [1, 2] | [1, 2, 3]>()
   assertTypeEquality<Take<never, 2>, never>()
 })
 

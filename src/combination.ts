@@ -1,5 +1,5 @@
 import { NonEmptyArray } from './Array/MinLengthArray'
-import { Tuple } from './Array/other'
+import { IsTuple, Tuple } from './Array/other'
 import { removeAt } from './collectionUpdate'
 import { rangeUntil } from './generate'
 
@@ -43,6 +43,17 @@ export function slideWindow<const T extends Tuple, N extends number>(self: T, n:
   }
   return result as any
 }
+
+/**
+ * @example
+ * PrefixesOf<[1, 2, 3]> returns [[], [1], [1, 2], [1, 2, 3]]
+ */
+export type PrefixesOf<T extends Tuple> = IsTuple<T> extends false ? T[] : PrefixesOfForTuple<T>
+export type PrefixesOfForTuple<T extends Tuple, R extends Tuple = []> = T extends readonly [infer H, ...infer L]
+  ? [R, ...PrefixesOfForTuple<L, [...R, H]>]
+  : IsTuple<T> extends false
+  ? [R, [...R, ...T]]
+  : [R]
 
 /**
  * @example
