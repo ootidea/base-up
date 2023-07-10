@@ -61,19 +61,23 @@ export type IsOneOf<T, U extends Tuple, Then = true, Else = false> = U extends r
 export function isOneOf<const T extends Tuple>(self: unknown, ...values: T): self is T[number] {
   return new Set(values).has(self)
 }
-
 export namespace isOneOf {
   export function defer<const T extends Tuple>(...values: T): (self: unknown) => self is T[number] {
     return (self: unknown): self is T[number] => new Set(values).has(self)
   }
 }
 
-export function isNotOneOf<const T extends Tuple, const U>(self: T[number] | U, ...values: T): self is U {
+export function isNotOneOf<const T extends Tuple, const U>(
+  self: T[number] | U,
+  ...values: T
+): self is Exclude<U, T[number]> {
   return !new Set(values).has(self)
 }
 export namespace isNotOneOf {
-  export function defer<const T extends Tuple>(...values: T): <const U>(self: T[number] | U) => self is U {
-    return <const U>(self: T[number] | U): self is U => !new Set(values).has(self)
+  export function defer<const T extends Tuple>(
+    ...values: T
+  ): <const U>(self: T[number] | U) => self is Exclude<U, T[number]> {
+    return <const U>(self: T[number] | U): self is Exclude<U, T[number]> => !new Set(values).has(self)
   }
 }
 
