@@ -1,6 +1,6 @@
 import { Tuple } from '../Array/other'
 import { Join } from '../transform'
-import { IsEqual, isObject, IsOneOf } from '../typePredicate'
+import { IsEqual, IsOneOf } from '../typePredicate'
 
 export type UppercaseLetter =
   | 'A'
@@ -292,24 +292,20 @@ export function toCamelCase<const T extends string>(self: T): ToCamelCase<T> {
  * SnakeCasedPropertiesDeep<{ readonly firstName?: string }> is equivalent to { readonly first_name?: string }
  * SnakeCasedPropertiesDeep<readonly string[]> is equivalent to readonly string[]
  */
-export type SnakeCasedPropertiesDeep<T extends object> = T extends T
-  ? IsEqual<T, any> extends true
-    ? T
-    : T extends Function
-    ? T
-    : T extends Tuple
-    ? SnakeCasedPropertiesDeepTuple<T>
-    : {
-        [K in keyof T as K extends string ? ToSnakeCase<K> : K]: T[K] extends object
-          ? SnakeCasedPropertiesDeep<T[K]>
-          : T[K]
-      }
-  : never
-type SnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends T
-  ? T extends any[]
-    ? _SnakeCasedPropertiesDeepTuple<T>
-    : Readonly<_SnakeCasedPropertiesDeepTuple<T>>
-  : never
+export type SnakeCasedPropertiesDeep<T> = IsEqual<T, any> extends true
+  ? T
+  : T extends Function
+  ? T
+  : T extends Tuple
+  ? SnakeCasedPropertiesDeepTuple<T>
+  : {
+      [K in keyof T as K extends string ? ToSnakeCase<K> : K]: T[K] extends object
+        ? SnakeCasedPropertiesDeep<T[K]>
+        : T[K]
+    }
+type SnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends any[]
+  ? _SnakeCasedPropertiesDeepTuple<T>
+  : Readonly<_SnakeCasedPropertiesDeepTuple<T>>
 type _SnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [infer H, ...infer L]
   ? [H extends object ? SnakeCasedPropertiesDeep<H> : H, ..._SnakeCasedPropertiesDeepTuple<L>]
   : T extends readonly [...infer L, infer H]
@@ -328,19 +324,22 @@ type _SnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [infer
  * snakeCasedPropertiesDeep({ nested: { firstName: 'John' } }) returns { nested: { first_name: 'John' } }
  * snakeCasedPropertiesDeep({ tags: [{ createdAt: 1 }] }) returns { tags: [{ created_at: 1 }] }
  * snakeCasedPropertiesDeep([{ firstName: 'John' }]) returns [{ first_name: 'John' }]
+ * snakeCasedPropertiesDeep(null) returns null
  */
-export function snakeCasedPropertiesDeep<T extends object>(self: T): SnakeCasedPropertiesDeep<T> {
+export function snakeCasedPropertiesDeep<T>(self: T): SnakeCasedPropertiesDeep<T> {
   if (self instanceof Function) return self as any
 
   if (self instanceof Array) {
-    return self.map((value: unknown) => (isObject(value) ? snakeCasedPropertiesDeep(value) : value)) as any
+    return self.map(snakeCasedPropertiesDeep) as any
   }
+
+  if (typeof self !== 'object' || self === null) return self as any
 
   const result: any = { ...self }
   for (const key of Object.keys(self)) {
     const snakeCase = toSnakeCase(key)
     const value = result[key]
-    result[snakeCase] = isObject(value) ? snakeCasedPropertiesDeep(value) : value
+    result[snakeCase] = snakeCasedPropertiesDeep(value)
     if (key !== snakeCase) {
       delete result[key]
     }
@@ -358,24 +357,20 @@ export function snakeCasedPropertiesDeep<T extends object>(self: T): SnakeCasedP
  * CamelCasedPropertiesDeep<{ readonly first_name?: string }> is equivalent to { readonly firstName?: string }
  * CamelCasedPropertiesDeep<readonly string[]> is equivalent to readonly string[]
  */
-export type CamelCasedPropertiesDeep<T extends object> = T extends T
-  ? IsEqual<T, any> extends true
-    ? T
-    : T extends Function
-    ? T
-    : T extends Tuple
-    ? CamelCasedPropertiesDeepTuple<T>
-    : {
-        [K in keyof T as K extends string ? ToCamelCase<K> : K]: T[K] extends object
-          ? CamelCasedPropertiesDeep<T[K]>
-          : T[K]
-      }
-  : never
-type CamelCasedPropertiesDeepTuple<T extends Tuple> = T extends T
-  ? T extends any[]
-    ? _CamelCasedPropertiesDeepTuple<T>
-    : Readonly<_CamelCasedPropertiesDeepTuple<T>>
-  : never
+export type CamelCasedPropertiesDeep<T> = IsEqual<T, any> extends true
+  ? T
+  : T extends Function
+  ? T
+  : T extends Tuple
+  ? CamelCasedPropertiesDeepTuple<T>
+  : {
+      [K in keyof T as K extends string ? ToCamelCase<K> : K]: T[K] extends object
+        ? CamelCasedPropertiesDeep<T[K]>
+        : T[K]
+    }
+type CamelCasedPropertiesDeepTuple<T extends Tuple> = T extends any[]
+  ? _CamelCasedPropertiesDeepTuple<T>
+  : Readonly<_CamelCasedPropertiesDeepTuple<T>>
 type _CamelCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [infer H, ...infer L]
   ? [H extends object ? CamelCasedPropertiesDeep<H> : H, ..._CamelCasedPropertiesDeepTuple<L>]
   : T extends readonly [...infer L, infer H]
@@ -394,19 +389,22 @@ type _CamelCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [infer
  * camelCasedPropertiesDeep({ nested: { first_name: 'John' } }) returns { nested: { firstName: 'John' } }
  * camelCasedPropertiesDeep({ tags: [{ created_at: 1 }] }) returns { tags: [{ createdAt: 1 }] }
  * camelCasedPropertiesDeep([{ first_name: 'John' }]) returns [{ firstName: 'John' }]
+ * camelCasedPropertiesDeep(null) returns null
  */
-export function camelCasedPropertiesDeep<T extends object>(self: T): CamelCasedPropertiesDeep<T> {
+export function camelCasedPropertiesDeep<T>(self: T): CamelCasedPropertiesDeep<T> {
   if (self instanceof Function) return self as any
 
   if (self instanceof Array) {
-    return self.map((value: unknown) => (isObject(value) ? camelCasedPropertiesDeep(value) : value)) as any
+    return self.map(camelCasedPropertiesDeep) as any
   }
+
+  if (typeof self !== 'object' || self === null) return self as any
 
   const result: any = { ...self }
   for (const key of Object.keys(self)) {
     const camelCase = toCamelCase(key)
     const value = result[key]
-    result[camelCase] = isObject(value) ? camelCasedPropertiesDeep(value) : value
+    result[camelCase] = camelCasedPropertiesDeep(value)
     if (key !== camelCase) {
       delete result[key]
     }

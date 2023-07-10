@@ -182,10 +182,17 @@ test('SnakeCasedPropertiesDeep', () => {
   assertTypeEquality<SnakeCasedPropertiesDeep<[string, { createdAt: number }]>, [string, { created_at: number }]>()
   assertTypeEquality<SnakeCasedPropertiesDeep<[[{ createdAt: number }]]>, [[{ created_at: number }]]>()
 
+  assertTypeEquality<SnakeCasedPropertiesDeep<1 | { createdAt: number }>, 1 | { created_at: number }>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<1 | { createdAt: number }[]>, 1 | { created_at: number }[]>()
   assertTypeEquality<
     SnakeCasedPropertiesDeep<Record<number, { createdAt: number }>>,
     Record<number, { created_at: number }>
   >()
+
+  assertTypeEquality<SnakeCasedPropertiesDeep<null>, null>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<undefined>, undefined>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<never>, never>()
+  assertTypeEquality<SnakeCasedPropertiesDeep<any>, any>()
 })
 
 test('snakeCasedPropertiesDeep', () => {
@@ -193,6 +200,9 @@ test('snakeCasedPropertiesDeep', () => {
   expect(snakeCasedPropertiesDeep({ nested: { createdAt: 1 } })).toStrictEqual({ nested: { created_at: 1 } })
   expect(snakeCasedPropertiesDeep([{ createdAt: 1 }])).toStrictEqual([{ created_at: 1 }])
   expect(snakeCasedPropertiesDeep({ [Symbol.iterator]: undefined })).toStrictEqual({ [Symbol.iterator]: undefined })
+  expect(snakeCasedPropertiesDeep(null)).toStrictEqual(null)
+  expect(snakeCasedPropertiesDeep(undefined)).toStrictEqual(undefined)
+  expect(snakeCasedPropertiesDeep(123)).toStrictEqual(123)
 })
 
 test('CamelCasedPropertiesDeep', () => {
@@ -207,15 +217,25 @@ test('CamelCasedPropertiesDeep', () => {
   assertTypeEquality<CamelCasedPropertiesDeep<[string, { created_at: number }]>, [string, { createdAt: number }]>()
   assertTypeEquality<CamelCasedPropertiesDeep<[[{ created_at: number }]]>, [[{ createdAt: number }]]>()
 
+  assertTypeEquality<CamelCasedPropertiesDeep<1 | { created_at: number }>, 1 | { createdAt: number }>()
+  assertTypeEquality<CamelCasedPropertiesDeep<1 | { created_at: number }[]>, 1 | { createdAt: number }[]>()
   assertTypeEquality<
     CamelCasedPropertiesDeep<Record<number, { created_at: number }>>,
     Record<number, { createdAt: number }>
   >()
+
+  assertTypeEquality<CamelCasedPropertiesDeep<null>, null>()
+  assertTypeEquality<CamelCasedPropertiesDeep<undefined>, undefined>()
+  assertTypeEquality<CamelCasedPropertiesDeep<never>, never>()
+  assertTypeEquality<CamelCasedPropertiesDeep<any>, any>()
 })
 
 test('camelCasedPropertiesDeep', () => {
   expect(camelCasedPropertiesDeep({ created_at: 1 })).toStrictEqual({ createdAt: 1 })
   expect(camelCasedPropertiesDeep({ nested: { created_at: 1 } })).toStrictEqual({ nested: { createdAt: 1 } })
-  expect(camelCasedPropertiesDeep([{ created_at: 1 }])).toStrictEqual([{ createdAt: 1 }])
+  expect(camelCasedPropertiesDeep([{ created_at: undefined }])).toStrictEqual([{ createdAt: undefined }])
   expect(camelCasedPropertiesDeep({ [Symbol.iterator]: undefined })).toStrictEqual({ [Symbol.iterator]: undefined })
+  expect(camelCasedPropertiesDeep(null)).toStrictEqual(null)
+  expect(camelCasedPropertiesDeep(undefined)).toStrictEqual(undefined)
+  expect(camelCasedPropertiesDeep(123)).toStrictEqual(123)
 })
