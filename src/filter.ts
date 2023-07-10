@@ -72,10 +72,10 @@ export type FirstOf<T extends Tuple> = T extends readonly [infer First, ...any]
   ? First
   : T extends readonly [...infer U, infer Last]
   ? _FirstOf<U, Last>
-  : T extends []
+  : T extends readonly []
   ? undefined
   : T[0] | undefined
-type _FirstOf<T extends Tuple, L> = T extends []
+type _FirstOf<T extends Tuple, L> = T extends readonly []
   ? L
   : T extends readonly [...infer T2, infer L2]
   ? _FirstOf<T2, L2>
@@ -98,7 +98,7 @@ export function firstOf<const T extends Tuple>(self: T): FirstOf<T> {
  */
 export type LastOf<T extends Tuple> = T extends readonly [...any, infer Last]
   ? Last
-  : T extends []
+  : T extends readonly []
   ? undefined
   : T extends readonly [infer H, ...infer L]
   ? _LastOf<H, L>
@@ -107,7 +107,7 @@ export type LastOf<T extends Tuple> = T extends readonly [...any, infer Last]
   : T extends readonly [(infer H)?, ...infer L]
   ? H | LastOf<L>
   : T[0] | undefined
-type _LastOf<H, L extends Tuple> = L extends []
+type _LastOf<H, L extends Tuple> = L extends readonly []
   ? H
   : L extends readonly [infer H2, ...infer L2]
   ? _LastOf<H2, L2>

@@ -69,7 +69,7 @@ export type CountProperties<T> = T extends T
     : never
   : never
 
-export type NestedProperty<T, Ks extends readonly (keyof any)[]> = Ks extends []
+export type NestedProperty<T, Ks extends readonly (keyof any)[]> = Ks extends readonly []
   ? T
   : Ks extends readonly [infer H extends keyof T, ...infer R extends readonly (keyof any)[]]
   ? NestedProperty<T[H], R>

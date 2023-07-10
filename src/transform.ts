@@ -172,7 +172,7 @@ type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer
     ? IsEqual<TL[number], H> extends true
       ? _Drop<TL, NL>
       : T
-    : T extends []
+    : T extends readonly []
     ? []
     : T
   : T
@@ -239,7 +239,7 @@ export type DropLast<T extends Tuple, N extends number = 1> = N extends N
 type _DropLast<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]
   ? T extends readonly [...infer TL, any]
     ? _DropLast<TL, NL>
-    : T extends []
+    : T extends readonly []
     ? []
     : T
   : T
@@ -378,7 +378,7 @@ export type Reverse<T extends Tuple> = T extends readonly [infer First, ...infer
   ? [...Reverse<R>, First]
   : T extends readonly [...infer R, infer Last]
   ? [Last, ...Reverse<R>]
-  : T extends []
+  : T extends readonly []
   ? []
   : T[number][] extends T
   ? T
