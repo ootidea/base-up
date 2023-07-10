@@ -217,15 +217,12 @@ export type NumberRankOf<T extends number> = T extends T
  * modOf(Infinity, 2) returns NaN
  * modOf(9, Infinity) returns NaN
  */
-export function modOf<const N extends number, const M extends number>(a: N, b: M): ModOf<N, M> {
+export function modOf<const N extends number, const M extends number>(
+  a: N,
+  b: M
+): IsInteger<N> extends false ? number : IsInteger<M> extends false ? number : IntegerRangeUntil<M> {
   return (((a % b) + b) % b) as any
 }
-
-export type ModOf<N extends number, M extends number> = IsInteger<N> extends false
-  ? number
-  : IsInteger<M> extends false
-  ? number
-  : IntegerRangeUntil<M>
 
 /**
  * Round off to the n-th decimal place.
