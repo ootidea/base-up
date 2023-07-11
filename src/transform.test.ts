@@ -120,9 +120,9 @@ test('Join', () => {
 
 test('join', () => {
   expect(join(['a', 'b', 'c'])).toStrictEqual('a,b,c')
-  expect(join(['a', 'b'], ' + ')).toStrictEqual('a + b')
+  expect(join([1, 2], ' + ')).toStrictEqual('1 + 2')
   expect(join(['a', 'b', 'c'], '')).toStrictEqual('abc')
-  expect(join(['xyz'])).toStrictEqual('xyz')
+  expect(join(['a'])).toStrictEqual('a')
   expect(join([])).toStrictEqual('')
 })
 

@@ -11,6 +11,7 @@ import { Subtract } from './number/other'
 import { IntegerRangeThrough } from './number/range'
 import { newPromise } from './Promise'
 import { newSet, NonEmptySet, ReadonlyNonEmptySet } from './Set'
+import { Interpolable } from './string/other'
 import { IsEqual, IsOneOf } from './typePredicate'
 
 export function map<T, U>(self: ReadonlyNonEmptyArray<T>, f: (_: T) => U): NonEmptyArray<U>
@@ -267,18 +268,31 @@ export function dropLast<const T extends Tuple>(self: T, n: number = 1) {
  * Join<['a', 'b', 'c']> is equivalent to 'a,b,c'
  * Join<['a', 'b', 'c'], ''> is equivalent to 'abc'
  * Join<['a', 'b', 'c'], '-' | '.'> is equivalent to 'a-b-c' | 'a.b.c'
+ * Join<[], '.'> is equivalent to ''
+ * @example
+ * Join<[1, 2, 3], ' + '> is equivalent to '1 + 2 + 3'
+ * Join<[Date, RegExp]> is equivalent to string
  */
-export type Join<T extends readonly string[], Separator extends string = ','> = T extends readonly [
-  infer U extends string
+export type Join<T extends Tuple, Separator extends string = ','> = T extends readonly Interpolable[]
+  ? _Join<T, Separator>
+  : string
+export type _Join<T extends readonly Interpolable[], Separator extends string> = T extends readonly [
+  infer U extends Interpolable
 ]
   ? U
-  : T extends readonly [infer H extends string, ...infer L extends readonly string[]]
-  ? `${H}${Separator}${Join<L, Separator>}`
+  : T extends readonly [infer H extends Interpolable, ...infer L extends readonly Interpolable[]]
+  ? `${H}${Separator}${_Join<L, Separator>}`
   : T extends readonly []
   ? ''
   : string
 
-export function join<const T extends readonly string[], Separator extends string = ','>(
+/**
+ * @example
+ * join(['a', 'b', 'c']) returns 'a,b,c'
+ * join(['a', 'b', 'c'], '') returns 'abc'
+ * join([1, 2, 3], ' + ') returns '1 + 2 + 3'
+ */
+export function join<const T extends Tuple, Separator extends string = ','>(
   self: T,
   separator: Separator = ',' as any
 ): Join<T, Separator> {
