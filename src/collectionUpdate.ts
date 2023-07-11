@@ -79,9 +79,19 @@ export type _RemoveAt<T extends Tuple, N extends Tuple, Acc extends Tuple = []> 
     : [...Acc, ...L]
   : [...Acc, ...T]
 
+/**
+ * @example
+ * removeAt([0, 1, 2], 0) returns [1, 2]
+ * removeAt([0, 1, 2], 1) returns [0, 2]
+ * removeAt([0, 1, 2], 2) returns [0, 1]
+ * removeAt([0, 1, 2], 3) returns [0, 1, 2]
+ * removeAt([0, 1, 2], -1) returns [0, 1, 2]
+ */
 export function removeAt<const T extends Tuple, N extends number>(self: T, i: N): RemoveAt<T, N> {
   const cloned = [...self]
-  cloned.splice(modOf(i, cloned.length), 1)
+  if (isInIntegerRangeUntil(i, 0, self.length)) {
+    cloned.splice(i, 1)
+  }
   return cloned as any
 }
 export namespace removeAt {

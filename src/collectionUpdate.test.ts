@@ -36,11 +36,8 @@ test('removeAt', () => {
   expect(removeAt([0, 1, 2], 0)).toStrictEqual([1, 2])
   expect(removeAt([0, 1, 2], 1)).toStrictEqual([0, 2])
   expect(removeAt([0, 1, 2], 2)).toStrictEqual([0, 1])
-  expect(removeAt([0, 1, 2], 3)).toStrictEqual([1, 2])
-  expect(removeAt([0, 1, 2], -1)).toStrictEqual([0, 1])
-  expect(removeAt([0, 1, 2], -2)).toStrictEqual([0, 2])
-  expect(removeAt([0, 1, 2], -3)).toStrictEqual([1, 2])
-  expect(removeAt([0, 1, 2], -4)).toStrictEqual([0, 1])
+  expect(removeAt([0, 1, 2], 3)).toStrictEqual([0, 1, 2])
+  expect(removeAt([0, 1, 2], -1)).toStrictEqual([0, 1, 2])
 })
 
 test('RemoveAt', () => {
