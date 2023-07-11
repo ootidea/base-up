@@ -183,7 +183,21 @@ interface NonClassValueObject {
   [key: keyof any]: NonClassValue
 }
 
+/**
+ * @example
+ * IsClass<Date> is equivalent to true
+ * IsClass<RegExp> is equivalent to true
+ * IsClass<Set<any>> is equivalent to true
+ * @example
+ * IsClass<object> is equivalent to true
+ * @example
+ * IsClass<number> is equivalent to false
+ * IsClass<any> is equivalent to false
+ * IsClass<Function> is equivalent to false
+ */
 export type IsClass<T> = IsOneOf<T, [any, unknown, never, void]> extends true
+  ? false
+  : IsUnion<T> extends true
   ? false
   : T extends NonClassValue
   ? // In the scope of our current analysis, only the Blob type exhibits unique characteristics.

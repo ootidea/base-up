@@ -123,4 +123,8 @@ test('IsClass', () => {
   assertTypeEquality<IsClass<[]>, false>()
   assertTypeEquality<IsClass<{}>, false>()
   assertTypeEquality<IsClass<() => any>, false>()
+
+  assertTypeEquality<IsClass<null | Date>, false>()
+  assertTypeEquality<IsClass<Error | Date>, false>()
+  assertTypeEquality<IsClass<Date & {}>, true>()
 })
