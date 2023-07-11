@@ -299,23 +299,21 @@ export type SnakeCasedPropertiesDeep<T> = IsEqual<T, any> extends true
   : T extends Tuple
   ? SnakeCasedPropertiesDeepTuple<T>
   : {
-      [K in keyof T as K extends string ? ToSnakeCase<K> : K]: T[K] extends object
-        ? SnakeCasedPropertiesDeep<T[K]>
-        : T[K]
+      [K in keyof T as K extends string ? ToSnakeCase<K> : K]: SnakeCasedPropertiesDeep<T[K]>
     }
 type SnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends any[]
   ? _SnakeCasedPropertiesDeepTuple<T>
   : Readonly<_SnakeCasedPropertiesDeepTuple<T>>
 type _SnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [infer H, ...infer L]
-  ? [H extends object ? SnakeCasedPropertiesDeep<H> : H, ..._SnakeCasedPropertiesDeepTuple<L>]
+  ? [SnakeCasedPropertiesDeep<H>, ..._SnakeCasedPropertiesDeepTuple<L>]
   : T extends readonly [...infer L, infer H]
-  ? [..._SnakeCasedPropertiesDeepTuple<L>, H extends object ? SnakeCasedPropertiesDeep<H> : H]
+  ? [..._SnakeCasedPropertiesDeepTuple<L>, SnakeCasedPropertiesDeep<H>]
   : T extends readonly []
   ? []
   : T[number][] extends T
   ? SnakeCasedPropertiesDeep<T[number]>[]
   : T extends readonly [(infer H)?, ...infer L]
-  ? [(H extends object ? SnakeCasedPropertiesDeep<H> : H)?, ..._SnakeCasedPropertiesDeepTuple<L>]
+  ? [SnakeCasedPropertiesDeep<H>?, ..._SnakeCasedPropertiesDeepTuple<L>]
   : never
 
 /**
@@ -364,23 +362,21 @@ export type CamelCasedPropertiesDeep<T> = IsEqual<T, any> extends true
   : T extends Tuple
   ? CamelCasedPropertiesDeepTuple<T>
   : {
-      [K in keyof T as K extends string ? ToCamelCase<K> : K]: T[K] extends object
-        ? CamelCasedPropertiesDeep<T[K]>
-        : T[K]
+      [K in keyof T as K extends string ? ToCamelCase<K> : K]: CamelCasedPropertiesDeep<T[K]>
     }
 type CamelCasedPropertiesDeepTuple<T extends Tuple> = T extends any[]
   ? _CamelCasedPropertiesDeepTuple<T>
   : Readonly<_CamelCasedPropertiesDeepTuple<T>>
 type _CamelCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [infer H, ...infer L]
-  ? [H extends object ? CamelCasedPropertiesDeep<H> : H, ..._CamelCasedPropertiesDeepTuple<L>]
+  ? [CamelCasedPropertiesDeep<H>, ..._CamelCasedPropertiesDeepTuple<L>]
   : T extends readonly [...infer L, infer H]
-  ? [..._CamelCasedPropertiesDeepTuple<L>, H extends object ? CamelCasedPropertiesDeep<H> : H]
+  ? [..._CamelCasedPropertiesDeepTuple<L>, CamelCasedPropertiesDeep<H>]
   : T extends readonly []
   ? []
   : T[number][] extends T
   ? CamelCasedPropertiesDeep<T[number]>[]
   : T extends readonly [(infer H)?, ...infer L]
-  ? [(H extends object ? CamelCasedPropertiesDeep<H> : H)?, ..._CamelCasedPropertiesDeepTuple<L>]
+  ? [CamelCasedPropertiesDeep<H>?, ..._CamelCasedPropertiesDeepTuple<L>]
   : never
 
 /**

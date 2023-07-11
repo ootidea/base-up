@@ -185,6 +185,10 @@ test('SnakeCasedPropertiesDeep', () => {
   assertTypeEquality<SnakeCasedPropertiesDeep<1 | { createdAt: number }>, 1 | { created_at: number }>()
   assertTypeEquality<SnakeCasedPropertiesDeep<1 | { createdAt: number }[]>, 1 | { created_at: number }[]>()
   assertTypeEquality<
+    SnakeCasedPropertiesDeep<{ meta: { createdAt: number } | null }>,
+    { meta: { created_at: number } | null }
+  >()
+  assertTypeEquality<
     SnakeCasedPropertiesDeep<Record<number, { createdAt: number }>>,
     Record<number, { created_at: number }>
   >()
@@ -219,6 +223,10 @@ test('CamelCasedPropertiesDeep', () => {
 
   assertTypeEquality<CamelCasedPropertiesDeep<1 | { created_at: number }>, 1 | { createdAt: number }>()
   assertTypeEquality<CamelCasedPropertiesDeep<1 | { created_at: number }[]>, 1 | { createdAt: number }[]>()
+  assertTypeEquality<
+    CamelCasedPropertiesDeep<{ meta: { created_at: number } | null }>,
+    { meta: { createdAt: number } | null }
+  >()
   assertTypeEquality<
     CamelCasedPropertiesDeep<Record<number, { created_at: number }>>,
     Record<number, { createdAt: number }>
