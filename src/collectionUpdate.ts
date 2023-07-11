@@ -1,4 +1,4 @@
-import { isInIntegerRangeThrough } from './all'
+import { isInIntegerRangeThrough, isInIntegerRangeUntil } from './all'
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { NonEmptyArray } from './Array/MinLengthArray'
 import { Tuple } from './Array/other'
@@ -150,8 +150,10 @@ export namespace removeSuffix {
 
 export function moveTo<T>(self: readonly T[], from: number, to: number): T[] {
   const cloned = [...self]
-  const [removed] = cloned.splice(modOf(from, self.length), 1)
-  cloned.splice(modOf(to, self.length), 0, removed!)
+  if (isInIntegerRangeUntil(from, 0, self.length) && isInIntegerRangeUntil(to, 0, self.length)) {
+    const [removed] = cloned.splice(from, 1)
+    cloned.splice(to, 0, removed!)
+  }
   return cloned
 }
 
