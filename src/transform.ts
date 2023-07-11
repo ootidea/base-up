@@ -273,7 +273,9 @@ export function dropLast<const T extends Tuple>(self: T, n: number = 1) {
  * Join<[1, 2, 3], ' + '> is equivalent to '1 + 2 + 3'
  * Join<[Date, RegExp]> is equivalent to string
  */
-export type Join<T extends Tuple, Separator extends string = ','> = T extends readonly Interpolable[]
+export type Join<T extends Tuple, Separator extends string = ','> = IsEqual<T, any> extends true
+  ? string
+  : T extends readonly Interpolable[]
   ? _Join<T, Separator>
   : string
 export type _Join<T extends readonly Interpolable[], Separator extends string> = T extends readonly [

@@ -106,6 +106,8 @@ test('Join', () => {
   assertTypeEquality<Join<[]>, ''>()
   assertTypeEquality<Join<['a']>, 'a'>()
   assertTypeEquality<Join<['a', 'b']>, 'a,b'>()
+  assertTypeEquality<Join<[1, 2]>, '1,2'>()
+  assertTypeEquality<Join<[1, 2], ' + '>, '1 + 2'>()
 
   assertTypeEquality<Join<['a', 'b'], '.' | '/'>, 'a.b' | 'a/b'>()
   assertTypeEquality<Join<['a', 'b'], string>, `a${string}b`>()
