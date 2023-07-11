@@ -217,7 +217,7 @@ test('Reverse', () => {
   assertTypeEquality<Reverse<[0?, 1?]>, [] | [0] | [1, 0]>()
 })
 
-test('unique', () => {
+test('removeDuplicates', () => {
   expect(removeDuplicates([3, 1, 4, 1, 5, 9])).toStrictEqual([3, 1, 4, 5, 9])
   expect(removeDuplicates(repeat(10, 'me'))).toStrictEqual(['me'])
   expect(removeDuplicates([])).toStrictEqual([])

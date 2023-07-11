@@ -21,8 +21,8 @@ test('toggle.mutable', () => {
 test('setWhetherHas', () => {
   expect(setWhetherHas(setOf(1, 2, 3), 2, false)).toStrictEqual(setOf(1, 3))
   expect(setWhetherHas(setOf(1, 2, 3), 2, true)).toStrictEqual(setOf(1, 2, 3))
-  expect(setWhetherHas(setOf(1, 2, 3), 9, false)).toStrictEqual(setOf(1, 2, 3))
-  expect(setWhetherHas(setOf(1, 2, 3), 9, true)).toStrictEqual(setOf(1, 2, 3, 9))
+  expect(setWhetherHas(setOf(1, 2, 3), null, false)).toStrictEqual(setOf(1, 2, 3))
+  expect(setWhetherHas(setOf(1, 2, 3), null, true)).toStrictEqual(setOf(1, 2, 3, null))
 })
 
 test('unionOf', () => {
