@@ -24,6 +24,17 @@ test('setWhetherHas', () => {
   expect(setWhetherHas(setOf(1, 2, 3), null, false)).toStrictEqual(setOf(1, 2, 3))
   expect(setWhetherHas(setOf(1, 2, 3), null, true)).toStrictEqual(setOf(1, 2, 3, null))
 })
+test('setWhetherHas.mutable', () => {
+  const set = new Set([1, 2, 3])
+  setWhetherHas.mutable(set, 2, false)
+  expect(set).toStrictEqual(setOf(1, 3))
+  setWhetherHas.mutable(set, null, true)
+  expect(set).toStrictEqual(setOf(1, 3, null))
+  setWhetherHas.mutable(set, null, true)
+  expect(set).toStrictEqual(setOf(1, 3, null))
+  setWhetherHas.mutable(set, 9, false)
+  expect(set).toStrictEqual(setOf(1, 3, null))
+})
 
 test('unionOf', () => {
   expect(unionOf(setOf(1, 2, 3), setOf(3, 4, 5))).toStrictEqual(setOf(1, 2, 3, 4, 5))

@@ -26,7 +26,7 @@ export function setOf<const T extends Tuple>(...args: T): T extends readonly [] 
  * toggle(setOf(1, 2, 3), 2) returns setOf(1, 3)
  * toggle(setOf(1, 2, 3), 4) returns setOf(1, 2, 3, 4)
  */
-export function toggle<T, U>(self: ReadonlySet<T>, value: U): Set<T | U> {
+export function toggle<T, U>(self: ReadonlySet<T>, value: U): Set<T> | Set<T | U> {
   const cloned = new Set(self)
   if (cloned.has(value as any)) {
     cloned.delete(value as any)
@@ -60,6 +60,16 @@ export function setWhetherHas<T, U>(self: ReadonlySet<T>, value: U, has: boolean
     cloned.delete(value as any)
   }
   return cloned
+}
+export namespace setWhetherHas {
+  export function mutable<T>(self: Set<T>, value: T, has: boolean): Set<T> {
+    if (has) {
+      self.add(value)
+    } else {
+      self.delete(value)
+    }
+    return self
+  }
 }
 
 export function has<T, U extends T>(self: ReadonlySet<U>, value: T): value is U
