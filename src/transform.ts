@@ -12,7 +12,7 @@ import { IntegerRangeThrough } from './number/range'
 import { newPromise } from './Promise'
 import { newSet, NonEmptySet, ReadonlyNonEmptySet } from './Set'
 import { Interpolable } from './string/other'
-import { IsEqual, IsOneOf } from './typePredicate'
+import { Equals, IsOneOf } from './typePredicate'
 
 export function map<T, U>(self: ReadonlyNonEmptyArray<T>, f: (_: T) => U): NonEmptyArray<U>
 export function map<T, U>(self: readonly T[], f: (_: T) => U): U[]
@@ -81,7 +81,7 @@ export namespace flatten {
  * Take<[0, 1, 2], 1 | 2> is equivalent to [0] | [0, 1]
  * Take<[0, 1, 2], number> is equivalent to [] | [0] | [0, 1] | [0, 1, 2]
  */
-export type Take<T extends Tuple, N extends number> = IsEqual<T, any> extends true
+export type Take<T extends Tuple, N extends number> = Equals<T, any> extends true
   ? MaxLengthArray<N, any>
   : IsOneOf<N, [number, any]> extends true
   ? PrefixesOf<T>[number]
@@ -170,7 +170,7 @@ type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer
   ? T extends readonly [any, ...infer TL]
     ? _Drop<TL, NL>
     : T extends readonly [...infer TL, infer H]
-    ? IsEqual<TL[number], H> extends true
+    ? Equals<TL[number], H> extends true
       ? _Drop<TL, NL>
       : T
     : T extends readonly []
@@ -273,7 +273,7 @@ export function dropLast<const T extends Tuple>(self: T, n: number = 1) {
  * Join<[1, 2, 3], ' + '> is equivalent to '1 + 2 + 3'
  * Join<[Date, RegExp]> is equivalent to string
  */
-export type Join<T extends Tuple, Separator extends string = ','> = IsEqual<T, any> extends true
+export type Join<T extends Tuple, Separator extends string = ','> = Equals<T, any> extends true
   ? string
   : T extends readonly Interpolable[]
   ? _Join<T, Separator>

@@ -3,7 +3,7 @@ import { NonEmptyArray } from './Array/MinLengthArray'
 import { Tuple } from './Array/other'
 import { newMap } from './Map'
 import { modOf } from './number/other'
-import { IsEqual } from './typePredicate'
+import { Equals } from './typePredicate'
 
 export function push<const T extends Tuple, const U extends Tuple>(self: T, ...args: U): [...T, ...U] {
   return [...self, ...args] as any
@@ -55,7 +55,7 @@ export namespace insertAt {
   }
 }
 
-export type RemoveAt<T extends Tuple, N extends number> = IsEqual<T, any> extends true
+export type RemoveAt<T extends Tuple, N extends number> = Equals<T, any> extends true
   ? any[]
   : _RemoveAt<T, FixedLengthArray<N>>
 export type _RemoveAt<T extends Tuple, N extends Tuple, Acc extends Tuple = []> = T extends readonly [

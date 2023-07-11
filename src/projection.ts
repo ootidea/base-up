@@ -1,7 +1,7 @@
 import { MinLengthOf, Tuple } from './Array/other'
 import { RangeUntil } from './generate'
 import { Interpolable } from './string/other'
-import { IsEqual } from './typePredicate'
+import { Equals } from './typePredicate'
 
 /**
  * Function with improved type of Object.keys.
@@ -24,26 +24,26 @@ import { IsEqual } from './typePredicate'
 export function keysOf<const T extends {}>(record: T): KeysOf<T> {
   return Object.keys(record) as any
 }
-export type KeysOf<T> = IsEqual<T, any> extends true
+export type KeysOf<T> = Equals<T, any> extends true
   ? string[]
-  : IsEqual<T, never> extends true
+  : Equals<T, never> extends true
   ? never
   : T extends Tuple
   ? KeysOfTuple<T>
   : _KeysOf<T> extends infer Keys
-  ? IsEqual<Keys, never, [], Keys[]>
+  ? Equals<Keys, never, [], Keys[]>
   : never
 // Remove symbol keys and convert number keys to string
 type _KeysOf<T> = keyof T extends infer K
   ? K extends string | number
-    ? IsEqual<K, never> extends true
+    ? Equals<K, never> extends true
       ? never
-      : IsEqual<K, any> extends true
+      : Equals<K, any> extends true
       ? string
       : `${K}`
     : never
   : never
-type KeysOfTuple<T extends Tuple> = IsEqual<Exclude<keyof T, keyof []>, never> extends true
+type KeysOfTuple<T extends Tuple> = Equals<Exclude<keyof T, keyof []>, never> extends true
   ? string[]
   : ToStringElements<RangeUntil<MinLengthOf<T>>>
 type ToStringElements<T extends Tuple> = T extends readonly [infer H extends Interpolable, ...infer L]
@@ -84,7 +84,7 @@ export function allKeysOf(objectLike: unknown): Set<string | symbol> {
  * numberKeysOf({ 0: 'first', 1: 'second' } as const) returns [0, 1]
  * numberKeysOf({ 0: 'first', 1: 'second' } as const) is typed as (0 | 1)[]
  */
-export function numberKeysOf<const K extends number>(record: Record<K, unknown>): IsEqual<K, never, [], K[]> {
+export function numberKeysOf<const K extends number>(record: Record<K, unknown>): Equals<K, never, [], K[]> {
   return Object.keys(record).map(Number) as any
 }
 
@@ -121,4 +121,4 @@ type _EntriesOf<T> = keyof T extends infer K extends keyof T
     ? [`${K}`, T[K]]
     : never
   : never
-type EntriesOf<T> = IsEqual<_EntriesOf<T>, never, [], _EntriesOf<T>[]>
+type EntriesOf<T> = Equals<_EntriesOf<T>, never, [], _EntriesOf<T>[]>

@@ -1,6 +1,6 @@
 import { Digit, Infinity, Negate, NegativeInfinity } from '../number/other'
 import { IsUnion, ToBasePrimitiveType } from '../type'
-import { IsEqual, IsOneOf } from '../typePredicate'
+import { Equals, IsOneOf } from '../typePredicate'
 
 export type ToNumber<S extends string> = S extends 'Infinity'
   ? Infinity
@@ -71,12 +71,12 @@ export type Interpolable = string | number | bigint | boolean | null | undefined
  */
 export type IsTemplateLiteral<T extends string, Then = true, Else = false> = IsUnion<T> extends true
   ? Else
-  : IsEqual<T, never> extends true
+  : Equals<T, never> extends true
   ? Else
   : T extends `${infer H}${infer L}`
   ? IsOneOf<H, [string, `${number}`, `${bigint}`]> extends true
     ? Then
-    : IsEqual<L, string> extends true
+    : Equals<L, string> extends true
     ? Then
     : IsTemplateLiteral<L, Then, Else>
   : Else
@@ -108,7 +108,7 @@ type CharactersSubjectToRemoveByTrim = ' ' | '\t' | '\n' | '\r' | '\f' | '\v' | 
  * TrimStart<'  abc  '> is equivalent to 'abc  '
  * TrimStart<'\n\t\r\uFEFF\xA0'> is equivalent to ''
  */
-export type TrimStart<T extends string> = IsEqual<T, any> extends true
+export type TrimStart<T extends string> = Equals<T, any> extends true
   ? string
   : T extends `${CharactersSubjectToRemoveByTrim}${infer L}`
   ? TrimStart<L>
@@ -128,7 +128,7 @@ export function trimStart<const T extends string>(self: T): TrimStart<T> {
  * TrimEnd<'  abc  '> is equivalent to '  abc'
  * TrimEnd<'\n\t\r\uFEFF\xA0'> is equivalent to ''
  */
-export type TrimEnd<T extends string> = IsEqual<T, any> extends true
+export type TrimEnd<T extends string> = Equals<T, any> extends true
   ? string
   : T extends `${infer L}${CharactersSubjectToRemoveByTrim}`
   ? TrimEnd<L>

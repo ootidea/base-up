@@ -113,7 +113,7 @@ export {
   IsOneOf,
   isOneOf,
   isNotOneOf,
-  IsEqual,
+  Equals,
   equals,
 } from './typePredicate'
 export { Tuple, shuffle, UnionToTuple, IsTuple, MinLengthOf } from './Array/other'

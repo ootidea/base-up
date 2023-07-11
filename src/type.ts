@@ -1,4 +1,4 @@
-import { IsEqual, IsOneOf } from './typePredicate'
+import { Equals, IsOneOf } from './typePredicate'
 
 /**
  * @example
@@ -6,7 +6,7 @@ import { IsEqual, IsOneOf } from './typePredicate'
  * assertTypeEquality<123, 123>()  does not result in a type error
  */
 export function assertTypeEquality<T, U>(
-  ..._: IsEqual<T, U> extends true ? [] : ['Assertion failed:', T, 'is not equal to', U]
+  ..._: Equals<T, U> extends true ? [] : ['Assertion failed:', T, 'is not equal to', U]
 ) {}
 
 export function assert<T, U extends T>(value: T, predicate: (value: T) => value is U): asserts value is U
@@ -82,7 +82,7 @@ export type UnionToIntersection<T> = (T extends T ? (arg: T) => any : never) ext
  * IsUnion<never> is equivalent to false
  * IsUnion<never | number> is equivalent to false
  */
-export type IsUnion<T, Then = true, Else = false> = IsEqual<T, UnionToIntersection<T>, Else, Then>
+export type IsUnion<T, Then = true, Else = false> = Equals<T, UnionToIntersection<T>, Else, Then>
 
 /**
  * @example
@@ -187,5 +187,5 @@ export type IsClass<T> = IsOneOf<T, [any, unknown, never, void]> extends true
   ? false
   : T extends NonClassValue
   ? // In the scope of our current analysis, only the Blob type exhibits unique characteristics.
-    IsEqual<T, Blob>
+    Equals<T, Blob>
   : true

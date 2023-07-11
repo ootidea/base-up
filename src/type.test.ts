@@ -1,6 +1,6 @@
 import { expectTypeOf, test } from 'vitest'
 import { assertTypeEquality, Branded, DiscriminatedUnion, IsClass, Simplify, ToBasePrimitiveType } from './type'
-import { IsEqual } from './typePredicate'
+import { Equals } from './typePredicate'
 
 test('Branded', () => {
   type UserId = Branded<number, 'UserId'>
@@ -18,7 +18,7 @@ test('Branded', () => {
 test('Simplify', () => {
   assertTypeEquality<Simplify<{ name: string } & { age: number }>, { name: string; age: number }>()
   assertTypeEquality<Simplify<{}>, {}>()
-  assertTypeEquality<IsEqual<Simplify<string & {}>, string>, false>()
+  assertTypeEquality<Equals<Simplify<string & {}>, string>, false>()
 
   assertTypeEquality<Simplify<1>, 1>()
   assertTypeEquality<Simplify<null>, null>()

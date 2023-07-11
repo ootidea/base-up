@@ -1,6 +1,6 @@
 import { randomIntegerThrough } from '../number/range'
 import { UnionToIntersection } from '../type'
-import { IsEqual, IsOneOf } from '../typePredicate'
+import { Equals, IsOneOf } from '../typePredicate'
 import { FixedLengthArray } from './FixedLengthArray'
 
 export type Tuple = readonly any[]
@@ -47,9 +47,9 @@ export type IsTuple<T extends Tuple> = T extends T
  * MinLengthOf<any> is equivalent to 0
  * MinLengthOf<never> is equivalent to never
  */
-export type MinLengthOf<T extends Tuple> = IsEqual<T, any> extends true
+export type MinLengthOf<T extends Tuple> = Equals<T, any> extends true
   ? 0
-  : IsEqual<T, never> extends true
+  : Equals<T, never> extends true
   ? never
   : RemoveElementsThatMightNotExist<T>['length']
 type RemoveElementsThatMightNotExist<T extends Tuple> = T extends readonly [infer H, ...infer L]

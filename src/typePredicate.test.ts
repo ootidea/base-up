@@ -1,25 +1,25 @@
 import { expect, expectTypeOf, test } from 'vitest'
 import { assertTypeEquality } from './type'
-import { IsEqual, isFalsy, isInstanceOf, isNotOneOf, isOneOf, IsOneOf, isTruthy } from './typePredicate'
+import { Equals, isFalsy, isInstanceOf, isNotOneOf, isOneOf, IsOneOf, isTruthy } from './typePredicate'
 
-test('IsEqual', () => {
-  assertTypeEquality<IsEqual<'abc', 'abc'>, true>()
-  assertTypeEquality<IsEqual<1, number>, false>()
-  assertTypeEquality<IsEqual<any, unknown>, false>()
-  assertTypeEquality<IsEqual<any, never>, false>()
-  assertTypeEquality<IsEqual<unknown, never>, false>()
-  assertTypeEquality<IsEqual<void, undefined>, false>()
+test('Equals', () => {
+  assertTypeEquality<Equals<'abc', 'abc'>, true>()
+  assertTypeEquality<Equals<1, number>, false>()
+  assertTypeEquality<Equals<any, unknown>, false>()
+  assertTypeEquality<Equals<any, never>, false>()
+  assertTypeEquality<Equals<unknown, never>, false>()
+  assertTypeEquality<Equals<void, undefined>, false>()
 
-  assertTypeEquality<IsEqual<1 | 2, 2 | 1>, true>()
-  assertTypeEquality<IsEqual<1 | never, 1>, true>()
-  assertTypeEquality<IsEqual<boolean, true | false>, true>()
+  assertTypeEquality<Equals<1 | 2, 2 | 1>, true>()
+  assertTypeEquality<Equals<1 | never, 1>, true>()
+  assertTypeEquality<Equals<boolean, true | false>, true>()
 
-  assertTypeEquality<IsEqual<string & {}, string>, false>()
-  assertTypeEquality<IsEqual<string & {}, {}>, false>()
+  assertTypeEquality<Equals<string & {}, string>, false>()
+  assertTypeEquality<Equals<string & {}, {}>, false>()
 
-  assertTypeEquality<IsEqual<[a: string], [b: string]>, true>()
-  assertTypeEquality<IsEqual<[string?], [] | [string]>, false>()
-  assertTypeEquality<IsEqual<[string, ...string[]], [...string[], string]>, false>()
+  assertTypeEquality<Equals<[a: string], [b: string]>, true>()
+  assertTypeEquality<Equals<[string?], [] | [string]>, false>()
+  assertTypeEquality<Equals<[string, ...string[]], [...string[], string]>, false>()
 })
 
 test('IsOneOf', () => {

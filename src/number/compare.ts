@@ -1,5 +1,5 @@
 import { FixedLengthArray } from '../Array/FixedLengthArray'
-import { IsEqual } from '../typePredicate'
+import { Equals } from '../typePredicate'
 import { Digit } from './other'
 import { DigitToRangeUntil } from './range'
 
@@ -18,7 +18,7 @@ import { DigitToRangeUntil } from './range'
  * @example
  * LteNaturalNumber<1234567, 1234560> is equivalent to false
  */
-export type LteNaturalNumber<N extends number, M extends number> = IsEqual<N, M> extends true
+export type LteNaturalNumber<N extends number, M extends number> = Equals<N, M> extends true
   ? true
   : _LteNaturalNumber<`${N}`, `${M}`>
 type _LteNaturalNumber<
@@ -47,7 +47,7 @@ type _LteNaturalNumberLexicographic<Lhs extends readonly Digit[], Rhs extends re
   ...infer LL extends readonly Digit[]
 ]
   ? Rhs extends readonly [infer RH extends Digit, ...infer RL extends readonly Digit[]]
-    ? IsEqual<LH, RH, _LteNaturalNumberLexicographic<LL, RL>, LtDigit<LH, RH>>
+    ? Equals<LH, RH, _LteNaturalNumberLexicographic<LL, RL>, LtDigit<LH, RH>>
     : false
   : true
 

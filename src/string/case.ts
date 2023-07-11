@@ -1,6 +1,6 @@
 import { Tuple } from '../Array/other'
 import { Join } from '../transform'
-import { IsEqual, IsOneOf } from '../typePredicate'
+import { Equals, IsOneOf } from '../typePredicate'
 
 export type UppercaseLetter =
   | 'A'
@@ -292,7 +292,7 @@ export function toCamelCase<const T extends string>(self: T): ToCamelCase<T> {
  * SnakeCasedPropertiesDeep<{ readonly firstName?: string }> is equivalent to { readonly first_name?: string }
  * SnakeCasedPropertiesDeep<readonly string[]> is equivalent to readonly string[]
  */
-export type SnakeCasedPropertiesDeep<T> = IsEqual<T, any> extends true
+export type SnakeCasedPropertiesDeep<T> = Equals<T, any> extends true
   ? T
   : T extends Function
   ? T
@@ -355,7 +355,7 @@ export function snakeCasedPropertiesDeep<T>(self: T): SnakeCasedPropertiesDeep<T
  * CamelCasedPropertiesDeep<{ readonly first_name?: string }> is equivalent to { readonly firstName?: string }
  * CamelCasedPropertiesDeep<readonly string[]> is equivalent to readonly string[]
  */
-export type CamelCasedPropertiesDeep<T> = IsEqual<T, any> extends true
+export type CamelCasedPropertiesDeep<T> = Equals<T, any> extends true
   ? T
   : T extends Function
   ? T

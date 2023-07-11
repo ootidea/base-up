@@ -5,26 +5,26 @@ import { nullish } from './type'
  * Determines whether the types are strictly the same or not.
  * This was implemented with reference to: {@link https://github.com/microsoft/TypeScript/issues/27024#issuecomment-421529650}
  * @example
- * IsEqual<123, 123> is equivalent to true
- * IsEqual<123, 456> is equivalent to false
- * IsEqual<123, number> is equivalent to false
- * IsEqual<void, undefined> is equivalent to false
- * IsEqual<any, unknown> is equivalent to false
- * IsEqual<never, any> is equivalent to false
+ * Equals<123, 123> is equivalent to true
+ * Equals<123, 456> is equivalent to false
+ * Equals<123, number> is equivalent to false
+ * Equals<void, undefined> is equivalent to false
+ * Equals<any, unknown> is equivalent to false
+ * Equals<never, any> is equivalent to false
  * @example
- * IsEqual<'a' | 'b', 'b' | 'a'> is equivalent to true
- * IsEqual<1, 1 | never> is equivalent to true
- * IsEqual<boolean, true | false> is equivalent to true
+ * Equals<'a' | 'b', 'b' | 'a'> is equivalent to true
+ * Equals<1, 1 | never> is equivalent to true
+ * Equals<boolean, true | false> is equivalent to true
  * @example
- * IsEqual<string & {}, string> is equivalent to false
- * IsEqual<string & {}, {}> is equivalent to false
+ * Equals<string & {}, string> is equivalent to false
+ * Equals<string & {}, {}> is equivalent to false
  * @example
- * IsEqual<[a: string], [b: string]> is equivalent to true
- * IsEqual<[string?], [] | [string]> is equivalent to false
+ * Equals<[a: string], [b: string]> is equivalent to true
+ * Equals<[string?], [] | [string]> is equivalent to false
  * @example
- * IsEqual<{}, {}> is equivalent to true
+ * Equals<{}, {}> is equivalent to true
  */
-export type IsEqual<T, U, Then = true, Else = false> = (<R>() => R extends T ? 1 : 2) extends <R>() => R extends U
+export type Equals<T, U, Then = true, Else = false> = (<R>() => R extends T ? 1 : 2) extends <R>() => R extends U
   ? 1
   : 2
   ? Then
@@ -53,7 +53,7 @@ export namespace equals {
  * IsOneOf<any, []> is equivalent to false
  */
 export type IsOneOf<T, U extends Tuple, Then = true, Else = false> = U extends readonly [infer H, ...infer L]
-  ? IsEqual<T, H> extends true
+  ? Equals<T, H> extends true
     ? Then
     : IsOneOf<T, L, Then, Else>
   : Else
