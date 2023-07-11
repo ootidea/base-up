@@ -1,3 +1,4 @@
+import { isInIntegerRangeThrough } from './all'
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { NonEmptyArray } from './Array/MinLengthArray'
 import { Tuple } from './Array/other'
@@ -25,13 +26,24 @@ export namespace unshift {
   }
 }
 
+/**
+ * @example
+ * insertAt([0, 1, 2], 0, 9) returns [9, 0, 1, 2]
+ * insertAt([0, 1, 2], 1, 9) returns [0, 9, 1, 2]
+ * insertAt([0, 1, 2], 3, 9) returns [0, 1, 2, 9]
+ * insertAt([0, 1, 2], 4, 9) returns [0, 1, 2]
+ * insertAt([0, 1, 2], -1, 9) returns [0, 1, 2]
+ * insertAt([0, 1, 2], 1, false, null) returns [0, false, null, 1, 2]
+ */
 export function insertAt<T, const U extends Tuple>(
   self: readonly T[],
   at: number,
   ...values: U
 ): NonEmptyArray<T | U[number]> {
   const cloned: (T | U[number])[] = [...self]
-  cloned.splice(modOf(at, self.length + 1), 0, ...values)
+  if (isInIntegerRangeThrough(at, 0, self.length)) {
+    cloned.splice(at, 0, ...values)
+  }
   return cloned as any
 }
 export namespace insertAt {

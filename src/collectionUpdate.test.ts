@@ -18,13 +18,12 @@ test('unshift', () => {
 test('insertAt', () => {
   expect(insertAt([0, 1, 2], 0, 9)).toStrictEqual([9, 0, 1, 2])
   expect(insertAt([0, 1, 2], 3, 9)).toStrictEqual([0, 1, 2, 9])
-  expect(insertAt([0, 1, 2], 4, 9)).toStrictEqual([9, 0, 1, 2])
-  expect(insertAt([0, 1, 2], -1, 9)).toStrictEqual([0, 1, 2, 9])
-  expect(insertAt([0, 1, 2], -2, 9)).toStrictEqual([0, 1, 9, 2])
-  expect(insertAt([0, 1, 2], -4, 9)).toStrictEqual([9, 0, 1, 2])
-  expect(insertAt([0, 1, 2], -5, 9)).toStrictEqual([0, 1, 2, 9])
-  expect(insertAt([0, 1, 2], 2, 9, 8)).toStrictEqual([0, 1, 9, 8, 2])
+  expect(insertAt([0, 1, 2], 2, false, null)).toStrictEqual([0, 1, false, null, 2])
 
+  expect(insertAt([0, 1, 2], 4, 9)).toStrictEqual([0, 1, 2])
+  expect(insertAt([0, 1, 2], -1, 9)).toStrictEqual([0, 1, 2])
+})
+test('insertAt.Iterable', () => {
   expect([...insertAt.Iterable([0, 1, 2], 0, 9)]).toStrictEqual([9, 0, 1, 2])
   expect([...insertAt.Iterable([0, 1, 2], 3, 9)]).toStrictEqual([0, 1, 2, 9])
   expect([...insertAt.Iterable([0, 1, 2], 1, 9, 8)]).toStrictEqual([0, 9, 8, 1, 2])

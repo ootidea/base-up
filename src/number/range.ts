@@ -123,7 +123,10 @@ export function isInIntegerRangeUntil<N extends number, M extends number>(
   n: N,
   m: M
 ): value is IntegerRangeUntil<N, M> {
-  return Number.isInteger(value) && n <= value && value < m
+  if (!Number.isInteger(n)) throw new TypeError(`${n} is not an integer`)
+  if (!Number.isInteger(m)) throw new TypeError(`${m} is not an integer`)
+
+  return Number.isInteger(value) && Math.min(n, m) <= value && value < Math.max(n, m)
 }
 export namespace isInIntegerRangeUntil {
   /**
@@ -142,7 +145,10 @@ export function isInIntegerRangeThrough<N extends number, M extends number>(
   n: N,
   m: M
 ): value is IntegerRangeThrough<N, M> {
-  return Number.isInteger(value) && n <= value && value <= m
+  if (!Number.isInteger(n)) throw new TypeError(`${n} is not an integer`)
+  if (!Number.isInteger(m)) throw new TypeError(`${m} is not an integer`)
+
+  return Number.isInteger(value) && Math.min(n, m) <= value && value <= Math.max(n, m)
 }
 export namespace isInIntegerRangeThrough {
   export function defer<N extends number, M extends number>(
