@@ -29,27 +29,19 @@ export function isFixedLengthArray<N extends number>(self: unknown, length: N) {
 
 /** Create a tuple by repeating the given tuple 10 times. */
 type TenTimes<T extends Tuple> = [...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T]
-type DigitToFixedLengthArray<N extends Digit, T = unknown> = N extends '0'
-  ? []
-  : N extends '1'
-  ? [T]
-  : N extends '2'
-  ? [T, T]
-  : N extends '3'
-  ? [T, T, T]
-  : N extends '4'
-  ? [T, T, T, T]
-  : N extends '5'
-  ? [T, T, T, T, T]
-  : N extends '6'
-  ? [T, T, T, T, T, T]
-  : N extends '7'
-  ? [T, T, T, T, T, T, T]
-  : N extends '8'
-  ? [T, T, T, T, T, T, T, T]
-  : N extends '9'
-  ? [T, T, T, T, T, T, T, T, T]
-  : never
+type DigitToFixedLengthArray<N extends Digit, T = unknown> = {
+  ['0']: []
+  ['1']: [T]
+  ['2']: [T, T]
+  ['3']: [T, T, T]
+  ['4']: [T, T, T, T]
+  ['5']: [T, T, T, T, T]
+  ['6']: [T, T, T, T, T, T]
+  ['7']: [T, T, T, T, T, T, T]
+  ['8']: [T, T, T, T, T, T, T, T]
+  ['9']: [T, T, T, T, T, T, T, T, T]
+}[N]
+
 /**
  * @example
  * DigitArrayToFixedLengthArray<['2']> is equivalent to [unknown, unknown]

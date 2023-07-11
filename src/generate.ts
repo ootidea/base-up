@@ -171,21 +171,6 @@ type ToNegativeNumbers<T extends readonly number[]> = T extends readonly [
 
 /**
  * @example
- * Protruded<[any], [bigint, never, void]> is equivalent to [never, void]
- * Protruded<[bigint, never, void], [any]> is equivalent to [never, void]
- * Protruded<[any, any, any], [bigint, never, void]> is equivalent to []
- * Protruded<FixedLengthArray<1>, FixedLengthArray<4>>['length'] is equivalent to 3
- */
-export type Protruded<T extends Tuple, U extends Tuple> = T extends [any, ...infer TL]
-  ? U extends [any, ...infer UL]
-    ? Protruded<TL, UL>
-    : T
-  : U extends [any, ...infer UL]
-  ? U
-  : []
-
-/**
- * @example
  * rangeUntil(3) returns [0, 1, 2]
  * rangeUntil(3) is typed as [0, 1, 2]
  * @example
