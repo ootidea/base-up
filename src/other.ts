@@ -1,5 +1,4 @@
 import { NonEmptyArray } from './Array/MinLengthArray'
-import { Tuple } from './Array/other'
 import { newMap } from './Map'
 
 export function groupBy<T, U extends keyof any>(self: readonly T[], by: (_: T) => U): Record<U, NonEmptyArray<T>> {
@@ -25,8 +24,8 @@ export namespace groupBy {
   }
 }
 
-export function toMultiset<const T extends Tuple>(self: T): Map<T[number], number> {
-  const result = newMap<T[number], number>()
+export function toMultiset<T>(self: Iterable<T>): Map<T, number> {
+  const result = newMap<T, number>()
   for (const value of self) {
     const count = result.get(value) ?? 0
     result.set(value, count + 1)
