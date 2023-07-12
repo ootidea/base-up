@@ -52,7 +52,7 @@ type ToStringElements<T extends Tuple> = T extends readonly [infer H extends Int
 
 /**
  * Get all keys of an object including inherited keys.
- * It behaves similarly to the typeof operator.
+ * It behaves similarly to the keyof operator.
  * @example
  * allKeysOf({ name: 'Bob', age: 60 }) returns new Set(['name', 'age'])
  * allKeysOf({}) returns new Set()
