@@ -32,7 +32,7 @@ export namespace permutationOf {
   }
 }
 
-export function slideWindow<const T extends Tuple, N extends number>(self: T, n: N): [T[number], T[number]][] {
+export function rollWindow<const T extends Tuple, N extends number>(self: T, n: N): [T[number], T[number]][] {
   const result = []
   if (n < 0) throw new RangeError()
 

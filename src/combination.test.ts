@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { cartesianProductOf, permutationOf, PrefixesOf, prefixesOf, slideWindow } from './combination'
+import { cartesianProductOf, permutationOf, PrefixesOf, prefixesOf, rollWindow } from './combination'
 import { assertTypeEquality } from './type'
 
 test('cartesianProductOf', () => {
@@ -48,16 +48,16 @@ test('permutationOf', () => {
   expect(permutationOf.number(5, 2)).toBe(20)
 })
 
-test('slideWindow', () => {
-  expect(slideWindow([1, 2, 3], 2)).toStrictEqual([
+test('rollWindow', () => {
+  expect(rollWindow([1, 2, 3], 2)).toStrictEqual([
     [1, 2],
     [2, 3],
   ])
-  expect(slideWindow([1, 2, 3], 3)).toStrictEqual([[1, 2, 3]])
-  expect(slideWindow([1, 2, 3], 1)).toStrictEqual([[1], [2], [3]])
-  expect(slideWindow([1, 2, 3], 0)).toStrictEqual([[], [], [], []])
-  expect(slideWindow([1, 2, 3], 4)).toStrictEqual([])
-  expect(slideWindow([], 0)).toStrictEqual([[]])
+  expect(rollWindow([1, 2, 3], 3)).toStrictEqual([[1, 2, 3]])
+  expect(rollWindow([1, 2, 3], 1)).toStrictEqual([[1], [2], [3]])
+  expect(rollWindow([1, 2, 3], 0)).toStrictEqual([[], [], [], []])
+  expect(rollWindow([1, 2, 3], 4)).toStrictEqual([])
+  expect(rollWindow([], 0)).toStrictEqual([[]])
 })
 
 test('PrefixesOf', () => {
