@@ -2,7 +2,7 @@ import { MinLengthOf, Tuple } from './Array/other'
 import { RangeUntil } from './generate'
 import { Interpolable } from './string/other'
 import { NonClassValue } from './type'
-import { Equals } from './typePredicate'
+import { Equals, IsOneOf } from './typePredicate'
 
 /**
  * Function with improved type of Object.keys.
@@ -51,7 +51,9 @@ type ToStringElements<T extends Tuple> = T extends readonly [infer H extends Int
   ? [`${H}`, ...ToStringElements<L>]
   : []
 
-export type AllKeysOf<T> = Equals<T, any> extends true
+export type AllKeysOf<T> = IsOneOf<T, [undefined, null]> extends true
+  ? Set<never>
+  : Equals<T, any> extends true
   ? Set<string | symbol>
   : T extends Record<keyof any, NonClassValue>
   ? Set<ToStringKey<keyof T>>
@@ -69,8 +71,10 @@ type ToStringKey<K extends keyof any> = K extends number ? `${K}` : K
  */
 export function allKeysOf<const T>(objectLike: T): AllKeysOf<T> {
   const result: Set<string | symbol> = new Set()
-  const basePrototype = Object.getPrototypeOf({})
 
+  if (objectLike === null || objectLike === undefined) return result as any
+
+  const basePrototype = Object.getPrototypeOf({})
   let current = objectLike
   while (current !== basePrototype) {
     for (const ownPropertyName of Object.getOwnPropertyNames(current)) {

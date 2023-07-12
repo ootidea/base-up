@@ -1,4 +1,4 @@
-import { describe, expect, expectTypeOf, test } from 'vitest'
+import { expect, expectTypeOf, test } from 'vitest'
 import { assertTypeEquality } from './all'
 import { AllKeysOf, allKeysOf, entriesOf, keysOf, numberKeysOf } from './projection'
 
@@ -35,6 +35,12 @@ test('AllKeysOf', () => {
   assertTypeEquality<AllKeysOf<{ [Symbol.iterator]: boolean }>, Set<typeof Symbol.iterator>>()
   assertTypeEquality<AllKeysOf<{ name?: string; age?: number }>, Set<'name' | 'age'>>()
   assertTypeEquality<AllKeysOf<{}>, Set<never>>()
+  assertTypeEquality<AllKeysOf<undefined>, Set<never>>()
+  assertTypeEquality<AllKeysOf<null>, Set<never>>()
+
+  assertTypeEquality<AllKeysOf<{ name: string } | { age: number }>, Set<'name'> | Set<'age'>>()
+
+  assertTypeEquality<AllKeysOf<Record<string, any>>, Set<string>>()
   assertTypeEquality<AllKeysOf<Record<number, any>>, Set<`${number}`>>()
 
   assertTypeEquality<AllKeysOf<Date>, Set<string | symbol>>()
@@ -47,32 +53,28 @@ test('AllKeysOf', () => {
   assertTypeEquality<AllKeysOf<() => any>, Set<string | symbol>>()
   assertTypeEquality<AllKeysOf<object>, Set<string | symbol>>()
   assertTypeEquality<AllKeysOf<string>, Set<string | symbol>>()
-  assertTypeEquality<AllKeysOf<1 | 2>, Set<string | symbol>>()
+  assertTypeEquality<AllKeysOf<123>, Set<string | symbol>>()
   assertTypeEquality<AllKeysOf<any>, Set<string | symbol>>()
   assertTypeEquality<AllKeysOf<never>, never>()
 })
 
-describe('allKeysOf', () => {
-  test('string keys', () => {
-    expect(allKeysOf({ name: 'Bob', age: 30 })).toStrictEqual(new Set(['name', 'age']))
-    expect(allKeysOf({})).toStrictEqual(new Set())
-    expect(allKeysOf(123)).toStrictEqual(
-      new Set(['toExponential', 'toFixed', 'toPrecision', 'toString', 'valueOf', 'toLocaleString'])
-    )
-    class A {
-      a = 1
-    }
-    class B extends A {
-      b = 2
-    }
-    expect(allKeysOf(new B())).toStrictEqual(new Set(['a', 'b']))
-  })
-  test('number keys', () => {
-    expect(allKeysOf({ 0: false, 1: true })).toStrictEqual(new Set(['0', '1']))
-  })
-  test('symbol keys', () => {
-    expect(allKeysOf({ [Symbol.iterator]: false })).toStrictEqual(new Set([Symbol.iterator]))
-  })
+test('allKeysOf', () => {
+  expect(allKeysOf({ name: 'Bob', age: 30 })).toStrictEqual(new Set(['name', 'age']))
+  expect(allKeysOf({})).toStrictEqual(new Set())
+
+  class A {
+    a = 1
+  }
+  class B extends A {
+    b = 2
+  }
+  expect(allKeysOf(new B())).toStrictEqual(new Set(['a', 'b']))
+
+  expect(allKeysOf({ 0: false, 1: true })).toStrictEqual(new Set(['0', '1']))
+  expect(allKeysOf({ [Symbol.iterator]: false })).toStrictEqual(new Set([Symbol.iterator]))
+
+  expect(allKeysOf(null)).toStrictEqual(new Set())
+  expect(allKeysOf(undefined)).toStrictEqual(new Set())
 })
 
 test('numberKeysOf', () => {
