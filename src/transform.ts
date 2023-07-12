@@ -331,15 +331,15 @@ export type Split<T extends string, Separator extends string> = T extends `${inf
 /**
  * @example
  * chunk([1, 2, 3, 4, 5, 6], 2) returns [[1, 2], [3, 4], [5, 6]]
- * chunk([1, 2, 3, 4, 5, 6], 2) is typed as readonly [number, number][]
+ * chunk([1, 2, 3, 4, 5, 6], 2) is typed as [number, number][]
  * @example
  * chunk([3, 1, 4, 1, 5, 9, 2], 3) returns [[3, 1, 4], [1, 5, 9]]
- * chunk([3, 1, 4, 1, 5, 9, 2], 3) is typed as readonly [number, number, number][]
+ * chunk([3, 1, 4, 1, 5, 9, 2], 3) is typed as [number, number, number][]
  */
 export function chunk<T, N extends number>(
   array: readonly T[],
   size: N
-): number extends N ? readonly T[][] : readonly FixedLengthArray<N, T>[] {
+): number extends N ? T[][] : FixedLengthArray<N, T>[] {
   if (size <= 0) {
     throw RangeError(`Size(${size}) must be greater than 0.`)
   }
