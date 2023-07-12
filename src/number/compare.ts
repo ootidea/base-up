@@ -11,47 +11,47 @@ import { DigitToRangeUntil } from './range'
  * @returns true if N <= M, false otherwise
  *
  * @example
- * LteNaturalNumber<3, 4> is equivalent to true
- * LteNaturalNumber<4, 4> is equivalent to true
- * LteNaturalNumber<5, 4> is equivalent to false
- * LteNaturalNumber<9, 123> is equivalent to true
+ * IsAtMostNaturalNumber<3, 4> is equivalent to true
+ * IsAtMostNaturalNumber<4, 4> is equivalent to true
+ * IsAtMostNaturalNumber<5, 4> is equivalent to false
+ * IsAtMostNaturalNumber<9, 123> is equivalent to true
  * @example
- * LteNaturalNumber<1234567, 1234560> is equivalent to false
+ * IsAtMostNaturalNumber<1234567, 1234560> is equivalent to false
  */
-export type LteNaturalNumber<N extends number, M extends number> = Equals<N, M> extends true
+export type IsAtMostNaturalNumber<N extends number, M extends number> = Equals<N, M> extends true
   ? true
-  : _LteNaturalNumber<`${N}`, `${M}`>
-type _LteNaturalNumber<
+  : _IsAtMostNaturalNumber<`${N}`, `${M}`>
+type _IsAtMostNaturalNumber<
   Lhs extends string,
   Rhs extends string,
   LA extends readonly Digit[] = [],
   RA extends readonly Digit[] = []
 > = Lhs extends `${infer LH extends Digit}${infer LL}`
   ? Rhs extends `${infer RH extends Digit}${infer RL}`
-    ? _LteNaturalNumber<LL, RL, [LH, ...LA], [RH, ...RA]>
+    ? _IsAtMostNaturalNumber<LL, RL, [LH, ...LA], [RH, ...RA]>
     : false
   : Rhs extends `${infer RH extends Digit}${infer RL}`
   ? true
-  : _LteNaturalNumberLexicographic<LA, RA>
+  : _IsAtMostNaturalNumberLexicographic<LA, RA>
 /**
  * @example
- * _LteNaturalNumberLexicographic<['4'], ['4']> is equivalent to true
- * _LteNaturalNumberLexicographic<['1', '2'], ['4']> is equivalent to true
- * _LteNaturalNumberLexicographic<['1', '2'], ['1']> is equivalent to false
- * _LteNaturalNumberLexicographic<['1', '2'], ['1', '5']> is equivalent to true
- * _LteNaturalNumberLexicographic<['1', '2'], ['0', '5']> is equivalent to false
- * _LteNaturalNumberLexicographic<[], ['0']> is equivalent to true
+ * _IsAtMostNaturalNumberLexicographic<['4'], ['4']> is equivalent to true
+ * _IsAtMostNaturalNumberLexicographic<['1', '2'], ['4']> is equivalent to true
+ * _IsAtMostNaturalNumberLexicographic<['1', '2'], ['1']> is equivalent to false
+ * _IsAtMostNaturalNumberLexicographic<['1', '2'], ['1', '5']> is equivalent to true
+ * _IsAtMostNaturalNumberLexicographic<['1', '2'], ['0', '5']> is equivalent to false
+ * _IsAtMostNaturalNumberLexicographic<[], ['0']> is equivalent to true
  */
-type _LteNaturalNumberLexicographic<Lhs extends readonly Digit[], Rhs extends readonly Digit[]> = Lhs extends readonly [
-  infer LH extends Digit,
-  ...infer LL extends readonly Digit[]
-]
+type _IsAtMostNaturalNumberLexicographic<
+  Lhs extends readonly Digit[],
+  Rhs extends readonly Digit[]
+> = Lhs extends readonly [infer LH extends Digit, ...infer LL extends readonly Digit[]]
   ? Rhs extends readonly [infer RH extends Digit, ...infer RL extends readonly Digit[]]
-    ? Equals<LH, RH, _LteNaturalNumberLexicographic<LL, RL>, LtDigit<LH, RH>>
+    ? Equals<LH, RH, _IsAtMostNaturalNumberLexicographic<LL, RL>, IsLessThanDigit<LH, RH>>
     : false
   : true
 
-type LtDigit<Lhs extends Digit, Rhs extends Digit> = Lhs extends DigitToRangeUntil[Rhs] ? true : false
+type IsLessThanDigit<Lhs extends Digit, Rhs extends Digit> = Lhs extends DigitToRangeUntil[Rhs] ? true : false
 
 /**
  * @example

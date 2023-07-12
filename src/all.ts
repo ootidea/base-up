@@ -36,7 +36,12 @@ export {
 } from './collectionUpdate'
 export { isEmpty, includes, every, everyValues, isNotEmpty, isUnique } from './collectionPredicate'
 export { slideWindow, cartesianProductOf, permutationOf, PrefixesOf, prefixesOf } from './combination'
-export { lexicographicLt, lexicographicLte, lteToComparator, ltToComparator } from './comparison'
+export {
+  isLexicographicLessThan,
+  isLexicographicAtMost,
+  createComparatorFromIsAtMost,
+  createComparatorFromIsLessThan,
+} from './comparison'
 export {
   filter,
   firstOf,

@@ -3,7 +3,7 @@ import { MaxLengthArray } from './Array/MaxLengthArray'
 import { MinLengthArray, NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
 import { IsTuple, SplitTupleAroundRest, Tuple } from './Array/other'
 import { PrefixesOf } from './combination'
-import { ltToComparator } from './comparison'
+import { createComparatorFromIsLessThan } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
 import { newMap, NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
@@ -369,13 +369,14 @@ export function sortBy<const T extends Tuple, U>(
   self: T,
   by: (_: T[number]) => U
 ): FixedLengthArray<T['length'], T[number]> {
-  return [...self].sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs))) as any
+  return [...self].sort(createComparatorFromIsLessThan((lhs, rhs) => by(lhs) < by(rhs))) as any
 }
 export namespace sortBy {
   export function defer<E, U>(
     by: (_: E) => U
   ): <const T extends readonly E[]>(self: T) => FixedLengthArray<T['length'], E> {
-    return (self: readonly E[]) => [...self].sort(ltToComparator((lhs, rhs) => by(lhs) < by(rhs))) as any
+    return (self: readonly E[]) =>
+      [...self].sort(createComparatorFromIsLessThan((lhs, rhs) => by(lhs) < by(rhs))) as any
   }
 }
 
