@@ -1,5 +1,6 @@
 import { describe, expect, expectTypeOf, test } from 'vitest'
-import { allKeysOf, entriesOf, keysOf, numberKeysOf } from './projection'
+import { assertTypeEquality } from './all'
+import { AllKeysOf, allKeysOf, entriesOf, keysOf, numberKeysOf } from './projection'
 
 test('keysOf', () => {
   expect(keysOf({ name: 'Bob', age: 30 })).toStrictEqual(['name', 'age'])
@@ -26,6 +27,29 @@ test('keysOf', () => {
   expect(keysOf(Symbol())).toStrictEqual([])
   expect(keysOf(new Date())).toStrictEqual([])
   expect(keysOf(new Set())).toStrictEqual([])
+})
+
+test('AllKeysOf', () => {
+  assertTypeEquality<AllKeysOf<{ name: string; age: number }>, Set<'name' | 'age'>>()
+  assertTypeEquality<AllKeysOf<{ 0: string; 1: number }>, Set<'0' | '1'>>()
+  assertTypeEquality<AllKeysOf<{ [Symbol.iterator]: boolean }>, Set<typeof Symbol.iterator>>()
+  assertTypeEquality<AllKeysOf<{ name?: string; age?: number }>, Set<'name' | 'age'>>()
+  assertTypeEquality<AllKeysOf<{}>, Set<never>>()
+  assertTypeEquality<AllKeysOf<Record<number, any>>, Set<`${number}`>>()
+
+  assertTypeEquality<AllKeysOf<Date>, Set<string | symbol>>()
+  class A {
+    a = 1
+  }
+  assertTypeEquality<AllKeysOf<A>, Set<string | symbol>>()
+
+  assertTypeEquality<AllKeysOf<[0, 1]>, Set<string | symbol>>()
+  assertTypeEquality<AllKeysOf<() => any>, Set<string | symbol>>()
+  assertTypeEquality<AllKeysOf<object>, Set<string | symbol>>()
+  assertTypeEquality<AllKeysOf<string>, Set<string | symbol>>()
+  assertTypeEquality<AllKeysOf<1 | 2>, Set<string | symbol>>()
+  assertTypeEquality<AllKeysOf<any>, Set<string | symbol>>()
+  assertTypeEquality<AllKeysOf<never>, never>()
 })
 
 describe('allKeysOf', () => {

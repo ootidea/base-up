@@ -1,6 +1,7 @@
 import { MinLengthOf, Tuple } from './Array/other'
 import { RangeUntil } from './generate'
 import { Interpolable } from './string/other'
+import { NonClassValue } from './type'
 import { Equals } from './typePredicate'
 
 /**
@@ -50,6 +51,13 @@ type ToStringElements<T extends Tuple> = T extends readonly [infer H extends Int
   ? [`${H}`, ...ToStringElements<L>]
   : []
 
+export type AllKeysOf<T> = Equals<T, any> extends true
+  ? Set<string | symbol>
+  : T extends Record<keyof any, NonClassValue>
+  ? Set<ToStringKey<keyof T>>
+  : Set<string | symbol>
+type ToStringKey<K extends keyof any> = K extends number ? `${K}` : K
+
 /**
  * Get all keys of an object including inherited keys.
  * It behaves similarly to the keyof operator.
@@ -59,7 +67,7 @@ type ToStringElements<T extends Tuple> = T extends readonly [infer H extends Int
  * allKeysOf({ 0: false, 1: true }) returns new Set(['0', '1'])
  * allKeysOf({ [Symbol.iterator]: false }) returns new Set([Symbol.iterator])
  */
-export function allKeysOf(objectLike: unknown): Set<string | symbol> {
+export function allKeysOf<const T>(objectLike: T): AllKeysOf<T> {
   const result: Set<string | symbol> = new Set()
   const basePrototype = Object.getPrototypeOf({})
 
@@ -75,7 +83,7 @@ export function allKeysOf(objectLike: unknown): Set<string | symbol> {
     }
     current = Object.getPrototypeOf(current)
   }
-  return result
+  return result as any
 }
 
 /**
