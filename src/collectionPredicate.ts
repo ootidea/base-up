@@ -1,7 +1,6 @@
 import { NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
 import { Tuple } from './Array/other'
 import { ReadonlyNonEmptyMap } from './Map'
-import { valuesOf } from './projection'
 import { ReadonlyNonEmptySet } from './Set'
 
 export function isEmpty(self: []): true
@@ -82,16 +81,12 @@ export namespace every {
     }
     return true
   }
+
+  export function Set<T, U extends T>(self: ReadonlySet<T>, f: (value: T) => value is U): self is ReadonlySet<U> {
+    return every.Iterable(self, f)
+  }
 }
 
-export function everyValues<K extends keyof any, T, U extends T>(
-  self: Record<K, T>,
-  f: (value: T) => value is U
-): self is Record<K, U>
-export function everyValues<K extends keyof any, T>(self: Record<K, T>, f: (value: T) => boolean): boolean
-export function everyValues<K extends keyof any, T>(self: Record<K, T>, f: (value: T) => boolean): boolean {
-  return valuesOf(self).every(f)
-}
 export namespace everyValues {
   export function Map<K, T, U extends T>(
     self: ReadonlyMap<K, T>,

@@ -1,5 +1,5 @@
 import { expectTypeOf, test } from 'vitest'
-import { assertTypeEquality, Branded, DiscriminatedUnion, IsClass, Simplify, ToBasePrimitiveType } from './type'
+import { assertTypeEquality, Branded, DiscriminatedUnion, Simplify, ToBasePrimitiveType } from './type'
 import { Equals } from './typePredicate'
 
 test('Branded', () => {
@@ -78,53 +78,4 @@ test('DiscriminatedUnion', () => {
     DiscriminatedUnion<{ [Symbol.iterator]: { radius: number } }>,
     { type: typeof Symbol.iterator; radius: number }
   >()
-})
-
-test('IsClass', () => {
-  assertTypeEquality<IsClass<Date>, true>()
-  assertTypeEquality<IsClass<RegExp>, true>()
-  assertTypeEquality<IsClass<Blob>, true>()
-  assertTypeEquality<IsClass<Error>, true>()
-  assertTypeEquality<IsClass<URL>, true>()
-  assertTypeEquality<IsClass<URLSearchParams>, true>()
-  assertTypeEquality<IsClass<Number>, true>()
-  assertTypeEquality<IsClass<ArrayBuffer>, true>()
-  assertTypeEquality<IsClass<Int8Array>, true>()
-  assertTypeEquality<IsClass<HTMLElement>, true>()
-
-  class Empty {}
-  assertTypeEquality<IsClass<Empty>, true>()
-
-  assertTypeEquality<IsClass<Set<any>>, true>()
-  assertTypeEquality<IsClass<WeakSet<any>>, true>()
-  assertTypeEquality<IsClass<Map<any, any>>, true>()
-  assertTypeEquality<IsClass<Promise<any>>, true>()
-
-  // assertTypeEquality<IsClass<JSON>, false>()
-  // assertTypeEquality<IsClass<Math>, false>()
-  // assertTypeEquality<IsClass<Reflect>, false>()
-
-  assertTypeEquality<IsClass<object>, true>()
-
-  assertTypeEquality<IsClass<Function>, false>()
-  assertTypeEquality<IsClass<any>, false>()
-  assertTypeEquality<IsClass<unknown>, false>()
-  assertTypeEquality<IsClass<never>, false>()
-  assertTypeEquality<IsClass<void>, false>()
-  assertTypeEquality<IsClass<undefined>, false>()
-  assertTypeEquality<IsClass<null>, false>()
-  assertTypeEquality<IsClass<symbol>, false>()
-  assertTypeEquality<IsClass<string>, false>()
-  assertTypeEquality<IsClass<number>, false>()
-  assertTypeEquality<IsClass<bigint>, false>()
-  assertTypeEquality<IsClass<boolean>, false>()
-  assertTypeEquality<IsClass<0>, false>()
-  assertTypeEquality<IsClass<''>, false>()
-  assertTypeEquality<IsClass<[]>, false>()
-  assertTypeEquality<IsClass<{}>, false>()
-  assertTypeEquality<IsClass<() => any>, false>()
-
-  assertTypeEquality<IsClass<null | Date>, false>()
-  assertTypeEquality<IsClass<Error | Date>, false>()
-  assertTypeEquality<IsClass<Date & {}>, true>()
 })
