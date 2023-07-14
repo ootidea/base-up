@@ -1,7 +1,7 @@
 import { expect, expectTypeOf, test } from 'vitest'
 import { setOf } from '../Set'
 import { assertTypeEquality } from '../type'
-import { IsTuple, MinLengthOf, shuffle, UnionToTuple } from './other'
+import { IsTuple, MinLengthOf, shuffle, SplitTupleAroundRest, UnionToTuple } from './other'
 
 test('shuffle', () => {
   expect(setOf(...shuffle([1, 2, 3]))).toStrictEqual(setOf(1, 2, 3))
@@ -54,4 +54,14 @@ test('MinLengthOf', () => {
   assertTypeEquality<MinLengthOf<readonly 1[]>, 0>()
   assertTypeEquality<MinLengthOf<any>, 0>()
   assertTypeEquality<MinLengthOf<never>, never>()
+})
+
+test('SplitTupleAroundRest', () => {
+  assertTypeEquality<SplitTupleAroundRest<[1, ...2[], 3]>, { before: [1]; rest: 2[]; after: [3] }>()
+  assertTypeEquality<SplitTupleAroundRest<[...1[], 2, 3]>, { before: []; rest: 1[]; after: [2, 3] }>()
+  assertTypeEquality<SplitTupleAroundRest<[1, 2?, ...3[]]>, { before: [1, 2?]; rest: 3[]; after: [] }>()
+  assertTypeEquality<SplitTupleAroundRest<string[]>, { before: []; rest: string[]; after: [] }>()
+  assertTypeEquality<SplitTupleAroundRest<any>, { before: []; rest: any[]; after: [] }>()
+  assertTypeEquality<SplitTupleAroundRest<[1, ...any]>, { before: [1]; rest: any[]; after: [] }>()
+  assertTypeEquality<SplitTupleAroundRest<never>, never>()
 })

@@ -76,18 +76,21 @@ export type UnionToTuple<T> = UnionToIntersection<T extends T ? (_: T) => T : ne
  * SplitTupleAroundRest<Date[]> equals { before: [], rest: Date[], after: [] }
  * SplitTupleAroundRest<[]> equals { before: [], rest: [], after: [] }
  */
-export type SplitTupleAroundRest<
+export type SplitTupleAroundRest<T extends Tuple> = Equals<T, any> extends true
+  ? { before: []; rest: any[]; after: [] }
+  : _SplitTupleAroundRest<T>
+export type _SplitTupleAroundRest<
   T extends Tuple,
   Before extends Tuple = [],
   After extends Tuple = []
 > = T extends readonly [infer H, ...infer L]
-  ? SplitTupleAroundRest<L, [...Before, H], After>
+  ? _SplitTupleAroundRest<L, [...Before, H], After>
   : T extends readonly [...infer L, infer H]
-  ? SplitTupleAroundRest<L, Before, [H, ...After]>
+  ? _SplitTupleAroundRest<L, Before, [H, ...After]>
   : IsTuple<T> extends false
   ? { before: Before; rest: T; after: After }
   : T extends readonly []
   ? { before: Before; rest: T; after: After }
   : T extends readonly [(infer H)?, ...infer L]
-  ? SplitTupleAroundRest<L, [...Before, H?], After>
+  ? _SplitTupleAroundRest<L, [...Before, H?], After>
   : never
