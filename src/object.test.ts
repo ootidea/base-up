@@ -48,12 +48,13 @@ test('AtLeastOneProperty', () => {
 
 test('CountProperties', () => {
   assertTypeEquality<CountProperties<{ name: string; age: number }>, 2>()
-  assertTypeEquality<CountProperties<{ name?: string; age?: number }>, 2>()
+  assertTypeEquality<CountProperties<{ name?: string }>, 0 | 1>()
   assertTypeEquality<CountProperties<{ none: never }>, 1>()
   assertTypeEquality<CountProperties<{}>, 0>()
   assertTypeEquality<CountProperties<Record<never, any>>, 0>()
   assertTypeEquality<CountProperties<{ size: number } | { name: string; age: number }>, 1 | 2>()
   assertTypeEquality<CountProperties<Record<string, any>>, number>()
+  assertTypeEquality<CountProperties<Record<`${number}`, any>>, number>()
   assertTypeEquality<CountProperties<Record<string | 0, any>>, number>()
   assertTypeEquality<CountProperties<any>, number>()
   assertTypeEquality<CountProperties<never>, never>()
