@@ -66,7 +66,7 @@ export namespace takeWhile {
  * FirstOf<[...string[], number]> equals string | number
  * @example
  * FirstOf<[Date] | [Date, boolean]> equals Date
- * FirstOf<[Date?, boolean?]> equals Date | undefined
+ * FirstOf<[Date?, boolean?]> equals Date | boolean | undefined
  */
 export type FirstOf<T extends Tuple> = T extends readonly [infer First, ...any]
   ? First
@@ -74,7 +74,11 @@ export type FirstOf<T extends Tuple> = T extends readonly [infer First, ...any]
   ? _FirstOf<U, Last>
   : T extends readonly []
   ? undefined
-  : T[0] | undefined
+  : T[number][] extends T
+  ? T[number] | undefined
+  : T extends readonly [(infer H)?, ...infer L]
+  ? H | FirstOf<L>
+  : never
 type _FirstOf<T extends Tuple, L> = T extends readonly []
   ? L
   : T extends readonly [...infer T2, infer L2]
