@@ -11,10 +11,12 @@ import { Simplify } from './type'
  * @example
  * RequiredKeysOf<[0, 1?, 2?]> is equivalent to '0' | keyof []
  */
-export type RequiredKeysOf<T> = keyof T extends infer K extends keyof T
-  ? K extends K
-    ? T extends Record<K, any>
-      ? K
+export type RequiredKeysOf<T> = T extends T
+  ? keyof T extends infer K extends keyof T
+    ? K extends K
+      ? T extends Record<K, any>
+        ? K
+        : never
       : never
     : never
   : never
@@ -27,11 +29,13 @@ export type RequiredKeysOf<T> = keyof T extends infer K extends keyof T
  * @example Optional elements of a tuple
  * OptionalKeysOf<[0, 1?, 2?]> is equivalent to '1' | '2'
  */
-export type OptionalKeysOf<T> = keyof T extends infer K extends keyof T
-  ? K extends K
-    ? T extends Record<K, any>
-      ? never
-      : K
+export type OptionalKeysOf<T> = T extends T
+  ? keyof T extends infer K extends keyof T
+    ? K extends K
+      ? T extends Record<K, any>
+        ? never
+        : K
+      : never
     : never
   : never
 

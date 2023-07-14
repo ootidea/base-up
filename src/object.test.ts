@@ -14,6 +14,8 @@ test('RequiredKeysOf', () => {
   assertTypeEquality<RequiredKeysOf<Record<symbol, unknown>>, symbol>()
   assertTypeEquality<RequiredKeysOf<Record<string | number, unknown>>, string | number>()
   assertTypeEquality<RequiredKeysOf<Record<`#${number}`, unknown>>, `#${number}`>()
+
+  assertTypeEquality<RequiredKeysOf<{ value: string } | { 0: boolean }>, 'value' | 0>()
 })
 
 test('OptionalKeysOf', () => {
@@ -29,6 +31,8 @@ test('OptionalKeysOf', () => {
   assertTypeEquality<OptionalKeysOf<Partial<Record<string, bigint>>>, never>()
 
   assertTypeEquality<OptionalKeysOf<[0, 1?, 2?]>, '1' | '2'>()
+
+  assertTypeEquality<OptionalKeysOf<{ value?: string } | { 0?: boolean }>, 'value' | 0>()
 })
 
 test('AtLeastOneProperty', () => {
