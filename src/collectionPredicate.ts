@@ -67,12 +67,15 @@ export namespace isNotEmpty {
 }
 
 export function every<T>(self: [], f: (value: T) => boolean): true
+export function every<T, U extends T>(self: T[], f: (value: T) => value is U): self is U[]
 export function every<T, U extends T>(self: readonly T[], f: (value: T) => value is U): self is readonly U[]
 export function every<T>(self: readonly T[], f: (value: T) => boolean): boolean
 export function every<T>(self: readonly T[], f: (value: T) => boolean): boolean {
   return self.every(f)
 }
 export namespace every {
+  export function Iterable<T, U extends T>(self: Set<T>, f: (value: T) => value is U): self is Set<U>
+  export function Iterable<T, U extends T>(self: ReadonlySet<T>, f: (value: T) => value is U): self is ReadonlySet<U>
   export function Iterable<T, U extends T>(self: Iterable<T>, f: (value: T) => value is U): self is Iterable<U>
   export function Iterable<T>(self: Iterable<T>, f: (value: T) => boolean): boolean
   export function Iterable<T>(self: Iterable<T>, f: (value: T) => boolean): boolean {
@@ -81,13 +84,10 @@ export namespace every {
     }
     return true
   }
-
-  export function Set<T, U extends T>(self: ReadonlySet<T>, f: (value: T) => value is U): self is ReadonlySet<U> {
-    return every.Iterable(self, f)
-  }
 }
 
 export namespace everyValues {
+  export function Map<K, T, U extends T>(self: Map<K, T>, f: (value: T) => value is U): self is Map<K, U>
   export function Map<K, T, U extends T>(
     self: ReadonlyMap<K, T>,
     f: (value: T) => value is U
