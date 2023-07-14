@@ -53,6 +53,7 @@ test('SplitIntoWords', () => {
   assertTypeEquality<SplitIntoWords<'block__element--modifier'>, ['block', 'element', 'modifier']>()
   assertTypeEquality<SplitIntoWords<'XMLHttpRequest'>, ['XML', 'Http', 'Request']>()
   assertTypeEquality<SplitIntoWords<'innerHTML'>, ['inner', 'HTML']>()
+  assertTypeEquality<SplitIntoWords<'HTML'>, ['HTML']>()
   assertTypeEquality<SplitIntoWords<'getXCoordinate'>, ['get', 'X', 'Coordinate']>()
 
   assertTypeEquality<SplitIntoWords<'camelCase' | 'PascalCase'>, ['camel', 'Case'] | ['Pascal', 'Case']>()
@@ -72,6 +73,7 @@ test('splitIntoWords', () => {
   expect(splitIntoWords('block__element--modifier')).toStrictEqual(['block', 'element', 'modifier'])
   expect(splitIntoWords('XMLHttpRequest')).toStrictEqual(['XML', 'Http', 'Request'])
   expect(splitIntoWords('innerHTML')).toStrictEqual(['inner', 'HTML'])
+  expect(splitIntoWords('HTML')).toStrictEqual(['HTML'])
   expect(splitIntoWords('getXCoordinate')).toStrictEqual(['get', 'X', 'Coordinate'])
 
   expect(splitIntoWords('')).toStrictEqual([])
