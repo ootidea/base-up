@@ -5,24 +5,24 @@ import { nullish } from './type'
  * Determines whether the types are strictly the same or not.
  * This was implemented with reference to: {@link https://github.com/microsoft/TypeScript/issues/27024#issuecomment-421529650}
  * @example
- * Equals<123, 123> is equivalent to true
- * Equals<123, 456> is equivalent to false
- * Equals<123, number> is equivalent to false
- * Equals<void, undefined> is equivalent to false
- * Equals<any, unknown> is equivalent to false
- * Equals<never, any> is equivalent to false
+ * Equals<123, 123> equals true
+ * Equals<123, 456> equals false
+ * Equals<123, number> equals false
+ * Equals<void, undefined> equals false
+ * Equals<any, unknown> equals false
+ * Equals<never, any> equals false
  * @example
- * Equals<'a' | 'b', 'b' | 'a'> is equivalent to true
- * Equals<1, 1 | never> is equivalent to true
- * Equals<boolean, true | false> is equivalent to true
+ * Equals<'a' | 'b', 'b' | 'a'> equals true
+ * Equals<1, 1 | never> equals true
+ * Equals<boolean, true | false> equals true
  * @example
- * Equals<string & {}, string> is equivalent to false
- * Equals<string & {}, {}> is equivalent to false
+ * Equals<string & {}, string> equals false
+ * Equals<string & {}, {}> equals false
  * @example
- * Equals<[a: string], [b: string]> is equivalent to true
- * Equals<[string?], [] | [string]> is equivalent to false
+ * Equals<[a: string], [b: string]> equals true
+ * Equals<[string?], [] | [string]> equals false
  * @example
- * Equals<{}, {}> is equivalent to true
+ * Equals<{}, {}> equals true
  */
 export type Equals<T, U, Then = true, Else = false> = (<R>() => R extends T ? 1 : 2) extends <R>() => R extends U
   ? 1
@@ -45,12 +45,12 @@ export namespace equals {
 /**
  * Determines whether the type is one of the types in the tuple.
  * @example
- * IsOneOf<string, [string, number, bigint]> is equivalent to true
- * IsOneOf<string, [number, bigint]> is equivalent to false
- * IsOneOf<string, [any, unknown, never]> is equivalent to false
- * IsOneOf<string, [string | number]> is equivalent to false
- * IsOneOf<'text', [string]> is equivalent to false
- * IsOneOf<any, []> is equivalent to false
+ * IsOneOf<string, [string, number, bigint]> equals true
+ * IsOneOf<string, [number, bigint]> equals false
+ * IsOneOf<string, [any, unknown, never]> equals false
+ * IsOneOf<string, [string | number]> equals false
+ * IsOneOf<'text', [string]> equals false
+ * IsOneOf<any, []> equals false
  */
 export type IsOneOf<T, U extends Tuple, Then = true, Else = false> = U extends readonly [infer H, ...infer L]
   ? Equals<T, H> extends true
@@ -158,7 +158,7 @@ export function isInstanceOf<T extends abstract new (..._: any) => any>(
 }
 export namespace isInstanceOf {
   /**
-   * isInstanceOf.defer(Class)(value) is equivalent to isInstanceOf(value, Class).
+   * isInstanceOf.defer(Class)(value) equals isInstanceOf(value, Class).
    * @example
    * isInstanceOf.defer(RegExp)(/a/) returns true
    */

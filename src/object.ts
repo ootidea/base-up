@@ -5,11 +5,11 @@ import { Simplify } from './type'
 
 /**
  * @example
- * RequiredKeysOf<{ a: 1; b?: 2; c: 3 }> is equivalent to 'a' | 'c'
- * RequiredKeysOf<{ value: string; 0: boolean }> is equivalent to 'value' | 0
- * RequiredKeysOf<{ a?: 1 }> is equivalent to never
+ * RequiredKeysOf<{ a: 1; b?: 2; c: 3 }> equals 'a' | 'c'
+ * RequiredKeysOf<{ value: string; 0: boolean }> equals 'value' | 0
+ * RequiredKeysOf<{ a?: 1 }> equals never
  * @example
- * RequiredKeysOf<[0, 1?, 2?]> is equivalent to '0' | keyof []
+ * RequiredKeysOf<[0, 1?, 2?]> equals '0' | keyof []
  */
 export type RequiredKeysOf<T> = T extends T
   ? keyof T extends infer K extends keyof T
@@ -23,11 +23,11 @@ export type RequiredKeysOf<T> = T extends T
 
 /**
  * @example
- * OptionalKeysOf<{ a: 1; b?: 2; c: 3 }> is equivalent to 'b'
- * OptionalKeysOf<{ value?: string; 0?: boolean }> is equivalent to 'value' | 0
- * OptionalKeysOf<{ a: 1 }> is equivalent to never
+ * OptionalKeysOf<{ a: 1; b?: 2; c: 3 }> equals 'b'
+ * OptionalKeysOf<{ value?: string; 0?: boolean }> equals 'value' | 0
+ * OptionalKeysOf<{ a: 1 }> equals never
  * @example Optional elements of a tuple
- * OptionalKeysOf<[0, 1?, 2?]> is equivalent to '1' | '2'
+ * OptionalKeysOf<[0, 1?, 2?]> equals '1' | '2'
  */
 export type OptionalKeysOf<T> = T extends T
   ? keyof T extends infer K extends keyof T
@@ -41,20 +41,20 @@ export type OptionalKeysOf<T> = T extends T
 
 /**
  * @example
- * AtLeastOneProperty<{ a: 1; b?: 2; c: 3 }> is equivalent to { a: 1; b?: 2; c?: 3 } | { a?: 1; b?: 2; c: 3 }
- * AtLeastOneProperty<{ a: 1; b?: 2 }> is equivalent to { a: 1; b?: 2 }
- * AtLeastOneProperty<{ b?: 2 }> is equivalent to never
- * AtLeastOneProperty<{}> is equivalent to never
+ * AtLeastOneProperty<{ a: 1; b?: 2; c: 3 }> equals { a: 1; b?: 2; c?: 3 } | { a?: 1; b?: 2; c: 3 }
+ * AtLeastOneProperty<{ a: 1; b?: 2 }> equals { a: 1; b?: 2 }
+ * AtLeastOneProperty<{ b?: 2 }> equals never
+ * AtLeastOneProperty<{}> equals never
  */
 export type AtLeastOneProperty<T> = Simplify<Partial<T> & { [K in RequiredKeysOf<T>]: Pick<T, K> }[RequiredKeysOf<T>]>
 
 /**
  * @example
- * CountProperties<{ name: string; age: number }> is equivalent to 2
- * CountProperties<{ name?: string; age?: number }> is equivalent to 2
- * CountProperties<{ none: never }> is equivalent to 1
- * CountProperties<{}> is equivalent to 0
- * CountProperties<Record<never, any>> is equivalent to 0
+ * CountProperties<{ name: string; age: number }> equals 2
+ * CountProperties<{ name?: string; age?: number }> equals 2
+ * CountProperties<{ none: never }> equals 1
+ * CountProperties<{}> equals 0
+ * CountProperties<Record<never, any>> equals 0
  * @example
  * assertTypeEquality<CountProperties<{ size: number } | { name: string; age: number }>, 1 | 2>()
  * assertTypeEquality<CountProperties<Record<string, any>, number>()

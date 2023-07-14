@@ -7,20 +7,20 @@ import { Lazy, Unlazy } from './type'
 
 /**
  * @example
- * RangeUntil<3> is equivalent to [0, 1, 2]
- * RangeUntil<2, 5> is equivalent to [2, 3, 4]
- * RangeUntil<5, 2> is equivalent to [5, 4, 3]
- * RangeUntil<7, 7> is equivalent to []
+ * RangeUntil<3> equals [0, 1, 2]
+ * RangeUntil<2, 5> equals [2, 3, 4]
+ * RangeUntil<5, 2> equals [5, 4, 3]
+ * RangeUntil<7, 7> equals []
  * @example
- * RangeUntil<-3, 2> is equivalent to [-3, -2, -1, 0, 1]
- * RangeUntil<3, -2> is equivalent to [3, 2, 1, 0, -1]
- * RangeUntil<-1, -3> is equivalent to [-1, -2]
- * RangeUntil<-3, -1> is equivalent to [-3, -2]
+ * RangeUntil<-3, 2> equals [-3, -2, -1, 0, 1]
+ * RangeUntil<3, -2> equals [3, 2, 1, 0, -1]
+ * RangeUntil<-1, -3> equals [-1, -2]
+ * RangeUntil<-3, -1> equals [-3, -2]
  * @example
- * RangeUntil<2 | -2> is equivalent to [0, 1] | [0, -1]
- * RangeUntil<1, 3 | 5> is equivalent to [1, 2] | [1, 2, 3, 4]
- * RangeUntil<0 | 2, 4> is equivalent to [0, 1, 2, 3] | [2, 3]
- * RangeUntil<number> is equivalent to number[]
+ * RangeUntil<2 | -2> equals [0, 1] | [0, -1]
+ * RangeUntil<1, 3 | 5> equals [1, 2] | [1, 2, 3, 4]
+ * RangeUntil<0 | 2, 4> equals [0, 1, 2, 3] | [2, 3]
+ * RangeUntil<number> equals number[]
  */
 export type RangeUntil<From extends number, To extends number | undefined = undefined> = To extends number
   ? number extends From
@@ -46,20 +46,20 @@ export type RangeUntil<From extends number, To extends number | undefined = unde
 
 /**
  * @example
- * RangeThrough<3> is equivalent to [0, 1, 2, 3]
- * RangeThrough<2, 5> is equivalent to [2, 3, 4, 5]
- * RangeThrough<5, 2> is equivalent to [5, 4, 3, 2]
- * RangeThrough<7, 7> is equivalent to [7]
+ * RangeThrough<3> equals [0, 1, 2, 3]
+ * RangeThrough<2, 5> equals [2, 3, 4, 5]
+ * RangeThrough<5, 2> equals [5, 4, 3, 2]
+ * RangeThrough<7, 7> equals [7]
  * @example
- * RangeThrough<-3, 2> is equivalent to [-3, -2, -1, 0, 1, 2]
- * RangeThrough<3, -2> is equivalent to [3, 2, 1, 0, -1, -2]
- * RangeThrough<-1, -3> is equivalent to [-1, -2, -3]
- * RangeThrough<-3, -1> is equivalent to [-3, -2, -1]
+ * RangeThrough<-3, 2> equals [-3, -2, -1, 0, 1, 2]
+ * RangeThrough<3, -2> equals [3, 2, 1, 0, -1, -2]
+ * RangeThrough<-1, -3> equals [-1, -2, -3]
+ * RangeThrough<-3, -1> equals [-3, -2, -1]
  * @example
- * RangeThrough<2 | -2> is equivalent to [0, 1, 2] | [0, -1, -2]
- * RangeThrough<1, 3 | 5> is equivalent to [1, 2, 3] | [1, 2, 3, 4, 5]
- * RangeThrough<0 | 2, 4> is equivalent to [0, 1, 2, 3, 4] | [2, 3, 4]
- * RangeThrough<number> is equivalent to [number, ...number[]] | [...number[], number]
+ * RangeThrough<2 | -2> equals [0, 1, 2] | [0, -1, -2]
+ * RangeThrough<1, 3 | 5> equals [1, 2, 3] | [1, 2, 3, 4, 5]
+ * RangeThrough<0 | 2, 4> equals [0, 1, 2, 3, 4] | [2, 3, 4]
+ * RangeThrough<number> equals [number, ...number[]] | [...number[], number]
  */
 export type RangeThrough<From extends number, To extends number | undefined = undefined> = To extends number
   ? number extends From
@@ -85,10 +85,10 @@ export type RangeThrough<From extends number, To extends number | undefined = un
 
 /**
  * @example
- * NaturalNumbersUntil<3> is equivalent to [0, 1, 2]
- * NaturalNumbersUntil<0> is equivalent to []
- * NaturalNumbersUntil<1 | 2> is equivalent to [0] | [0, 1]
- * NaturalNumbersUntil<number> is equivalent to number[]
+ * NaturalNumbersUntil<3> equals [0, 1, 2]
+ * NaturalNumbersUntil<0> equals []
+ * NaturalNumbersUntil<1 | 2> equals [0] | [0, 1]
+ * NaturalNumbersUntil<number> equals number[]
  */
 type NaturalNumbersUntil<N extends number> = number extends N
   ? number[]
@@ -101,10 +101,10 @@ type _NaturalNumbersUntil<N extends number, Acc extends Tuple> = Acc['length'] e
 
 /**
  * @example
- * NaturalNumbersThrough<3> is equivalent to [0, 1, 2, 3]
- * NaturalNumbersThrough<0> is equivalent to [0]
- * NaturalNumbersThrough<1 | 2> is equivalent to [0, 1] | [0, 1, 2]
- * NaturalNumbersThrough<number> is equivalent to number[]
+ * NaturalNumbersThrough<3> equals [0, 1, 2, 3]
+ * NaturalNumbersThrough<0> equals [0]
+ * NaturalNumbersThrough<1 | 2> equals [0, 1] | [0, 1, 2]
+ * NaturalNumbersThrough<number> equals number[]
  */
 type NaturalNumbersThrough<N extends number> = number extends N
   ? number[]
@@ -120,10 +120,10 @@ type _NaturalNumbersThrough<Size extends Tuple, R extends Tuple = []> = Size ext
 
 /**
  * @example
- * PositiveIntegersUntil<3> is equivalent to [1, 2]
- * PositiveIntegersUntil<1 | 2> is equivalent to [] | [1]
- * PositiveIntegersUntil<0> is equivalent to []
- * PositiveIntegersUntil<number> is equivalent to number[]
+ * PositiveIntegersUntil<3> equals [1, 2]
+ * PositiveIntegersUntil<1 | 2> equals [] | [1]
+ * PositiveIntegersUntil<0> equals []
+ * PositiveIntegersUntil<number> equals number[]
  */
 type PositiveIntegersUntil<N extends number> = number extends N
   ? number[]
@@ -136,10 +136,10 @@ type _PositiveIntegersUntil<Size extends Tuple, Acc extends Tuple> = Acc extends
 
 /**
  * @example
- * PositiveIntegersThrough<3> is equivalent to [1, 2, 3]
- * PositiveIntegersThrough<1 | 2> is equivalent to [1] | [1, 2]
- * PositiveIntegersThrough<0> is equivalent to []
- * PositiveIntegersThrough<number> is equivalent to number[]
+ * PositiveIntegersThrough<3> equals [1, 2, 3]
+ * PositiveIntegersThrough<1 | 2> equals [1] | [1, 2]
+ * PositiveIntegersThrough<0> equals []
+ * PositiveIntegersThrough<number> equals number[]
  */
 type PositiveIntegersThrough<N extends number> = number extends N
   ? number[]
@@ -154,9 +154,9 @@ type _PositiveIntegersThrough<Size extends Tuple, R extends Tuple = []> = Size e
 
 /**
  * @example
- * ToNegativeNumbers<[1, 2, -3]> is equivalent to [-1, -2, -3]
- * ToNegativeNumbers<[0]> is equivalent to [0]
- * ToNegativeNumbers<[]> is equivalent to []
+ * ToNegativeNumbers<[1, 2, -3]> equals [-1, -2, -3]
+ * ToNegativeNumbers<[0]> equals [0]
+ * ToNegativeNumbers<[]> equals []
  */
 type ToNegativeNumbers<T extends readonly number[]> = T extends readonly [
   infer H extends number,
@@ -298,14 +298,14 @@ type _Repeat<
 export namespace Repeat {
   /**
    * @example
-   * Repeat.String<'Abc', 2> is equivalent to 'AbcAbc'
-   * Repeat.String<'A', 0> is equivalent to ''
+   * Repeat.String<'Abc', 2> equals 'AbcAbc'
+   * Repeat.String<'A', 0> equals ''
    * @example
-   * Repeat.String<'A' | 'B', 2> is equivalent to 'AA' | 'AB' | 'BA' | 'BB'
-   * Repeat.String<'A', 1 | 3> is equivalent to 'A' | 'AAA'
+   * Repeat.String<'A' | 'B', 2> equals 'AA' | 'AB' | 'BA' | 'BB'
+   * Repeat.String<'A', 1 | 3> equals 'A' | 'AAA'
    * @example
-   * Repeat.String<string, 2> is equivalent to string
-   * Repeat.String<'A', number> is equivalent to string
+   * Repeat.String<string, 2> equals string
+   * Repeat.String<'A', number> equals string
    */
   export type String<S extends string, N extends number> = string extends S
     ? string

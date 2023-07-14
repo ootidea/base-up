@@ -68,18 +68,18 @@ export namespace flatten {
 
 /**
  * @example
- * Take<[0, 1, 2], 0> is equivalent to []
- * Take<[0, 1, 2], 1> is equivalent to [0]
- * Take<[0, 1, 2], 2> is equivalent to [0, 1]
- * Take<[0, 1, 2], 3> is equivalent to [0, 1, 2]
- * Take<[0, 1, 2], 4> is equivalent to [0, 1, 2]
+ * Take<[0, 1, 2], 0> equals []
+ * Take<[0, 1, 2], 1> equals [0]
+ * Take<[0, 1, 2], 2> equals [0, 1]
+ * Take<[0, 1, 2], 3> equals [0, 1, 2]
+ * Take<[0, 1, 2], 4> equals [0, 1, 2]
  * @example
- * Take<Date[], 2> is equivalent to [Date, Date] | [Date] | []
- * Take<[number, ...string[]], 2> is equivalent to [number, string] | [number]
- * Take<[...Date[], bigint], 2> is equivalent to [Date, Date] | [Date, bigint] | [bigint]
+ * Take<Date[], 2> equals [Date, Date] | [Date] | []
+ * Take<[number, ...string[]], 2> equals [number, string] | [number]
+ * Take<[...Date[], bigint], 2> equals [Date, Date] | [Date, bigint] | [bigint]
  * @example
- * Take<[0, 1, 2], 1 | 2> is equivalent to [0] | [0, 1]
- * Take<[0, 1, 2], number> is equivalent to [] | [0] | [0, 1] | [0, 1, 2]
+ * Take<[0, 1, 2], 1 | 2> equals [0] | [0, 1]
+ * Take<[0, 1, 2], number> equals [] | [0] | [0, 1] | [0, 1, 2]
  */
 export type Take<T extends Tuple, N extends number> = Equals<T, any> extends true
   ? MaxLengthArray<N, any>
@@ -149,17 +149,17 @@ export namespace take {
 
 /**
  * @example
- * Drop<[0, 1, 2], 0> is equivalent to [0, 1, 2]
- * Drop<[0, 1, 2], 1> is equivalent to [1, 2]
- * Drop<[0, 1, 2], 2> is equivalent to [2]
- * Drop<[0, 1, 2], 3> is equivalent to []
- * Drop<[0, 1, 2], 4> is equivalent to []
+ * Drop<[0, 1, 2], 0> equals [0, 1, 2]
+ * Drop<[0, 1, 2], 1> equals [1, 2]
+ * Drop<[0, 1, 2], 2> equals [2]
+ * Drop<[0, 1, 2], 3> equals []
+ * Drop<[0, 1, 2], 4> equals []
  * @example
- * Drop<[0, 1, 2], 1 | 2> is equivalent to [1, 2] | [2]
- * Drop<[0, 1, 2], number> is equivalent to [0, 1, 2] | [1, 2] | [2] | []
+ * Drop<[0, 1, 2], 1 | 2> equals [1, 2] | [2]
+ * Drop<[0, 1, 2], number> equals [0, 1, 2] | [1, 2] | [2] | []
  * @example
- * Drop<[number, ...string[]], 2> is equivalent to string[]
- * Drop<any, 1> is equivalent to any
+ * Drop<[number, ...string[]], 2> equals string[]
+ * Drop<any, 1> equals any
  */
 export type Drop<T extends Tuple, N extends number = 1> = N extends N
   ? number extends N
@@ -220,17 +220,17 @@ export namespace drop {
 
 /**
  * @example
- * DropLast<[0, 1, 2], 0> is equivalent to [0, 1, 2]
- * DropLast<[0, 1, 2], 1> is equivalent to [0, 1]
- * DropLast<[0, 1, 2], 2> is equivalent to [0]
- * DropLast<[0, 1, 2], 3> is equivalent to []
- * DropLast<[0, 1, 2], 4> is equivalent to []
+ * DropLast<[0, 1, 2], 0> equals [0, 1, 2]
+ * DropLast<[0, 1, 2], 1> equals [0, 1]
+ * DropLast<[0, 1, 2], 2> equals [0]
+ * DropLast<[0, 1, 2], 3> equals []
+ * DropLast<[0, 1, 2], 4> equals []
  * @example
- * DropLast<[0, 1, 2], 1 | 2> is equivalent to [0, 1] | [0]
- * DropLast<[0, 1, 2], number> is equivalent to [0, 1, 2] | [0, 1] | [0] | []
+ * DropLast<[0, 1, 2], 1 | 2> equals [0, 1] | [0]
+ * DropLast<[0, 1, 2], number> equals [0, 1, 2] | [0, 1] | [0] | []
  * @example
- * DropLast<[...number[], boolean], 2> is equivalent to number[]
- * DropLast<any, 1> is equivalent to any
+ * DropLast<[...number[], boolean], 2> equals number[]
+ * DropLast<any, 1> equals any
  */
 export type DropLast<T extends Tuple, N extends number = 1> = N extends N
   ? number extends N
@@ -265,13 +265,13 @@ export function dropLast<const T extends Tuple>(self: T, n: number = 1) {
 
 /**
  * @example
- * Join<['a', 'b', 'c']> is equivalent to 'a,b,c'
- * Join<['a', 'b', 'c'], ''> is equivalent to 'abc'
- * Join<['a', 'b', 'c'], '-' | '.'> is equivalent to 'a-b-c' | 'a.b.c'
- * Join<[], '.'> is equivalent to ''
+ * Join<['a', 'b', 'c']> equals 'a,b,c'
+ * Join<['a', 'b', 'c'], ''> equals 'abc'
+ * Join<['a', 'b', 'c'], '-' | '.'> equals 'a-b-c' | 'a.b.c'
+ * Join<[], '.'> equals ''
  * @example
- * Join<[1, 2, 3], ' + '> is equivalent to '1 + 2 + 3'
- * Join<[Date, RegExp]> is equivalent to string
+ * Join<[1, 2, 3], ' + '> equals '1 + 2 + 3'
+ * Join<[Date, RegExp]> equals string
  */
 export type Join<T extends Tuple, Separator extends string = ','> = Equals<T, any> extends true
   ? string
@@ -315,12 +315,12 @@ export namespace join {
 
 /**
  * @example
- * Split<'12:34', ':'> is equivalent to ['12', '34']
- * Split<'12:34:56', ':'> is equivalent to ['12', '34', '56']
- * Split<'12:34', '@'> is equivalent to ['12:34']
- * Split<'//', '/'> is equivalent to ['', '', '']
- * Split<'12:34', ''> is equivalent to ['1', '2', ':', '3', '4']
- * Split<`${number}:${number}`, ':'> is equivalent to [`${number}`, `${number}`]
+ * Split<'12:34', ':'> equals ['12', '34']
+ * Split<'12:34:56', ':'> equals ['12', '34', '56']
+ * Split<'12:34', '@'> equals ['12:34']
+ * Split<'//', '/'> equals ['', '', '']
+ * Split<'12:34', ''> equals ['1', '2', ':', '3', '4']
+ * Split<`${number}:${number}`, ':'> equals [`${number}`, `${number}`]
  */
 export type Split<T extends string, Separator extends string> = T extends `${infer H}${Separator}${infer L}`
   ? `${Separator}${L}` extends ''
@@ -382,12 +382,12 @@ export namespace sortBy {
 
 /**
  * @example
- * Reverse<[0, 1, 2]> is equivalent to [2, 1, 0]
- * Reverse<[]> is equivalent to []
- * Reverse<string[]> is equivalent to string[]
+ * Reverse<[0, 1, 2]> equals [2, 1, 0]
+ * Reverse<[]> equals []
+ * Reverse<string[]> equals string[]
  * @example
- * Reverse<[0, 1] | [0, 1, 2]> is equivalent to [1, 0] | [2, 1, 0]
- * Reverse<[0, 1, ...number[], 9]> is equivalent to [9, ...number[], 1, 0]
+ * Reverse<[0, 1] | [0, 1, 2]> equals [1, 0] | [2, 1, 0]
+ * Reverse<[0, 1, ...number[], 9]> equals [9, ...number[], 1, 0]
  */
 export type Reverse<T extends Tuple> = T extends readonly [infer First, ...infer R, infer Last]
   ? [Last, ...Reverse<R>, First]

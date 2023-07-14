@@ -3,15 +3,15 @@ import { Tuple } from './other'
 
 /**
  * @example
- * FixedLengthArray<3> is equivalent to [unknown, unknown, unknown]
+ * FixedLengthArray<3> equals [unknown, unknown, unknown]
  * @example
- * FixedLengthArray<3, boolean> is equivalent to [boolean, boolean, boolean]
+ * FixedLengthArray<3, boolean> equals [boolean, boolean, boolean]
  * @example
- * FixedLengthArray<0, Set<number>> is equivalent to []
+ * FixedLengthArray<0, Set<number>> equals []
  * @example
- * FixedLengthArray<2 | 3, any> is equivalent to [any, any] | [any, any, any]
+ * FixedLengthArray<2 | 3, any> equals [any, any] | [any, any, any]
  * @example
- * FixedLengthArray<number, bigint> is equivalent to bigint[]
+ * FixedLengthArray<number, bigint> equals bigint[]
  */
 export type FixedLengthArray<N extends number, T = unknown> = number extends N
   ? T[]
@@ -44,7 +44,7 @@ type DigitToFixedLengthArray<N extends Digit, T = unknown> = {
 
 /**
  * @example
- * DigitArrayToFixedLengthArray<['2']> is equivalent to [unknown, unknown]
+ * DigitArrayToFixedLengthArray<['2']> equals [unknown, unknown]
  * DigitArrayToFixedLengthArray<['0', '3']> ie equivalent to [unknown, unknown, unknown]
  * DigitArrayToFixedLengthArray<['1', '0']> ie equivalent to [unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown
  */

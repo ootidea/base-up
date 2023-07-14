@@ -57,42 +57,42 @@ export type Branded<T, Brand extends keyof any = typeof DEFAULT_BRAND> = T & Rec
 
 /**
  * @example
- * Simplify<{ name: string } & { age: number }> is equivalent to { name: string; age: number }
- * Simplify<{ a: 1 } | ({ b: 2 } & { c: 3 })> is equivalent to { a: 1 } | { b: 2; c: 3 }
+ * Simplify<{ name: string } & { age: number }> equals { name: string; age: number }
+ * Simplify<{ a: 1 } | ({ b: 2 } & { c: 3 })> equals { a: 1 } | { b: 2; c: 3 }
  */
 export type Simplify<T> = T extends T ? (IsOneOf<T, [any, unknown]> extends true ? T : { [K in keyof T]: T[K] }) : never
 
 /**
  * @example
- * UnionToIntersection<{ name: string } | { age: number }> is equivalent to { name: string } & { age: number }
- * UnionToIntersection<string[] | { 0: string }> is equivalent to string[] & { 0: string }
- * UnionToIntersection<number> is equivalent to number
- * UnionToIntersection<0 | 1> is equivalent to never
+ * UnionToIntersection<{ name: string } | { age: number }> equals { name: string } & { age: number }
+ * UnionToIntersection<string[] | { 0: string }> equals string[] & { 0: string }
+ * UnionToIntersection<number> equals number
+ * UnionToIntersection<0 | 1> equals never
  */
 export type UnionToIntersection<T> = (T extends T ? (arg: T) => any : never) extends (arg: infer U) => any ? U : never
 
 /**
  * @example
- * IsUnion<true | false> is equivalent to true
- * IsUnion<boolean> is equivalent to true
- * IsUnion<{ name: string } | { age: number }> is equivalent to true
- * IsUnion<{ name: string } & { age: number }> is equivalent to false
- * IsUnion<keyof any> is equivalent to true
- * IsUnion<any> is equivalent to false
- * IsUnion<never> is equivalent to false
- * IsUnion<never | number> is equivalent to false
+ * IsUnion<true | false> equals true
+ * IsUnion<boolean> equals true
+ * IsUnion<{ name: string } | { age: number }> equals true
+ * IsUnion<{ name: string } & { age: number }> equals false
+ * IsUnion<keyof any> equals true
+ * IsUnion<any> equals false
+ * IsUnion<never> equals false
+ * IsUnion<never | number> equals false
  */
 export type IsUnion<T, Then = true, Else = false> = Equals<T, UnionToIntersection<T>, Else, Then>
 
 /**
  * @example
- * ToBasePrimitiveType<'a'> is equivalent to string
- * ToBasePrimitiveType<1> is equivalent to number
- * ToBasePrimitiveType<true> is equivalent to boolean
- * ToBasePrimitiveType<undefined> is equivalent to undefined
- * ToBasePrimitiveType<null> is equivalent to null
+ * ToBasePrimitiveType<'a'> equals string
+ * ToBasePrimitiveType<1> equals number
+ * ToBasePrimitiveType<true> equals boolean
+ * ToBasePrimitiveType<undefined> equals undefined
+ * ToBasePrimitiveType<null> equals null
  * @example
- * ToBasePrimitiveType<1 | 'a'> is equivalent to number | string
+ * ToBasePrimitiveType<1 | 'a'> equals number | string
  */
 export type ToBasePrimitiveType<T> = T extends T
   ? IsOneOf<T, [any, never, boolean]> extends true
@@ -114,7 +114,7 @@ export type ToBasePrimitiveType<T> = T extends T
  * Utility for defining tagged union types.
  * @example
  * DiscriminatedUnion<{ Rect: { width: number; height: number }; Circle: { radius: number } }>
- * is equivalent to
+ * equals
  * { type: 'Rect'; width: number; height: number } | { type: 'Circle'; radius: number }
  */
 export type DiscriminatedUnion<T, D extends keyof any = 'type'> = {

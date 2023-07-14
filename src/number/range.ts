@@ -6,19 +6,19 @@ import { Digit, Infinity, Negate, NegativeInfinity, ToDigitArray } from './other
 
 /**
  * @example
- * IntegerRangeUntil<3> is equivalent to 0 | 1 | 2
- * IntegerRangeUntil<4, 8> is equivalent to 4 | 5 | 6 | 7
- * IntegerRangeUntil<5, 3> is equivalent to 5 | 4
+ * IntegerRangeUntil<3> equals 0 | 1 | 2
+ * IntegerRangeUntil<4, 8> equals 4 | 5 | 6 | 7
+ * IntegerRangeUntil<5, 3> equals 5 | 4
  * @example
- * IntegerRangeUntil<2, -2> is equivalent to 2 | 1 | 0 | -1
- * IntegerRangeUntil<-2, 2> is equivalent to -2 | -1 | 0 | 1
+ * IntegerRangeUntil<2, -2> equals 2 | 1 | 0 | -1
+ * IntegerRangeUntil<-2, 2> equals -2 | -1 | 0 | 1
  * @example
- * IntegerRangeUntil<1, 1> is equivalent to never
- * IntegerRangeUntil<0> is equivalent to never
+ * IntegerRangeUntil<1, 1> equals never
+ * IntegerRangeUntil<0> equals never
  * @example
- * IntegerRangeUntil<2 | 4> is equivalent to 0 | 1 | 2 | 3
- * IntegerRangeUntil<number, 9> is equivalent to number
- * IntegerRangeUntil<9, number> is equivalent to number
+ * IntegerRangeUntil<2 | 4> equals 0 | 1 | 2 | 3
+ * IntegerRangeUntil<number, 9> equals number
+ * IntegerRangeUntil<9, number> equals number
  */
 export type IntegerRangeUntil<N extends number, M extends number | undefined = undefined> = N extends N
   ? M extends M
@@ -42,19 +42,19 @@ export type IntegerRangeUntil<N extends number, M extends number | undefined = u
 
 /**
  * @example
- * IntegerRangeThrough<3> is equivalent to 0 | 1 | 2 | 3
- * IntegerRangeThrough<4, 8> is equivalent to 4 | 5 | 6 | 7 | 8
- * IntegerRangeThrough<5, 3> is equivalent to 5 | 4 | 3
+ * IntegerRangeThrough<3> equals 0 | 1 | 2 | 3
+ * IntegerRangeThrough<4, 8> equals 4 | 5 | 6 | 7 | 8
+ * IntegerRangeThrough<5, 3> equals 5 | 4 | 3
  * @example
- * IntegerRangeThrough<2, -2> is equivalent to 2 | 1 | 0 | -1 | -2
- * IntegerRangeThrough<-2, 2> is equivalent to -2 | -1 | 0 | 1 | 2
+ * IntegerRangeThrough<2, -2> equals 2 | 1 | 0 | -1 | -2
+ * IntegerRangeThrough<-2, 2> equals -2 | -1 | 0 | 1 | 2
  * @example
- * IntegerRangeThrough<1, 1> is equivalent to 1
- * IntegerRangeThrough<0> is equivalent to 0
+ * IntegerRangeThrough<1, 1> equals 1
+ * IntegerRangeThrough<0> equals 0
  * @example
- * IntegerRangeThrough<2 | 4> is equivalent to 0 | 1 | 2 | 3 | 4
- * IntegerRangeThrough<number, 9> is equivalent to number
- * IntegerRangeThrough<9, number> is equivalent to number
+ * IntegerRangeThrough<2 | 4> equals 0 | 1 | 2 | 3 | 4
+ * IntegerRangeThrough<number, 9> equals number
+ * IntegerRangeThrough<9, number> equals number
  */
 export type IntegerRangeThrough<N extends number, M extends number | undefined = undefined> = N extends N
   ? M extends M
@@ -92,10 +92,10 @@ export type DigitToRangeUntil = {
 /**
  * Generate a union type from 0 to the given number minus 1. It's orders of magnitude faster compared to a naive implementation.
  * @example
- * NaturalNumbersFrom0Until<0> is equivalent to never
- * NaturalNumbersFrom0Until<1> is equivalent to 0
- * NaturalNumbersFrom0Until<2> is equivalent to 0 | 1
- * NaturalNumbersFrom0Until<10000> is equivalent to 0 | 1 | 2 | ... | 9999
+ * NaturalNumbersFrom0Until<0> equals never
+ * NaturalNumbersFrom0Until<1> equals 0
+ * NaturalNumbersFrom0Until<2> equals 0 | 1
+ * NaturalNumbersFrom0Until<10000> equals 0 | 1 | 2 | ... | 9999
  */
 export type NaturalNumbersFrom0Until<N extends number> = ToNumber<_NaturalNumbersFrom0Until<ToDigitArray<N>>>
 type _NaturalNumbersFrom0Until<DigitArray extends readonly Digit[]> = DigitArray extends readonly [
@@ -111,10 +111,10 @@ type _NaturalNumbersFrom0Until<DigitArray extends readonly Digit[]> = DigitArray
 /**
  * Generate a union type from 0 to the given number. It's orders of magnitude faster compared to a naive implementation.
  * @example
- * NaturalNumbersFrom0Through<0> is equivalent to 0
- * NaturalNumbersFrom0Through<1> is equivalent to 1
- * NaturalNumbersFrom0Through<2> is equivalent to 0 | 1 | 2
- * NaturalNumbersFrom0Through<10000> is equivalent to 0 | 1 | 2 | ... | 10000
+ * NaturalNumbersFrom0Through<0> equals 0
+ * NaturalNumbersFrom0Through<1> equals 1
+ * NaturalNumbersFrom0Through<2> equals 0 | 1 | 2
+ * NaturalNumbersFrom0Through<10000> equals 0 | 1 | 2 | ... | 10000
  */
 export type NaturalNumbersFrom0Through<N extends number> = NaturalNumbersFrom0Until<N> | N
 

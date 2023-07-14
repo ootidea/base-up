@@ -84,18 +84,18 @@ export function capitalize<const T extends string>(self: T): Capitalize<T> {
  * Splits a string in formats like snake_case or PascalCase into words.
  * Words such as 'iPhone' are not correctly recognized.
  * @example
- * SplitIntoWords<''> is equivalent to []
- * SplitIntoWords<'kebab-case'> is equivalent to ['kebab', 'case']
- * SplitIntoWords<'snake_case'> is equivalent to ['snake', 'case']
- * SplitIntoWords<'PascalCase'> is equivalent to ['Pascal', 'Case']
- * SplitIntoWords<'camelCase'> is equivalent to ['camel', 'Case']
- * SplitIntoWords<'SCREAMING_SNAKE_CASE'> is equivalent to ['SCREAMING', 'SNAKE', 'CASE']
- * SplitIntoWords<'Title Case'> is equivalent to ['Title', 'Case']
+ * SplitIntoWords<''> equals []
+ * SplitIntoWords<'kebab-case'> equals ['kebab', 'case']
+ * SplitIntoWords<'snake_case'> equals ['snake', 'case']
+ * SplitIntoWords<'PascalCase'> equals ['Pascal', 'Case']
+ * SplitIntoWords<'camelCase'> equals ['camel', 'Case']
+ * SplitIntoWords<'SCREAMING_SNAKE_CASE'> equals ['SCREAMING', 'SNAKE', 'CASE']
+ * SplitIntoWords<'Title Case'> equals ['Title', 'Case']
  * @example
- * SplitIntoWords<'block__element--modifier'> is equivalent to ['block', 'element', 'modifier']
- * SplitIntoWords<`abc_${string}_xyz`> is equivalent to ['abc', string, 'xyz']
+ * SplitIntoWords<'block__element--modifier'> equals ['block', 'element', 'modifier']
+ * SplitIntoWords<`abc_${string}_xyz`> equals ['abc', string, 'xyz']
  * @example
- * SplitIntoWords<'iPhone'> is equivalent to ['i', 'Phone']
+ * SplitIntoWords<'iPhone'> equals ['i', 'Phone']
  */
 export type SplitIntoWords<T extends string, D extends string = '-' | '_' | ' '> = IsOneOf<
   T,
@@ -169,17 +169,17 @@ export function splitIntoWords<const T extends string, const D extends readonly 
 
 /**
  * @example
- * ToSnakeCase<'camelCase'> is equivalent to 'camel_case'
- * ToSnakeCase<'PascalCase'> is equivalent to 'pascal_case'
- * ToSnakeCase<'kebab-case'> is equivalent to 'kebab_case'
- * ToSnakeCase<'SCREAMING_SNAKE_CASE'> is equivalent to 'screaming_snake_case'
- * ToSnakeCase<'Title Case'> is equivalent to 'title_case'
+ * ToSnakeCase<'camelCase'> equals 'camel_case'
+ * ToSnakeCase<'PascalCase'> equals 'pascal_case'
+ * ToSnakeCase<'kebab-case'> equals 'kebab_case'
+ * ToSnakeCase<'SCREAMING_SNAKE_CASE'> equals 'screaming_snake_case'
+ * ToSnakeCase<'Title Case'> equals 'title_case'
  * @example
- * ToSnakeCase<'block__element--modifier'> is equivalent to 'block_element_modifier'
- * ToSnakeCase<'XMLHttpRequest'> is equivalent to 'xml_http_request'
- * ToSnakeCase<'innerHTML'> is equivalent to 'inner_html'
- * ToSnakeCase<'getXCoordinate'> is equivalent to 'get_x_coordinate'
- * ToSnakeCase<'camelCase' | 'PascalCase'> is equivalent to 'camel_case' | 'pascal_case'
+ * ToSnakeCase<'block__element--modifier'> equals 'block_element_modifier'
+ * ToSnakeCase<'XMLHttpRequest'> equals 'xml_http_request'
+ * ToSnakeCase<'innerHTML'> equals 'inner_html'
+ * ToSnakeCase<'getXCoordinate'> equals 'get_x_coordinate'
+ * ToSnakeCase<'camelCase' | 'PascalCase'> equals 'camel_case' | 'pascal_case'
  */
 export type ToSnakeCase<T extends string> = IsOneOf<T, [string, any]> extends true
   ? string
@@ -204,17 +204,17 @@ export function toSnakeCase<const T extends string>(self: T): ToSnakeCase<T> {
 
 /**
  * @example
- * ToKebabCase<'camelCase'> is equivalent to 'camel-case'
- * ToKebabCase<'PascalCase'> is equivalent to 'pascal-case'
- * ToKebabCase<'snake_case'> is equivalent to 'snake-case'
- * ToKebabCase<'SCREAMING_SNAKE_CASE'> is equivalent to 'screaming-snake-case'
- * ToKebabCase<'Title Case'> is equivalent to 'title-case'
+ * ToKebabCase<'camelCase'> equals 'camel-case'
+ * ToKebabCase<'PascalCase'> equals 'pascal-case'
+ * ToKebabCase<'snake_case'> equals 'snake-case'
+ * ToKebabCase<'SCREAMING_SNAKE_CASE'> equals 'screaming-snake-case'
+ * ToKebabCase<'Title Case'> equals 'title-case'
  * @example
- * ToKebabCase<'block__element--modifier'> is equivalent to 'block-element-modifier'
- * ToKebabCase<'XMLHttpRequest'> is equivalent to 'xml-http-request'
- * ToKebabCase<'innerHTML'> is equivalent to 'inner-html'
- * ToKebabCase<'getXCoordinate'> is equivalent to 'get-x-coordinate'
- * ToKebabCase<'camelCase' | 'PascalCase'> is equivalent to 'camel-case' | 'pascal-case'
+ * ToKebabCase<'block__element--modifier'> equals 'block-element-modifier'
+ * ToKebabCase<'XMLHttpRequest'> equals 'xml-http-request'
+ * ToKebabCase<'innerHTML'> equals 'inner-html'
+ * ToKebabCase<'getXCoordinate'> equals 'get-x-coordinate'
+ * ToKebabCase<'camelCase' | 'PascalCase'> equals 'camel-case' | 'pascal-case'
  */
 export type ToKebabCase<T extends string> = IsOneOf<T, [string, any]> extends true
   ? string
@@ -239,16 +239,16 @@ export function toKebabCase<const T extends string>(self: T): ToKebabCase<T> {
 
 /**
  * @example
- * ToCamelCase<'PascalCase'> is equivalent to 'pascalCase'
- * ToCamelCase<'snake_case'> is equivalent to 'snakeCase'
- * ToCamelCase<'kebab-case'> is equivalent to 'kebabCase'
- * ToCamelCase<'SCREAMING_SNAKE_CASE'> is equivalent to 'screamingSnakeCase'
- * ToCamelCase<'Title Case'> is equivalent to 'titleCase'
+ * ToCamelCase<'PascalCase'> equals 'pascalCase'
+ * ToCamelCase<'snake_case'> equals 'snakeCase'
+ * ToCamelCase<'kebab-case'> equals 'kebabCase'
+ * ToCamelCase<'SCREAMING_SNAKE_CASE'> equals 'screamingSnakeCase'
+ * ToCamelCase<'Title Case'> equals 'titleCase'
  * @example
- * ToCamelCase<'block__element--modifier'> is equivalent to 'blockElementModifier'
- * ToCamelCase<'XMLHttpRequest'> is equivalent to 'xmlHttpRequest'
- * ToCamelCase<'innerHTML'> is equivalent to 'innerHtml'
- * ToCamelCase<'getXCoordinate'> is equivalent to 'getXCoordinate'
+ * ToCamelCase<'block__element--modifier'> equals 'blockElementModifier'
+ * ToCamelCase<'XMLHttpRequest'> equals 'xmlHttpRequest'
+ * ToCamelCase<'innerHTML'> equals 'innerHtml'
+ * ToCamelCase<'getXCoordinate'> equals 'getXCoordinate'
  */
 export type ToCamelCase<T extends string> = IsOneOf<T, [string, any]> extends true
   ? string
@@ -284,13 +284,13 @@ export function toCamelCase<const T extends string>(self: T): ToCamelCase<T> {
 
 /**
  * @example
- * ToSnakeCasedPropertiesDeep<{ firstName: string, lastName: string }> is equivalent to { first_name: string, last_name: string }
- * ToSnakeCasedPropertiesDeep<{ nested: { firstName: string } }> is equivalent to { nested: { first_name: string } }
- * ToSnakeCasedPropertiesDeep<{ tags: { createdAt: number }[] }> is equivalent to { tags: { created_at: number }[] }
- * ToSnakeCasedPropertiesDeep<{ firstName: string }[]> is equivalent to { first_name: string }[]
+ * ToSnakeCasedPropertiesDeep<{ firstName: string, lastName: string }> equals { first_name: string, last_name: string }
+ * ToSnakeCasedPropertiesDeep<{ nested: { firstName: string } }> equals { nested: { first_name: string } }
+ * ToSnakeCasedPropertiesDeep<{ tags: { createdAt: number }[] }> equals { tags: { created_at: number }[] }
+ * ToSnakeCasedPropertiesDeep<{ firstName: string }[]> equals { first_name: string }[]
  * @example keep modifiers
- * ToSnakeCasedPropertiesDeep<{ readonly firstName?: string }> is equivalent to { readonly first_name?: string }
- * ToSnakeCasedPropertiesDeep<readonly string[]> is equivalent to readonly string[]
+ * ToSnakeCasedPropertiesDeep<{ readonly firstName?: string }> equals { readonly first_name?: string }
+ * ToSnakeCasedPropertiesDeep<readonly string[]> equals readonly string[]
  */
 export type ToSnakeCasedPropertiesDeep<T> = Equals<T, any> extends true
   ? T
@@ -347,13 +347,13 @@ export function toSnakeCasedPropertiesDeep<T>(self: T): ToSnakeCasedPropertiesDe
 
 /**
  * @example
- * ToCamelCasedPropertiesDeep<{ first_name: string, last_name: string }> is equivalent to { firstName: string, lastName: string }
- * ToCamelCasedPropertiesDeep<{ nested: { first_name: string } }> is equivalent to { nested: { firstName: string } }
- * ToCamelCasedPropertiesDeep<{ tags: { created_at: number }[] }> is equivalent to { tags: { createdAt: number }[] }
- * ToCamelCasedPropertiesDeep<{ first_name: string }[]> is equivalent to { firstName: string }[]
+ * ToCamelCasedPropertiesDeep<{ first_name: string, last_name: string }> equals { firstName: string, lastName: string }
+ * ToCamelCasedPropertiesDeep<{ nested: { first_name: string } }> equals { nested: { firstName: string } }
+ * ToCamelCasedPropertiesDeep<{ tags: { created_at: number }[] }> equals { tags: { createdAt: number }[] }
+ * ToCamelCasedPropertiesDeep<{ first_name: string }[]> equals { firstName: string }[]
  * @example keep modifiers
- * ToCamelCasedPropertiesDeep<{ readonly first_name?: string }> is equivalent to { readonly firstName?: string }
- * ToCamelCasedPropertiesDeep<readonly string[]> is equivalent to readonly string[]
+ * ToCamelCasedPropertiesDeep<{ readonly first_name?: string }> equals { readonly firstName?: string }
+ * ToCamelCasedPropertiesDeep<readonly string[]> equals readonly string[]
  */
 export type ToCamelCasedPropertiesDeep<T> = Equals<T, any> extends true
   ? T

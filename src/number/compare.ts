@@ -11,12 +11,12 @@ import { DigitToRangeUntil } from './range'
  * @returns true if N <= M, false otherwise
  *
  * @example
- * IsAtMostNaturalNumber<3, 4> is equivalent to true
- * IsAtMostNaturalNumber<4, 4> is equivalent to true
- * IsAtMostNaturalNumber<5, 4> is equivalent to false
- * IsAtMostNaturalNumber<9, 123> is equivalent to true
+ * IsAtMostNaturalNumber<3, 4> equals true
+ * IsAtMostNaturalNumber<4, 4> equals true
+ * IsAtMostNaturalNumber<5, 4> equals false
+ * IsAtMostNaturalNumber<9, 123> equals true
  * @example
- * IsAtMostNaturalNumber<1234567, 1234560> is equivalent to false
+ * IsAtMostNaturalNumber<1234567, 1234560> equals false
  */
 export type IsAtMostNaturalNumber<N extends number, M extends number> = Equals<N, M> extends true
   ? true
@@ -35,12 +35,12 @@ type _IsAtMostNaturalNumber<
   : _IsAtMostNaturalNumberLexicographic<LA, RA>
 /**
  * @example
- * _IsAtMostNaturalNumberLexicographic<['4'], ['4']> is equivalent to true
- * _IsAtMostNaturalNumberLexicographic<['1', '2'], ['4']> is equivalent to true
- * _IsAtMostNaturalNumberLexicographic<['1', '2'], ['1']> is equivalent to false
- * _IsAtMostNaturalNumberLexicographic<['1', '2'], ['1', '5']> is equivalent to true
- * _IsAtMostNaturalNumberLexicographic<['1', '2'], ['0', '5']> is equivalent to false
- * _IsAtMostNaturalNumberLexicographic<[], ['0']> is equivalent to true
+ * _IsAtMostNaturalNumberLexicographic<['4'], ['4']> equals true
+ * _IsAtMostNaturalNumberLexicographic<['1', '2'], ['4']> equals true
+ * _IsAtMostNaturalNumberLexicographic<['1', '2'], ['1']> equals false
+ * _IsAtMostNaturalNumberLexicographic<['1', '2'], ['1', '5']> equals true
+ * _IsAtMostNaturalNumberLexicographic<['1', '2'], ['0', '5']> equals false
+ * _IsAtMostNaturalNumberLexicographic<[], ['0']> equals true
  */
 type _IsAtMostNaturalNumberLexicographic<
   Lhs extends readonly Digit[],
@@ -55,10 +55,10 @@ type IsLessThanDigit<Lhs extends Digit, Rhs extends Digit> = Lhs extends DigitTo
 
 /**
  * @example
- * Min<0, 3> is equivalent to 0
- * Min<2, 2> is equivalent to 2
- * Min<-1, 2> is equivalent to -1
- * Min<-1, -4> is equivalent to -4
+ * Min<0, 3> equals 0
+ * Min<2, 2> equals 2
+ * Min<-1, 2> equals -1
+ * Min<-1, -4> equals -4
  */
 export type Min<N extends number, M extends number> = `${N}` extends `-${infer PN extends number}`
   ? `${M}` extends `-${infer PM extends number}`
@@ -74,10 +74,10 @@ export type Min<N extends number, M extends number> = `${N}` extends `-${infer P
 
 /**
  * @example
- * Max<0, 3> is equivalent to 3
- * Max<2, 2> is equivalent to 2
- * Max<-1, 2> is equivalent to 2
- * Max<-1, -4> is equivalent to -1
+ * Max<0, 3> equals 3
+ * Max<2, 2> equals 2
+ * Max<-1, 2> equals 2
+ * Max<-1, -4> equals -1
  */
 export type Max<N extends number, M extends number> = `${N}` extends `-${infer PN extends number}`
   ? `${M}` extends `-${infer PM extends number}`

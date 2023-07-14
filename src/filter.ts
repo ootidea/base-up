@@ -59,14 +59,14 @@ export namespace takeWhile {
 
 /**
  * @example
- * FirstOf<[bigint]> is equivalent to bigint
- * FirstOf<[number, bigint]> is equivalent to number
- * FirstOf<[]> is equivalent to undefined
- * FirstOf<boolean[]> is equivalent to boolean | undefined
- * FirstOf<[...string[], number]> is equivalent to string | number
+ * FirstOf<[bigint]> equals bigint
+ * FirstOf<[number, bigint]> equals number
+ * FirstOf<[]> equals undefined
+ * FirstOf<boolean[]> equals boolean | undefined
+ * FirstOf<[...string[], number]> equals string | number
  * @example
- * FirstOf<[Date] | [Date, boolean]> is equivalent to Date
- * FirstOf<[Date?, boolean?]> is equivalent to Date | undefined
+ * FirstOf<[Date] | [Date, boolean]> equals Date
+ * FirstOf<[Date?, boolean?]> equals Date | undefined
  */
 export type FirstOf<T extends Tuple> = T extends readonly [infer First, ...any]
   ? First
@@ -86,15 +86,15 @@ export function firstOf<const T extends Tuple>(self: T): FirstOf<T> {
 
 /**
  * @example
- * LastOf<[bigint]> is equivalent to bigint
- * LastOf<[bigint, number]> is equivalent to number
- * LastOf<[]> is equivalent to undefined
- * LastOf<boolean[]> is equivalent to boolean | undefined
- * LastOf<[string, ...string[]]> is equivalent to string
- * LastOf<[boolean, ...string[]]> is equivalent to boolean | string
+ * LastOf<[bigint]> equals bigint
+ * LastOf<[bigint, number]> equals number
+ * LastOf<[]> equals undefined
+ * LastOf<boolean[]> equals boolean | undefined
+ * LastOf<[string, ...string[]]> equals string
+ * LastOf<[boolean, ...string[]]> equals boolean | string
  * @example
- * LastOf<[Date] | [Date, boolean]> is equivalent to Date | boolean
- * LastOf<[Date?, boolean?]> is equivalent to Date | boolean | undefined
+ * LastOf<[Date] | [Date, boolean]> equals Date | boolean
+ * LastOf<[Date?, boolean?]> equals Date | boolean | undefined
  */
 export type LastOf<T extends Tuple> = T extends readonly [...any, infer Last]
   ? Last

@@ -3,11 +3,11 @@ import { FixedLengthArray } from './FixedLengthArray'
 
 /**
  * @example
- * MaxLengthArray<2> is equivalent to [] | [unknown] | [unknown, unknown]
- * MaxLengthArray<3, Date> is equivalent to [] | [Date] | [Date, Date] | [Date, Date, Date]
- * MaxLengthArray<0, string> is equivalent to []
+ * MaxLengthArray<2> equals [] | [unknown] | [unknown, unknown]
+ * MaxLengthArray<3, Date> equals [] | [Date] | [Date, Date] | [Date, Date, Date]
+ * MaxLengthArray<0, string> equals []
  * @example
- * MaxLengthArray<number, string> is equivalent to string[]
+ * MaxLengthArray<number, string> equals string[]
  */
 export type MaxLengthArray<N extends number, T = unknown> = FixedLengthArray<IntegerRangeThrough<N>, T>
 

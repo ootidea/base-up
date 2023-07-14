@@ -25,7 +25,7 @@ test('OptionalKeysOf', () => {
   assertTypeEquality<OptionalKeysOf<Record<string, any>>, never>()
   /*
   This is a counterintuitive result, but it's correct.
-  Partial<Record<string, bigint>> is equivalent to { [key: string]: bigint | undefined }.
+  Partial<Record<string, bigint>> equals { [key: string]: bigint | undefined }.
   So there are no optional keys.
   */
   assertTypeEquality<OptionalKeysOf<Partial<Record<string, bigint>>>, never>()

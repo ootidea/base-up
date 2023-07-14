@@ -56,18 +56,18 @@ export type Interpolable = string | number | bigint | boolean | null | undefined
 
 /**
  * @example
- * IsTemplateLiteral<`Hi, ${string}`> is equivalent to true
- * IsTemplateLiteral<`${number}`> is equivalent to true
- * IsTemplateLiteral<`${bigint}`> is equivalent to true
- * IsTemplateLiteral<`${boolean}`> is equivalent to false
- * IsTemplateLiteral<`${null}`> is equivalent to false
- * IsTemplateLiteral<`${undefined}`> is equivalent to false
- * IsTemplateLiteral<string> is equivalent to false
- * IsTemplateLiteral<never> is equivalent to false
- * IsTemplateLiteral<any> is equivalent to false
- * IsTemplateLiteral<''> is equivalent to false
- * IsTemplateLiteral<'a'> is equivalent to false
- * IsTemplateLiteral<'a' | 'b'> is equivalent to false
+ * IsTemplateLiteral<`Hi, ${string}`> equals true
+ * IsTemplateLiteral<`${number}`> equals true
+ * IsTemplateLiteral<`${bigint}`> equals true
+ * IsTemplateLiteral<`${boolean}`> equals false
+ * IsTemplateLiteral<`${null}`> equals false
+ * IsTemplateLiteral<`${undefined}`> equals false
+ * IsTemplateLiteral<string> equals false
+ * IsTemplateLiteral<never> equals false
+ * IsTemplateLiteral<any> equals false
+ * IsTemplateLiteral<''> equals false
+ * IsTemplateLiteral<'a'> equals false
+ * IsTemplateLiteral<'a' | 'b'> equals false
  */
 export type IsTemplateLiteral<T extends string, Then = true, Else = false> = IsUnion<T> extends true
   ? Else
@@ -83,17 +83,17 @@ export type IsTemplateLiteral<T extends string, Then = true, Else = false> = IsU
 
 /**
  * @example
- * IsStringLiteral<'a'> is equivalent to true
- * IsStringLiteral<''> is equivalent to true
- * IsStringLiteral<string> is equivalent to false
- * IsStringLiteral<never> is equivalent to false
- * IsStringLiteral<any> is equivalent to false
- * IsStringLiteral<'a' | 'b'> is equivalent to false
- * IsStringLiteral<`${null}`> is equivalent to true
- * IsStringLiteral<`${undefined}`> is equivalent to true
- * IsStringLiteral<`${boolean}`> is equivalent to false
- * IsStringLiteral<`${number}`> is equivalent to false
- * IsStringLiteral<`${bigint}`> is equivalent to false
+ * IsStringLiteral<'a'> equals true
+ * IsStringLiteral<''> equals true
+ * IsStringLiteral<string> equals false
+ * IsStringLiteral<never> equals false
+ * IsStringLiteral<any> equals false
+ * IsStringLiteral<'a' | 'b'> equals false
+ * IsStringLiteral<`${null}`> equals true
+ * IsStringLiteral<`${undefined}`> equals true
+ * IsStringLiteral<`${boolean}`> equals false
+ * IsStringLiteral<`${number}`> equals false
+ * IsStringLiteral<`${bigint}`> equals false
  */
 export type IsStringLiteral<T extends string> = IsUnion<T> extends true
   ? false
@@ -105,8 +105,8 @@ type CharactersSubjectToRemoveByTrim = ' ' | '\t' | '\n' | '\r' | '\f' | '\v' | 
 
 /**
  * @example
- * TrimStart<'  abc  '> is equivalent to 'abc  '
- * TrimStart<'\n\t\r\uFEFF\xA0'> is equivalent to ''
+ * TrimStart<'  abc  '> equals 'abc  '
+ * TrimStart<'\n\t\r\uFEFF\xA0'> equals ''
  */
 export type TrimStart<T extends string> = Equals<T, any> extends true
   ? string
@@ -125,8 +125,8 @@ export function trimStart<const T extends string>(self: T): TrimStart<T> {
 
 /**
  * @example
- * TrimEnd<'  abc  '> is equivalent to '  abc'
- * TrimEnd<'\n\t\r\uFEFF\xA0'> is equivalent to ''
+ * TrimEnd<'  abc  '> equals '  abc'
+ * TrimEnd<'\n\t\r\uFEFF\xA0'> equals ''
  */
 export type TrimEnd<T extends string> = Equals<T, any> extends true
   ? string
@@ -145,8 +145,8 @@ export function trimEnd<const T extends string>(self: T): TrimEnd<T> {
 
 /**
  * @example
- * TrimStart<'  abc  '> is equivalent to 'abc'
- * TrimStart<'\n\t\r\uFEFF\xA0'> is equivalent to ''
+ * TrimStart<'  abc  '> equals 'abc'
+ * TrimStart<'\n\t\r\uFEFF\xA0'> equals ''
  */
 export type Trim<T extends string> = TrimStart<TrimEnd<T>>
 

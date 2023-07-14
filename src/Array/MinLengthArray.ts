@@ -8,10 +8,10 @@ export type ReadonlyNonEmptyArray<T> = Readonly<NonEmptyArray<T>>
 
 /**
  * @example
- * MinLengthArray<1> is equivalent to [unknown, ...unknown[]] | [...unknown[], unknown]
- * MinLengthArray<2, Date> is equivalent to [Date, Date, ...Date[]] | [Date, ...Date[], Date] | [...Date[], Date, Date]
- * MinLengthArray<0, string> is equivalent to string[]
- * MinLengthArray<number, string> is equivalent to string[]
+ * MinLengthArray<1> equals [unknown, ...unknown[]] | [...unknown[], unknown]
+ * MinLengthArray<2, Date> equals [Date, Date, ...Date[]] | [Date, ...Date[], Date] | [...Date[], Date, Date]
+ * MinLengthArray<0, string> equals string[]
+ * MinLengthArray<number, string> equals string[]
  */
 export type MinLengthArray<N extends number, T = unknown> = _MinLengthArray<N, IntegerRangeThrough<N>, T>
 type _MinLengthArray<N extends number, M extends number, T> = M extends M

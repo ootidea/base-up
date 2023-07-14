@@ -14,13 +14,13 @@ export const NegativeInfinity: NegativeInfinity = -globalThis.Infinity as Negati
 
 /**
  * @example
- * IsNumberLiteral<0> is equivalent to true
- * IsNumberLiteral<1e100> is equivalent to true
- * IsNumberLiteral<Infinity> is equivalent to true
- * IsNumberLiteral<number> is equivalent to false
- * IsNumberLiteral<1 | 2> is equivalent to false
- * IsNumberLiteral<any> is equivalent to false
- * IsNumberLiteral<never> is equivalent to false
+ * IsNumberLiteral<0> equals true
+ * IsNumberLiteral<1e100> equals true
+ * IsNumberLiteral<Infinity> equals true
+ * IsNumberLiteral<number> equals false
+ * IsNumberLiteral<1 | 2> equals false
+ * IsNumberLiteral<any> equals false
+ * IsNumberLiteral<never> equals false
  */
 export type IsNumberLiteral<T extends number> = IsUnion<T> extends true
   ? false
@@ -30,15 +30,15 @@ export type IsNumberLiteral<T extends number> = IsUnion<T> extends true
 
 /**
  * @example
- * IsInteger<12.34> is equivalent to false
- * IsInteger<-12> is equivalent to true
- * IsInteger<1.2e-15> is equivalent to false
- * IsInteger<1.2e+15> is equivalent to true
+ * IsInteger<12.34> equals false
+ * IsInteger<-12> equals true
+ * IsInteger<1.2e-15> equals false
+ * IsInteger<1.2e+15> equals true
  * @example
- * IsInteger<1.8e+308> is equivalent to false (Note that 1.8e+308 is Infinity)
+ * IsInteger<1.8e+308> equals false (Note that 1.8e+308 is Infinity)
  * @example Customizing result values
- * IsInteger<12, []> is equivalent to []
- * IsInteger<0.5, number, never> is equivalent to never
+ * IsInteger<12, []> equals []
+ * IsInteger<0.5, number, never> equals never
  */
 export type IsInteger<N extends number, Then = true, Else = false> = N extends N
   ? IsOneOf<N, [number, any]> extends true
@@ -52,25 +52,25 @@ export type IsInteger<N extends number, Then = true, Else = false> = N extends N
 
 /**
  * @example
- * Abs<-3> is equivalent to 3
- * Abs<0.12> is equivalent to 0.12
- * Abs<-0> is equivalent to 0
- * Abs<-1.2e-45> is equivalent to 1.2e-45
- * Abs<-3 | 5> is equivalent to 3 | 5
- * Abs<number> is equivalent to number
+ * Abs<-3> equals 3
+ * Abs<0.12> equals 0.12
+ * Abs<-0> equals 0
+ * Abs<-1.2e-45> equals 1.2e-45
+ * Abs<-3 | 5> equals 3 | 5
+ * Abs<number> equals number
  */
 export type Abs<N extends number> = N extends N ? (`${N}` extends `-${infer P extends number}` ? P : N) : never
 
 /**
  * @example
- * Negate<1> is equivalent to -1
- * Negate<-0.5> is equivalent to 0.5
- * Negate<0> is equivalent to 0
- * Negate<-0> is equivalent to 0
- * Negate<1e+100> is equivalent to -1e+100
- * Negate<-1.2e-45> is equivalent to 1.2e-45
- * Negate<2 | -4> is equivalent to -2 | 4
- * Negate<number> is equivalent to number
+ * Negate<1> equals -1
+ * Negate<-0.5> equals 0.5
+ * Negate<0> equals 0
+ * Negate<-0> equals 0
+ * Negate<1e+100> equals -1e+100
+ * Negate<-1.2e-45> equals 1.2e-45
+ * Negate<2 | -4> equals -2 | 4
+ * Negate<number> equals number
  */
 export type Negate<N extends number> = N extends 0
   ? 0
@@ -86,13 +86,13 @@ export type Negate<N extends number> = N extends 0
 
 /**
  * @example
- * Trunc<3.5> is equivalent to 3
- * Trunc<-0.09> is equivalent to 0
- * Trunc<-12> is equivalent to -12
- * Trunc<8.2e-9> is equivalent to 0
- * Trunc<1e+100> is equivalent to 1e+100
- * Trunc<1.1 | 3.3> is equivalent to 1 | 3
- * Trunc<number> is equivalent to number
+ * Trunc<3.5> equals 3
+ * Trunc<-0.09> equals 0
+ * Trunc<-12> equals -12
+ * Trunc<8.2e-9> equals 0
+ * Trunc<1e+100> equals 1e+100
+ * Trunc<1.1 | 3.3> equals 1 | 3
+ * Trunc<number> equals number
  */
 export type Trunc<N extends number> = number extends N
   ? number
@@ -111,19 +111,19 @@ export type Trunc<N extends number> = number extends N
 /**
  * Convert a natural number type into an array type of its digits.
  * @example
- * ToDigitArray<123> is equivalent to ['1', '2', '3']
- * ToDigitArray<0> is equivalent to ['0']
+ * ToDigitArray<123> equals ['1', '2', '3']
+ * ToDigitArray<0> equals ['0']
  */
 export type ToDigitArray<N extends number> = _ToDigitArray<`${N}`>
 type _ToDigitArray<S extends string> = S extends `${infer H extends Digit}${infer L}` ? [H, ..._ToDigitArray<L>] : []
 
 /**
  * @example
- * Increment<0> is equivalent to 1
- * Increment<-1> is equivalent to 0
- * Increment<-2> is equivalent to -1
- * Increment<1 | 3> is equivalent to 2 | 4
- * Increment<number> is equivalent to number
+ * Increment<0> equals 1
+ * Increment<-1> equals 0
+ * Increment<-2> equals -1
+ * Increment<1 | 3> equals 2 | 4
+ * Increment<number> equals number
  */
 export type Increment<N extends number> = `${N}` extends `-${infer PN extends number}`
   ? FixedLengthArray<PN> extends [any, ...infer L]

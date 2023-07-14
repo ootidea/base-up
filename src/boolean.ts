@@ -2,11 +2,11 @@ import { Equals, IsOneOf } from './typePredicate'
 
 /**
  * @example
- * Not<true> is equivalent to false
- * Not<false> is equivalent to true
- * Not<boolean> is equivalent to boolean
- * Not<any> is equivalent to boolean
- * Not<never> is equivalent to never
+ * Not<true> equals false
+ * Not<false> equals true
+ * Not<boolean> equals boolean
+ * Not<any> equals boolean
+ * Not<never> equals never
  */
 export type Not<T extends boolean> = Equals<T, never> extends true
   ? never
@@ -18,11 +18,11 @@ export type Not<T extends boolean> = Equals<T, never> extends true
 
 /**
  * @example
- * IsBooleanLiteral<true> is equivalent to true
- * IsBooleanLiteral<false> is equivalent to true
- * IsBooleanLiteral<true | false> is equivalent to false
- * IsBooleanLiteral<boolean> is equivalent to false
- * IsBooleanLiteral<any> is equivalent to false
- * IsBooleanLiteral<never> is equivalent to false
+ * IsBooleanLiteral<true> equals true
+ * IsBooleanLiteral<false> equals true
+ * IsBooleanLiteral<true | false> equals false
+ * IsBooleanLiteral<boolean> equals false
+ * IsBooleanLiteral<any> equals false
+ * IsBooleanLiteral<never> equals false
  */
 export type IsBooleanLiteral<T extends boolean> = IsOneOf<T, [true, false]>
