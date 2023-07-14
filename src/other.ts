@@ -33,7 +33,7 @@ export function toMultiset<T>(self: Iterable<T>): Map<T, number> {
   return result
 }
 
-export function sumOf(self: []): 0
+export function sumOf(self: readonly []): 0
 export function sumOf(self: readonly number[]): number
 export function sumOf(self: readonly number[]): number {
   return self.reduce((lhs, rhs) => lhs + rhs, 0)

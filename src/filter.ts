@@ -4,15 +4,15 @@ import { isNotEmpty } from './collectionPredicate'
 import { update } from './collectionUpdate'
 import { newSet } from './Set'
 
-export function filter(self: [], f: (_: any) => boolean): []
+export function filter(self: readonly [], f: (_: any) => boolean): []
 export function filter<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
 export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[]
 export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[] {
   return self.filter(f) as any
 }
 export namespace filter {
-  export function defer<T, U extends T>(f: (_: T) => _ is U): { (self: []): []; (self: readonly T[]): U[] }
-  export function defer<T>(f: (_: T) => boolean): { (self: []): []; (self: readonly T[]): T[] }
+  export function defer<T, U extends T>(f: (_: T) => _ is U): { (self: readonly []): []; (self: readonly T[]): U[] }
+  export function defer<T>(f: (_: T) => boolean): { (self: readonly []): []; (self: readonly T[]): T[] }
   export function defer<T>(f: (_: T) => boolean) {
     return (self: readonly T[]) => self.filter(f)
   }
@@ -124,7 +124,7 @@ export function lastOf<const T extends Tuple>(self: T): LastOf<T> {
   return self[self.length - 1]
 }
 
-export function indexOf<T>(self: [], value: T, fromIndex?: number): undefined
+export function indexOf<T>(self: readonly [], value: T, fromIndex?: number): undefined
 export function indexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined
 export function indexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined {
   const index = self.indexOf(value, fromIndex)
@@ -133,7 +133,7 @@ export function indexOf<T>(self: readonly T[], value: T, fromIndex?: number): nu
   return index
 }
 
-export function lastIndexOf<T>(self: [], value: T, fromIndex?: number): undefined
+export function lastIndexOf<T>(self: readonly [], value: T, fromIndex?: number): undefined
 export function lastIndexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined
 export function lastIndexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined {
   const index = self.lastIndexOf(value, fromIndex)
@@ -142,7 +142,7 @@ export function lastIndexOf<T>(self: readonly T[], value: T, fromIndex?: number)
   return index
 }
 
-export function indexesOf<T>(self: [], value: T): []
+export function indexesOf<T>(self: readonly [], value: T): []
 export function indexesOf<T>(self: readonly T[], value: T): number[]
 export function indexesOf<T>(self: readonly T[], value: T): number[] {
   const result = []

@@ -3,7 +3,7 @@ import { Tuple } from './Array/other'
 import { ReadonlyNonEmptyMap } from './Map'
 import { ReadonlyNonEmptySet } from './Set'
 
-export function isEmpty(self: []): true
+export function isEmpty(self: readonly []): true
 export function isEmpty<T>(self: ReadonlyNonEmptyArray<T>): false
 export function isEmpty<T>(self: readonly T[]): self is []
 export function isEmpty<T>(self: readonly T[]): self is [] {
@@ -66,7 +66,7 @@ export namespace isNotEmpty {
   }
 }
 
-export function every<T>(self: [], f: (value: T) => boolean): true
+export function every<T>(self: readonly [], f: (value: T) => boolean): true
 export function every<T, U extends T>(self: T[], f: (value: T) => value is U): self is U[]
 export function every<T, U extends T>(self: readonly T[], f: (value: T) => value is U): self is readonly U[]
 export function every<T>(self: readonly T[], f: (value: T) => boolean): boolean
@@ -98,7 +98,7 @@ export namespace everyValues {
   }
 }
 
-export function includes(self: [], value: unknown, fromIndex?: number | undefined): false
+export function includes(self: readonly [], value: unknown, fromIndex?: number | undefined): false
 export function includes<const T extends Tuple>(
   self: T,
   value: unknown,
@@ -113,7 +113,7 @@ export function includes<const T extends Tuple>(
 }
 export namespace includes {
   export function defer(value: unknown, fromIndex?: number | undefined) {
-    function result(self: []): false
+    function result(self: readonly []): false
     function result<T extends Tuple>(self: T): boolean
     function result<T extends Tuple>(self: T) {
       return includes(self, value, fromIndex)
@@ -148,7 +148,7 @@ export namespace includes {
   }
 }
 
-export function isUnique(self: [] | ''): true
+export function isUnique(self: readonly [] | ''): true
 export function isUnique<T>(self: Iterable<T>): boolean
 export function isUnique<T>(self: Iterable<T>): boolean {
   const set = new Set<T>()
