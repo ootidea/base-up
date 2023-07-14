@@ -8,6 +8,12 @@ test('RequiredKeysOf', () => {
   assertTypeEquality<RequiredKeysOf<{ a?: 1 }>, never>()
 
   assertTypeEquality<RequiredKeysOf<[0, 1?, 2?]>, '0' | keyof []>()
+
+  assertTypeEquality<RequiredKeysOf<Record<string, any>>, string>()
+  assertTypeEquality<RequiredKeysOf<Record<number, null>>, number>()
+  assertTypeEquality<RequiredKeysOf<Record<symbol, unknown>>, symbol>()
+  assertTypeEquality<RequiredKeysOf<Record<string | number, unknown>>, string | number>()
+  assertTypeEquality<RequiredKeysOf<Record<`#${number}`, unknown>>, `#${number}`>()
 })
 
 test('OptionalKeysOf', () => {
