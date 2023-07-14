@@ -346,7 +346,7 @@ export function repeatApply<N extends number, T>(length: N, first: T, f: (_: T) 
   return result as any
 }
 export namespace repeatApply {
-  export function* Iterator<T>(first: T, f: (_: T) => T): Iterable<T> {
+  export function* Iterable<T>(first: T, f: (_: T) => T): Iterable<T> {
     let value = first
     while (true) {
       yield value

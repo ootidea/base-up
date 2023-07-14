@@ -53,7 +53,7 @@ test('repeat', () => {
   expect(repeat(0, 123)).toStrictEqual([])
 })
 
-test('repeat.Iterator', () => {
+test('repeat.Iterable', () => {
   expect(take(repeat.Iterable(true), 5)).toStrictEqual([true, true, true, true, true])
   expect(take(repeat.Iterable(0, 9), 4)).toStrictEqual([0, 9, 0, 9])
 })
@@ -64,10 +64,10 @@ test('repeatApply', () => {
   expect(repeatApply(0, '123', (x) => x + 1)).toStrictEqual([])
 })
 
-test('repeatApply.Iterator', () => {
+test('repeatApply.Iterable', () => {
   expect(
     take(
-      repeatApply.Iterator(0, (x) => x + 3),
+      repeatApply.Iterable(0, (x) => x + 3),
       5
     )
   ).toStrictEqual([0, 3, 6, 9, 12])

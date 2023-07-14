@@ -40,13 +40,13 @@ test('includes.defer', () => {
   expectTypeOf(includes.defer(0n)([])).toEqualTypeOf<false>()
 })
 
-test('includes.Iterator', () => {
+test('includes.Iterable', () => {
   expect(includes.Iterable([1, 2, 3], 1)).toBe(true)
   expect(includes.Iterable([1, 2, 3], 'a')).toBe(false)
   expect(includes.Iterable('abc', 'a')).toBe(true)
 })
 
-test('includes.Iterator.defer', () => {
+test('includes.Iterable.defer', () => {
   expect(includes.Iterable.defer(1)([1, 2, 3])).toBe(true)
   expect(includes.Iterable.defer('a')([1, 2, 3])).toBe(false)
   expect(includes.Iterable.defer('a')('abc')).toBe(true)
