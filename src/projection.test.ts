@@ -1,6 +1,6 @@
-import { expect, expectTypeOf, test } from 'vitest'
+import { expect, test } from 'vitest'
 import { assertTypeEquality } from './all'
-import { AllKeysOf, allKeysOf, allValuesOf, AllValuesOf, numberKeysOf } from './projection'
+import { AllKeysOf, allKeysOf, allValuesOf, AllValuesOf } from './projection'
 
 test('AllKeysOf', () => {
   assertTypeEquality<AllKeysOf<{ name: string; age: number }>, Set<'name' | 'age'>>()
@@ -88,12 +88,4 @@ test('allValuesOf', () => {
 
   expect(allValuesOf(null)).toStrictEqual(new Set())
   expect(allValuesOf(undefined)).toStrictEqual(new Set())
-})
-
-test('numberKeysOf', () => {
-  expect(numberKeysOf({ 0: 'first', 1: 'second' })).toStrictEqual([0, 1])
-  expectTypeOf(numberKeysOf({ 0: 'first', 1: 'second' })).toEqualTypeOf<(0 | 1)[]>()
-
-  expect(numberKeysOf({})).toStrictEqual([])
-  expectTypeOf(numberKeysOf({})).toEqualTypeOf<[]>()
 })

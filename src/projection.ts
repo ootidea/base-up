@@ -53,13 +53,3 @@ export function allValuesOf<T>(objectLike: T): AllValuesOf<T> {
   const allKeys = allKeysOf(objectLike)
   return map.Set(allKeys, (key) => (objectLike as any)[key]) as any
 }
-
-/**
- * Get keys as type number from a record where key is type number.
- * @example
- * numberKeysOf({ 0: 'first', 1: 'second' } as const) returns [0, 1]
- * numberKeysOf({ 0: 'first', 1: 'second' } as const) is typed as (0 | 1)[]
- */
-export function numberKeysOf<const K extends number>(record: Record<K, unknown>): Equals<K, never, [], K[]> {
-  return Object.keys(record).map(Number) as any
-}
