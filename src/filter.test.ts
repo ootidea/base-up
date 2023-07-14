@@ -63,6 +63,7 @@ test('LastOf', () => {
   assertTypeEquality<LastOf<never[]>, undefined>()
   assertTypeEquality<LastOf<[string, ...string[]]>, string>()
   assertTypeEquality<LastOf<[boolean, ...string[]]>, boolean | string>()
+  assertTypeEquality<LastOf<[...string[], bigint]>, bigint>()
   assertTypeEquality<LastOf<[Date] | [Date, boolean]>, Date | boolean>()
   assertTypeEquality<LastOf<[1, 2?]>, 1 | 2>()
   assertTypeEquality<LastOf<[1?, 2?]>, 1 | 2 | undefined>()
