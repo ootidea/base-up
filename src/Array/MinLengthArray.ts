@@ -25,6 +25,7 @@ type _ReadonlyMinLengthArray<N extends number, M extends number, T> = M extends 
   ? readonly [...Drop<FixedLengthArray<N, T>, M>, ...T[], ...FixedLengthArray<M, T>]
   : never
 
+export function isMinLengthArray<T, N extends number>(self: T[], length: N): self is MinLengthArray<N, T>
 export function isMinLengthArray<T, N extends number>(
   self: readonly T[],
   length: N

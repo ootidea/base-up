@@ -18,6 +18,7 @@ export type FixedLengthArray<N extends number, T = unknown> = number extends N
   : DigitArrayToFixedLengthArray<ToDigitArray<N>, T>
 export type ReadonlyFixedLengthArray<N extends number, T = unknown> = Readonly<FixedLengthArray<N, T>>
 
+export function isFixedLengthArray<T, N extends number>(self: T[], length: N): self is FixedLengthArray<N, T>
 export function isFixedLengthArray<T, N extends number>(
   self: readonly T[],
   length: N

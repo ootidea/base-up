@@ -13,6 +13,7 @@ export type MaxLengthArray<N extends number, T = unknown> = FixedLengthArray<Int
 
 export type ReadonlyMaxLengthArray<N extends number, T = unknown> = Readonly<MaxLengthArray<N, T>>
 
+export function isMaxLengthArray<T, N extends number>(self: T[], length: N): self is MaxLengthArray<N, T>
 export function isMaxLengthArray<T, N extends number>(
   self: readonly T[],
   length: N
