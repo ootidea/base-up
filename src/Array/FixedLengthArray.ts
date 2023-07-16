@@ -27,6 +27,17 @@ export function isFixedLengthArray<N extends number>(self: unknown, length: N): 
 export function isFixedLengthArray<N extends number>(self: unknown, length: N) {
   return self instanceof Array && self.length === length
 }
+export namespace isFixedLengthArray {
+  export function defer<N extends number>(
+    length: N
+  ): {
+    <T>(self: T[]): self is FixedLengthArray<N, T>
+    <T>(self: readonly T[]): self is ReadonlyFixedLengthArray<N, T>
+    (self: unknown): self is FixedLengthArray<N>
+  } {
+    return ((self: unknown) => self instanceof Array && self.length === length) as any
+  }
+}
 
 /** Create a tuple by repeating the given tuple 10 times. */
 type TenTimes<T extends Tuple> = [...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T]

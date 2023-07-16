@@ -34,3 +34,14 @@ export function isMinLengthArray<N extends number>(self: unknown, length: N): se
 export function isMinLengthArray<N extends number>(self: unknown, length: N) {
   return self instanceof Array && self.length >= length
 }
+export namespace isMinLengthArray {
+  export function defer<N extends number>(
+    length: N
+  ): {
+    <T>(self: T[]): self is MinLengthArray<N, T>
+    <T>(self: readonly T[]): self is ReadonlyMinLengthArray<N, T>
+    (self: unknown): self is MinLengthArray<N>
+  } {
+    return ((self: unknown) => self instanceof Array && self.length === length) as any
+  }
+}
