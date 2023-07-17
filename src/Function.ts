@@ -18,6 +18,13 @@ export function returnLast<const T extends Tuple>(...args: T): T extends readonl
   return args[args.length - 1] as any
 }
 
+export type Predicate<T = unknown> = ((value: T) => value is any) | ((value: T) => boolean)
+export type PredicateResult<T> = T extends (value: any) => value is infer R
+  ? R
+  : T extends (value: infer V) => boolean
+  ? V
+  : never
+
 export function pipe<const A>(a: A): A
 export function pipe<const A, B>(a: A, b: (a: A) => B): B
 export function pipe<const A, B, C>(a: A, b: (a: A) => B, c: (b: B) => C): C
