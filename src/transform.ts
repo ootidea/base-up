@@ -79,6 +79,15 @@ export namespace flatMap {
       yield* f(value)
     }
   }
+  export namespace Iterable {
+    /**
+     * @example
+     * flatMap.Iterable.defer((x: number) => [x, x + 0.5])([0, 1, 2]) yields 0, 0.5, 1, 1.5, 2, 2.5
+     */
+    export function defer<T, U>(f: (_: T) => Iterable<U>): (self: Iterable<T>) => Iterable<U> {
+      return (self: Iterable<T>) => flatMap.Iterable(self, f)
+    }
+  }
 }
 
 export function flatten<T>(self: readonly (readonly T[])[]): T[] {
