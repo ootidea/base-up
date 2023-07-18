@@ -58,6 +58,15 @@ export namespace map {
 export function flatMap<T, U>(self: readonly T[], f: (_: T) => readonly U[]): U[] {
   return self.flatMap(f)
 }
+export namespace flatMap {
+  /**
+   * @example
+   * flatMap.defer((x: number) => [x, x + 0.5])([0, 1, 2]) returns [0, 0.5, 1, 1.5, 2, 2.5]
+   */
+  export function defer<T, U>(f: (_: T) => readonly U[]): (self: readonly T[]) => U[] {
+    return (self: readonly T[]) => self.flatMap(f)
+  }
+}
 
 export function flatten<T>(self: readonly (readonly T[])[]): T[] {
   return self.flatMap((x) => x)
