@@ -51,6 +51,14 @@ export namespace map {
   }
 }
 
+/**
+ * @example
+ * flatMap([0, 1, 2], (x) => [x, x + 0.5]) returns [0, 0.5, 1, 1.5, 2, 2.5]
+ */
+export function flatMap<T, U>(self: readonly T[], f: (_: T) => readonly U[]): U[] {
+  return self.flatMap(f)
+}
+
 export function flatten<T>(self: readonly (readonly T[])[]): T[] {
   return self.flatMap((x) => x)
 }

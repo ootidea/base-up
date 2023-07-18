@@ -6,6 +6,7 @@ import { setOf } from './Set'
 import {
   chunk,
   Drop,
+  flatMap,
   flatten,
   Join,
   join,
@@ -27,6 +28,12 @@ test('map', async () => {
   expect(map.Set(setOf(2, 1, 3), (x) => x + 10)).toStrictEqual(setOf(12, 11, 13))
 
   expect(await map.Promise(Promise.resolve({ a: 123 }), (value) => value.a)).toBe(123)
+})
+
+test('flatMap', () => {
+  expect(flatMap([0, 1, 2], (x) => [x, x + 0.5])).toStrictEqual([0, 0.5, 1, 1.5, 2, 2.5])
+  expect(flatMap([0, 1, 2], (x) => [])).toStrictEqual([])
+  expect(flatMap([], (x) => [x, x + 0.5])).toStrictEqual([])
 })
 
 test('flatten', () => {

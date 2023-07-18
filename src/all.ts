@@ -1,5 +1,6 @@
 export {
   map,
+  flatMap,
   flatten,
   join,
   Join,
