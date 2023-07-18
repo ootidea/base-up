@@ -40,6 +40,11 @@ test('flatMap.defer', () => {
   expect(flatMap.defer((x) => [])([0, 1, 2])).toStrictEqual([])
   expect(flatMap.defer((x: number) => [x, x + 0.5])([])).toStrictEqual([])
 })
+test('flatMap.Iterable', () => {
+  expect([...flatMap.Iterable([0, 1, 2], (x) => [x, x + 0.5])]).toStrictEqual([0, 0.5, 1, 1.5, 2, 2.5])
+  expect([...flatMap.Iterable([0, 1, 2], (x) => [])]).toStrictEqual([])
+  expect([...flatMap.Iterable([], (x) => [x, x + 0.5])]).toStrictEqual([])
+})
 
 test('flatten', () => {
   expect(

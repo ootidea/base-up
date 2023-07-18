@@ -55,6 +55,9 @@ export namespace map {
  * @example
  * flatMap([0, 1, 2], (x) => [x, x + 0.5]) returns [0, 0.5, 1, 1.5, 2, 2.5]
  */
+export function flatMap<T>(self: readonly T[], f: (_: T) => readonly []): []
+export function flatMap<T, U>(self: readonly [], f: (_: T) => readonly U[]): []
+export function flatMap<T, U>(self: readonly T[], f: (_: T) => readonly U[]): U[]
 export function flatMap<T, U>(self: readonly T[], f: (_: T) => readonly U[]): U[] {
   return self.flatMap(f)
 }
@@ -65,6 +68,16 @@ export namespace flatMap {
    */
   export function defer<T, U>(f: (_: T) => readonly U[]): (self: readonly T[]) => U[] {
     return (self: readonly T[]) => self.flatMap(f)
+  }
+
+  /**
+   * @example
+   * flatMap.Iterable([0, 1, 2], (x) => [x, x + 0.5]) yields 0, 0.5, 1, 1.5, 2, 2.5
+   */
+  export function* Iterable<T, U>(self: Iterable<T>, f: (_: T) => Iterable<U>): Iterable<U> {
+    for (const value of self) {
+      yield* f(value)
+    }
   }
 }
 
