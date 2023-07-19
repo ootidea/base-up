@@ -3,7 +3,7 @@ import { NonEmptyArray } from './Array/MinLengthArray'
 import { shuffle, Tuple } from './Array/other'
 import { IntegerRangeUntil, randomIntegerUntil } from './number/range'
 import { Drop, Reverse, take } from './transform'
-import { Lazy, Unlazy } from './type'
+import { Lazy, OMITTED, Unlazy } from './type'
 
 /**
  * @example
@@ -22,7 +22,7 @@ import { Lazy, Unlazy } from './type'
  * RangeUntil<0 | 2, 4> equals [0, 1, 2, 3] | [2, 3]
  * RangeUntil<number> equals number[]
  */
-export type RangeUntil<From extends number, To extends number | undefined = undefined> = To extends number
+export type RangeUntil<From extends number, To extends number | OMITTED = OMITTED> = To extends number
   ? number extends From
     ? number[]
     : number extends To
@@ -61,7 +61,7 @@ export type RangeUntil<From extends number, To extends number | undefined = unde
  * RangeThrough<0 | 2, 4> equals [0, 1, 2, 3, 4] | [2, 3, 4]
  * RangeThrough<number> equals [number, ...number[]] | [...number[], number]
  */
-export type RangeThrough<From extends number, To extends number | undefined = undefined> = To extends number
+export type RangeThrough<From extends number, To extends number | OMITTED = OMITTED> = To extends number
   ? number extends From
     ? NonEmptyArray<number>
     : number extends To

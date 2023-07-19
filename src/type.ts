@@ -182,3 +182,7 @@ interface NonClassValueArray extends ReadonlyArray<NonClassValue> {}
 interface NonClassValueObject {
   [key: keyof any]: NonClassValue
 }
+
+declare const OMITTED: unique symbol
+/** The default type of the type parameters */
+export type OMITTED = typeof OMITTED

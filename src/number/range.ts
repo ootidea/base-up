@@ -1,6 +1,7 @@
 import { FixedLengthArray } from '../Array/FixedLengthArray'
 import { Repeat } from '../generate'
 import { ToNumber } from '../string/other'
+import { OMITTED } from '../type'
 import { IsOneOf } from '../typePredicate'
 import { Digit, Infinity, Negate, NegativeInfinity, ToDigitArray } from './other'
 
@@ -20,7 +21,7 @@ import { Digit, Infinity, Negate, NegativeInfinity, ToDigitArray } from './other
  * IntegerRangeUntil<number, 9> equals number
  * IntegerRangeUntil<9, number> equals number
  */
-export type IntegerRangeUntil<N extends number, M extends number | undefined = undefined> = N extends N
+export type IntegerRangeUntil<N extends number, M extends number | OMITTED = OMITTED> = N extends N
   ? M extends M
     ? IsOneOf<N, [number, any, Infinity, NegativeInfinity]> extends true
       ? number
@@ -56,7 +57,7 @@ export type IntegerRangeUntil<N extends number, M extends number | undefined = u
  * IntegerRangeThrough<number, 9> equals number
  * IntegerRangeThrough<9, number> equals number
  */
-export type IntegerRangeThrough<N extends number, M extends number | undefined = undefined> = N extends N
+export type IntegerRangeThrough<N extends number, M extends number | OMITTED = OMITTED> = N extends N
   ? M extends M
     ? IsOneOf<N, [number, any, Infinity, NegativeInfinity]> extends true
       ? number
