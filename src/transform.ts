@@ -88,6 +88,14 @@ export namespace flatMap {
       return (self: Iterable<T>) => flatMap.Iterable(self, f)
     }
   }
+
+  /**
+   * @example
+   * flatMap.Set([0, 1, 2], (x) => [x, x + 0.5]) returns new Set([0, 0.5, 1, 1.5, 2, 2.5])
+   */
+  export function Set<T, U>(self: Iterable<T>, f: (_: T) => Iterable<U>): Set<U> {
+    return new globalThis.Set(flatMap.Iterable(self, f))
+  }
 }
 
 export function flatten<T>(self: readonly (readonly T[])[]): T[] {
