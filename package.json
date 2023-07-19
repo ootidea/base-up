@@ -1,7 +1,7 @@
 {
   "name": "base-up",
   "version": "0.21.0",
-  "description": "A modern TypeScript utility library",
+  "description": "A modern TypeScript utility library with numerous versatile functions, constants, and types",
   "keywords": [
     "stdlib",
     "type-level",
