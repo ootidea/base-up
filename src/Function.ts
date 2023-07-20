@@ -14,10 +14,6 @@ export function identity<const T>(value: T): T {
   return value
 }
 
-export function returnLast<const T extends Tuple>(...args: T): T extends readonly [...any, infer L] ? L : undefined {
-  return args[args.length - 1] as any
-}
-
 export type Predicate<T = unknown> = ((value: T) => value is any) | ((value: T) => boolean)
 export type PredicateResult<T> = T extends (value: any) => value is infer R
   ? R
