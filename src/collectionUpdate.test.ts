@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { insertAt, moveTo, push, RemoveAt, removeAt, setAt, unshift } from './collectionUpdate'
+import { insertAt, moveTo, push, RemoveAt, removeAt, unshift } from './collectionUpdate'
 import { repeat } from './generate'
 import { take } from './transform'
 import { assertTypeEquality } from './type'
@@ -66,9 +66,4 @@ test('moveTo', () => {
 
   expect(moveTo([0, 1, 2], -1, 1)).toStrictEqual([0, 1, 2])
   expect(moveTo([0, 1, 2], 1, -1)).toStrictEqual([0, 1, 2])
-})
-
-test('setAt', () => {
-  expect(setAt([0, 1, 2], 0, 9)).toStrictEqual([9, 1, 2])
-  expect(setAt(['a', 'b', 'c'], -1, 'D')).toStrictEqual(['a', 'b', 'D'])
 })

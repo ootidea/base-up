@@ -2,8 +2,6 @@ import { isInIntegerRangeThrough, isInIntegerRangeUntil } from './all'
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { NonEmptyArray } from './Array/MinLengthArray'
 import { Tuple } from './Array/other'
-import { newMap } from './Map'
-import { modOf } from './number/other'
 import { Equals } from './typePredicate'
 
 export function push<const T extends Tuple, const U extends Tuple>(self: T, ...args: U): [...T, ...U] {
@@ -165,45 +163,4 @@ export function moveTo<T>(self: readonly T[], from: number, to: number): T[] {
     cloned.splice(to, 0, removed!)
   }
   return cloned
-}
-
-/**
- * @example
- * setAt(['a', 'b', 'c'], 0, 'D') returns ['D', 'b', 'c']
- * setAt(['a', 'b', 'c'], -1, 'D') returns ['a', 'b', 'D']
- */
-export function setAt<T>(self: readonly T[], at: number, value: T): T[] {
-  const cloned = [...self]
-  cloned.splice(modOf(at, self.length), 1, value)
-  return cloned
-}
-
-export function set<T, K extends keyof T>(self: T, key: K, value: T[K]): T
-export function set<T, K extends keyof T, V>(self: T, key: K, value: V): Omit<T, K> & Record<K, V>
-export function set<K extends keyof any>(self: any, key: K, value: unknown): any {
-  const result = { ...self }
-  result[key] = value
-  return result
-}
-export namespace set {
-  export function Map<K, T>(self: ReadonlyMap<K, T>, key: K, value: T): Map<K, T> {
-    const cloned = newMap(self)
-    cloned.set(key, value)
-    return cloned
-  }
-}
-
-export namespace update {
-  export function Map<K, T>(self: ReadonlyMap<K, T>, key: K, f: (_: T | undefined) => T): Map<K, T> {
-    const cloned = newMap(self)
-    cloned.set(key, f(cloned.get(key)))
-    return cloned
-  }
-
-  export namespace Map {
-    export function mutable<K, T>(self: Map<K, T>, key: K, f: (_: T | undefined) => T): Map<K, T> {
-      self.set(key, f(self.get(key)))
-      return self
-    }
-  }
 }

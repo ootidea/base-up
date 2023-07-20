@@ -23,15 +23,12 @@ export {
 } from './transform'
 export {
   push,
-  set,
   insertAt,
-  setAt,
   RemoveAt,
   removeAt,
   remove,
   removeAll,
   moveTo,
-  update,
   unshift,
   removeSuffix,
 } from './collectionUpdate'

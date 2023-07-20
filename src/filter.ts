@@ -1,7 +1,6 @@
 import { ReadonlyNonEmptyArray } from './Array/MinLengthArray'
 import { Tuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
-import { update } from './collectionUpdate'
 import { newSet } from './Set'
 
 export function filter(self: readonly [], f: (_: any) => boolean): []
@@ -236,14 +235,12 @@ export function modeOf<const T>(self: readonly T[]): T | undefined {
   let maxCount = 0
   let candidateValue: T | undefined = undefined
   for (const value of self) {
-    update.Map.mutable(map, value, (prev) => {
-      const nextCount = (prev ?? 0) + 1
-      if (maxCount < nextCount) {
-        maxCount = nextCount
-        candidateValue = value
-      }
-      return nextCount
-    })
+    const nextCount = (map.get(value) ?? 0) + 1
+    if (maxCount < nextCount) {
+      maxCount = nextCount
+      candidateValue = value
+    }
+    map.set(value, nextCount)
   }
   return candidateValue
 }
@@ -255,14 +252,13 @@ export function modeBy<T, U>(self: readonly T[], by: (_: T) => U): T | undefined
   let maxCount = 0
   let candidateValue: T | undefined = undefined
   for (const value of self) {
-    update.Map.mutable(map, by(value), (prev) => {
-      const nextCount = (prev ?? 0) + 1
-      if (maxCount < nextCount) {
-        maxCount = nextCount
-        candidateValue = value
-      }
-      return nextCount
-    })
+    const key = by(value)
+    const nextCount = (map.get(key) ?? 0) + 1
+    if (maxCount < nextCount) {
+      maxCount = nextCount
+      candidateValue = value
+    }
+    map.set(key, nextCount)
   }
   return candidateValue
 }
