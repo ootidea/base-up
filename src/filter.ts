@@ -85,7 +85,7 @@ type _FirstOf<T extends Tuple, L> = T extends readonly []
   ? _FirstOf<T2, L2>
   : T[0] | L
 export function firstOf<const T extends Tuple>(self: T): FirstOf<T> {
-  return self[0]
+  return self[0] as any
 }
 
 /**
@@ -121,7 +121,7 @@ type _LastOf<H, L extends Tuple> = L extends readonly []
   ? _LastOf<H | H2, L2>
   : H | L[0]
 export function lastOf<const T extends Tuple>(self: T): LastOf<T> {
-  return self[self.length - 1]
+  return self[self.length - 1] as any
 }
 
 export function indexOf<T>(self: readonly [], value: T, fromIndex?: number): undefined

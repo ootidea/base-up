@@ -3,10 +3,10 @@ import { UnionToIntersection } from '../type'
 import { Equals, IsOneOf } from '../typePredicate'
 import { FixedLengthArray } from './FixedLengthArray'
 
-export type Tuple = readonly any[]
+export type Tuple = readonly unknown[]
 
 export function shuffle<const T extends Tuple>(self: T): FixedLengthArray<T['length'], T[number]> {
-  const result: T[] = []
+  const result: T[number][] = []
   for (let i = 0; i < self.length; ++i) {
     const j = randomIntegerThrough(i)
     if (j < i) {
