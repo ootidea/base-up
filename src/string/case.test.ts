@@ -209,6 +209,7 @@ test('toSnakeCasedPropertiesDeep', () => {
   expect(toSnakeCasedPropertiesDeep(null)).toStrictEqual(null)
   expect(toSnakeCasedPropertiesDeep(undefined)).toStrictEqual(undefined)
   expect(toSnakeCasedPropertiesDeep(123)).toStrictEqual(123)
+  expect(toSnakeCasedPropertiesDeep(parseInt)).toStrictEqual(parseInt)
 })
 
 test('ToCamelCasedPropertiesDeep', () => {
@@ -248,4 +249,5 @@ test('toCamelCasedPropertiesDeep', () => {
   expect(toCamelCasedPropertiesDeep(null)).toStrictEqual(null)
   expect(toCamelCasedPropertiesDeep(undefined)).toStrictEqual(undefined)
   expect(toCamelCasedPropertiesDeep(123)).toStrictEqual(123)
+  expect(toCamelCasedPropertiesDeep(parseInt)).toStrictEqual(parseInt)
 })

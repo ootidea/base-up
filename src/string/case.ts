@@ -325,8 +325,6 @@ type _ToSnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [inf
  * toSnakeCasedPropertiesDeep(null) returns null
  */
 export function toSnakeCasedPropertiesDeep<const T>(self: T): ToSnakeCasedPropertiesDeep<T> {
-  if (self instanceof Function) return self as any
-
   if (self instanceof Array) {
     return self.map(toSnakeCasedPropertiesDeep) as any
   }
@@ -388,8 +386,6 @@ type _ToCamelCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [inf
  * toCamelCasedPropertiesDeep(null) returns null
  */
 export function toCamelCasedPropertiesDeep<const T>(self: T): ToCamelCasedPropertiesDeep<T> {
-  if (self instanceof Function) return self as any
-
   if (self instanceof Array) {
     return self.map(toCamelCasedPropertiesDeep) as any
   }
