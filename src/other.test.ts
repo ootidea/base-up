@@ -11,9 +11,27 @@ test('groupBy.Map', () => {
 })
 
 test('toMultiset', () => {
-  expect(toMultiset(['a', 'a', 'b', 'c'])).toStrictEqual(mapOf(['a', 2], ['b', 1], ['c', 1]))
-  expect(toMultiset([null, undefined, null])).toStrictEqual(mapOf([null, 2], [undefined, 1]))
-  expect(toMultiset('Hello')).toStrictEqual(mapOf(['H', 1], ['e', 1], ['l', 2], ['o', 1]))
+  expect(toMultiset(['a', 'a', 'b', 'c'])).toStrictEqual(
+    new Map([
+      ['a', 2],
+      ['b', 1],
+      ['c', 1],
+    ])
+  )
+  expect(toMultiset([null, undefined, null])).toStrictEqual(
+    new Map([
+      [null, 2],
+      [undefined, 1],
+    ])
+  )
+  expect(toMultiset('Hello')).toStrictEqual(
+    new Map([
+      ['H', 1],
+      ['e', 1],
+      ['l', 2],
+      ['o', 1],
+    ])
+  )
 })
 
 test('sumOf', () => {

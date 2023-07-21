@@ -24,6 +24,14 @@ export namespace groupBy {
   }
 }
 
+/**
+ * @example
+ * toMultiset(['a', 'a', 'b', 'c']) returns new Map([['a', 2], ['b', 1], ['c', 1]])
+ * toMultiset('aabc') returns new Map([['a', 2], ['b', 1], ['c', 1]])
+ */
+export function toMultiset(self: readonly []): Map<never, number>
+export function toMultiset(self: ''): Map<never, number>
+export function toMultiset<T>(self: Iterable<T>): Map<T, number>
 export function toMultiset<T>(self: Iterable<T>): Map<T, number> {
   const result = newMap<T, number>()
   for (const value of self) {
