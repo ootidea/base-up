@@ -2,6 +2,28 @@ import { Digit, Infinity, Negate, NegativeInfinity } from '../number/other'
 import { IsUnion, ToBasePrimitiveType } from '../type'
 import { Equals, IsOneOf } from '../typePredicate'
 
+/**
+ * @example
+ * ToNumber<'00'> equals 0
+ * ToNumber<'001'> equals 1
+ * ToNumber<'-0'> equals 0
+ * ToNumber<'-00'> equals 0
+ * ToNumber<'-001'> equals -1
+ * ToNumber<'Infinity'> equals Infinity
+ * ToNumber<'-Infinity'> equals -Infinity
+ * @example
+ * ToNumber<'1' | '2'> equals 1 | 2
+ * ToNumber<string> equals number
+ * ToNumber<any> equals number
+ * ToNumber<never> equals never
+ * @example NaN is typed as number
+ * ToNumber<'0xFF'> equals number
+ * ToNumber<'1px'> equals number
+ * ToNumber<''> equals number
+ * ToNumber<'  12'> equals number
+ * ToNumber<'1_234'> equals number
+ * ToNumber<'1,234'> equals number
+ */
 export type ToNumber<S extends string> = S extends 'Infinity'
   ? Infinity
   : S extends '-Infinity'

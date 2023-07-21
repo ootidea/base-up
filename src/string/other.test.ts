@@ -49,10 +49,17 @@ test('ToNumber', () => {
   assertTypeEquality<ToNumber<'-0'>, 0>()
   assertTypeEquality<ToNumber<'-00'>, 0>()
   assertTypeEquality<ToNumber<'-001'>, -1>()
+  assertTypeEquality<ToNumber<'1' | '2'>, 1 | 2>()
+  assertTypeEquality<ToNumber<never>, never>()
+  assertTypeEquality<ToNumber<string>, number>()
+  assertTypeEquality<ToNumber<any>, number>()
+
+  assertTypeEquality<ToNumber<'1px'>, number>()
+  assertTypeEquality<ToNumber<'0xFF'>, number>()
+  assertTypeEquality<ToNumber<''>, number>()
+  assertTypeEquality<ToNumber<'  12'>, number>()
   assertTypeEquality<ToNumber<'1_234'>, number>()
   assertTypeEquality<ToNumber<'1,234'>, number>()
-  assertTypeEquality<ToNumber<'1px'>, number>()
-  assertTypeEquality<ToNumber<'abc'>, number>()
 })
 
 test('toString', () => {

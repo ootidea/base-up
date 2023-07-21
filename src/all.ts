@@ -174,6 +174,7 @@ export {
 } from './number/range'
 export { clamp, Min, Max } from './number/compare'
 export {
+  ToNumber,
   toNumber,
   ToString,
   toString,
