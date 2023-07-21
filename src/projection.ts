@@ -1,11 +1,11 @@
-import { NonClassValue } from './type'
+import { PlainValue } from './type'
 import { Equals, IsOneOf } from './typePredicate'
 
 export type AllKeysOf<T> = IsOneOf<T, [undefined, null, {}]> extends true
   ? []
   : Equals<T, any> extends true
   ? (string | symbol)[]
-  : T extends Record<keyof any, NonClassValue>
+  : T extends Record<keyof any, PlainValue<Function>>
   ? ToStringKey<keyof T>[]
   : (string | symbol)[]
 type ToStringKey<K extends keyof any> = K extends number ? `${K}` : K
@@ -51,7 +51,7 @@ export type AllValuesOf<T> = IsOneOf<T, [undefined, null]> extends true
   ? []
   : Equals<T, any> extends true
   ? any[]
-  : T extends Record<keyof any, NonClassValue>
+  : T extends Record<keyof any, PlainValue<Function>>
   ? T[keyof T][]
   : unknown[]
 

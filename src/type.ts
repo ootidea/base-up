@@ -147,12 +147,15 @@ interface JsonValueObject {
 }
 
 /**
- * A superset of {@link JsonValue}.
- * It includes types undefined, bigint, and symbol.
- * Keys for objects can be of type number and symbol.
- * Just like JSON, it does not include function and class types.
+ * A superset of {@link JsonValue} type. The differences from JsonValue are as follows:
+ * (1) It includes the undefined, bigint, and symbol types.
+ * (2) It allows number and symbol as keys for objects.
+ *
+ * You can extend the type by providing a type parameter.
+ * Specifically, PlainValue<Function> means a type that does not include classes.
  */
-export type PlainValue =
+export type PlainValue<Addition = never> =
+  | Addition
   | null
   | undefined
   | boolean
@@ -160,27 +163,11 @@ export type PlainValue =
   | bigint
   | string
   | symbol
-  | PlainValueArray
-  | PlainValueObject
-interface PlainValueArray extends ReadonlyArray<PlainValue> {}
-interface PlainValueObject {
-  [key: keyof any]: PlainValue
-}
-
-export type NonClassValue =
-  | null
-  | undefined
-  | boolean
-  | number
-  | bigint
-  | string
-  | symbol
-  | Function
-  | NonClassValueArray
-  | NonClassValueObject
-interface NonClassValueArray extends ReadonlyArray<NonClassValue> {}
-interface NonClassValueObject {
-  [key: keyof any]: NonClassValue
+  | PlainValueArray<Addition>
+  | PlainValueObject<Addition>
+interface PlainValueArray<Addition> extends ReadonlyArray<PlainValue<Addition>> {}
+interface PlainValueObject<Addition> {
+  [key: keyof any]: PlainValue<Addition>
 }
 
 declare const OMITTED: unique symbol

@@ -86,6 +86,7 @@ export {
   Simplify,
   DiscriminatedUnion,
   JsonValue,
+  PlainValue,
 } from './type'
 export {
   isNull,
