@@ -87,6 +87,7 @@ export {
   DiscriminatedUnion,
   JsonValue,
   PlainValue,
+  ExtendedPlainValue,
 } from './type'
 export {
   isNull,

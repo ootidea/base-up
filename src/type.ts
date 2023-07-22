@@ -1,3 +1,4 @@
+import { StrictFunction } from './Function'
 import { Equals, IsOneOf } from './typePredicate'
 
 /**
@@ -150,12 +151,15 @@ interface JsonValueObject {
  * A superset of {@link JsonValue} type. The differences from JsonValue are as follows:
  * (1) It includes the undefined, bigint, and symbol types.
  * (2) It allows number and symbol as keys for objects.
- *
- * You can extend the type by providing a type parameter.
- * Specifically, PlainValue<Function> means a type that does not include classes.
+ * @example
+ * const v1: PlainValue = 123
+ * const v2: PlainValue = ['abc']
+ * const v3: PlainValue = { [Symbol.iterator]: 123 }
+ * const v4: PlainValue = new Date() // Type error!
+ * const v5: PlainValue = () => {} // Type error!
+ * const v6: PlainValue = { blob: new Blob() } // Type error!
  */
-export type PlainValue<Addition = never> =
-  | Addition
+export type PlainValue =
   | null
   | undefined
   | boolean
@@ -163,11 +167,32 @@ export type PlainValue<Addition = never> =
   | bigint
   | string
   | symbol
-  | PlainValueArray<Addition>
-  | PlainValueObject<Addition>
-interface PlainValueArray<Addition> extends ReadonlyArray<PlainValue<Addition>> {}
-interface PlainValueObject<Addition> {
-  [key: keyof any]: PlainValue<Addition>
+  | PlainValueArray
+  | PlainValueObject
+interface PlainValueArray extends ReadonlyArray<PlainValue> {}
+interface PlainValueObject {
+  [key: keyof any]: PlainValue
+}
+
+/**
+ * A superset of {@link PlainValue} type, which includes function types.
+ * It is a type that does not include classes.
+ * You can customize additional types with a type parameter.
+ */
+export type ExtendedPlainValue<T = StrictFunction> =
+  | T
+  | null
+  | undefined
+  | boolean
+  | number
+  | bigint
+  | string
+  | symbol
+  | ExtendedPlainValueArray<T>
+  | ExtendedPlainValueObject<T>
+interface ExtendedPlainValueArray<T> extends ReadonlyArray<ExtendedPlainValue<T>> {}
+interface ExtendedPlainValueObject<T> {
+  [key: keyof any]: ExtendedPlainValue<T>
 }
 
 declare const OMITTED: unique symbol
