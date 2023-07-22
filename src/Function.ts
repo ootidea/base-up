@@ -1,5 +1,15 @@
 import { Tuple } from './Array/other'
 
+/**
+ * For some reason, the Blob type is a subtype of Function, even though other class types are not.
+ * Therefore, you should not use 'T extends Function' to determine whether it is a function.
+ * @example
+ * const f1: StrictFunction = () => {} // OK
+ * const f2: StrictFunction = new Blob() // Type error as expected
+ * const f3: Function = new Blob() // Contrary to expectations, there is no type error
+ */
+export type StrictFunction = (..._: readonly unknown[]) => unknown
+
 export function curry<const H, const L extends Tuple, const R>(f: (h: H, ...l: L) => R): (a: H) => (...bs: L) => R {
   return (h: H) =>
     (...l: L) =>
