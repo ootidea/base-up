@@ -6,9 +6,7 @@ import { Equals, IsOneOf } from './typePredicate'
  * assertTypeEquality<string, any>() results in a type error
  * assertTypeEquality<123, 123>()  does not result in a type error
  */
-export function assertTypeEquality<T, U>(
-  ..._: Equals<T, U> extends true ? [] : ['Assertion failed:', T, 'is not equal to', U]
-) {}
+export function assertTypeEquality<T, U>(..._: Equals<T, U> extends true ? [] : [error: [T, 'is not equal to', U]]) {}
 
 export function assert<T, U extends T>(value: T, predicate: (value: T) => value is U): asserts value is U
 export function assert<T>(value: T, predicate: (value: T) => boolean): void
