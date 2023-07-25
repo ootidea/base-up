@@ -6,11 +6,10 @@ import { PrefixesOf } from './combination'
 import { createComparatorFromIsLessThan } from './comparison'
 import { identity } from './Function'
 import { repeat } from './generate'
-import { newMap, NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
+import { NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
 import { Subtract } from './number/other'
 import { IntegerRangeThrough } from './number/range'
-import { newPromise } from './Promise'
-import { newSet, NonEmptySet, ReadonlyNonEmptySet } from './Set'
+import { NonEmptySet, ReadonlyNonEmptySet } from './Set'
 import { Interpolable } from './string/other'
 import { Equals, IsOneOf } from './typePredicate'
 
@@ -35,17 +34,17 @@ export namespace map {
   export function Set<T, U>(self: ReadonlyNonEmptySet<T>, f: (_: T) => U): NonEmptySet<U>
   export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): Set<U>
   export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): Set<U> {
-    return newSet(map.Iterable(self, f))
+    return new globalThis.Set(map.Iterable(self, f))
   }
 
   export function Map<K, T, U>(self: ReadonlyNonEmptyMap<K, T>, f: (_: T) => U): NonEmptyMap<K, U>
   export function Map<K, T, U>(self: ReadonlyMap<K, T>, f: (_: T) => U): Map<K, U>
   export function Map<K, T, U>(self: ReadonlyMap<K, T>, f: (_: T) => U): Map<K, U> {
-    return newMap(map.Iterable(self.entries(), ([key, value]) => [key, f(value)]))
+    return new globalThis.Map(map.Iterable(self.entries(), ([key, value]) => [key, f(value)]))
   }
 
   export function Promise<T, U>(self: PromiseLike<T>, f: (_: T) => U): Promise<U> {
-    return newPromise<U>((resolve, reject) => {
+    return new globalThis.Promise<U>((resolve, reject) => {
       self.then((value) => resolve(f(value)), reject)
     })
   }
@@ -103,7 +102,7 @@ export function flatten<T>(self: readonly (readonly T[])[]): T[] {
 }
 export namespace flatten {
   export function Set<T>(self: ReadonlySet<ReadonlySet<T>>): Set<T> {
-    const result = newSet<T>()
+    const result = new globalThis.Set<T>()
     for (const set of self) {
       for (const value of set) {
         result.add(value)

@@ -1,7 +1,6 @@
 import { ReadonlyNonEmptyArray } from './Array/MinLengthArray'
 import { Tuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
-import { newSet } from './Set'
 
 export function filter(self: readonly [], f: (_: any) => boolean): []
 export function filter<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
@@ -29,7 +28,7 @@ export namespace filter {
   export function Set<T, U extends T>(self: ReadonlySet<T>, f: (_: T) => _ is U): Set<U>
   export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T>
   export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T> {
-    return newSet(filter.Iterable(self, f))
+    return new globalThis.Set(filter.Iterable(self, f))
   }
 }
 

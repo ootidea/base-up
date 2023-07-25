@@ -1,5 +1,4 @@
 import { NonEmptyArray } from './Array/MinLengthArray'
-import { newMap } from './Map'
 
 export function groupBy<T, U extends keyof any>(self: readonly T[], by: (_: T) => U): Record<U, NonEmptyArray<T>> {
   const result: Record<U, NonEmptyArray<T>> = {} as any
@@ -13,7 +12,7 @@ export function groupBy<T, U extends keyof any>(self: readonly T[], by: (_: T) =
 }
 export namespace groupBy {
   export function Map<T, U>(self: readonly T[], by: (_: T) => U): Map<U, NonEmptyArray<T>> {
-    const result = newMap<U, NonEmptyArray<T>>()
+    const result = new globalThis.Map<U, NonEmptyArray<T>>()
     for (const value of self) {
       const key = by(value)
       if (!result.get(key)?.push(value)) {
@@ -33,7 +32,7 @@ export function toMultiset(self: readonly []): Map<never, number>
 export function toMultiset(self: ''): Map<never, number>
 export function toMultiset<T>(self: Iterable<T>): Map<T, number>
 export function toMultiset<T>(self: Iterable<T>): Map<T, number> {
-  const result = newMap<T, number>()
+  const result = new globalThis.Map<T, number>()
   for (const value of self) {
     const count = result.get(value) ?? 0
     result.set(value, count + 1)

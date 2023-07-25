@@ -5,14 +5,6 @@ export type NonEmptyMap<K, T> = Branded<Map<K, T>, typeof NON_EMPTY_MAP_TAG>
 export type ReadonlyNonEmptyMap<K, T> = Branded<ReadonlyMap<K, T>, typeof NON_EMPTY_MAP_TAG>
 
 /**
- * Wrapper function for the Map constructor.
- * Use to avoid name conflicts.
- */
-export function newMap<K, T>(...args: ConstructorParameters<typeof Map<K, T>>): Map<K, T> {
-  return new Map(...args)
-}
-
-/**
  * Create a Map object from a tuple of key-value pairs.
  * More precisely typed than Map constructor.
  * @example
