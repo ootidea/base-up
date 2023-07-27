@@ -128,6 +128,7 @@ export function pipe<const A, B, C, D, E, F, G, H, I, J, K, L, M>(
   l: (k: K) => L,
   m: (l: L) => M
 ): M
+export function pipe<A>(a: A, ...fs: readonly ((a: A) => A)[]): A
 export function pipe<const A, const T extends readonly StrictFunction[]>(a: A, ...fs: T) {
   let value: any = a
   for (const f of fs) {
