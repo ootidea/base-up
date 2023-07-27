@@ -26,6 +26,11 @@ export namespace map {
       yield f(value)
     }
   }
+  export namespace Iterable {
+    export function defer<T, U>(f: (_: T) => U): (self: Iterable<T>) => Iterable<U> {
+      return (self: Iterable<T>) => map.Iterable(self, f)
+    }
+  }
 
   export function Set<T, U>(self: ReadonlyNonEmptySet<T>, f: (_: T) => U): NonEmptySet<U>
   export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): Set<U>
