@@ -51,6 +51,19 @@ export function assertNeverType(mustBeNever: never): never {
 
 export type nullish = null | undefined
 
+export type TypedArray =
+  | Int8Array
+  | Uint8Array
+  | Uint8ClampedArray
+  | Int16Array
+  | Uint16Array
+  | Int32Array
+  | Uint32Array
+  | Float32Array
+  | Float64Array
+  | BigInt64Array
+  | BigUint64Array
+
 declare const DEFAULT_BRAND: unique symbol
 export type Branded<T, Brand extends keyof any = typeof DEFAULT_BRAND> = T & Record<Brand, never>
 

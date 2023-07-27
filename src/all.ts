@@ -83,6 +83,7 @@ export {
   IsUnion,
   ToBasePrimitiveType,
   nullish,
+  TypedArray,
   Branded,
   Simplify,
   DiscriminatedUnion,
