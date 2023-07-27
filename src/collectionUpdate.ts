@@ -149,6 +149,20 @@ export namespace remove {
 
 /**
  * @example
+ * removePrefix('ABCDE', 'AB') returns 'CDE'
+ * removePrefix('ABCDE', 'ABCDE') returns ''
+ * removePrefix('ABCDE', '123') returns 'ABCDE'
+ * removePrefix('ABCDE', '') returns 'ABCDE'
+ */
+export function removePrefix(self: string, prefix: string): string {
+  if (self.startsWith(prefix)) {
+    return self.slice(prefix.length)
+  }
+  return self
+}
+
+/**
+ * @example
  * removeSuffix('ABCDE', 'DE') returns 'ABC'
  * removeSuffix('ABCDE', 'ABCDE') returns ''
  * removeSuffix('ABCDE', '123') returns 'ABCDE'

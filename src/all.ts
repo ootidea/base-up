@@ -30,6 +30,7 @@ export {
   removeAll,
   moveTo,
   unshift,
+  removePrefix,
   removeSuffix,
 } from './collectionUpdate'
 export { isEmpty, includes, every, everyValues, isNotEmpty, isUnique } from './collectionPredicate'
