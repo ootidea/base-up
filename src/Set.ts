@@ -7,8 +7,10 @@ declare const NON_EMPTY_SET_TAG: unique symbol
 export type NonEmptySet<T> = Branded<Set<T>, typeof NON_EMPTY_SET_TAG>
 export type ReadonlyNonEmptySet<T> = Branded<ReadonlySet<T>, typeof NON_EMPTY_SET_TAG>
 
-export function setOf<const T extends Tuple>(...args: T): T extends readonly [] ? Set<never> : NonEmptySet<T[number]> {
-  return new Set(args) as any
+export function setOf(): Set<never>
+export function setOf<T extends Tuple>(...args: T): Set<T[number]>
+export function setOf<T>(...args: readonly T[]): Set<T> {
+  return new Set(args)
 }
 
 /**

@@ -9,11 +9,11 @@ export type ReadonlyNonEmptyMap<K, T> = Branded<ReadonlyMap<K, T>, typeof NON_EM
  * More precisely typed than Map constructor.
  * @example
  * mapOf([true, 1], [false, 0]) returns new Map([[true, 1], [false, 0]])
- * mapOf([true, 1], [false, 0]) is typed as Map<boolean, 0 | 1>
+ * mapOf([true, 1], [false, 0]) is typed as Map<boolean, number>
  * @example
  * mapOf() returns new Map()
  * mapOf() is typed as Map<never, never>
  */
-export function mapOf<const T extends readonly (readonly [any, any])[]>(...args: T): Map<T[number][0], T[number][1]> {
+export function mapOf<T extends readonly (readonly [any, any])[]>(...args: T): Map<T[number][0], T[number][1]> {
   return new Map(args)
 }
