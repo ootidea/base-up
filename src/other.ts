@@ -1,22 +1,22 @@
 import { NonEmptyArray } from './Array/MinLengthArray'
 
-export function groupBy<T, U extends keyof any>(self: readonly T[], by: (_: T) => U): Record<U, NonEmptyArray<T>> {
-  const result: Record<U, NonEmptyArray<T>> = {} as any
+export function groupBy<T, U>(self: readonly T[], by: (_: T) => U): Map<U, NonEmptyArray<T>> {
+  const result = new globalThis.Map<U, NonEmptyArray<T>>()
   for (const value of self) {
     const key = by(value)
-    if (!result[key]?.push(value)) {
-      result[key] = [value]
+    if (!result.get(key)?.push(value)) {
+      result.set(key, [value])
     }
   }
   return result
 }
 export namespace groupBy {
-  export function Map<T, U>(self: readonly T[], by: (_: T) => U): Map<U, NonEmptyArray<T>> {
-    const result = new globalThis.Map<U, NonEmptyArray<T>>()
+  export function Record<T, U extends keyof any>(self: readonly T[], by: (_: T) => U): Record<U, NonEmptyArray<T>> {
+    const result: Record<U, NonEmptyArray<T>> = {} as any
     for (const value of self) {
       const key = by(value)
-      if (!result.get(key)?.push(value)) {
-        result.set(key, [value])
+      if (!result[key]?.push(value)) {
+        result[key] = [value]
       }
     }
     return result
