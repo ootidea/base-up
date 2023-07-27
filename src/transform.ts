@@ -102,6 +102,12 @@ export function flatten<T>(self: readonly (readonly T[])[]): T[] {
   return self.flatMap((x) => x)
 }
 export namespace flatten {
+  export function* Iterable<T>(self: Iterable<Iterable<T>>): Iterable<T> {
+    for (const iterable of self) {
+      yield* iterable
+    }
+  }
+
   export function Set<T>(self: ReadonlySet<ReadonlySet<T>>): Set<T> {
     const result = new globalThis.Set<T>()
     for (const set of self) {

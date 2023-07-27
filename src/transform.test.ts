@@ -76,7 +76,18 @@ test('flatten', () => {
   ).toStrictEqual([1, 2, 3, 4, 5, 6, 7, 8])
   expect(flatten([[1, 2], [], [3]])).toStrictEqual([1, 2, 3])
   expect(flatten([])).toStrictEqual([])
-
+})
+test('flatten.Iterable', () => {
+  expect([
+    ...flatten.Iterable([
+      [1, 2, 3],
+      [1, 2],
+    ]),
+  ]).toStrictEqual([1, 2, 3, 1, 2])
+  expect([...flatten.Iterable([[], [1, 2]])]).toStrictEqual([1, 2])
+  expect([...flatten.Iterable([])]).toStrictEqual([])
+})
+test('flatten.Set', () => {
   expect(flatten.Set(setOf(setOf(1, 2, 3), setOf(3, 4), setOf(4, 5, 6)))).toStrictEqual(setOf(1, 2, 3, 4, 5, 6))
   expect(flatten.Set(setOf(setOf(1, 2, 3), setOf(), setOf(4)))).toStrictEqual(setOf(1, 2, 3, 4))
   expect(flatten.Set(setOf())).toStrictEqual(setOf())
