@@ -20,10 +20,20 @@ import {
 } from './transform'
 import { assertTypeEquality } from './type'
 
-test('map', async () => {
-  expect(map.Set(setOf(2, 1, 3), (x) => x + 10)).toStrictEqual(setOf(12, 11, 13))
-
-  expect(await map.Promise(Promise.resolve({ a: 123 }), (value) => value.a)).toBe(123)
+test('map', () => {
+  expect(map([1, 2, 3], (x) => x * 2)).toStrictEqual([2, 4, 6])
+  expect(map([], (x) => x * 2)).toStrictEqual([])
+})
+test('map.defer', async () => {
+  expect(map.defer((x: number) => x * 2)([1, 2, 3])).toStrictEqual([2, 4, 6])
+  expect(map.defer((x: number) => x * 2)([])).toStrictEqual([])
+})
+test('map.Set', () => {
+  expect(map.Set(setOf(1, 2, 3), (x) => x * 2)).toStrictEqual(setOf(2, 4, 6))
+  expect(map.Set(setOf(), (x) => x * 2)).toStrictEqual(setOf())
+})
+test('map.Promise', () => {
+  expect(map.Promise(Promise.resolve({ a: 123 }), ({ a }) => a)).resolves.toBe(123)
 })
 
 test('flatMap', () => {
