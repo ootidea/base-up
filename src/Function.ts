@@ -6,7 +6,7 @@ import { Tuple } from './Array/other'
  * @example
  * const f1: StrictFunction = () => {} // OK
  * const f2: StrictFunction = new Blob() // Type error as expected
- * const f3: Function = new Blob() // Contrary to expectations, there is no type error
+ * const f3: Function = new Blob() // For some reason, there is no type error
  */
 export type StrictFunction = (..._: readonly unknown[]) => unknown
 
