@@ -1,9 +1,16 @@
 import { expect, expectTypeOf, test } from 'vitest'
+import { mapOf, setOf } from './all'
 import { every, includes, isEmpty, isNotEmpty, isUnique } from './collectionPredicate'
 
 test('isEmpty', () => {
   expect(isEmpty([1, 2, 3])).toBe(false)
   expect(isEmpty([])).toBe(true)
+  expect(isEmpty(setOf(1, 2, 3))).toBe(false)
+  expect(isEmpty(setOf())).toBe(true)
+  expect(isEmpty(mapOf([false, 0], [true, 1]))).toBe(false)
+  expect(isEmpty(mapOf())).toBe(true)
+  expect(isEmpty('abc')).toBe(false)
+  expect(isEmpty('')).toBe(true)
 
   expectTypeOf(isEmpty([1, 2, 3])).toEqualTypeOf<false>()
   expectTypeOf(isEmpty([])).toEqualTypeOf<true>()
@@ -14,6 +21,12 @@ test('isEmpty', () => {
 test('isNotEmpty', () => {
   expect(isNotEmpty([1, 2, 3])).toBe(true)
   expect(isNotEmpty([])).toBe(false)
+  expect(isNotEmpty(setOf(1, 2, 3))).toBe(true)
+  expect(isNotEmpty(setOf())).toBe(false)
+  expect(isNotEmpty(mapOf([false, 0], [true, 1]))).toBe(true)
+  expect(isNotEmpty(mapOf())).toBe(false)
+  expect(isNotEmpty('abc')).toBe(true)
+  expect(isNotEmpty('')).toBe(false)
 })
 
 test('every', () => {

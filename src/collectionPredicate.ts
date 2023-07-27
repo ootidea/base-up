@@ -1,61 +1,47 @@
 import { NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
 import { Tuple } from './Array/other'
-import { ReadonlyNonEmptyMap } from './Map'
-import { ReadonlyNonEmptySet } from './Set'
+import { NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
+import { NonEmptySet, ReadonlyNonEmptySet } from './Set'
 
 export function isEmpty(self: readonly []): true
+export function isEmpty(self: readonly never[]): true
 export function isEmpty<T>(self: ReadonlyNonEmptyArray<T>): false
-export function isEmpty<T>(self: readonly T[]): self is []
-export function isEmpty<T>(self: readonly T[]): self is [] {
-  return self.length === 0
-}
-export namespace isEmpty {
-  export function Iterable<T>(self: Iterable<T>): boolean {
-    for (const _ of self) {
-      return false
-    }
-    return true
+export function isEmpty<T>(self: T[]): self is []
+export function isEmpty<T>(self: readonly T[]): self is readonly []
+export function isEmpty(self: ReadonlySet<never>): true
+export function isEmpty<T>(self: ReadonlyNonEmptySet<T>): false
+export function isEmpty<K>(self: ReadonlyMap<K, never>): true
+export function isEmpty<K, T>(self: ReadonlyNonEmptyMap<K, T>): false
+export function isEmpty(self: ''): true
+export function isEmpty(self: string): self is ''
+export function isEmpty<T>(self: Iterable<T>): boolean
+export function isEmpty<T>(self: Iterable<T>): boolean {
+  for (const _ of self) {
+    return false
   }
-
-  export function Set<T>(self: ReadonlyNonEmptySet<T>): false
-  export function Set<T>(self: ReadonlySet<T>): boolean
-  export function Set<T>(self: ReadonlySet<T>): boolean {
-    return self.size === 0
-  }
-
-  export function Map<K, T>(self: ReadonlyNonEmptyMap<K, T>): false
-  export function Map<K, T>(self: ReadonlyMap<K, T>): boolean
-  export function Map<K, T>(self: ReadonlyMap<K, T>): boolean {
-    return self.size === 0
-  }
+  return true
 }
 
 export function isNotEmpty(self: readonly []): false
+export function isNotEmpty(self: readonly never[]): false
 export function isNotEmpty<T>(self: ReadonlyNonEmptyArray<T>): true
 export function isNotEmpty<T>(self: T[]): self is NonEmptyArray<T>
 export function isNotEmpty<T>(self: readonly T[]): self is ReadonlyNonEmptyArray<T>
-export function isNotEmpty<T>(self: readonly T[]) {
-  return self.length > 0
-}
-export namespace isNotEmpty {
-  export function Iterable<T>(self: Iterable<T>): boolean {
-    for (const _ of self) {
-      return true
-    }
-    return false
+export function isNotEmpty(self: ReadonlySet<never>): false
+export function isNotEmpty<T>(self: ReadonlyNonEmptySet<T>): true
+export function isNotEmpty<T>(self: Set<T>): self is NonEmptySet<T>
+export function isNotEmpty<T>(self: ReadonlySet<T>): self is ReadonlyNonEmptySet<T>
+export function isNotEmpty<K>(self: ReadonlyMap<K, never>): true
+export function isNotEmpty<K, T>(self: ReadonlyNonEmptyMap<K, T>): false
+export function isNotEmpty<K, T>(self: Map<K, T>): self is NonEmptyMap<K, T>
+export function isNotEmpty<K, T>(self: ReadonlyMap<K, T>): self is ReadonlyNonEmptyMap<K, T>
+export function isNotEmpty(self: ''): false
+export function isNotEmpty<T>(self: Iterable<T>): boolean
+export function isNotEmpty<T>(self: Iterable<T>): boolean {
+  for (const _ of self) {
+    return true
   }
-
-  export function Set<T>(self: ReadonlyNonEmptySet<T>): true
-  export function Set<T>(self: ReadonlySet<T>): self is ReadonlyNonEmptySet<T>
-  export function Set<T>(self: ReadonlySet<T>): self is ReadonlyNonEmptySet<T> {
-    return self.size > 0
-  }
-
-  export function Map<K, T>(self: ReadonlyNonEmptyMap<K, T>): true
-  export function Map<K, T>(self: ReadonlyMap<K, T>): self is ReadonlyNonEmptyMap<K, T>
-  export function Map<K, T>(self: ReadonlyMap<K, T>): self is ReadonlyNonEmptyMap<K, T> {
-    return self.size > 0
-  }
+  return false
 }
 
 export function every<T>(self: readonly [], f: (value: T) => boolean): true
