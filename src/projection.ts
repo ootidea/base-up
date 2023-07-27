@@ -14,10 +14,10 @@ type ToStringKey<K extends keyof any> = K extends number ? `${K}` : K
  * Get all keys of an object including inherited keys.
  * It behaves similarly to the keyof operator.
  * @example
- * allKeysOf({ name: 'Bob', age: 60 }) returns new Set(['name', 'age'])
- * allKeysOf({}) returns new Set()
- * allKeysOf({ 0: false, 1: true }) returns new Set(['0', '1'])
- * allKeysOf({ [Symbol.iterator]: false }) returns new Set([Symbol.iterator])
+ * allKeysOf({ name: 'Bob', age: 60 }) returns ['name', 'age']
+ * allKeysOf({}) returns []
+ * allKeysOf({ 0: false, 1: true }) returns ['0', '1']
+ * allKeysOf({ [Symbol.iterator]: false }) returns [Symbol.iterator]
  */
 export function allKeysOf<const T>(objectLike: T): AllKeysOf<T> {
   const resultSet: Set<string | symbol> = new Set()
