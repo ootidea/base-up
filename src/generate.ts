@@ -1,8 +1,9 @@
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { NonEmptyArray } from './Array/MinLengthArray'
 import { shuffle, Tuple } from './Array/other'
+import { Drop, take } from './filter'
 import { IntegerRangeUntil, randomIntegerUntil } from './number/range'
-import { Drop, Reverse, take } from './transform'
+import { Reverse } from './transform'
 import { Lazy, OMITTED, Unlazy } from './type'
 
 /**

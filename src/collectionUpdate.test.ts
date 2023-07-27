@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
 import { insertAt, moveTo, push, RemoveAt, removeAt, removePrefix, removeSuffix, unshift } from './collectionUpdate'
+import { take } from './filter'
 import { repeat } from './generate'
-import { take } from './transform'
 import { assertTypeEquality } from './type'
 
 test('push', () => {

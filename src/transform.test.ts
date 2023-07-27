@@ -1,11 +1,9 @@
 import { expect, test } from 'vitest'
-import { MinLengthArray, NonEmptyArray } from './Array/MinLengthArray'
 import { identity } from './Function'
 import { repeat } from './generate'
 import { setOf } from './Set'
 import {
   chunk,
-  Drop,
   flatMap,
   flatten,
   Join,
@@ -19,8 +17,6 @@ import {
   sort,
   sortBy,
   Split,
-  take,
-  Take,
 } from './transform'
 import { assertTypeEquality } from './type'
 
@@ -70,63 +66,6 @@ test('flatten', () => {
   expect(flatten.Set(setOf(setOf(1, 2, 3), setOf(3, 4), setOf(4, 5, 6)))).toStrictEqual(setOf(1, 2, 3, 4, 5, 6))
   expect(flatten.Set(setOf(setOf(1, 2, 3), setOf(), setOf(4)))).toStrictEqual(setOf(1, 2, 3, 4))
   expect(flatten.Set(setOf())).toStrictEqual(setOf())
-})
-
-test('Take', () => {
-  assertTypeEquality<Take<[1, 2, 3], 0>, []>()
-  assertTypeEquality<Take<[1, 2, 3], 2>, [1, 2]>()
-  assertTypeEquality<Take<[1, 2, 3], 4>, [1, 2, 3]>()
-  assertTypeEquality<Take<[1, ...2[]], 3>, [1] | [1, 2] | [1, 2, 2]>()
-  assertTypeEquality<Take<Date[], 2>, [] | [Date] | [Date, Date]>()
-  assertTypeEquality<Take<[...1[], 2], 3>, [2] | [1, 2] | [1, 1, 2] | [1, 1, 1]>()
-  assertTypeEquality<
-    Take<[1, 2, ...3[], 4, 5], 5>,
-    [1, 2, 4, 5] | [1, 2, 3, 4, 5] | [1, 2, 3, 3, 4] | [1, 2, 3, 3, 3]
-  >()
-  assertTypeEquality<Take<[1, ...any], 2>, [1] | [1, any]>()
-  assertTypeEquality<Take<any, 2>, [] | [any] | [any, any]>()
-
-  assertTypeEquality<Take<[1, 2, 3], 0 | 1>, [] | [1]>()
-  assertTypeEquality<Take<[1, 2, 3], never>, never>()
-  assertTypeEquality<Take<[1, 2, 3], number>, [] | [1] | [1, 2] | [1, 2, 3]>()
-  assertTypeEquality<Take<[1, 2, 3], any>, [] | [1] | [1, 2] | [1, 2, 3]>()
-  assertTypeEquality<Take<never, 2>, never>()
-})
-
-test('take', () => {
-  expect(take([1, 2, 3], 0)).toStrictEqual([])
-  expect(take([1, 2, 3], 2)).toStrictEqual([1, 2])
-  expect(take([1, 2, 3], 4)).toStrictEqual([1, 2, 3])
-  expect(take('abc', 2)).toStrictEqual(['a', 'b'])
-})
-
-test('take.defer', () => {
-  expect(take.defer(0)([1, 2, 3])).toStrictEqual([])
-  expect(take.defer(2)([1, 2, 3])).toStrictEqual([1, 2])
-  expect(take.defer(4)([1, 2, 3])).toStrictEqual([1, 2, 3])
-  expect(take.defer(2)('abc')).toStrictEqual(['a', 'b'])
-})
-
-test('Drop', () => {
-  assertTypeEquality<Drop<[1, 2, 3]>, [2, 3]>()
-  assertTypeEquality<Drop<[1, 2, 3], 2>, [3]>()
-  assertTypeEquality<Drop<[]>, []>()
-
-  assertTypeEquality<Drop<[...Date[], Date, Date], 2>, Date[]>()
-  assertTypeEquality<Drop<[...Date[], URL], 2>, [...Date[], URL]>()
-  assertTypeEquality<Drop<NonEmptyArray<string>>, string[]>()
-  assertTypeEquality<Drop<NonEmptyArray<string>, 2>, string[]>()
-  assertTypeEquality<Drop<MinLengthArray<2, string>, 2>, string[]>()
-  assertTypeEquality<Drop<MinLengthArray<2, string>>, NonEmptyArray<string>>()
-
-  assertTypeEquality<Drop<string[], 3>, string[]>()
-  assertTypeEquality<Drop<any, 3>, any>()
-  assertTypeEquality<Drop<never, 3>, never>()
-
-  // assertTypeEquality<Drop<[1?, 2?]>, [] | [2]>()
-
-  // assertTypeEquality<Drop<readonly [1, 2, 3]>, readonly [2, 3]>()
-  assertTypeEquality<Drop<readonly string[], 3>, readonly string[]>()
 })
 
 test('Join', () => {

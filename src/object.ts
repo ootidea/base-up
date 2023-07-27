@@ -1,6 +1,6 @@
 import { UnionToTuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
-import { drop } from './transform'
+import { drop } from './filter'
 import { Simplify } from './type'
 
 /**

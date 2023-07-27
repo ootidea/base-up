@@ -1,5 +1,5 @@
+import { Drop } from '../filter'
 import { IntegerRangeThrough } from '../number/range'
-import { Drop } from '../transform'
 import { FixedLengthArray } from './FixedLengthArray'
 
 export type NonEmptyArray<T = unknown> = [T, ...T[]] | [...T[], T]

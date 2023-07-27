@@ -1,8 +1,7 @@
 import { expect, test } from 'vitest'
-import { assertTypeEquality, Repeat } from './all'
+import { assertTypeEquality, Repeat, take } from './all'
 import { every, isUnique } from './collectionPredicate'
 import { fromEntries, rangeThrough, rangeUntil, repeat, repeatApply, uniqueRandomIntegersUntil } from './generate'
-import { take } from './transform'
 
 test('rangeUntil', () => {
   expect(rangeUntil(3)).toStrictEqual([0, 1, 2])
