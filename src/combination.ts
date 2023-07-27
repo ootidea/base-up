@@ -5,7 +5,7 @@ import { rangeUntil } from './generate'
 
 export function cartesianProductOf<const T extends Tuple, const U extends Tuple>(
   lhs: T,
-  rhs: U
+  rhs: U,
 ): [T[number], U[number]][] {
   const result = []
   for (const lhsElement of lhs) {

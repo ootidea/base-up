@@ -82,7 +82,7 @@ export type SplitTupleAroundRest<T extends Tuple> = Equals<T, any> extends true
 export type _SplitTupleAroundRest<
   T extends Tuple,
   Before extends Tuple = [],
-  After extends Tuple = []
+  After extends Tuple = [],
 > = T extends readonly [infer H, ...infer L]
   ? _SplitTupleAroundRest<L, [...Before, H], After>
   : T extends readonly [...infer L, infer H]

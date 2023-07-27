@@ -153,7 +153,7 @@ export function isFalsy(value: unknown) {
 
 export function isInstanceOf<T extends abstract new (..._: any) => any>(
   value: unknown,
-  ctor: T
+  ctor: T,
 ): value is InstanceType<T> {
   return value instanceof ctor
 }
@@ -170,7 +170,7 @@ export namespace isInstanceOf {
 
 export function isNotInstanceOf<T extends abstract new (..._: any) => any, U>(
   value: U,
-  ctor: T
+  ctor: T,
 ): value is Exclude<U, InstanceType<T>> {
   return !(value instanceof ctor)
 }

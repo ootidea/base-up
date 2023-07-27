@@ -74,7 +74,7 @@ export type _Take<T extends Tuple, N extends number, R extends Tuple = []> = R['
       ? [
           ...R,
           ...FixedLengthArray<M, SplitTupleAroundRest<T>['rest'][0]>,
-          ...Take<SplitTupleAroundRest<T>['after'], Subtract<S, M>>
+          ...Take<SplitTupleAroundRest<T>['after'], Subtract<S, M>>,
         ]
       : never
     : never
@@ -94,7 +94,7 @@ export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArr
 
 export namespace take {
   export function defer<N extends number>(
-    n: N
+    n: N,
   ): { <const T extends Tuple>(_: T): Take<T, N>; <T>(_: Iterable<T>): MaxLengthArray<N, T> } {
     return (self: any) => take(self, n)
   }

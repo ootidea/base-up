@@ -28,7 +28,7 @@ type _ReadonlyMinLengthArray<N extends number, M extends number, T> = M extends 
 export function isMinLengthArray<T, N extends number>(self: T[], length: N): self is MinLengthArray<N, T>
 export function isMinLengthArray<T, N extends number>(
   self: readonly T[],
-  length: N
+  length: N,
 ): self is ReadonlyMinLengthArray<N, T>
 export function isMinLengthArray<N extends number>(self: unknown, length: N): self is MinLengthArray<N>
 export function isMinLengthArray<N extends number>(self: unknown, length: N) {
@@ -36,7 +36,7 @@ export function isMinLengthArray<N extends number>(self: unknown, length: N) {
 }
 export namespace isMinLengthArray {
   export function defer<N extends number>(
-    length: N
+    length: N,
   ): {
     <T>(self: T[]): self is MinLengthArray<N, T>
     <T>(self: readonly T[]): self is ReadonlyMinLengthArray<N, T>

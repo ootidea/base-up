@@ -114,7 +114,7 @@ type NaturalNumbersThrough<N extends number> = number extends N
   : never
 type _NaturalNumbersThrough<Size extends Tuple, R extends Tuple = []> = Size extends readonly [
   any,
-  ...infer L extends Tuple
+  ...infer L extends Tuple,
 ]
   ? Lazy<_NaturalNumbersThrough<L, [Size['length'], ...R]>>
   : [0, ...R]
@@ -161,7 +161,7 @@ type _PositiveIntegersThrough<Size extends Tuple, R extends Tuple = []> = Size e
  */
 type ToNegativeNumbers<T extends readonly number[]> = T extends readonly [
   infer H extends number,
-  ...infer L extends readonly number[]
+  ...infer L extends readonly number[],
 ]
   ? H extends 0
     ? [0, ...ToNegativeNumbers<L>]
@@ -247,7 +247,7 @@ export function rangeThrough<N extends number, M extends number>(n: N, m?: M): n
  */
 export function uniqueRandomIntegersUntil<const N extends number, const M extends number>(
   upperBound: N,
-  length: M
+  length: M,
 ): FixedLengthArray<M, IntegerRangeUntil<N>> {
   if (length / upperBound < 0.4) {
     return retryWhile(upperBound, length)
@@ -257,13 +257,13 @@ export function uniqueRandomIntegersUntil<const N extends number, const M extend
 }
 function takeShuffle<const N extends number, const M extends number>(
   upperBound: N,
-  length: M
+  length: M,
 ): FixedLengthArray<M, IntegerRangeUntil<N>> {
   return take(shuffle(rangeUntil(upperBound)), length) as any
 }
 function retryWhile<const N extends number, const M extends number>(
   upperBound: N,
-  length: M
+  length: M,
 ): FixedLengthArray<M, IntegerRangeUntil<N>> {
   const set = new Set<number>()
   const result: number[] = []
@@ -294,7 +294,7 @@ type _Repeat<
   N extends number,
   A extends Tuple,
   Size extends Tuple = [],
-  R extends Tuple = []
+  R extends Tuple = [],
 > = Size['length'] extends N ? R : _Repeat<N, A, [1, ...Size], [...R, ...A]>
 export namespace Repeat {
   /**

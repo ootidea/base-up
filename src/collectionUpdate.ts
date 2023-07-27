@@ -70,7 +70,7 @@ export type RemoveAt<T extends Tuple, N extends number> = Equals<T, any> extends
   : _RemoveAt<T, FixedLengthArray<N>>
 export type _RemoveAt<T extends Tuple, N extends Tuple, Acc extends Tuple = []> = T extends readonly [
   infer H,
-  ...infer L
+  ...infer L,
 ]
   ? N extends readonly [any, ...infer M]
     ? _RemoveAt<L, M, [...Acc, H]>

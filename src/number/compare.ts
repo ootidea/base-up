@@ -25,7 +25,7 @@ type _IsAtMostNaturalNumber<
   Lhs extends string,
   Rhs extends string,
   LA extends readonly Digit[] = [],
-  RA extends readonly Digit[] = []
+  RA extends readonly Digit[] = [],
 > = Lhs extends `${infer LH extends Digit}${infer LL}`
   ? Rhs extends `${infer RH extends Digit}${infer RL}`
     ? _IsAtMostNaturalNumber<LL, RL, [LH, ...LA], [RH, ...RA]>
@@ -44,7 +44,7 @@ type _IsAtMostNaturalNumber<
  */
 type _IsAtMostNaturalNumberLexicographic<
   Lhs extends readonly Digit[],
-  Rhs extends readonly Digit[]
+  Rhs extends readonly Digit[],
 > = Lhs extends readonly [infer LH extends Digit, ...infer LL extends readonly Digit[]]
   ? Rhs extends readonly [infer RH extends Digit, ...infer RL extends readonly Digit[]]
     ? Equals<LH, RH, _IsAtMostNaturalNumberLexicographic<LL, RL>, IsLessThanDigit<LH, RH>>

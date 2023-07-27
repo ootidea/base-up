@@ -68,7 +68,7 @@ export namespace everyValues {
   export function Map<K, T, U extends T>(self: Map<K, T>, f: (value: T) => value is U): self is Map<K, U>
   export function Map<K, T, U extends T>(
     self: ReadonlyMap<K, T>,
-    f: (value: T) => value is U
+    f: (value: T) => value is U,
   ): self is ReadonlyMap<K, U>
   export function Map<K, T>(self: ReadonlyMap<K, T>, f: (value: T) => boolean): boolean
   export function Map<K, T>(self: ReadonlyMap<K, T>, f: (value: T) => boolean): boolean {
@@ -80,12 +80,12 @@ export function includes(self: readonly [], value: unknown, fromIndex?: number |
 export function includes<const T extends Tuple>(
   self: T,
   value: unknown,
-  fromIndex?: number | undefined
+  fromIndex?: number | undefined,
 ): value is T[number]
 export function includes<const T extends Tuple>(
   self: T,
   value: unknown,
-  fromIndex?: number | undefined
+  fromIndex?: number | undefined,
 ): value is T[number] {
   return self.includes(value as any, fromIndex)
 }

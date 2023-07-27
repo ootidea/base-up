@@ -16,13 +16,13 @@ test('toMultiset', () => {
       ['a', 2],
       ['b', 1],
       ['c', 1],
-    ])
+    ]),
   )
   expect(toMultiset([null, undefined, null])).toStrictEqual(
     new Map([
       [null, 2],
       [undefined, 1],
-    ])
+    ]),
   )
   expect(toMultiset('Hello')).toStrictEqual(
     new Map([
@@ -30,7 +30,7 @@ test('toMultiset', () => {
       ['e', 1],
       ['l', 2],
       ['o', 1],
-    ])
+    ]),
   )
 })
 

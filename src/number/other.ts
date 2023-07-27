@@ -219,7 +219,7 @@ export type NumberRankOf<T extends number> = T extends T
  */
 export function modOf<const N extends number, const M extends number>(
   a: N,
-  b: M
+  b: M,
 ): IsInteger<N> extends false ? number : IsInteger<M> extends false ? number : IntegerRangeUntil<M> {
   return (((a % b) + b) % b) as any
 }

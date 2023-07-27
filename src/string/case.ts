@@ -108,7 +108,7 @@ type _SplitIntoWords<
   T extends string,
   D extends string,
   Acc extends string = '',
-  Result extends string[] = []
+  Result extends string[] = [],
 > = T extends `${infer H1 extends LowercaseLetter}${infer H2 extends UppercaseLetter}${infer L}`
   ? _SplitIntoWords<`${H2}${L}`, D, '', [...Result, `${Acc}${H1}`]>
   : T extends `${infer H1 extends UppercaseLetter}${infer H2 extends LowercaseLetter}${infer L}`
@@ -137,7 +137,7 @@ type _SplitIntoWords<
  */
 export function splitIntoWords<const T extends string, const D extends readonly string[] = ['-', '_', ' ']>(
   self: T,
-  separators: D = ['-', '_', ' '] as any
+  separators: D = ['-', '_', ' '] as any,
 ): SplitIntoWords<T, D[number]> {
   const result = []
   let current: string = self
@@ -258,7 +258,7 @@ export type ToCamelCase<T extends string> = IsOneOf<T, [string, any]> extends tr
   : ''
 type PascalizeAll<T extends readonly string[]> = T extends readonly [
   infer H extends string,
-  ...infer L extends readonly string[]
+  ...infer L extends readonly string[],
 ]
   ? [Capitalize<Lowercase<H>>, ...PascalizeAll<L>]
   : []

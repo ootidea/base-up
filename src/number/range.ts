@@ -100,7 +100,7 @@ export type DigitToRangeUntil = {
  */
 export type NaturalNumbersFrom0Until<N extends number> = ToNumber<_NaturalNumbersFrom0Until<ToDigitArray<N>>>
 type _NaturalNumbersFrom0Until<DigitArray extends readonly Digit[]> = DigitArray extends readonly [
-  infer D extends Digit
+  infer D extends Digit,
 ]
   ? `${DigitToRangeUntil[D]}`
   : DigitArray extends readonly [infer H extends Digit, ...infer L extends readonly Digit[]]
@@ -122,7 +122,7 @@ export type NaturalNumbersFrom0Through<N extends number> = NaturalNumbersFrom0Un
 export function isInIntegerRangeUntil<N extends number, M extends number>(
   value: number,
   n: N,
-  m: M
+  m: M,
 ): value is IntegerRangeUntil<N, M> {
   if (!Number.isInteger(n)) throw new TypeError(`${n} is not an integer`)
   if (!Number.isInteger(m)) throw new TypeError(`${m} is not an integer`)
@@ -135,7 +135,7 @@ export namespace isInIntegerRangeUntil {
    */
   export function defer<N extends number, M extends number>(
     n: N,
-    m: M
+    m: M,
   ): (value: number) => value is IntegerRangeUntil<N, M> {
     return (value): value is IntegerRangeUntil<N, M> => isInIntegerRangeUntil(value, n, m)
   }
@@ -144,7 +144,7 @@ export namespace isInIntegerRangeUntil {
 export function isInIntegerRangeThrough<N extends number, M extends number>(
   value: number,
   n: N,
-  m: M
+  m: M,
 ): value is IntegerRangeThrough<N, M> {
   if (!Number.isInteger(n)) throw new TypeError(`${n} is not an integer`)
   if (!Number.isInteger(m)) throw new TypeError(`${m} is not an integer`)
@@ -154,7 +154,7 @@ export function isInIntegerRangeThrough<N extends number, M extends number>(
 export namespace isInIntegerRangeThrough {
   export function defer<N extends number, M extends number>(
     n: N,
-    m: M
+    m: M,
   ): (value: number) => value is IntegerRangeThrough<N, M> {
     return (value): value is IntegerRangeThrough<N, M> => isInIntegerRangeThrough(value, n, m)
   }
@@ -178,7 +178,7 @@ export namespace isInIntegerRangeThrough {
 export function randomIntegerUntil<To extends number>(to: To): IntegerRangeUntil<To>
 export function randomIntegerUntil<From extends number, To extends number>(
   from: From,
-  to: To
+  to: To,
 ): IntegerRangeUntil<From, To>
 export function randomIntegerUntil<N extends number, M extends number>(first: N, second?: M): number {
   const [from, to] = second === undefined ? [0, first] : [first, second]

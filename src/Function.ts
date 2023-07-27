@@ -42,7 +42,7 @@ export function pipe<const A, B, C, D, E, F>(
   c: (b: B) => C,
   d: (c: C) => D,
   e: (d: D) => E,
-  f: (e: E) => F
+  f: (e: E) => F,
 ): F
 export function pipe<const A, B, C, D, E, F, G>(
   a: A,
@@ -51,7 +51,7 @@ export function pipe<const A, B, C, D, E, F, G>(
   d: (c: C) => D,
   e: (d: D) => E,
   f: (e: E) => F,
-  g: (f: F) => G
+  g: (f: F) => G,
 ): G
 export function pipe<const A, B, C, D, E, F, G, H>(
   a: A,
@@ -61,7 +61,7 @@ export function pipe<const A, B, C, D, E, F, G, H>(
   e: (d: D) => E,
   f: (e: E) => F,
   g: (f: F) => G,
-  h: (g: G) => H
+  h: (g: G) => H,
 ): H
 export function pipe<const A, B, C, D, E, F, G, H, I>(
   a: A,
@@ -72,7 +72,7 @@ export function pipe<const A, B, C, D, E, F, G, H, I>(
   f: (e: E) => F,
   g: (f: F) => G,
   h: (g: G) => H,
-  i: (h: H) => I
+  i: (h: H) => I,
 ): I
 export function pipe<const A, B, C, D, E, F, G, H, I, J>(
   a: A,
@@ -84,7 +84,7 @@ export function pipe<const A, B, C, D, E, F, G, H, I, J>(
   g: (f: F) => G,
   h: (g: G) => H,
   i: (h: H) => I,
-  j: (i: I) => J
+  j: (i: I) => J,
 ): J
 export function pipe<const A, B, C, D, E, F, G, H, I, J, K>(
   a: A,
@@ -97,7 +97,7 @@ export function pipe<const A, B, C, D, E, F, G, H, I, J, K>(
   h: (g: G) => H,
   i: (h: H) => I,
   j: (i: I) => J,
-  k: (j: J) => K
+  k: (j: J) => K,
 ): K
 export function pipe<const A, B, C, D, E, F, G, H, I, J, K, L>(
   a: A,
@@ -111,7 +111,7 @@ export function pipe<const A, B, C, D, E, F, G, H, I, J, K, L>(
   i: (h: H) => I,
   j: (i: I) => J,
   k: (j: J) => K,
-  l: (k: K) => L
+  l: (k: K) => L,
 ): L
 export function pipe<const A, B, C, D, E, F, G, H, I, J, K, L, M>(
   a: A,
@@ -126,7 +126,7 @@ export function pipe<const A, B, C, D, E, F, G, H, I, J, K, L, M>(
   j: (i: I) => J,
   k: (j: J) => K,
   l: (k: K) => L,
-  m: (l: L) => M
+  m: (l: L) => M,
 ): M
 export function pipe<A>(a: A, ...fs: readonly ((a: A) => A)[]): A
 export function pipe<const A, const T extends readonly StrictFunction[]>(a: A, ...fs: T) {

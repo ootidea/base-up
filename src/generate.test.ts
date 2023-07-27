@@ -67,8 +67,8 @@ test('repeatApply.Iterable', () => {
   expect(
     take(
       repeatApply.Iterable(0, (x) => x + 3),
-      5
-    )
+      5,
+    ),
   ).toStrictEqual([0, 3, 6, 9, 12])
 })
 

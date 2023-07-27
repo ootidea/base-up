@@ -16,7 +16,7 @@ export type ReadonlyMaxLengthArray<N extends number, T = unknown> = Readonly<Max
 export function isMaxLengthArray<T, N extends number>(self: T[], length: N): self is MaxLengthArray<N, T>
 export function isMaxLengthArray<T, N extends number>(
   self: readonly T[],
-  length: N
+  length: N,
 ): self is ReadonlyMaxLengthArray<N, T>
 export function isMaxLengthArray<N extends number>(self: unknown, length: N): self is MaxLengthArray<N>
 export function isMaxLengthArray<N extends number>(self: unknown, length: N) {
@@ -24,7 +24,7 @@ export function isMaxLengthArray<N extends number>(self: unknown, length: N) {
 }
 export namespace isMaxLengthArray {
   export function defer<N extends number>(
-    length: N
+    length: N,
   ): {
     <T>(self: T[]): self is MaxLengthArray<N, T>
     <T>(self: readonly T[]): self is ReadonlyMaxLengthArray<N, T>

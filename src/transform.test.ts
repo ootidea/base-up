@@ -58,7 +58,7 @@ test('flatten', () => {
       [1, 2, 3],
       [4, 5],
       [6, 7, 8],
-    ])
+    ]),
   ).toStrictEqual([1, 2, 3, 4, 5, 6, 7, 8])
   expect(flatten([[1, 2], [], [3]])).toStrictEqual([1, 2, 3])
   expect(flatten([])).toStrictEqual([])
@@ -102,8 +102,8 @@ test('join.Array', () => {
         [4, 5, 6],
         [7, 8],
       ],
-      0
-    )
+      0,
+    ),
   ).toStrictEqual([1, 2, 0, 4, 5, 6, 0, 7, 8])
   expect(join.Array([['a', 'b'], ['c']], true, 1)).toStrictEqual(['a', 'b', true, 1, 'c'])
   expect(join.Array([], '-')).toStrictEqual([])

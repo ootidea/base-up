@@ -7,7 +7,7 @@ test('mapOf', () => {
     new Map([
       [true, 1],
       [false, 0],
-    ])
+    ]),
   )
   expect(mapOf()).toStrictEqual(new Map())
 })

@@ -16,7 +16,7 @@ export function map<T, U>(self: readonly T[], f: (_: T) => U): U[] {
 }
 export namespace map {
   export function defer<const T, const U>(
-    f: (_: T) => U
+    f: (_: T) => U,
   ): { (_: ReadonlyNonEmptyArray<T>): NonEmptyArray<U>; (_: readonly T[]): U[] } {
     return (self: any) => map(self, f)
   }
@@ -124,7 +124,7 @@ export type Join<T extends Tuple, Separator extends string = ','> = Equals<T, an
   ? _Join<T, Separator>
   : string
 export type _Join<T extends readonly Interpolable[], Separator extends string> = T extends readonly [
-  infer U extends Interpolable
+  infer U extends Interpolable,
 ]
   ? U
   : T extends readonly [infer H extends Interpolable, ...infer L extends readonly Interpolable[]]
@@ -141,7 +141,7 @@ export type _Join<T extends readonly Interpolable[], Separator extends string> =
  */
 export function join<const T extends Tuple, Separator extends string = ','>(
   self: T,
-  separator: Separator = ',' as any
+  separator: Separator = ',' as any,
 ): Join<T, Separator> {
   return self.join(separator) as any
 }
@@ -183,7 +183,7 @@ export type Split<T extends string, Separator extends string> = T extends `${inf
  */
 export function chunk<T, N extends number>(
   array: readonly T[],
-  size: N
+  size: N,
 ): number extends N ? T[][] : FixedLengthArray<N, T>[] {
   if (size <= 0) {
     throw RangeError(`Size(${size}) must be greater than 0.`)
@@ -212,13 +212,13 @@ export function sort<const T extends Tuple>(self: T): FixedLengthArray<T['length
 
 export function sortBy<const T extends Tuple, U>(
   self: T,
-  by: (_: T[number]) => U
+  by: (_: T[number]) => U,
 ): FixedLengthArray<T['length'], T[number]> {
   return [...self].sort(createComparatorFromIsLessThan((lhs, rhs) => by(lhs) < by(rhs))) as any
 }
 export namespace sortBy {
   export function defer<E, U>(
-    by: (_: E) => U
+    by: (_: E) => U,
   ): <const T extends readonly E[]>(self: T) => FixedLengthArray<T['length'], E> {
     return (self: readonly E[]) =>
       [...self].sort(createComparatorFromIsLessThan((lhs, rhs) => by(lhs) < by(rhs))) as any

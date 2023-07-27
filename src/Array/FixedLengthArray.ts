@@ -21,7 +21,7 @@ export type ReadonlyFixedLengthArray<N extends number, T = unknown> = Readonly<F
 export function isFixedLengthArray<T, N extends number>(self: T[], length: N): self is FixedLengthArray<N, T>
 export function isFixedLengthArray<T, N extends number>(
   self: readonly T[],
-  length: N
+  length: N,
 ): self is ReadonlyFixedLengthArray<N, T>
 export function isFixedLengthArray<N extends number>(self: unknown, length: N): self is FixedLengthArray<N>
 export function isFixedLengthArray<N extends number>(self: unknown, length: N) {
@@ -29,7 +29,7 @@ export function isFixedLengthArray<N extends number>(self: unknown, length: N) {
 }
 export namespace isFixedLengthArray {
   export function defer<N extends number>(
-    length: N
+    length: N,
   ): {
     <T>(self: T[]): self is FixedLengthArray<N, T>
     <T>(self: readonly T[]): self is ReadonlyFixedLengthArray<N, T>
@@ -62,7 +62,7 @@ type DigitToFixedLengthArray<N extends Digit, T = unknown> = {
  */
 type DigitArrayToFixedLengthArray<DigitArray extends readonly Digit[], T = unknown> = DigitArray extends [
   ...infer R extends readonly Digit[],
-  infer Last extends Digit
+  infer Last extends Digit,
 ]
   ? [...DigitToFixedLengthArray<Last, T>, ...TenTimes<DigitArrayToFixedLengthArray<R, T>>]
   : []
