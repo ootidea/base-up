@@ -147,13 +147,18 @@ export namespace remove {
   }
 }
 
-export namespace removeSuffix {
-  export function string(self: string, suffix: string): string {
-    if (self.endsWith(suffix)) {
-      return self.slice(0, -suffix.length)
-    }
-    return self
+/**
+ * @example
+ * removeSuffix('ABCDE', 'DE') returns 'ABC'
+ * removeSuffix('ABCDE', 'ABCDE') returns ''
+ * removeSuffix('ABCDE', '123') returns 'ABCDE'
+ * removeSuffix('ABCDE', '') returns 'ABCDE'
+ */
+export function removeSuffix(self: string, suffix: string): string {
+  if (self.endsWith(suffix)) {
+    return self.slice(0, self.length - suffix.length)
   }
+  return self
 }
 
 export function moveTo<T>(self: readonly T[], from: number, to: number): T[] {

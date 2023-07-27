@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { insertAt, moveTo, push, RemoveAt, removeAt, unshift } from './collectionUpdate'
+import { insertAt, moveTo, push, RemoveAt, removeAt, removeSuffix, unshift } from './collectionUpdate'
 import { repeat } from './generate'
 import { take } from './transform'
 import { assertTypeEquality } from './type'
@@ -56,6 +56,13 @@ test('RemoveAt', () => {
   assertTypeEquality<RemoveAt<any[], 5>, any[]>()
   assertTypeEquality<RemoveAt<any, 5>, any[]>()
   assertTypeEquality<RemoveAt<never, 5>, never>()
+})
+
+test('removeSuffix', () => {
+  expect(removeSuffix('ABCDE', 'DE')).toStrictEqual('ABC')
+  expect(removeSuffix('ABCDE', 'ABCDE')).toStrictEqual('')
+  expect(removeSuffix('ABCDE', '123')).toStrictEqual('ABCDE')
+  expect(removeSuffix('ABCDE', '')).toStrictEqual('ABCDE')
 })
 
 test('moveTo', () => {
