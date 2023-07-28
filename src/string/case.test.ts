@@ -195,6 +195,11 @@ test('ToSnakeCasedPropertiesDeep', () => {
     Record<number, { created_at: number }>
   >()
 
+  assertTypeEquality<
+    ToSnakeCasedPropertiesDeep<{ createdAt: Date }>,
+    { created_at: ToSnakeCasedPropertiesDeep<Date> }
+  >()
+
   assertTypeEquality<ToSnakeCasedPropertiesDeep<null>, null>()
   assertTypeEquality<ToSnakeCasedPropertiesDeep<undefined>, undefined>()
   assertTypeEquality<ToSnakeCasedPropertiesDeep<never>, never>()
@@ -233,6 +238,11 @@ test('ToCamelCasedPropertiesDeep', () => {
   assertTypeEquality<
     ToCamelCasedPropertiesDeep<Record<number, { created_at: number }>>,
     Record<number, { createdAt: number }>
+  >()
+
+  assertTypeEquality<
+    ToCamelCasedPropertiesDeep<{ created_at: Date }>,
+    { createdAt: ToCamelCasedPropertiesDeep<Date> }
   >()
 
   assertTypeEquality<ToCamelCasedPropertiesDeep<null>, null>()
