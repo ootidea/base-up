@@ -29,6 +29,10 @@ export type Equals<T, U, Then = true, Else = false> = (<R>() => R extends T ? 1 
   ? Then
   : Else
 
+/**
+ * A function of the === operator with improved types.
+ * Narrowing is possible on both the left-hand and right-hand sides.
+ */
 export function equals<const T, const U extends T>(self: T, other: U): self is U
 export function equals<const T extends U, const U>(self: T, other: U): other is T
 export function equals<const T, const U>(self: T, other: U): false
