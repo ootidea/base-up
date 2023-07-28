@@ -16,21 +16,54 @@ export function curry<const H, const L extends Tuple, const R>(f: (h: H, ...l: L
       f(h, ...l)
 }
 
-export function call<const T>(f: () => T): T {
+/**
+ * Shorthand for IIFEs (Immediately Invoked Function Expressions).
+ * It improves readability and can avoid issues with semicolons.
+ * @example
+ * const resultCode = call(() => {
+ *   switch (type) {
+ *     case 'success':
+ *       return 1
+ *     case 'failure':
+ *       return 2
+ *     default:
+ *       return 3
+ *   }
+ * })
+ */
+export function call<T>(f: () => T): T {
   return f()
 }
 
+/**
+ * Returns the given value as is.
+ * It is known as the identity function in mathematics.
+ */
 export function identity<const T>(value: T): T {
   return value
 }
 
+/**
+ * The Predicate<T> is either a type predicate or a function that returns a boolean, and it takes one argument of type T.
+ * The parameter T is optional with a default value of unknown.
+ */
 export type Predicate<T = unknown> = ((value: T) => value is any) | ((value: T) => boolean)
+
+/**
+ * If a type predicate is passed, it returns the type after 'is'.
+ * If a function that returns a boolean is passed, it returns the type of the argument.
+ * In all other cases, it returns never.
+ */
 export type PredicateResult<T> = T extends (value: any) => value is infer R
   ? R
   : T extends (value: infer V) => boolean
   ? V
   : never
 
+/**
+ * Passes a value through a pipeline (a sequence of functions).
+ * For example, pipe(x, f, g) is equivalent to g(f(x)).
+ */
 export function pipe<const A>(a: A): A
 export function pipe<const A, B>(a: A, b: (a: A) => B): B
 export function pipe<const A, B, C>(a: A, b: (a: A) => B, c: (b: B) => C): C
