@@ -7,9 +7,19 @@ declare const NON_EMPTY_SET_TAG: unique symbol
 export type NonEmptySet<T> = Branded<Set<T>, typeof NON_EMPTY_SET_TAG>
 export type ReadonlyNonEmptySet<T> = Branded<ReadonlySet<T>, typeof NON_EMPTY_SET_TAG>
 
+/**
+ * setOf(...) is shorthand for new Set([...]).
+ * Note that setOf() is Set<never> type, unlike new Set() being Set<unknown> type.
+ * @example
+ * setOf(121, 'abc') returns new Set([123, 'abc'])
+ * setOf(121, 'abc') is typed as Set<number | string>
+ * @example
+ * setOf() returns new Set()
+ * setOf() is typed as Set<never>
+ */
 export function setOf(): Set<never>
 export function setOf<T extends Tuple>(...args: T): Set<T[number]>
-export function setOf<T>(...args: readonly T[]): Set<T> {
+export function setOf<T extends Tuple>(...args: T): Set<T[number]> {
   return new Set(args)
 }
 
