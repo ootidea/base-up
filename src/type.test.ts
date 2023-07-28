@@ -18,7 +18,8 @@ test('Branded', () => {
 test('Simplify', () => {
   assertTypeEquality<Simplify<{ name: string } & { age: number }>, { name: string; age: number }>()
   assertTypeEquality<Simplify<{}>, {}>()
-  assertTypeEquality<Equals<Simplify<string & {}>, string>, false>()
+
+  assertTypeEquality<Simplify<{ nested: { a: 1 } & { b: 2 } }>, { nested: { a: 1 } & { b: 2 } }>()
 
   assertTypeEquality<Simplify<1>, 1>()
   assertTypeEquality<Simplify<null>, null>()
@@ -37,6 +38,9 @@ test('Simplify', () => {
   assertTypeEquality<Simplify<[1, 2]>, [1, 2]>()
   assertTypeEquality<Simplify<[1, ...2[]]>, [1, ...2[]]>()
   assertTypeEquality<Simplify<[1?]>, [1?]>()
+
+  assertTypeEquality<Equals<Simplify<string & {}>, string & {}>, false>()
+  assertTypeEquality<Equals<Simplify<string & {}>, string>, false>()
 })
 
 test('ToBasePrimitiveType', () => {

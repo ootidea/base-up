@@ -22,8 +22,6 @@ import { nullish } from './type'
  * @example
  * Equals<[a: string], [b: string]> equals true
  * Equals<[string?], [] | [string]> equals false
- * @example
- * Equals<{}, {}> equals true
  */
 export type Equals<T, U, Then = true, Else = false> = (<R>() => R extends T ? 1 : 2) extends <R>() => R extends U
   ? 1
