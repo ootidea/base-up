@@ -32,6 +32,10 @@ test('map.Iterable', () => {
   expect([...map.Iterable([1, 2, 3], (x) => x * 2)]).toStrictEqual([2, 4, 6])
   expect([...map.Iterable([], (x) => x * 2)]).toStrictEqual([])
 })
+test('map.Iterable.defer', () => {
+  expect([...map.Iterable.defer((x: number) => x * 2)([1, 2, 3])]).toStrictEqual([2, 4, 6])
+  expect([...map.Iterable.defer((x: number) => x * 2)([])]).toStrictEqual([])
+})
 test('map.Set', () => {
   expect(map.Set(setOf(1, 2, 3), (x) => x * 2)).toStrictEqual(setOf(2, 4, 6))
   expect(map.Set(setOf(), (x) => x * 2)).toStrictEqual(setOf())
