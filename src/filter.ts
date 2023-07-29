@@ -80,7 +80,7 @@ export type _Take<T extends Tuple, N extends number, R extends Tuple = []> = R['
     : never
   : never
 
-export function take<T extends Tuple, N extends number>(self: T, n: N): Take<T, N>
+export function take<const T extends Tuple, const N extends number>(self: T, n: N): Take<T, N>
 export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArray<N, T>
 export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArray<N, T> {
   const result: T[] = []
@@ -91,7 +91,6 @@ export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArr
   iterator.return?.()
   return result as any
 }
-
 export namespace take {
   export function defer<N extends number>(
     n: N,
@@ -169,7 +168,6 @@ export function drop<const T extends Tuple, N extends number>(self: T, n: N): Dr
 export function drop<const T extends Tuple>(self: T, n: number = 1) {
   return self.slice(Math.max(n, 0))
 }
-
 export namespace drop {
   /**
    * @example
@@ -234,7 +232,7 @@ type _DropLast<T extends Tuple, N extends Tuple> = N extends readonly [any, ...i
  * dropLast([0, 1, 2], -1) returns [0, 1, 2]
  */
 export function dropLast<const T extends Tuple>(self: T): DropLast<T, 1>
-export function dropLast<const T extends Tuple, N extends number>(self: T, n: N): DropLast<T, N>
+export function dropLast<const T extends Tuple, const N extends number>(self: T, n: N): DropLast<T, N>
 export function dropLast<const T extends Tuple>(self: T, n: number = 1) {
   return self.slice(0, Math.max(self.length - n, 0))
 }
