@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { zip, zipAll, zipWith } from './fusion'
+import { merge, zip, zipAll, zipWith } from './fusion'
 import { rangeUntil, repeat } from './generate'
 
 test('zip', () => {
@@ -58,4 +58,12 @@ test('zipAll', () => {
     [2, undefined],
     [3, undefined],
   ])
+})
+
+test('merge', () => {
+  expect(merge([1, 2, 3], ['a', 'b', 'c'])).toStrictEqual([1, 'a', 2, 'b', 3, 'c'])
+  expect(merge([1, 2, 3, 4], ['a', 'b'])).toStrictEqual([1, 'a', 2, 'b', 3, 4])
+  expect(merge([], ['a', 'b'])).toStrictEqual(['a', 'b'])
+  expect(merge([1, 2, 3], [])).toStrictEqual([1, 2, 3])
+  expect(merge([], [])).toStrictEqual([])
 })

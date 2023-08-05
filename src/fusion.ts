@@ -86,6 +86,12 @@ export namespace zipAll {
   }
 }
 
+/**
+ * @example
+ * merge([1, 2, 3], ['a', 'b', 'c']) returns [1, 'a', 2, 'b', 3, 'c']
+ * merge([1, 2, 3, 4], ['a', 'b']) returns [1, 'a', 2, 'b', 3, 4]
+ * merge([], []) returns []
+ */
 export function merge<T, U>(lhs: readonly T[], rhs: readonly U[]): (T | U)[] {
   const result = []
   const minLength = Math.min(lhs.length, rhs.length)
