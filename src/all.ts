@@ -79,6 +79,7 @@ export {
   assertInstanceOf,
   assertNeverType,
   assertTypeEquality,
+  Writable,
   UnionToIntersection,
   IsUnion,
   ToBasePrimitiveType,

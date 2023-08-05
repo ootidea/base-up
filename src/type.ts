@@ -65,6 +65,17 @@ export type TypedArray =
   | BigInt64Array
   | BigUint64Array
 
+/**
+ * Removes readonly modifier.
+ * @example
+ * Writable<{ readonly a: number }> equals { a: number }
+ * Writable<readonly string[]> equals string[]
+ * @example It does not apply to nested types.
+ * Writable<{ nested: { readonly a: number } }> equals { nested: { readonly a: number } }
+ * Writable<readonly [readonly Date[]]> equals [readonly Date[]]
+ */
+export type Writable<T> = { -readonly [K in keyof T]: T[K] }
+
 declare const DEFAULT_BRAND: unique symbol
 export type Branded<T, Brand extends keyof any = typeof DEFAULT_BRAND> = T & Record<Brand, never>
 

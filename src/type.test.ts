@@ -1,6 +1,20 @@
 import { expectTypeOf, test } from 'vitest'
-import { assertTypeEquality, Branded, DiscriminatedUnion, Simplify, ToBasePrimitiveType } from './type'
+import { assertTypeEquality, Branded, DiscriminatedUnion, Simplify, ToBasePrimitiveType, Writable } from './type'
 import { Equals } from './typePredicate'
+
+test('Writable', () => {
+  assertTypeEquality<Writable<{ readonly a: string }>, { a: string }>()
+  assertTypeEquality<Writable<{ readonly a?: never }>, { a?: never }>()
+  assertTypeEquality<Writable<readonly string[]>, string[]>()
+  assertTypeEquality<Writable<readonly [string?, ...number[]]>, [string?, ...number[]]>()
+
+  assertTypeEquality<Writable<{ nested: { readonly a: string } }>, { nested: { readonly a: string } }>()
+  assertTypeEquality<Writable<readonly [readonly string[]]>, [readonly string[]]>()
+
+  assertTypeEquality<Writable<never>, never>()
+  assertTypeEquality<Writable<{ readonly a: 1 } | { b: 2 }>, { a: 1 } | { b: 2 }>()
+  assertTypeEquality<Writable<1[] | readonly []>, 1[] | []>()
+})
 
 test('Branded', () => {
   type UserId = Branded<number, 'UserId'>
