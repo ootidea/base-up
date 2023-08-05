@@ -178,12 +178,17 @@ test('drop.Iterable', () => {
 
 test('dropLast', () => {
   expect(dropLast([1, 2, 3])).toStrictEqual([1, 2])
-  expect(dropLast([1, 2, 3], -1 as number)).toStrictEqual([1, 2, 3])
+  expect(dropLast([1, 2, 3], -1)).toStrictEqual([1, 2, 3])
   expect(dropLast([1, 2, 3], 0)).toStrictEqual([1, 2, 3])
   expect(dropLast([1, 2, 3], 1)).toStrictEqual([1, 2])
   expect(dropLast([1, 2, 3], 2)).toStrictEqual([1])
   expect(dropLast([1, 2, 3], 3)).toStrictEqual([])
   expect(dropLast([1, 2, 3], 4)).toStrictEqual([])
+
+  expectTypeOf(dropLast([1, 2, 3])).toEqualTypeOf<[1, 2]>()
+  expectTypeOf(dropLast([1, 2, 3], -1)).toEqualTypeOf<[1, 2, 3]>()
+  expectTypeOf(dropLast([1, 2, 3], 0)).toEqualTypeOf<[1, 2, 3]>()
+  expectTypeOf(dropLast([1, 2, 3], 1)).toEqualTypeOf<[1, 2]>()
 })
 
 test('indexesOf', () => {

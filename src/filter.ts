@@ -6,6 +6,7 @@ import { isNotEmpty } from './collectionPredicate'
 import { PrefixesOf } from './combination'
 import { Subtract } from './number/other'
 import { IntegerRangeThrough } from './number/range'
+import { Writable } from './type'
 import { Equals, IsOneOf } from './typePredicate'
 
 export function filter(self: readonly [], f: (_: any) => boolean): []
@@ -231,8 +232,8 @@ type _DropLast<T extends Tuple, N extends Tuple> = N extends readonly [any, ...i
  * dropLast([0, 1, 2], 0) returns [0, 1, 2]
  * dropLast([0, 1, 2], -1) returns [0, 1, 2]
  */
-export function dropLast<const T extends Tuple>(self: T): DropLast<T, 1>
-export function dropLast<const T extends Tuple, const N extends number>(self: T, n: N): DropLast<T, N>
+export function dropLast<const T extends Tuple>(self: T): Writable<DropLast<T, 1>>
+export function dropLast<const T extends Tuple, const N extends number>(self: T, n: N): Writable<DropLast<T, N>>
 export function dropLast<const T extends Tuple>(self: T, n: number = 1) {
   return self.slice(0, Math.max(self.length - n, 0))
 }
