@@ -4,13 +4,10 @@ import { Tuple } from './other'
 /**
  * @example
  * FixedLengthArray<3> equals [unknown, unknown, unknown]
- * @example
  * FixedLengthArray<3, boolean> equals [boolean, boolean, boolean]
- * @example
  * FixedLengthArray<0, Set<number>> equals []
  * @example
  * FixedLengthArray<2 | 3, any> equals [any, any] | [any, any, any]
- * @example
  * FixedLengthArray<number, bigint> equals bigint[]
  */
 export type FixedLengthArray<N extends number, T = unknown> = number extends N
