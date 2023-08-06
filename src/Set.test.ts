@@ -1,8 +1,12 @@
-import { expect, test } from 'vitest'
+import { expect, expectTypeOf, test } from 'vitest'
 import { differenceOf, intersectionOf, isDisjoint, isSubsetOf, setOf, setWhetherHas, toggle, unionOf } from './Set'
 
 test('setOf', () => {
-  expect(setOf(1, 2)).toStrictEqual(new Set([2, 1]))
+  expect(setOf(1, 2)).toStrictEqual(new Set([1, 2]))
+  expect(setOf()).toStrictEqual(new Set())
+
+  expectTypeOf(setOf(1, 2)).toEqualTypeOf<Set<number>>()
+  expectTypeOf(setOf()).toEqualTypeOf<Set<never>>()
 })
 
 test('toggle', () => {
