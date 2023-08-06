@@ -9,7 +9,7 @@ import { IntegerRangeThrough } from './number/range'
 import { Writable } from './type'
 import { Equals, IsOneOf } from './typePredicate'
 
-export function filter<T>(self: readonly [], f: (_: T) => boolean): []
+export function filter<T = never>(self: readonly [], f: (_: T) => boolean): []
 export function filter<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
 export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[]
 export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[] {
