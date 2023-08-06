@@ -157,7 +157,6 @@ export {
 } from './object'
 export {
   modOf,
-  isPrimeNumber,
   factorialOf,
   gcdOf,
   roundAt,
