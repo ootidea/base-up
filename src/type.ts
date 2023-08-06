@@ -81,10 +81,14 @@ export type Branded<T, Brand extends keyof any = typeof DEFAULT_BRAND> = T & Rec
 
 /**
  * @example
- * Simplify<{ name: string } & { age: number }> equals { name: string; age: number }
- * Simplify<{ a: 1 } | ({ b: 2 } & { c: 3 })> equals { a: 1 } | { b: 2; c: 3 }
+ * MergeIntersection<{ name: string } & { age: number }> equals { name: string; age: number }
+ * MergeIntersection<{ a: 1 } | ({ b: 2 } & { c: 3 })> equals { a: 1 } | { b: 2; c: 3 }
  */
-export type Simplify<T> = T extends T ? (IsOneOf<T, [any, unknown]> extends true ? T : { [K in keyof T]: T[K] }) : never
+export type MergeIntersection<T> = T extends T
+  ? IsOneOf<T, [any, unknown]> extends true
+    ? T
+    : { [K in keyof T]: T[K] }
+  : never
 
 /**
  * @example
@@ -142,7 +146,7 @@ export type ToBasePrimitiveType<T> = T extends T
  * { type: 'Rect'; width: number; height: number } | { type: 'Circle'; radius: number }
  */
 export type DiscriminatedUnion<T, D extends keyof any = 'type'> = {
-  [K in keyof T]: Simplify<Record<D, K> & T[K]>
+  [K in keyof T]: MergeIntersection<Record<D, K> & T[K]>
 }[keyof T]
 
 declare const lazyKey: unique symbol

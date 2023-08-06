@@ -86,7 +86,7 @@ export {
   nullish,
   TypedArray,
   Branded,
-  Simplify,
+  MergeIntersection,
   DiscriminatedUnion,
   JsonValue,
   PlainValue,

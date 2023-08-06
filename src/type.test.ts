@@ -1,5 +1,12 @@
 import { expectTypeOf, test } from 'vitest'
-import { assertTypeEquality, Branded, DiscriminatedUnion, Simplify, ToBasePrimitiveType, Writable } from './type'
+import {
+  assertTypeEquality,
+  Branded,
+  DiscriminatedUnion,
+  MergeIntersection,
+  ToBasePrimitiveType,
+  Writable,
+} from './type'
 import { Equals } from './typePredicate'
 
 test('Writable', () => {
@@ -29,32 +36,32 @@ test('Branded', () => {
   expectTypeOf(rawNumber).not.toMatchTypeOf<UserId>()
 })
 
-test('Simplify', () => {
-  assertTypeEquality<Simplify<{ name: string } & { age: number }>, { name: string; age: number }>()
-  assertTypeEquality<Simplify<{}>, {}>()
+test('MergeIntersection', () => {
+  assertTypeEquality<MergeIntersection<{ name: string } & { age: number }>, { name: string; age: number }>()
+  assertTypeEquality<MergeIntersection<{}>, {}>()
 
-  assertTypeEquality<Simplify<{ nested: { a: 1 } & { b: 2 } }>, { nested: { a: 1 } & { b: 2 } }>()
+  assertTypeEquality<MergeIntersection<{ nested: { a: 1 } & { b: 2 } }>, { nested: { a: 1 } & { b: 2 } }>()
 
-  assertTypeEquality<Simplify<1>, 1>()
-  assertTypeEquality<Simplify<null>, null>()
-  assertTypeEquality<Simplify<any>, any>()
-  assertTypeEquality<Simplify<unknown>, unknown>()
-  assertTypeEquality<Simplify<never>, never>()
+  assertTypeEquality<MergeIntersection<1>, 1>()
+  assertTypeEquality<MergeIntersection<null>, null>()
+  assertTypeEquality<MergeIntersection<any>, any>()
+  assertTypeEquality<MergeIntersection<unknown>, unknown>()
+  assertTypeEquality<MergeIntersection<never>, never>()
 
-  assertTypeEquality<Simplify<1 | 2>, 1 | 2>()
+  assertTypeEquality<MergeIntersection<1 | 2>, 1 | 2>()
   assertTypeEquality<
-    Simplify<{ size: number } | ({ name: string } & { age: number })>,
+    MergeIntersection<{ size: number } | ({ name: string } & { age: number })>,
     { size: number } | { name: string; age: number }
   >()
 
-  assertTypeEquality<Simplify<any[]>, any[]>()
-  assertTypeEquality<Simplify<readonly any[]>, readonly any[]>()
-  assertTypeEquality<Simplify<[1, 2]>, [1, 2]>()
-  assertTypeEquality<Simplify<[1, ...2[]]>, [1, ...2[]]>()
-  assertTypeEquality<Simplify<[1?]>, [1?]>()
+  assertTypeEquality<MergeIntersection<any[]>, any[]>()
+  assertTypeEquality<MergeIntersection<readonly any[]>, readonly any[]>()
+  assertTypeEquality<MergeIntersection<[1, 2]>, [1, 2]>()
+  assertTypeEquality<MergeIntersection<[1, ...2[]]>, [1, ...2[]]>()
+  assertTypeEquality<MergeIntersection<[1?]>, [1?]>()
 
-  assertTypeEquality<Equals<Simplify<string & {}>, string & {}>, false>()
-  assertTypeEquality<Equals<Simplify<string & {}>, string>, false>()
+  assertTypeEquality<Equals<MergeIntersection<string & {}>, string & {}>, false>()
+  assertTypeEquality<Equals<MergeIntersection<string & {}>, string>, false>()
 })
 
 test('ToBasePrimitiveType', () => {
@@ -90,7 +97,7 @@ test('DiscriminatedUnion', () => {
     DiscriminatedUnion<{ Rect: { width: number; height: number }; Circle: { radius: number } }>,
     { type: 'Rect'; width: number; height: number } | { type: 'Circle'; radius: number }
   >()
-  assertTypeEquality<DiscriminatedUnion<{ Circle: [] }>, Simplify<{ type: 'Circle' } & []>>()
+  assertTypeEquality<DiscriminatedUnion<{ Circle: [] }>, MergeIntersection<{ type: 'Circle' } & []>>()
   assertTypeEquality<DiscriminatedUnion<{}>, never>()
   assertTypeEquality<
     DiscriminatedUnion<{ [Symbol.iterator]: { radius: number } }>,

@@ -1,7 +1,7 @@
 import { UnionToTuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
 import { drop } from './filter'
-import { Simplify } from './type'
+import { MergeIntersection } from './type'
 
 /**
  * @example
@@ -46,7 +46,9 @@ export type OptionalKeysOf<T> = T extends T
  * AtLeastOneProperty<{ b?: 2 }> equals never
  * AtLeastOneProperty<{}> equals never
  */
-export type AtLeastOneProperty<T> = Simplify<Partial<T> & { [K in RequiredKeysOf<T>]: Pick<T, K> }[RequiredKeysOf<T>]>
+export type AtLeastOneProperty<T> = MergeIntersection<
+  Partial<T> & { [K in RequiredKeysOf<T>]: Pick<T, K> }[RequiredKeysOf<T>]
+>
 
 /**
  * @example
