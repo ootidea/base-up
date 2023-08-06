@@ -30,7 +30,7 @@ export function assertInstanceOf<T extends abstract new (..._: any) => any>(
   ctor: T,
 ): asserts value is InstanceType<T> {
   if (!(value instanceof ctor)) {
-    throw new Error()
+    throw new TypeError()
   }
 }
 
@@ -47,7 +47,7 @@ export function assertInstanceOf<T extends abstract new (..._: any) => any>(
  * }
  */
 export function assertNeverType(mustBeNever: never): never {
-  throw new Error(`Assertion error: ${mustBeNever} is not never type.`)
+  throw new TypeError(`Assertion error: ${mustBeNever} is not never type.`)
 }
 
 export type nullish = null | undefined
