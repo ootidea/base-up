@@ -21,7 +21,7 @@ export function assertEqual<T extends U, U>(lhs: T, rhs: U): asserts rhs is T
 export function assertEqual<T, U>(lhs: T, rhs: U): never
 export function assertEqual<T, U>(lhs: T, rhs: U) {
   if (lhs !== (rhs as any)) {
-    throw new Error()
+    throw new Error(`Assertion failed: ${lhs} is not equal to ${rhs}.`)
   }
 }
 
@@ -30,7 +30,7 @@ export function assertInstanceOf<T extends abstract new (..._: any) => any>(
   ctor: T,
 ): asserts value is InstanceType<T> {
   if (!(value instanceof ctor)) {
-    throw new TypeError()
+    throw new TypeError(`Assertion failed: ${value} is not an instance of ${ctor.name}.`)
   }
 }
 
@@ -47,7 +47,7 @@ export function assertInstanceOf<T extends abstract new (..._: any) => any>(
  * }
  */
 export function assertNeverType(mustBeNever: never): never {
-  throw new TypeError(`Assertion error: ${mustBeNever} is not never type.`)
+  throw new TypeError(`Assertion failed: ${mustBeNever} is not never type.`)
 }
 
 export type nullish = null | undefined
