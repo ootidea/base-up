@@ -1,6 +1,6 @@
 import { expect, expectTypeOf, test } from 'vitest'
 import { assertTypeEquality } from './type'
-import { Equals, isFalsy, isInstanceOf, isNotOneOf, isOneOf, IsOneOf, isTruthy } from './typePredicate'
+import { equals, Equals, isFalsy, isInstanceOf, isNotOneOf, isOneOf, IsOneOf, isTruthy } from './typePredicate'
 
 test('Equals', () => {
   assertTypeEquality<Equals<'abc', 'abc'>, true>()
@@ -20,6 +20,16 @@ test('Equals', () => {
   assertTypeEquality<Equals<[a: string], [b: string]>, true>()
   assertTypeEquality<Equals<[string?], [] | [string]>, false>()
   assertTypeEquality<Equals<[string, ...string[]], [...string[], string]>, false>()
+})
+
+test('equals', () => {
+  expect(equals('abc', 'abc')).toBe(true)
+  expect(equals(123, 123)).toBe(true)
+  expect(equals(123, 789)).toBe(false)
+  expect(equals(123, '123')).toBe(false)
+  expect(equals({}, {})).toBe(false)
+
+  expectTypeOf(equals(123, 'abc')).toEqualTypeOf<false>()
 })
 
 test('IsOneOf', () => {

@@ -32,6 +32,11 @@ export type Equals<T, U, Then = true, Else = false> = (<R>() => R extends T ? 1 
 /**
  * A function of the === operator with improved types.
  * Narrowing is possible on both the left-hand and right-hand sides.
+ * @example
+ * let value = Date.now() % 2
+ * if (equals(value, 0)) {
+ *   // Here, the value is of type 0.
+ * }
  */
 export function equals<const T, const U extends T>(self: T, other: U): self is U
 export function equals<const T extends U, const U>(self: T, other: U): other is T
