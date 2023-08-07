@@ -45,18 +45,27 @@ export function equals(self: unknown, other: unknown) {
   return self === other
 }
 export namespace equals {
+  /**
+   * @example
+   * let value = Date.now() % 2
+   * const isZero = equals.defer(0)
+   * if (isZero(value)) {
+   *   // Here, the value is of type 0.
+   * }
+   */
   export function defer<const T>(other: T): (self: unknown) => self is T {
     return (self: unknown): self is T => self === other
   }
 }
 
 /**
- * Determines whether the type is one of the types in the tuple.
+ * Determines whether the given type is one of the types in the tuple.
  * @example
  * IsOneOf<string, [string, number, bigint]> equals true
  * IsOneOf<string, [number, bigint]> equals false
  * IsOneOf<string, [any, unknown, never]> equals false
  * IsOneOf<string, [string | number]> equals false
+ * IsOneOf<1 | 2, [1, 2]> equals false
  * IsOneOf<'text', [string]> equals false
  * IsOneOf<any, []> equals false
  */
@@ -66,10 +75,30 @@ export type IsOneOf<T, U extends Tuple, Then = true, Else = false> = U extends r
     : IsOneOf<T, L, Then, Else>
   : Else
 
+/**
+ * Determines whether the given value is one of the value in the tuple.
+ * @example
+ * isOneOf(2, 1, 2, 3) returns true
+ * isOneOf(4, 1, 2, 3) returns false
+ * isOneOf(1) returns false
+ * @example Narrowing
+ * let value = Date.now() % 5
+ * if (isOneOf(value, 0, 1)) {
+ *   // Here, the value is of type 0 | 1.
+ * }
+ */
 export function isOneOf<const T extends Tuple>(self: unknown, ...values: T): self is T[number] {
   return new Set(values).has(self)
 }
 export namespace isOneOf {
+  /**
+   * @example
+   * let value = Date.now() % 5
+   * const isZeroOrOne = isOneOf.defer(0, 1)
+   * if (isZeroOrOne(value)) {
+   *   // Here, the value is of type 0 | 1.
+   * }
+   */
   export function defer<const T extends Tuple>(...values: T): (self: unknown) => self is T[number] {
     return (self: unknown): self is T[number] => new Set(values).has(self)
   }
