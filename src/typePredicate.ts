@@ -1,5 +1,4 @@
 import { Tuple } from './Array/other'
-import { StrictFunction } from './Function'
 import { nullish } from './type'
 
 /**
@@ -121,7 +120,7 @@ export const isNumber = (value: unknown): value is number => typeof value === 'n
 export const isBigint = (value: unknown): value is bigint => typeof value === 'bigint'
 export const isString = (value: unknown): value is string => typeof value === 'string'
 export const isSymbol = (value: unknown): value is symbol => typeof value === 'symbol'
-export const isFunction = (value: unknown): value is StrictFunction => typeof value === 'function'
+export const isFunction = (value: unknown): value is Function => typeof value === 'function'
 export const isObject = (value: unknown): value is object => typeof value === 'object'
 export const isNotNull = <T>(value: T | null): value is T => value !== null
 export const isNotUndefined = <T>(value: T | undefined): value is T => value !== undefined
@@ -131,7 +130,7 @@ export const isNotNumber = <T>(value: T | number): value is T => typeof value !=
 export const isNotBigint = <T>(value: T | bigint): value is T => typeof value !== 'bigint'
 export const isNotString = <T>(value: T | string): value is T => typeof value !== 'string'
 export const isNotSymbol = <T>(value: T | symbol): value is T => typeof value !== 'symbol'
-export const isNotFunction = <T>(value: T | StrictFunction): value is T => typeof value !== 'function'
+export const isNotFunction = <T>(value: T | Function): value is T => typeof value !== 'function'
 export const isNotObject = <T>(value: T | symbol): value is T => typeof value !== 'object'
 
 /**

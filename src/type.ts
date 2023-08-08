@@ -1,4 +1,3 @@
-import { StrictFunction } from './Function'
 import { Equals, IsOneOf } from './typePredicate'
 
 /**
@@ -206,7 +205,7 @@ interface PlainValueObject {
  * It is a type that does not include classes.
  * You can customize additional types with a type parameter.
  */
-export type ExtendedPlainValue<T = StrictFunction> =
+export type ExtendedPlainValue<T = (..._: any) => any> =
   | T
   | null
   | undefined

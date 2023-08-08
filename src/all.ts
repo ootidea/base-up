@@ -214,5 +214,5 @@ export {
 } from './string/case'
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'
-export { pipe, call, identity, curry, StrictFunction, Predicate, PredicateResult } from './Function'
+export { pipe, call, identity, curry, Predicate, PredicateResult } from './Function'
 export { forever, Promisable } from './Promise'

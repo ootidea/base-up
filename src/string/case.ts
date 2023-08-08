@@ -1,5 +1,4 @@
 import { Tuple } from '../Array/other'
-import { StrictFunction } from '../Function'
 import { Join } from '../transform'
 import { Equals, IsOneOf } from '../typePredicate'
 
@@ -295,7 +294,7 @@ export function toCamelCase<const T extends string>(self: T): ToCamelCase<T> {
  */
 export type ToSnakeCasedPropertiesDeep<T> = Equals<T, any> extends true
   ? T
-  : T extends StrictFunction
+  : T extends Function
   ? T
   : T extends Tuple
   ? ToSnakeCasedPropertiesDeepTuple<T>
@@ -356,7 +355,7 @@ export function toSnakeCasedPropertiesDeep<const T>(self: T): ToSnakeCasedProper
  */
 export type ToCamelCasedPropertiesDeep<T> = Equals<T, any> extends true
   ? T
-  : T extends StrictFunction
+  : T extends Function
   ? T
   : T extends Tuple
   ? ToCamelCasedPropertiesDeepTuple<T>
