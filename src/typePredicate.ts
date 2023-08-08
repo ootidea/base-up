@@ -104,17 +104,12 @@ export namespace isOneOf {
   }
 }
 
-export function isNotOneOf<const T extends Tuple, const U>(
-  self: T[number] | U,
-  ...values: T
-): self is Exclude<U, T[number]> {
+export function isNotOneOf(self: unknown, ...values: Tuple): boolean {
   return !new Set(values).has(self)
 }
 export namespace isNotOneOf {
-  export function defer<const T extends Tuple>(
-    ...values: T
-  ): <const U>(self: T[number] | U) => self is Exclude<U, T[number]> {
-    return <const U>(self: T[number] | U): self is Exclude<U, T[number]> => !new Set(values).has(self)
+  export function defer(...values: Tuple): (self: unknown) => boolean {
+    return (self: unknown) => !new Set(values).has(self)
   }
 }
 
