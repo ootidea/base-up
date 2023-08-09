@@ -158,7 +158,6 @@ export {
 export {
   modOf,
   factorialOf,
-  gcdOf,
   roundAt,
   MaxNumber,
   Infinity,

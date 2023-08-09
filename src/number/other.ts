@@ -1,5 +1,4 @@
 import { FixedLengthArray } from '../Array/FixedLengthArray'
-import { ReadonlyNonEmptyArray } from '../Array/MinLengthArray'
 import { Tuple } from '../Array/other'
 import { IsUnion } from '../type'
 import { IsOneOf } from '../typePredicate'
@@ -246,19 +245,4 @@ export function factorialOf(n: number): number {
     result *= i
   }
   return result
-}
-
-export function gcdOf(...values: ReadonlyNonEmptyArray<number>): number {
-  const [first, ...rest] = values
-  let result = first
-  for (const value of rest) {
-    result = binaryGcdOf(result, value)
-  }
-  return result
-}
-
-function binaryGcdOf(a: number, b: number): number {
-  if (b === 0) return a
-
-  return binaryGcdOf(b, a % b)
 }

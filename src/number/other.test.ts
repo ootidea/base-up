@@ -1,16 +1,6 @@
 import { expect, test } from 'vitest'
 import { assertTypeEquality } from '../type'
-import {
-  factorialOf,
-  gcdOf,
-  Infinity,
-  IsInteger,
-  IsNumberLiteral,
-  modOf,
-  NegativeInfinity,
-  roundAt,
-  Trunc,
-} from './other'
+import { factorialOf, Infinity, IsInteger, IsNumberLiteral, modOf, NegativeInfinity, roundAt, Trunc } from './other'
 
 test('IsNumberLiteral', () => {
   assertTypeEquality<IsNumberLiteral<0>, true>()
@@ -126,14 +116,4 @@ test('factorialOf', () => {
   expect(factorialOf(Infinity)).toBeNaN()
   expect(factorialOf(-Infinity)).toBeNaN()
   expect(factorialOf(NaN)).toBeNaN()
-})
-
-test('gcdOf', () => {
-  expect(gcdOf(40, 120, 60)).toBe(20)
-  expect(gcdOf(2, 99)).toBe(1)
-  expect(gcdOf(99, 2)).toBe(1)
-  expect(gcdOf(1, 99)).toBe(1)
-  expect(gcdOf(99, 1)).toBe(1)
-  expect(gcdOf(0, 99)).toBe(99)
-  expect(gcdOf(99, 0)).toBe(99)
 })
