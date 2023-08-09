@@ -185,6 +185,21 @@ export type Split<T extends string, Separator extends string> = T extends `${inf
   : [T]
 
 /**
+ * Note that when both arguments are empty strings, the return value differs from the standard split method.
+ * @example
+ * split('12:34', ':') returns ['12', '34']
+ * split('12:34', '') returns ['1', '2', ':', '3', '4']
+ * split('12:34', '@') returns ['12:34']
+ * split('', '') returns ['']
+ */
+export function split<T extends string, Separator extends string>(self: T, separator: Separator): Split<T, Separator> {
+  if (self === '' && separator === '') {
+    return [''] as any
+  }
+  return self.split(separator) as any
+}
+
+/**
  * @example
  * chunk([1, 2, 3, 4, 5, 6], 2) returns [[1, 2], [3, 4], [5, 6]]
  * chunk([1, 2, 3, 4, 5, 6], 2) is typed as [number, number][]

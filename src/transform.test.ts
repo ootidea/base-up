@@ -16,6 +16,7 @@ import {
   reverse,
   sort,
   sortBy,
+  split,
   Split,
 } from './transform'
 import { assertTypeEquality } from './type'
@@ -122,7 +123,6 @@ test('join', () => {
   expect(join(['a'])).toStrictEqual('a')
   expect(join([])).toStrictEqual('')
 })
-
 test('join.Array', () => {
   expect(
     join.Array(
@@ -150,6 +150,16 @@ test('Split', () => {
 
   assertTypeEquality<Split<`${number}:${number}`, ':'>, [`${number}`, `${number}`]>()
   assertTypeEquality<Split<`0${number}:1${number}`, ':'>, [`0${number}`, `1${number}`]>()
+})
+
+test('split', () => {
+  expect(split('12:34', ':')).toStrictEqual(['12', '34'])
+  expect(split('a, b, c', ', ')).toStrictEqual(['a', 'b', 'c'])
+  expect(split('12:34', '@')).toStrictEqual(['12:34'])
+  expect(split('//', '/')).toStrictEqual(['', '', ''])
+  expect(split('', 'a')).toStrictEqual([''])
+  expect(split('', '')).toStrictEqual([''])
+  expect(split('12:34', '')).toStrictEqual(['1', '2', ':', '3', '4'])
 })
 
 test('chunk', () => {
