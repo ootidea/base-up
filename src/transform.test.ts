@@ -175,16 +175,16 @@ test('chunk', () => {
   expect(() => chunk([1, 2, 3], 0)).toThrowError()
 })
 
-test('padStart', () => {
-  expect(padStart([1, 2, 3], 6, 0)).toStrictEqual([0, 0, 0, 1, 2, 3])
-  expect(padStart([1, 2, 3], 2, 0)).toStrictEqual([1, 2, 3])
-  expect(padStart([], 4, 9)).toStrictEqual([9, 9, 9, 9])
+test('padStart.Array', () => {
+  expect(padStart.Array([1, 2, 3], 6, 0)).toStrictEqual([0, 0, 0, 1, 2, 3])
+  expect(padStart.Array([1, 2, 3], 2, 0)).toStrictEqual([1, 2, 3])
+  expect(padStart.Array([], 4, 9)).toStrictEqual([9, 9, 9, 9])
 })
 
-test('padEnd', () => {
-  expect(padEnd([1, 2, 3], 6, 0)).toStrictEqual([1, 2, 3, 0, 0, 0])
-  expect(padEnd([1, 2, 3], 2, 0)).toStrictEqual([1, 2, 3])
-  expect(padEnd([], 4, 9)).toStrictEqual([9, 9, 9, 9])
+test('padEnd.Array', () => {
+  expect(padEnd.Array([1, 2, 3], 6, 0)).toStrictEqual([1, 2, 3, 0, 0, 0])
+  expect(padEnd.Array([1, 2, 3], 2, 0)).toStrictEqual([1, 2, 3])
+  expect(padEnd.Array([], 4, 9)).toStrictEqual([9, 9, 9, 9])
 })
 
 test('sort', () => {

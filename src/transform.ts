@@ -222,14 +222,24 @@ export function chunk<T, N extends number>(
   return result as any
 }
 
-export function padStart<T, N extends number>(self: readonly T[], length: N, value: T): MinLengthArray<N, T> {
-  const paddingSize = Math.max(length - self.length, 0)
-  return [...repeat(paddingSize, value), ...self] as any
+export function padStart<T extends string>(self: T, length: number, value: string): string {
+  return self.padStart(length, value)
+}
+export namespace padStart {
+  export function Array<T, N extends number>(self: readonly T[], length: N, value: T): MinLengthArray<N, T> {
+    const paddingSize = Math.max(length - self.length, 0)
+    return [...repeat(paddingSize, value), ...self] as any
+  }
 }
 
-export function padEnd<T, N extends number>(self: readonly T[], length: N, value: T): MinLengthArray<N, T> {
-  const paddingSize = Math.max(length - self.length, 0)
-  return [...self, ...repeat(paddingSize, value)] as any
+export function padEnd<T extends string>(self: T, length: number, value: string): string {
+  return self.padEnd(length, value)
+}
+export namespace padEnd {
+  export function Array<T, N extends number>(self: readonly T[], length: N, value: T): MinLengthArray<N, T> {
+    const paddingSize = Math.max(length - self.length, 0)
+    return [...self, ...repeat(paddingSize, value)] as any
+  }
 }
 
 export function sort<const T extends Tuple>(self: T): FixedLengthArray<T['length'], T[number]> {
