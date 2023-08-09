@@ -1,5 +1,14 @@
 import { expect, expectTypeOf, test } from 'vitest'
-import { differenceOf, intersectionOf, isDisjoint, isSubsetOf, setOf, setWhetherHas, toggle, unionOf } from './Set'
+import {
+  differenceOf,
+  intersectionOf,
+  isDisjoint,
+  isSubsetOf,
+  setMembership,
+  setOf,
+  toggleMembership,
+  unionOf,
+} from './Set'
 
 test('setOf', () => {
   expect(setOf(1, 2)).toStrictEqual(new Set([1, 2]))
@@ -9,34 +18,34 @@ test('setOf', () => {
   expectTypeOf(setOf()).toEqualTypeOf<Set<never>>()
 })
 
-test('toggle', () => {
-  expect(toggle(setOf(1, 2, 3), 2)).toStrictEqual(setOf(1, 3))
-  expect(toggle(setOf(1, 2, 3), 9)).toStrictEqual(setOf(1, 2, 3, 9))
-  expect(toggle(setOf(1, 2, 3), null)).toStrictEqual(setOf(1, 2, 3, null))
+test('toggleMembership', () => {
+  expect(toggleMembership(setOf(1, 2, 3), 2)).toStrictEqual(setOf(1, 3))
+  expect(toggleMembership(setOf(1, 2, 3), 9)).toStrictEqual(setOf(1, 2, 3, 9))
+  expect(toggleMembership(setOf(1, 2, 3), null)).toStrictEqual(setOf(1, 2, 3, null))
 })
-test('toggle.mutable', () => {
+test('toggleMembership.mutable', () => {
   const set = setOf(1, 2, 3)
-  toggle.mutable(set, 2)
+  toggleMembership.mutable(set, 2)
   expect(set).toStrictEqual(setOf(1, 3))
-  toggle.mutable(set, 4)
+  toggleMembership.mutable(set, 4)
   expect(set).toStrictEqual(setOf(1, 3, 4))
 })
 
-test('setWhetherHas', () => {
-  expect(setWhetherHas(setOf(1, 2, 3), 2, false)).toStrictEqual(setOf(1, 3))
-  expect(setWhetherHas(setOf(1, 2, 3), 2, true)).toStrictEqual(setOf(1, 2, 3))
-  expect(setWhetherHas(setOf(1, 2, 3), null, false)).toStrictEqual(setOf(1, 2, 3))
-  expect(setWhetherHas(setOf(1, 2, 3), null, true)).toStrictEqual(setOf(1, 2, 3, null))
+test('setMembership', () => {
+  expect(setMembership(setOf(1, 2, 3), 2, false)).toStrictEqual(setOf(1, 3))
+  expect(setMembership(setOf(1, 2, 3), 2, true)).toStrictEqual(setOf(1, 2, 3))
+  expect(setMembership(setOf(1, 2, 3), null, false)).toStrictEqual(setOf(1, 2, 3))
+  expect(setMembership(setOf(1, 2, 3), null, true)).toStrictEqual(setOf(1, 2, 3, null))
 })
-test('setWhetherHas.mutable', () => {
+test('setMembership.mutable', () => {
   const set = new Set([1, 2, 3])
-  setWhetherHas.mutable(set, 2, false)
+  setMembership.mutable(set, 2, false)
   expect(set).toStrictEqual(setOf(1, 3))
-  setWhetherHas.mutable(set, null, true)
+  setMembership.mutable(set, null, true)
   expect(set).toStrictEqual(setOf(1, 3, null))
-  setWhetherHas.mutable(set, null, true)
+  setMembership.mutable(set, null, true)
   expect(set).toStrictEqual(setOf(1, 3, null))
-  setWhetherHas.mutable(set, 9, false)
+  setMembership.mutable(set, 9, false)
   expect(set).toStrictEqual(setOf(1, 3, null))
 })
 

@@ -18,15 +18,15 @@ export {
 } from './transform'
 export {
   push,
+  unshift,
   insertAt,
   RemoveAt,
   removeAt,
   remove,
   removeAll,
-  moveTo,
-  unshift,
   removePrefix,
   removeSuffix,
+  moveTo,
 } from './collectionUpdate'
 export { isEmpty, includes, every, everyValues, isNotEmpty, isUnique } from './collectionPredicate'
 export { rollWindow, cartesianProductOf, permutationOf, PrefixesOf, prefixesOf } from './combination'
@@ -137,8 +137,8 @@ export { MaxLengthArray, ReadonlyMaxLengthArray, isMaxLengthArray } from './Arra
 export {
   setOf,
   has,
-  toggle,
-  setWhetherHas,
+  toggleMembership,
+  setMembership,
   isSubsetOf,
   unionOf,
   intersectionOf,

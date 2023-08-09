@@ -25,12 +25,12 @@ export function setOf<T extends Tuple>(...args: T): Set<T[number]> {
 
 /**
  * Add the given value to the set, but remove it if it is already included.
- * In other words, toggle the boolean value of whether an item is included in the set.
+ * In other words, toggle the membership of the given value.
  * @example
- * toggle(setOf(1, 2, 3), 2) returns setOf(1, 3)
- * toggle(setOf(1, 2, 3), 4) returns setOf(1, 2, 3, 4)
+ * toggleMembership(setOf(1, 2, 3), 2) returns setOf(1, 3)
+ * toggleMembership(setOf(1, 2, 3), 4) returns setOf(1, 2, 3, 4)
  */
-export function toggle<T, U>(self: ReadonlySet<T>, value: U): Set<T> | Set<T | U> {
+export function toggleMembership<T, U>(self: ReadonlySet<T>, value: U): Set<T> | Set<T | U> {
   const cloned = new Set(self)
   if (cloned.has(value as any)) {
     cloned.delete(value as any)
@@ -39,12 +39,12 @@ export function toggle<T, U>(self: ReadonlySet<T>, value: U): Set<T> | Set<T | U
   }
   return cloned
 }
-export namespace toggle {
+export namespace toggleMembership {
   /**
    * @example
    * const set = new Set([1, 2, 3])
-   * toggle.mutable(set, 2) // set is now equivalent to Set([1, 3])
-   * toggle.mutable(set, 4) // set is now equivalent to Set([1, 3, 4])
+   * toggleMembership.mutable(set, 2) // set is now equivalent to Set([1, 3])
+   * toggleMembership.mutable(set, 4) // set is now equivalent to Set([1, 3, 4])
    */
   export function mutable<T>(self: Set<T>, value: T): Set<T> {
     if (self.has(value)) {
@@ -56,7 +56,7 @@ export namespace toggle {
   }
 }
 
-export function setWhetherHas<T, U>(self: ReadonlySet<T>, value: U, has: boolean): Set<T | U> {
+export function setMembership<T, U>(self: ReadonlySet<T>, value: U, has: boolean): Set<T | U> {
   const cloned = new Set(self)
   if (has) {
     cloned.add(value as any)
@@ -65,7 +65,7 @@ export function setWhetherHas<T, U>(self: ReadonlySet<T>, value: U, has: boolean
   }
   return cloned
 }
-export namespace setWhetherHas {
+export namespace setMembership {
   export function mutable<T>(self: Set<T>, value: T, has: boolean): Set<T> {
     if (has) {
       self.add(value)
