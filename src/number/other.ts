@@ -222,20 +222,6 @@ export function modOf<const N extends number, const M extends number>(
   return (((a % b) + b) % b) as any
 }
 
-/**
- * Round off to the n-th decimal place.
- * @example
- * roundAt(0.123, 2) returns 0.12
- * roundAt(0.123, 1) returns 0.1
- * roundAt(3.14159, 3) returns 3.142
- * roundAt(12345, -1) returns 12350
- * roundAt(12345, -2) returns 12300
- */
-export function roundAt(value: number, nthDecimalPlace: number): number {
-  const factor = Math.pow(10, nthDecimalPlace)
-  return Math.round(value * factor) / factor
-}
-
 export function factorialOf(n: number): number {
   if (!Number.isInteger(n)) return NaN
   if (n < 0) return NaN

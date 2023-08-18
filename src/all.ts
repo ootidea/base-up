@@ -159,7 +159,6 @@ export {
 export {
   modOf,
   factorialOf,
-  roundAt,
   MaxNumber,
   Infinity,
   NegativeInfinity,
