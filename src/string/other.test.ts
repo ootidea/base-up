@@ -83,13 +83,15 @@ test('IsTemplateLiteral', () => {
   assertTypeEquality<IsTemplateLiteral<`#${bigint}:`>, true>()
   assertTypeEquality<IsTemplateLiteral<`${number}` | `${bigint}`>, false>()
   assertTypeEquality<IsTemplateLiteral<'abc'>, false>()
-  assertTypeEquality<IsTemplateLiteral<``>, false>()
+  assertTypeEquality<IsTemplateLiteral<''>, false>()
   assertTypeEquality<IsTemplateLiteral<`${null}`>, false>()
   assertTypeEquality<IsTemplateLiteral<`${undefined}`>, false>()
   assertTypeEquality<IsTemplateLiteral<`${boolean}`>, false>()
   assertTypeEquality<IsTemplateLiteral<string>, false>()
   assertTypeEquality<IsTemplateLiteral<any>, false>()
   assertTypeEquality<IsTemplateLiteral<never>, false>()
+  assertTypeEquality<IsTemplateLiteral<number[]>, false>()
+  assertTypeEquality<IsTemplateLiteral<Date>, false>()
 })
 
 test('IsStringLiteral', () => {

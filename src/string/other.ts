@@ -91,7 +91,7 @@ export type Interpolable = string | number | bigint | boolean | null | undefined
  * IsTemplateLiteral<'a'> equals false
  * IsTemplateLiteral<'a' | 'b'> equals false
  */
-export type IsTemplateLiteral<T extends string, Then = true, Else = false> = IsUnion<T> extends true
+export type IsTemplateLiteral<T, Then = true, Else = false> = IsUnion<T> extends true
   ? Else
   : Equals<T, never> extends true
   ? Else

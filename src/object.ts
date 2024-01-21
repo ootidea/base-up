@@ -1,6 +1,8 @@
 import { UnionToTuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
 import { drop } from './filter'
+import { IntegerRangeThrough } from './number/range'
+import { IsTemplateLiteral } from './string/other'
 import { MergeIntersection } from './type'
 
 /**
@@ -53,13 +55,14 @@ export type AtLeastOneProperty<T> = MergeIntersection<
 /**
  * @example
  * CountProperties<{ name: string; age: number }> equals 2
- * CountProperties<{ name?: string; age?: number }> equals 2
+ * CountProperties<{ name?: string; age?: number }> equals 0 | 1 | 2
  * CountProperties<{ none: never }> equals 1
  * CountProperties<{}> equals 0
  * CountProperties<Record<never, any>> equals 0
  * @example
  * assertTypeEquality<CountProperties<{ size: number } | { name: string; age: number }>, 1 | 2>()
  * assertTypeEquality<CountProperties<Record<string, any>, number>()
+ * assertTypeEquality<CountProperties<Record<`${number}`, any>, number>()
  * assertTypeEquality<CountProperties<any, number>()
  * assertTypeEquality<CountProperties<never>, never>()
  */
@@ -71,7 +74,12 @@ export type CountProperties<T> = T extends T
       ? number
       : symbol extends K
       ? number
-      : UnionToTuple<keyof T>['length']
+      : IsTemplateLiteral<K> extends true
+      ? number
+      : IntegerRangeThrough<
+          UnionToTuple<RequiredKeysOf<T>>['length'] extends infer U extends number ? U : never,
+          UnionToTuple<keyof T>['length'] extends infer U extends number ? U : never
+        >
     : never
   : never
 
