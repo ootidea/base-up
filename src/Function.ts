@@ -28,6 +28,12 @@ export function call<T>(f: () => T): T {
 /**
  * Returns the given value as is.
  * It is known as the identity function in mathematics.
+ * @example Primitive values
+ * identity(9) returns 9
+ * identity('text') returns 'text'
+ * @example Mutable object
+ * const now = new Date()
+ * identity(now) returns now
  */
 export function identity<const T>(value: T): T {
   return value
