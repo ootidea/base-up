@@ -283,6 +283,9 @@ export function toCamelCase<const T extends string>(self: T): ToCamelCase<T> {
 }
 
 /**
+ * Converts all property names in a given object type to snake case.
+ * This function is recursively applied to objects nested within objects and arrays.
+ *
  * @example
  * ToSnakeCasedPropertiesDeep<{ firstName: string, lastName: string }> equals { first_name: string, last_name: string }
  * ToSnakeCasedPropertiesDeep<{ nested: { firstName: string } }> equals { nested: { first_name: string } }
@@ -317,12 +320,16 @@ type _ToSnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [inf
   : never
 
 /**
+ * Converts all property names in a given object to snake case.
+ * This function is recursively applied to objects nested within objects and arrays.
+ *
  * @example
  * toSnakeCasedPropertiesDeep({ firstName: 'John', lastName: 'Smith' }) returns { first_name: 'John', last_name: 'Smith' }
  * toSnakeCasedPropertiesDeep({ nested: { firstName: 'John' } }) returns { nested: { first_name: 'John' } }
  * toSnakeCasedPropertiesDeep({ tags: [{ createdAt: 1 }] }) returns { tags: [{ created_at: 1 }] }
  * toSnakeCasedPropertiesDeep([{ firstName: 'John' }]) returns [{ first_name: 'John' }]
- * toSnakeCasedPropertiesDeep(null) returns null
+ * toSnakeCasedPropertiesDeep(undefined) returns undefined
+ * toSnakeCasedPropertiesDeep('kebab-case-text') returns 'kebab-case-text'
  */
 export function toSnakeCasedPropertiesDeep<const T>(self: T): ToSnakeCasedPropertiesDeep<T> {
   if (self instanceof Array) {
@@ -344,6 +351,9 @@ export function toSnakeCasedPropertiesDeep<const T>(self: T): ToSnakeCasedProper
 }
 
 /**
+ * Converts all property names in a given object type to camel case.
+ * This function is recursively applied to objects nested within objects and arrays.
+ *
  * @example
  * ToCamelCasedPropertiesDeep<{ first_name: string, last_name: string }> equals { firstName: string, lastName: string }
  * ToCamelCasedPropertiesDeep<{ nested: { first_name: string } }> equals { nested: { firstName: string } }
@@ -378,12 +388,16 @@ type _ToCamelCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [inf
   : never
 
 /**
+ * Converts all property names in a given object to camel case.
+ * This function is recursively applied to objects nested within objects and arrays.
+ *
  * @example
  * toCamelCasedPropertiesDeep({ first_name: 'John', last_name: 'Smith' }) returns { firstName: 'John', lastName: 'Smith' }
  * toCamelCasedPropertiesDeep({ nested: { first_name: 'John' } }) returns { nested: { firstName: 'John' } }
  * toCamelCasedPropertiesDeep({ tags: [{ created_at: 1 }] }) returns { tags: [{ createdAt: 1 }] }
  * toCamelCasedPropertiesDeep([{ first_name: 'John' }]) returns [{ firstName: 'John' }]
- * toCamelCasedPropertiesDeep(null) returns null
+ * toCamelCasedPropertiesDeep(undefined) returns undefined
+ * toCamelCasedPropertiesDeep('kebab-case-text') returns 'kebab-case-text'
  */
 export function toCamelCasedPropertiesDeep<const T>(self: T): ToCamelCasedPropertiesDeep<T> {
   if (self instanceof Array) {
