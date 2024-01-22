@@ -139,7 +139,7 @@ export type Join<T extends Tuple, Separator extends string = ','> = Equals<T, an
 export type _Join<T extends readonly Interpolable[], Separator extends string> = T extends readonly [
   infer U extends Interpolable,
 ]
-  ? U
+  ? `${U}`
   : T extends readonly [infer H extends Interpolable, ...infer L extends readonly Interpolable[]]
   ? `${H}${Separator}${_Join<L, Separator>}`
   : T extends readonly []
