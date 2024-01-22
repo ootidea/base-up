@@ -1,17 +1,5 @@
 import { NonEmptyArray } from './Array/MinLengthArray'
 
-/**
- * @example for readonly property
- * Mutable<{ readonly name: string, age: number }> is equivalent to { name: string, age: number }
- * @example for readonly Array
- * Mutable<readonly string[]> is equivalent to string[]
- * Mutable<readonly [1, 2, 3]> is equivalent to [1, 2, 3]
- * @example for nested types
- * Mutable<{ nested: { readonly value: string } }> is equivalent to { nested: { readonly value: string } }
- * Mutable<[readonly string[]]> is equivalent to [readonly string[]]
- */
-export type Mutable<T> = { -readonly [K in keyof T]: T[K] }
-
 export function groupBy<T, U>(self: readonly T[], by: (_: T) => U): Map<U, NonEmptyArray<T>> {
   const result = new globalThis.Map<U, NonEmptyArray<T>>()
   for (const value of self) {

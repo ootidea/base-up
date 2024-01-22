@@ -71,7 +71,7 @@ export type TypedArray =
  * Writable<readonly string[]> equals string[]
  * @example It does not apply to nested types.
  * Writable<{ nested: { readonly a: number } }> equals { nested: { readonly a: number } }
- * Writable<readonly [readonly Date[]]> equals [readonly Date[]]
+ * Writable<[readonly boolean[]]> equals [readonly boolean[]]
  */
 export type Writable<T> = { -readonly [K in keyof T]: T[K] }
 
