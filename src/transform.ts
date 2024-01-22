@@ -1,10 +1,12 @@
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { MinLengthArray, NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
-import { Tuple } from './Array/other'
+import { DestructTuple, Tuple } from './Array/other'
 import { createComparatorFromIsLessThan } from './comparison'
+import { Take } from './filter'
 import { identity } from './Function'
 import { repeat } from './generate'
 import { NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
+import { IntegerRangeThrough } from './number/range'
 import { NonEmptySet, ReadonlyNonEmptySet } from './Set'
 import { Interpolable } from './string/other'
 import { Equals } from './typePredicate'
@@ -274,18 +276,21 @@ export namespace sortBy {
  * Reverse<[0, 1] | [0, 1, 2]> equals [1, 0] | [2, 1, 0]
  * Reverse<[0, 1, ...number[], 9]> equals [9, ...number[], 1, 0]
  */
-export type Reverse<T extends Tuple> = T extends readonly [infer First, ...infer R, infer Last]
-  ? [Last, ...Reverse<R>, First]
+export type Reverse<T extends Tuple> = [
+  ..._Reverse<DestructTuple<T>['trailing']>,
+  ...DestructTuple<T>['rest'],
+  ..._Reverse<Take<DestructTuple<T>['optional'], IntegerRangeThrough<DestructTuple<T>['optional']['length']>>>,
+  ..._Reverse<DestructTuple<T>['leading']>,
+]
+// Implementation of Reverse excluding edge case (optional elements)
+type _Reverse<T extends Tuple> = T extends readonly [infer First, ...infer R, infer Last]
+  ? [Last, ..._Reverse<R>, First]
   : T extends readonly [infer First, ...infer R]
-  ? [...Reverse<R>, First]
+  ? [..._Reverse<R>, First]
   : T extends readonly [...infer R, infer Last]
-  ? [Last, ...Reverse<R>]
+  ? [Last, ..._Reverse<R>]
   : T extends readonly []
   ? []
-  : T[number][] extends T
-  ? T
-  : T extends readonly [(infer H)?, ...infer L]
-  ? Reverse<L> | [...Reverse<L>, H]
   : T
 
 export function reverse<const T extends Tuple>(self: T): Reverse<T> {

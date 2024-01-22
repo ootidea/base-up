@@ -224,10 +224,11 @@ test('Reverse', () => {
   assertTypeEquality<Reverse<[0]>, [0]>()
   assertTypeEquality<Reverse<[]>, []>()
   assertTypeEquality<Reverse<[0, 1, ...2[]]>, [...2[], 1, 0]>()
-  assertTypeEquality<Reverse<[0, 1, ...number[], 9]>, [9, ...number[], 1, 0]>()
+  assertTypeEquality<Reverse<[1, 2, ...3[], 4, 5]>, [5, 4, ...3[], 2, 1]>()
   assertTypeEquality<Reverse<[0, 1] | [0]>, [0] | [1, 0]>()
   assertTypeEquality<Reverse<[0, 1?]>, [0] | [1, 0]>()
   assertTypeEquality<Reverse<[0?, 1?]>, [] | [0] | [1, 0]>()
+  assertTypeEquality<Reverse<[1, 2, 3?, 4?, ...5[]]>, [...5[], 4, 3, 2, 1] | [...5[], 3, 2, 1] | [...5[], 2, 1]>()
 })
 
 test('removeDuplicates', () => {
