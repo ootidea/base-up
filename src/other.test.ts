@@ -1,7 +1,19 @@
 import { expect, test } from 'vitest'
 import { sequentialNumbersUntil } from './generate'
 import { mapOf } from './Map'
-import { groupBy, sumOf, toMultiset } from './other'
+import { groupBy, Mutable, sumOf, toMultiset } from './other'
+import { assertTypeEquality } from './type'
+
+test('Mutable', () => {
+  assertTypeEquality<Mutable<{ readonly name: string; age: number }>, { name: string; age: number }>()
+  assertTypeEquality<Mutable<readonly string[]>, string[]>()
+  assertTypeEquality<Mutable<readonly [1, 2, 3]>, [1, 2, 3]>()
+
+  assertTypeEquality<Mutable<{ nested: { readonly value: string } }>, { nested: { readonly value: string } }>()
+  assertTypeEquality<Mutable<[readonly string[]]>, [readonly string[]]>()
+
+  assertTypeEquality<Mutable<never>, never>()
+})
 
 test('groupBy', () => {
   expect(groupBy(sequentialNumbersUntil(8), (x) => x % 3)).toStrictEqual(
