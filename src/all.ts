@@ -29,7 +29,7 @@ export {
   moveTo,
 } from './collectionUpdate'
 export { isEmpty, includes, every, everyValues, isNotEmpty, isUnique } from './collectionPredicate'
-export { rollWindow, cartesianProductOf, permutationOf, PrefixesOf, prefixesOf } from './combination'
+export { createNGrams, cartesianProductOf, permutationOf, PrefixesOf, prefixesOf } from './combination'
 export {
   isLexicographicLessThan,
   isLexicographicAtMost,

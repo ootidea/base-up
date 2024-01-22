@@ -32,7 +32,13 @@ export namespace permutationOf {
   }
 }
 
-export function rollWindow<const T extends Tuple, N extends number>(self: T, n: N): T[number][][] {
+/**
+ * @example
+ * createNGrams([1, 2, 3], 2) returns [[1, 2], [2, 3]]
+ * createNGrams([1, 2, 3], 3) returns [[1, 2, 3]]
+ * createNGrams([1, 2, 3], 1) returns [[1], [2], [3]]
+ */
+export function createNGrams<const T extends Tuple, N extends number>(self: T, n: N): T[number][][] {
   const result = []
   if (n < 0) throw new RangeError()
 
@@ -41,7 +47,7 @@ export function rollWindow<const T extends Tuple, N extends number>(self: T, n: 
   for (let i = 0; i + n - 1 < self.length; i++) {
     result.push(self.slice(i, i + n))
   }
-  return result as any
+  return result
 }
 
 /**

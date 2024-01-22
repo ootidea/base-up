@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { cartesianProductOf, permutationOf, PrefixesOf, prefixesOf, rollWindow } from './combination'
+import { cartesianProductOf, createNGrams, permutationOf, prefixesOf, PrefixesOf } from './combination'
 import { assertTypeEquality } from './type'
 
 test('cartesianProductOf', () => {
@@ -48,16 +48,16 @@ test('permutationOf', () => {
   expect(permutationOf.number(5, 2)).toBe(20)
 })
 
-test('rollWindow', () => {
-  expect(rollWindow([1, 2, 3], 2)).toStrictEqual([
+test('createNGrams', () => {
+  expect(createNGrams([1, 2, 3], 2)).toStrictEqual([
     [1, 2],
     [2, 3],
   ])
-  expect(rollWindow([1, 2, 3], 3)).toStrictEqual([[1, 2, 3]])
-  expect(rollWindow([1, 2, 3], 1)).toStrictEqual([[1], [2], [3]])
-  expect(rollWindow([1, 2, 3], 0)).toStrictEqual([[], [], [], []])
-  expect(rollWindow([1, 2, 3], 4)).toStrictEqual([])
-  expect(rollWindow([], 0)).toStrictEqual([[]])
+  expect(createNGrams([1, 2, 3], 3)).toStrictEqual([[1, 2, 3]])
+  expect(createNGrams([1, 2, 3], 1)).toStrictEqual([[1], [2], [3]])
+  expect(createNGrams([1, 2, 3], 0)).toStrictEqual([[], [], [], []])
+  expect(createNGrams([1, 2, 3], 4)).toStrictEqual([])
+  expect(createNGrams([], 0)).toStrictEqual([[]])
 })
 
 test('PrefixesOf', () => {
