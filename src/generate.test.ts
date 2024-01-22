@@ -1,30 +1,37 @@
 import { expect, test } from 'vitest'
 import { assertTypeEquality, Repeat, take } from './all'
 import { every, isUnique } from './collectionPredicate'
-import { fromEntries, rangeThrough, rangeUntil, repeat, repeatApply, uniqueRandomIntegersUntil } from './generate'
+import {
+  fromEntries,
+  repeat,
+  repeatApply,
+  sequentialNumbersThrough,
+  sequentialNumbersUntil,
+  uniqueRandomIntegersUntil,
+} from './generate'
 
-test('rangeUntil', () => {
-  expect(rangeUntil(3)).toStrictEqual([0, 1, 2])
-  expect(rangeUntil(-3)).toStrictEqual([0, -1, -2])
-  expect(rangeUntil(0)).toStrictEqual([])
-  expect(rangeUntil(2, 5)).toStrictEqual([2, 3, 4])
-  expect(rangeUntil(2, -2)).toStrictEqual([2, 1, 0, -1])
-  expect(rangeUntil(-2, 2)).toStrictEqual([-2, -1, 0, 1])
-  expect(rangeUntil(-2, -5)).toStrictEqual([-2, -3, -4])
-  expect(rangeUntil(3, 3)).toStrictEqual([])
+test('sequentialNumbersUntil', () => {
+  expect(sequentialNumbersUntil(3)).toStrictEqual([0, 1, 2])
+  expect(sequentialNumbersUntil(-3)).toStrictEqual([0, -1, -2])
+  expect(sequentialNumbersUntil(0)).toStrictEqual([])
+  expect(sequentialNumbersUntil(2, 5)).toStrictEqual([2, 3, 4])
+  expect(sequentialNumbersUntil(2, -2)).toStrictEqual([2, 1, 0, -1])
+  expect(sequentialNumbersUntil(-2, 2)).toStrictEqual([-2, -1, 0, 1])
+  expect(sequentialNumbersUntil(-2, -5)).toStrictEqual([-2, -3, -4])
+  expect(sequentialNumbersUntil(3, 3)).toStrictEqual([])
 
-  expect([...rangeUntil.Iterable(5)]).toStrictEqual([0, 1, 2, 3, 4])
+  expect([...sequentialNumbersUntil.Iterable(5)]).toStrictEqual([0, 1, 2, 3, 4])
 })
 
-test('rangeThrough', () => {
-  expect(rangeThrough(3)).toStrictEqual([0, 1, 2, 3])
-  expect(rangeThrough(-3)).toStrictEqual([0, -1, -2, -3])
-  expect(rangeThrough(0)).toStrictEqual([0])
-  expect(rangeThrough(2, 5)).toStrictEqual([2, 3, 4, 5])
-  expect(rangeThrough(2, -2)).toStrictEqual([2, 1, 0, -1, -2])
-  expect(rangeThrough(-2, 2)).toStrictEqual([-2, -1, 0, 1, 2])
-  expect(rangeThrough(-2, -5)).toStrictEqual([-2, -3, -4, -5])
-  expect(rangeThrough(3, 3)).toStrictEqual([3])
+test('sequentialNumbersThrough', () => {
+  expect(sequentialNumbersThrough(3)).toStrictEqual([0, 1, 2, 3])
+  expect(sequentialNumbersThrough(-3)).toStrictEqual([0, -1, -2, -3])
+  expect(sequentialNumbersThrough(0)).toStrictEqual([0])
+  expect(sequentialNumbersThrough(2, 5)).toStrictEqual([2, 3, 4, 5])
+  expect(sequentialNumbersThrough(2, -2)).toStrictEqual([2, 1, 0, -1, -2])
+  expect(sequentialNumbersThrough(-2, 2)).toStrictEqual([-2, -1, 0, 1, 2])
+  expect(sequentialNumbersThrough(-2, -5)).toStrictEqual([-2, -3, -4, -5])
+  expect(sequentialNumbersThrough(3, 3)).toStrictEqual([3])
 })
 
 test('uniqueRandomIntegersUntil', () => {

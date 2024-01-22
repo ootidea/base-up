@@ -1,13 +1,19 @@
 import { expect, test } from 'vitest'
-import { rangeUntil } from './generate'
+import { sequentialNumbersUntil } from './generate'
 import { mapOf } from './Map'
 import { groupBy, sumOf, toMultiset } from './other'
 
 test('groupBy', () => {
-  expect(groupBy(rangeUntil(8), (x) => x % 3)).toStrictEqual(mapOf([0, [0, 3, 6]], [1, [1, 4, 7]], [2, [2, 5]]))
+  expect(groupBy(sequentialNumbersUntil(8), (x) => x % 3)).toStrictEqual(
+    mapOf([0, [0, 3, 6]], [1, [1, 4, 7]], [2, [2, 5]]),
+  )
 })
 test('groupBy.Record', () => {
-  expect(groupBy.Record(rangeUntil(8), (x) => x % 3)).toStrictEqual({ 0: [0, 3, 6], 1: [1, 4, 7], 2: [2, 5] })
+  expect(groupBy.Record(sequentialNumbersUntil(8), (x) => x % 3)).toStrictEqual({
+    0: [0, 3, 6],
+    1: [1, 4, 7],
+    2: [2, 5],
+  })
 })
 
 test('toMultiset', () => {

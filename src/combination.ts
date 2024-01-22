@@ -1,7 +1,7 @@
 import { NonEmptyArray } from './Array/MinLengthArray'
 import { IsTuple, Tuple } from './Array/other'
 import { removeAt } from './collectionUpdate'
-import { rangeUntil } from './generate'
+import { sequentialNumbersUntil } from './generate'
 
 export function cartesianProductOf<const T extends Tuple, const U extends Tuple>(
   lhs: T,
@@ -21,14 +21,14 @@ export function permutationOf<T>(self: readonly T[], n: number = self.length): (
 
   if (self.length <= 1) return [self]
 
-  return rangeUntil(self.length).flatMap((i) => {
+  return sequentialNumbersUntil(self.length).flatMap((i) => {
     const value = self[i]!
     return permutationOf(removeAt(self, i), n - 1).map((rest) => [value, ...rest])
   })
 }
 export namespace permutationOf {
   export function number(lhs: number, rhs: number): number {
-    return rangeUntil(lhs, lhs - rhs).reduce((a, b) => a * b)
+    return sequentialNumbersUntil(lhs, lhs - rhs).reduce((a, b) => a * b)
   }
 }
 

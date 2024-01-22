@@ -8,22 +8,22 @@ import { Lazy, OMITTED, Unlazy } from './type'
 
 /**
  * @example
- * RangeUntil<3> equals [0, 1, 2]
- * RangeUntil<2, 5> equals [2, 3, 4]
- * RangeUntil<5, 2> equals [5, 4, 3]
- * RangeUntil<7, 7> equals []
+ * SequentialNumbersUntil<3> equals [0, 1, 2]
+ * SequentialNumbersUntil<2, 5> equals [2, 3, 4]
+ * SequentialNumbersUntil<5, 2> equals [5, 4, 3]
+ * SequentialNumbersUntil<7, 7> equals []
  * @example
- * RangeUntil<-3, 2> equals [-3, -2, -1, 0, 1]
- * RangeUntil<3, -2> equals [3, 2, 1, 0, -1]
- * RangeUntil<-1, -3> equals [-1, -2]
- * RangeUntil<-3, -1> equals [-3, -2]
+ * SequentialNumbersUntil<-3, 2> equals [-3, -2, -1, 0, 1]
+ * SequentialNumbersUntil<3, -2> equals [3, 2, 1, 0, -1]
+ * SequentialNumbersUntil<-1, -3> equals [-1, -2]
+ * SequentialNumbersUntil<-3, -1> equals [-3, -2]
  * @example
- * RangeUntil<2 | -2> equals [0, 1] | [0, -1]
- * RangeUntil<1, 3 | 5> equals [1, 2] | [1, 2, 3, 4]
- * RangeUntil<0 | 2, 4> equals [0, 1, 2, 3] | [2, 3]
- * RangeUntil<number> equals number[]
+ * SequentialNumbersUntil<2 | -2> equals [0, 1] | [0, -1]
+ * SequentialNumbersUntil<1, 3 | 5> equals [1, 2] | [1, 2, 3, 4]
+ * SequentialNumbersUntil<0 | 2, 4> equals [0, 1, 2, 3] | [2, 3]
+ * SequentialNumbersUntil<number> equals number[]
  */
-export type RangeUntil<From extends number, To extends number | OMITTED = OMITTED> = To extends number
+export type SequentialNumbersUntil<From extends number, To extends number | OMITTED = OMITTED> = To extends number
   ? number extends From
     ? number[]
     : number extends To
@@ -43,26 +43,26 @@ export type RangeUntil<From extends number, To extends number | OMITTED = OMITTE
         : Reverse<Drop<NaturalNumbersThrough<From>, NaturalNumbersThrough<To>['length']>>
       : never
     : never
-  : RangeUntil<0, From>
+  : SequentialNumbersUntil<0, From>
 
 /**
  * @example
- * RangeThrough<3> equals [0, 1, 2, 3]
- * RangeThrough<2, 5> equals [2, 3, 4, 5]
- * RangeThrough<5, 2> equals [5, 4, 3, 2]
- * RangeThrough<7, 7> equals [7]
+ * SequentialNumbersThrough<3> equals [0, 1, 2, 3]
+ * SequentialNumbersThrough<2, 5> equals [2, 3, 4, 5]
+ * SequentialNumbersThrough<5, 2> equals [5, 4, 3, 2]
+ * SequentialNumbersThrough<7, 7> equals [7]
  * @example
- * RangeThrough<-3, 2> equals [-3, -2, -1, 0, 1, 2]
- * RangeThrough<3, -2> equals [3, 2, 1, 0, -1, -2]
- * RangeThrough<-1, -3> equals [-1, -2, -3]
- * RangeThrough<-3, -1> equals [-3, -2, -1]
+ * SequentialNumbersThrough<-3, 2> equals [-3, -2, -1, 0, 1, 2]
+ * SequentialNumbersThrough<3, -2> equals [3, 2, 1, 0, -1, -2]
+ * SequentialNumbersThrough<-1, -3> equals [-1, -2, -3]
+ * SequentialNumbersThrough<-3, -1> equals [-3, -2, -1]
  * @example
- * RangeThrough<2 | -2> equals [0, 1, 2] | [0, -1, -2]
- * RangeThrough<1, 3 | 5> equals [1, 2, 3] | [1, 2, 3, 4, 5]
- * RangeThrough<0 | 2, 4> equals [0, 1, 2, 3, 4] | [2, 3, 4]
- * RangeThrough<number> equals [number, ...number[]] | [...number[], number]
+ * SequentialNumbersThrough<2 | -2> equals [0, 1, 2] | [0, -1, -2]
+ * SequentialNumbersThrough<1, 3 | 5> equals [1, 2, 3] | [1, 2, 3, 4, 5]
+ * SequentialNumbersThrough<0 | 2, 4> equals [0, 1, 2, 3, 4] | [2, 3, 4]
+ * SequentialNumbersThrough<number> equals [number, ...number[]] | [...number[], number]
  */
-export type RangeThrough<From extends number, To extends number | OMITTED = OMITTED> = To extends number
+export type SequentialNumbersThrough<From extends number, To extends number | OMITTED = OMITTED> = To extends number
   ? number extends From
     ? NonEmptyArray<number>
     : number extends To
@@ -82,7 +82,7 @@ export type RangeThrough<From extends number, To extends number | OMITTED = OMIT
         : Reverse<Drop<NaturalNumbersThrough<From>, To>>
       : never
     : never
-  : RangeThrough<0, From>
+  : SequentialNumbersThrough<0, From>
 
 /**
  * @example
@@ -172,18 +172,18 @@ type ToNegativeNumbers<T extends readonly number[]> = T extends readonly [
 
 /**
  * @example
- * rangeUntil(3) returns [0, 1, 2]
- * rangeUntil(3) is typed as [0, 1, 2]
+ * sequentialNumbersUntil(3) returns [0, 1, 2]
+ * sequentialNumbersUntil(3) is typed as [0, 1, 2]
  * @example
- * rangeUntil(0) returns []
- * rangeUntil(0) is typed as []
+ * sequentialNumbersUntil(0) returns []
+ * sequentialNumbersUntil(0) is typed as []
  * @example
- * rangeUntil(4 as number) returns [0, 1, 2, 3]
- * rangeUntil(4 as number) is typed as number[]
+ * sequentialNumbersUntil(4 as number) returns [0, 1, 2, 3]
+ * sequentialNumbersUntil(4 as number) is typed as number[]
  */
-export function rangeUntil<To extends number>(to: To): RangeUntil<To>
-export function rangeUntil<From extends number, To extends number>(from: From, to: To): RangeUntil<From, To>
-export function rangeUntil<N extends number, M extends number>(n: N, m?: M): number[] {
+export function sequentialNumbersUntil<To extends number>(to: To): SequentialNumbersUntil<To>
+export function sequentialNumbersUntil<From extends number, To extends number>(from: From, to: To): SequentialNumbersUntil<From, To>
+export function sequentialNumbersUntil<N extends number, M extends number>(n: N, m?: M): number[] {
   const [from, to] = m === undefined ? [0, n] : [n, m]
 
   const result = []
@@ -198,7 +198,7 @@ export function rangeUntil<N extends number, M extends number>(n: N, m?: M): num
   }
   return result as any
 }
-export namespace rangeUntil {
+export namespace sequentialNumbersUntil {
   export function* Iterable(n: number): Iterable<number> {
     for (let i = 0; i < n; i++) {
       yield i
@@ -208,18 +208,18 @@ export namespace rangeUntil {
 
 /**
  * @example
- * rangeThrough(3) returns [0, 1, 2, 3]
- * rangeThrough(3) is typed as [0, 1, 2, 3]
+ * sequentialNumbersThrough(3) returns [0, 1, 2, 3]
+ * sequentialNumbersThrough(3) is typed as [0, 1, 2, 3]
  * @example
- * rangeThrough(0) returns [0]
- * rangeThrough(0) is typed as [0]
+ * sequentialNumbersThrough(0) returns [0]
+ * sequentialNumbersThrough(0) is typed as [0]
  * @example
- * rangeThrough(4 as number) returns [0, 1, 2, 3, 4]
- * rangeThrough(4 as number) is typed as number[]
+ * sequentialNumbersThrough(4 as number) returns [0, 1, 2, 3, 4]
+ * sequentialNumbersThrough(4 as number) is typed as number[]
  */
-export function rangeThrough<To extends number>(to: To): RangeThrough<To>
-export function rangeThrough<From extends number, To extends number>(from: From, to: To): RangeThrough<From, To>
-export function rangeThrough<N extends number, M extends number>(n: N, m?: M): number[] {
+export function sequentialNumbersThrough<To extends number>(to: To): SequentialNumbersThrough<To>
+export function sequentialNumbersThrough<From extends number, To extends number>(from: From, to: To): SequentialNumbersThrough<From, To>
+export function sequentialNumbersThrough<N extends number, M extends number>(n: N, m?: M): number[] {
   const [from, to] = m === undefined ? [0, n] : [n, m]
 
   const result = []
@@ -259,7 +259,7 @@ function takeShuffle<const N extends number, const M extends number>(
   upperBound: N,
   length: M,
 ): FixedLengthArray<M, IntegerRangeUntil<N>> {
-  return take(shuffle(rangeUntil(upperBound)), length) as any
+  return take(shuffle(sequentialNumbersUntil(upperBound)), length) as any
 }
 function retryWhile<const N extends number, const M extends number>(
   upperBound: N,

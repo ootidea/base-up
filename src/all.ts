@@ -62,13 +62,13 @@ export {
 } from './filter'
 export { zipWith, zip, zipAll, merge } from './fusion'
 export {
-  rangeUntil,
-  rangeThrough,
+  sequentialNumbersUntil,
+  sequentialNumbersThrough,
   repeat,
   repeatApply,
   fromEntries,
-  RangeUntil,
-  RangeThrough,
+  SequentialNumbersUntil,
+  SequentialNumbersThrough,
   Repeat,
   uniqueRandomIntegersUntil,
 } from './generate'

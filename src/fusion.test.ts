@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { merge, zip, zipAll, zipWith } from './fusion'
-import { rangeUntil, repeat } from './generate'
+import { sequentialNumbersUntil, repeat } from './generate'
 
 test('zip', () => {
   expect(zip([1, 2, 3], ['a', 'b', 'c'])).toStrictEqual([
@@ -18,12 +18,12 @@ test('zip', () => {
   ])
   expect(zip([1, 2, 3])).toStrictEqual([[1], [2], [3]])
 
-  expect([...zip.Iterable(repeat.Iterable('a'), rangeUntil.Iterable(3))]).toStrictEqual([
+  expect([...zip.Iterable(repeat.Iterable('a'), sequentialNumbersUntil.Iterable(3))]).toStrictEqual([
     ['a', 0],
     ['a', 1],
     ['a', 2],
   ])
-  expect([...zip.Iterable(repeat.Iterable('a'), rangeUntil.Iterable(3), repeat.Iterable(0))]).toStrictEqual([
+  expect([...zip.Iterable(repeat.Iterable('a'), sequentialNumbersUntil.Iterable(3), repeat.Iterable(0))]).toStrictEqual([
     ['a', 0, 0],
     ['a', 1, 0],
     ['a', 2, 0],

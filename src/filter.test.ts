@@ -16,7 +16,7 @@ import {
   Take,
   take,
 } from './filter'
-import { rangeUntil, repeat } from './generate'
+import { sequentialNumbersUntil, repeat } from './generate'
 import { setOf } from './Set'
 import { assertTypeEquality } from './type'
 import { isNotNull } from './typePredicate'
@@ -197,9 +197,9 @@ test('indexesOf', () => {
 })
 
 test('elementAt', () => {
-  expect(elementAt(rangeUntil.Iterable(5), 0)).toBe(0)
-  expect(elementAt(rangeUntil.Iterable(5), 3)).toBe(3)
-  expect(elementAt(rangeUntil.Iterable(5), 5)).toBe(undefined)
+  expect(elementAt(sequentialNumbersUntil.Iterable(5), 0)).toBe(0)
+  expect(elementAt(sequentialNumbersUntil.Iterable(5), 3)).toBe(3)
+  expect(elementAt(sequentialNumbersUntil.Iterable(5), 5)).toBe(undefined)
 })
 
 test('modeOf', () => {

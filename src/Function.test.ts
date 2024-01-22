@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { curry, pipe } from './Function'
-import { rangeUntil } from './generate'
+import { sequentialNumbersUntil } from './generate'
 
 test('curry', () => {
   const plus = (a: number, b: string) => a + b
@@ -9,5 +9,5 @@ test('curry', () => {
 })
 
 test('pipe', () => {
-  expect(pipe(10, (x) => x / 2, rangeUntil)).toStrictEqual([0, 1, 2, 3, 4])
+  expect(pipe(10, (x) => x / 2, sequentialNumbersUntil)).toStrictEqual([0, 1, 2, 3, 4])
 })
