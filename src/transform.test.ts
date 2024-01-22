@@ -150,6 +150,12 @@ test('Split', () => {
 
   assertTypeEquality<Split<`${number}:${number}`, ':'>, [`${number}`, `${number}`]>()
   assertTypeEquality<Split<`0${number}:1${number}`, ':'>, [`0${number}`, `1${number}`]>()
+
+  assertTypeEquality<Split<'abc', string>, string[]>()
+  assertTypeEquality<Split<'abc', any>, string[]>()
+
+  assertTypeEquality<Split<'a-b_c', '-' | '_'>, ['a', 'b_c'] | ['a-b', 'c']>()
+  assertTypeEquality<Split<'abc', never>, never>()
 })
 
 test('split', () => {

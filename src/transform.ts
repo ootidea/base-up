@@ -178,11 +178,15 @@ export namespace join {
  * Split<'12:34', ''> equals ['1', '2', ':', '3', '4']
  * Split<`${number}:${number}`, ':'> equals [`${number}`, `${number}`]
  */
-export type Split<T extends string, Separator extends string> = T extends `${infer H}${Separator}${infer L}`
-  ? `${Separator}${L}` extends ''
-    ? [H]
-    : [H, ...Split<L, Separator>]
-  : [T]
+export type Split<T extends string, Separator extends string> = string extends Separator
+  ? string[]
+  : Separator extends Separator
+  ? T extends `${infer H}${Separator}${infer L}`
+    ? `${Separator}${L}` extends ''
+      ? [H]
+      : [H, ...Split<L, Separator>]
+    : [T]
+  : never
 
 /**
  * Note that when both arguments are empty strings, the return value differs from the standard split method.
