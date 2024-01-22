@@ -71,26 +71,26 @@ export type UnionToTuple<T> = UnionToIntersection<T extends T ? (_: T) => T : ne
 
 /**
  * @example
- * DestructTuple<[1, 2, ...3[], 4, 5]> equals { before: [1, 2]; rest: 3[]; after: [4, 5] }
- * DestructTuple<[1, 2?, ...3[]]> equals { before: [1]; optional: [2]; rest: 3[]; after: [] }
- * DestructTuple<Date[]> equals { before: []; rest: Date[]; after: [] }
- * DestructTuple<[]> equals { before: []; rest: []; after: [] }
+ * DestructTuple<[1, 2, ...3[], 4, 5]> equals { leading: [1, 2]; rest: 3[]; trailing: [4, 5] }
+ * DestructTuple<[1, 2?, ...3[]]> equals { leading: [1]; optional: [2]; rest: 3[]; trailing: [] }
+ * DestructTuple<Date[]> equals { leading: []; rest: Date[]; trailing: [] }
+ * DestructTuple<[]> equals { leading: []; rest: []; trailing: [] }
  */
 export type DestructTuple<
   T extends Tuple,
-  Before extends Tuple = [],
+  Leading extends Tuple = [],
   Optional extends Tuple = [],
-  After extends Tuple = [],
+  Trailing extends Tuple = [],
 > = Equals<T, any> extends true
-  ? { before: []; optional: []; rest: any[]; after: [] }
+  ? { leading: []; optional: []; rest: any[]; trailing: [] }
   : T extends readonly [infer H, ...infer L]
-  ? DestructTuple<L, [...Before, H], Optional, After>
+  ? DestructTuple<L, [...Leading, H], Optional, Trailing>
   : T extends readonly [...infer L, infer H]
-  ? DestructTuple<L, Before, Optional, [H, ...After]>
+  ? DestructTuple<L, Leading, Optional, [H, ...Trailing]>
   : IsTuple<T> extends false
-  ? { before: Before; optional: Optional; rest: T; after: After }
+  ? { leading: Leading; optional: Optional; rest: T; trailing: Trailing }
   : T extends readonly []
-  ? { before: Before; optional: Optional; rest: T; after: After }
+  ? { leading: Leading; optional: Optional; rest: T; trailing: Trailing }
   : T extends readonly [(infer H)?, ...infer L]
-  ? DestructTuple<L, Before, [...Optional, H], After>
+  ? DestructTuple<L, Leading, [...Optional, H], Trailing>
   : never

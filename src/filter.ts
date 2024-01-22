@@ -72,7 +72,11 @@ export type _Take<T extends Tuple, N extends number, R extends Tuple = []> = R['
     ? [...R, ...MaxLengthArray<S, T[number]>]
     : IntegerRangeThrough<S> extends infer M extends number
     ? M extends M
-      ? [...R, ...FixedLengthArray<M, DestructTuple<T>['rest'][0]>, ...Take<DestructTuple<T>['after'], Subtract<S, M>>]
+      ? [
+          ...R,
+          ...FixedLengthArray<M, DestructTuple<T>['rest'][0]>,
+          ...Take<DestructTuple<T>['trailing'], Subtract<S, M>>,
+        ]
       : never
     : never
   : never

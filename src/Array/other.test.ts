@@ -57,11 +57,11 @@ test('MinLengthOf', () => {
 })
 
 test('DestructTuple', () => {
-  assertTypeEquality<DestructTuple<[1, ...2[], 3]>, { before: [1]; optional: []; rest: 2[]; after: [3] }>()
-  assertTypeEquality<DestructTuple<[...1[], 2, 3]>, { before: []; optional: []; rest: 1[]; after: [2, 3] }>()
-  assertTypeEquality<DestructTuple<[1, 2?, ...3[]]>, { before: [1]; optional: [2]; rest: 3[]; after: [] }>()
-  assertTypeEquality<DestructTuple<string[]>, { before: []; optional: []; rest: string[]; after: [] }>()
-  assertTypeEquality<DestructTuple<any>, { before: []; optional: []; rest: any[]; after: [] }>()
-  assertTypeEquality<DestructTuple<[1, ...any]>, { before: [1]; optional: []; rest: any[]; after: [] }>()
+  assertTypeEquality<DestructTuple<[1, ...2[], 3]>, { leading: [1]; optional: []; rest: 2[]; trailing: [3] }>()
+  assertTypeEquality<DestructTuple<[...1[], 2, 3]>, { leading: []; optional: []; rest: 1[]; trailing: [2, 3] }>()
+  assertTypeEquality<DestructTuple<[1, 2?, ...3[]]>, { leading: [1]; optional: [2]; rest: 3[]; trailing: [] }>()
+  assertTypeEquality<DestructTuple<string[]>, { leading: []; optional: []; rest: string[]; trailing: [] }>()
+  assertTypeEquality<DestructTuple<any>, { leading: []; optional: []; rest: any[]; trailing: [] }>()
+  assertTypeEquality<DestructTuple<[1, ...any]>, { leading: [1]; optional: []; rest: any[]; trailing: [] }>()
   assertTypeEquality<DestructTuple<never>, never>()
 })
