@@ -88,7 +88,8 @@
     "format:package-json": "sort-package-json",
     "postversion": "git push && git push --tags && npm publish ./",
     "prepublishOnly": "npm run build",
-    "test": "vitest --silent=false",
+    "test": "vitest run --silent=false",
+    "test:watch": "vitest --silent=false",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
