@@ -1,7 +1,7 @@
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { MaxLengthArray } from './Array/MaxLengthArray'
 import { ReadonlyNonEmptyArray } from './Array/MinLengthArray'
-import { IsTuple, SplitTupleAroundRest, Tuple } from './Array/other'
+import { DestructTuple, IsTuple, Tuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
 import { PrefixesOf } from './combination'
 import { Subtract } from './number/other'
@@ -72,11 +72,7 @@ export type _Take<T extends Tuple, N extends number, R extends Tuple = []> = R['
     ? [...R, ...MaxLengthArray<S, T[number]>]
     : IntegerRangeThrough<S> extends infer M extends number
     ? M extends M
-      ? [
-          ...R,
-          ...FixedLengthArray<M, SplitTupleAroundRest<T>['rest'][0]>,
-          ...Take<SplitTupleAroundRest<T>['after'], Subtract<S, M>>,
-        ]
+      ? [...R, ...FixedLengthArray<M, DestructTuple<T>['rest'][0]>, ...Take<DestructTuple<T>['after'], Subtract<S, M>>]
       : never
     : never
   : never

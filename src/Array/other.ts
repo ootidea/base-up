@@ -71,26 +71,26 @@ export type UnionToTuple<T> = UnionToIntersection<T extends T ? (_: T) => T : ne
 
 /**
  * @example
- * SplitTupleAroundRest<[1, 2, ...3[], 4, 5]> equals { before: [1, 2], rest: 3[], after: [4, 5] }
- * SplitTupleAroundRest<[1, 2?, ...3[]]> equals { before: [1, 2?], rest: 3[], after: [] }
- * SplitTupleAroundRest<Date[]> equals { before: [], rest: Date[], after: [] }
- * SplitTupleAroundRest<[]> equals { before: [], rest: [], after: [] }
+ * DestructTuple<[1, 2, ...3[], 4, 5]> equals { before: [1, 2]; rest: 3[]; after: [4, 5] }
+ * DestructTuple<[1, 2?, ...3[]]> equals { before: [1]; optional: [2]; rest: 3[]; after: [] }
+ * DestructTuple<Date[]> equals { before: []; rest: Date[]; after: [] }
+ * DestructTuple<[]> equals { before: []; rest: []; after: [] }
  */
-export type SplitTupleAroundRest<T extends Tuple> = Equals<T, any> extends true
-  ? { before: []; rest: any[]; after: [] }
-  : _SplitTupleAroundRest<T>
-export type _SplitTupleAroundRest<
+export type DestructTuple<
   T extends Tuple,
   Before extends Tuple = [],
+  Optional extends Tuple = [],
   After extends Tuple = [],
-> = T extends readonly [infer H, ...infer L]
-  ? _SplitTupleAroundRest<L, [...Before, H], After>
+> = Equals<T, any> extends true
+  ? { before: []; optional: []; rest: any[]; after: [] }
+  : T extends readonly [infer H, ...infer L]
+  ? DestructTuple<L, [...Before, H], Optional, After>
   : T extends readonly [...infer L, infer H]
-  ? _SplitTupleAroundRest<L, Before, [H, ...After]>
+  ? DestructTuple<L, Before, Optional, [H, ...After]>
   : IsTuple<T> extends false
-  ? { before: Before; rest: T; after: After }
+  ? { before: Before; optional: Optional; rest: T; after: After }
   : T extends readonly []
-  ? { before: Before; rest: T; after: After }
+  ? { before: Before; optional: Optional; rest: T; after: After }
   : T extends readonly [(infer H)?, ...infer L]
-  ? _SplitTupleAroundRest<L, [...Before, H?], After>
+  ? DestructTuple<L, Before, [...Optional, H], After>
   : never
