@@ -206,10 +206,10 @@ export {
   toKebabCase,
   ToCamelCase,
   toCamelCase,
-  ToSnakeCasedPropertiesDeep,
-  toSnakeCasedPropertiesDeep,
-  ToCamelCasedPropertiesDeep,
-  toCamelCasedPropertiesDeep,
+  ToSnakeCasedPropertiesDeeply,
+  toSnakeCasedPropertiesDeeply,
+  ToCamelCasedPropertiesDeeply,
+  toCamelCasedPropertiesDeeply,
 } from './string/case'
 export { IsBigintLiteral } from './bigint'
 export { IsBooleanLiteral } from './boolean'

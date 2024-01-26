@@ -287,36 +287,36 @@ export function toCamelCase<const T extends string>(self: T): ToCamelCase<T> {
  * This function is recursively applied to objects nested within objects and arrays.
  *
  * @example
- * ToSnakeCasedPropertiesDeep<{ firstName: string, lastName: string }> equals { first_name: string, last_name: string }
- * ToSnakeCasedPropertiesDeep<{ nested: { firstName: string } }> equals { nested: { first_name: string } }
- * ToSnakeCasedPropertiesDeep<{ tags: { createdAt: number }[] }> equals { tags: { created_at: number }[] }
- * ToSnakeCasedPropertiesDeep<{ firstName: string }[]> equals { first_name: string }[]
+ * ToSnakeCasedPropertiesDeeply<{ firstName: string, lastName: string }> equals { first_name: string, last_name: string }
+ * ToSnakeCasedPropertiesDeeply<{ nested: { firstName: string } }> equals { nested: { first_name: string } }
+ * ToSnakeCasedPropertiesDeeply<{ tags: { createdAt: number }[] }> equals { tags: { created_at: number }[] }
+ * ToSnakeCasedPropertiesDeeply<{ firstName: string }[]> equals { first_name: string }[]
  * @example keep modifiers
- * ToSnakeCasedPropertiesDeep<{ readonly firstName?: string }> equals { readonly first_name?: string }
- * ToSnakeCasedPropertiesDeep<readonly string[]> equals readonly string[]
+ * ToSnakeCasedPropertiesDeeply<{ readonly firstName?: string }> equals { readonly first_name?: string }
+ * ToSnakeCasedPropertiesDeeply<readonly string[]> equals readonly string[]
  */
-export type ToSnakeCasedPropertiesDeep<T> = Equals<T, any> extends true
+export type ToSnakeCasedPropertiesDeeply<T> = Equals<T, any> extends true
   ? T
   : T extends Function
   ? T
   : T extends Tuple
-  ? ToSnakeCasedPropertiesDeepTuple<T>
+  ? ToSnakeCasedPropertiesDeeplyTuple<T>
   : {
-      [K in keyof T as K extends string ? ToSnakeCase<K> : K]: ToSnakeCasedPropertiesDeep<T[K]>
+      [K in keyof T as K extends string ? ToSnakeCase<K> : K]: ToSnakeCasedPropertiesDeeply<T[K]>
     }
-type ToSnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends any[]
-  ? _ToSnakeCasedPropertiesDeepTuple<T>
-  : Readonly<_ToSnakeCasedPropertiesDeepTuple<T>>
-type _ToSnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [infer H, ...infer L]
-  ? [ToSnakeCasedPropertiesDeep<H>, ..._ToSnakeCasedPropertiesDeepTuple<L>]
+type ToSnakeCasedPropertiesDeeplyTuple<T extends Tuple> = T extends any[]
+  ? _ToSnakeCasedPropertiesDeeplyTuple<T>
+  : Readonly<_ToSnakeCasedPropertiesDeeplyTuple<T>>
+type _ToSnakeCasedPropertiesDeeplyTuple<T extends Tuple> = T extends readonly [infer H, ...infer L]
+  ? [ToSnakeCasedPropertiesDeeply<H>, ..._ToSnakeCasedPropertiesDeeplyTuple<L>]
   : T extends readonly [...infer L, infer H]
-  ? [..._ToSnakeCasedPropertiesDeepTuple<L>, ToSnakeCasedPropertiesDeep<H>]
+  ? [..._ToSnakeCasedPropertiesDeeplyTuple<L>, ToSnakeCasedPropertiesDeeply<H>]
   : T extends readonly []
   ? []
   : T[number][] extends T
-  ? ToSnakeCasedPropertiesDeep<T[number]>[]
+  ? ToSnakeCasedPropertiesDeeply<T[number]>[]
   : T extends readonly [(infer H)?, ...infer L]
-  ? [ToSnakeCasedPropertiesDeep<H>?, ..._ToSnakeCasedPropertiesDeepTuple<L>]
+  ? [ToSnakeCasedPropertiesDeeply<H>?, ..._ToSnakeCasedPropertiesDeeplyTuple<L>]
   : never
 
 /**
@@ -324,16 +324,16 @@ type _ToSnakeCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [inf
  * This function is recursively applied to objects nested within objects and arrays.
  *
  * @example
- * toSnakeCasedPropertiesDeep({ firstName: 'John', lastName: 'Smith' }) returns { first_name: 'John', last_name: 'Smith' }
- * toSnakeCasedPropertiesDeep({ nested: { firstName: 'John' } }) returns { nested: { first_name: 'John' } }
- * toSnakeCasedPropertiesDeep({ tags: [{ createdAt: 1 }] }) returns { tags: [{ created_at: 1 }] }
- * toSnakeCasedPropertiesDeep([{ firstName: 'John' }]) returns [{ first_name: 'John' }]
- * toSnakeCasedPropertiesDeep(undefined) returns undefined
- * toSnakeCasedPropertiesDeep('kebab-case-text') returns 'kebab-case-text'
+ * toSnakeCasedPropertiesDeeply({ firstName: 'John', lastName: 'Smith' }) returns { first_name: 'John', last_name: 'Smith' }
+ * toSnakeCasedPropertiesDeeply({ nested: { firstName: 'John' } }) returns { nested: { first_name: 'John' } }
+ * toSnakeCasedPropertiesDeeply({ tags: [{ createdAt: 1 }] }) returns { tags: [{ created_at: 1 }] }
+ * toSnakeCasedPropertiesDeeply([{ firstName: 'John' }]) returns [{ first_name: 'John' }]
+ * toSnakeCasedPropertiesDeeply(undefined) returns undefined
+ * toSnakeCasedPropertiesDeeply('kebab-case-text') returns 'kebab-case-text'
  */
-export function toSnakeCasedPropertiesDeep<const T>(self: T): ToSnakeCasedPropertiesDeep<T> {
+export function toSnakeCasedPropertiesDeeply<const T>(self: T): ToSnakeCasedPropertiesDeeply<T> {
   if (self instanceof Array) {
-    return self.map(toSnakeCasedPropertiesDeep) as any
+    return self.map(toSnakeCasedPropertiesDeeply) as any
   }
 
   if (typeof self !== 'object' || self === null) return self as any
@@ -342,7 +342,7 @@ export function toSnakeCasedPropertiesDeep<const T>(self: T): ToSnakeCasedProper
   for (const key of Object.keys(self)) {
     const snakeCase = toSnakeCase(key)
     const value = result[key]
-    result[snakeCase] = toSnakeCasedPropertiesDeep(value)
+    result[snakeCase] = toSnakeCasedPropertiesDeeply(value)
     if (key !== snakeCase) {
       delete result[key]
     }
@@ -355,36 +355,36 @@ export function toSnakeCasedPropertiesDeep<const T>(self: T): ToSnakeCasedProper
  * This function is recursively applied to objects nested within objects and arrays.
  *
  * @example
- * ToCamelCasedPropertiesDeep<{ first_name: string, last_name: string }> equals { firstName: string, lastName: string }
- * ToCamelCasedPropertiesDeep<{ nested: { first_name: string } }> equals { nested: { firstName: string } }
- * ToCamelCasedPropertiesDeep<{ tags: { created_at: number }[] }> equals { tags: { createdAt: number }[] }
- * ToCamelCasedPropertiesDeep<{ first_name: string }[]> equals { firstName: string }[]
+ * ToCamelCasedPropertiesDeeply<{ first_name: string, last_name: string }> equals { firstName: string, lastName: string }
+ * ToCamelCasedPropertiesDeeply<{ nested: { first_name: string } }> equals { nested: { firstName: string } }
+ * ToCamelCasedPropertiesDeeply<{ tags: { created_at: number }[] }> equals { tags: { createdAt: number }[] }
+ * ToCamelCasedPropertiesDeeply<{ first_name: string }[]> equals { firstName: string }[]
  * @example keep modifiers
- * ToCamelCasedPropertiesDeep<{ readonly first_name?: string }> equals { readonly firstName?: string }
- * ToCamelCasedPropertiesDeep<readonly string[]> equals readonly string[]
+ * ToCamelCasedPropertiesDeeply<{ readonly first_name?: string }> equals { readonly firstName?: string }
+ * ToCamelCasedPropertiesDeeply<readonly string[]> equals readonly string[]
  */
-export type ToCamelCasedPropertiesDeep<T> = Equals<T, any> extends true
+export type ToCamelCasedPropertiesDeeply<T> = Equals<T, any> extends true
   ? T
   : T extends Function
   ? T
   : T extends Tuple
-  ? ToCamelCasedPropertiesDeepTuple<T>
+  ? ToCamelCasedPropertiesDeeplyTuple<T>
   : {
-      [K in keyof T as K extends string ? ToCamelCase<K> : K]: ToCamelCasedPropertiesDeep<T[K]>
+      [K in keyof T as K extends string ? ToCamelCase<K> : K]: ToCamelCasedPropertiesDeeply<T[K]>
     }
-type ToCamelCasedPropertiesDeepTuple<T extends Tuple> = T extends any[]
-  ? _ToCamelCasedPropertiesDeepTuple<T>
-  : Readonly<_ToCamelCasedPropertiesDeepTuple<T>>
-type _ToCamelCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [infer H, ...infer L]
-  ? [ToCamelCasedPropertiesDeep<H>, ..._ToCamelCasedPropertiesDeepTuple<L>]
+type ToCamelCasedPropertiesDeeplyTuple<T extends Tuple> = T extends any[]
+  ? _ToCamelCasedPropertiesDeeplyTuple<T>
+  : Readonly<_ToCamelCasedPropertiesDeeplyTuple<T>>
+type _ToCamelCasedPropertiesDeeplyTuple<T extends Tuple> = T extends readonly [infer H, ...infer L]
+  ? [ToCamelCasedPropertiesDeeply<H>, ..._ToCamelCasedPropertiesDeeplyTuple<L>]
   : T extends readonly [...infer L, infer H]
-  ? [..._ToCamelCasedPropertiesDeepTuple<L>, ToCamelCasedPropertiesDeep<H>]
+  ? [..._ToCamelCasedPropertiesDeeplyTuple<L>, ToCamelCasedPropertiesDeeply<H>]
   : T extends readonly []
   ? []
   : T[number][] extends T
-  ? ToCamelCasedPropertiesDeep<T[number]>[]
+  ? ToCamelCasedPropertiesDeeply<T[number]>[]
   : T extends readonly [(infer H)?, ...infer L]
-  ? [ToCamelCasedPropertiesDeep<H>?, ..._ToCamelCasedPropertiesDeepTuple<L>]
+  ? [ToCamelCasedPropertiesDeeply<H>?, ..._ToCamelCasedPropertiesDeeplyTuple<L>]
   : never
 
 /**
@@ -392,16 +392,16 @@ type _ToCamelCasedPropertiesDeepTuple<T extends Tuple> = T extends readonly [inf
  * This function is recursively applied to objects nested within objects and arrays.
  *
  * @example
- * toCamelCasedPropertiesDeep({ first_name: 'John', last_name: 'Smith' }) returns { firstName: 'John', lastName: 'Smith' }
- * toCamelCasedPropertiesDeep({ nested: { first_name: 'John' } }) returns { nested: { firstName: 'John' } }
- * toCamelCasedPropertiesDeep({ tags: [{ created_at: 1 }] }) returns { tags: [{ createdAt: 1 }] }
- * toCamelCasedPropertiesDeep([{ first_name: 'John' }]) returns [{ firstName: 'John' }]
- * toCamelCasedPropertiesDeep(undefined) returns undefined
- * toCamelCasedPropertiesDeep('kebab-case-text') returns 'kebab-case-text'
+ * toCamelCasedPropertiesDeeply({ first_name: 'John', last_name: 'Smith' }) returns { firstName: 'John', lastName: 'Smith' }
+ * toCamelCasedPropertiesDeeply({ nested: { first_name: 'John' } }) returns { nested: { firstName: 'John' } }
+ * toCamelCasedPropertiesDeeply({ tags: [{ created_at: 1 }] }) returns { tags: [{ createdAt: 1 }] }
+ * toCamelCasedPropertiesDeeply([{ first_name: 'John' }]) returns [{ firstName: 'John' }]
+ * toCamelCasedPropertiesDeeply(undefined) returns undefined
+ * toCamelCasedPropertiesDeeply('kebab-case-text') returns 'kebab-case-text'
  */
-export function toCamelCasedPropertiesDeep<const T>(self: T): ToCamelCasedPropertiesDeep<T> {
+export function toCamelCasedPropertiesDeeply<const T>(self: T): ToCamelCasedPropertiesDeeply<T> {
   if (self instanceof Array) {
-    return self.map(toCamelCasedPropertiesDeep) as any
+    return self.map(toCamelCasedPropertiesDeeply) as any
   }
 
   if (typeof self !== 'object' || self === null) return self as any
@@ -410,7 +410,7 @@ export function toCamelCasedPropertiesDeep<const T>(self: T): ToCamelCasedProper
   for (const key of Object.keys(self)) {
     const camelCase = toCamelCase(key)
     const value = result[key]
-    result[camelCase] = toCamelCasedPropertiesDeep(value)
+    result[camelCase] = toCamelCasedPropertiesDeeply(value)
     if (key !== camelCase) {
       delete result[key]
     }
