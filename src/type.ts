@@ -49,6 +49,7 @@ export function assertNeverType(mustBeNever: never): never {
   throw new TypeError(`Assertion failed: ${mustBeNever} is not never type.`)
 }
 
+/** Alias for null | undefined type */
 export type nullish = null | undefined
 
 export type TypedArray =
@@ -79,6 +80,7 @@ declare const DEFAULT_BRAND: unique symbol
 export type Branded<T, Brand extends keyof any = typeof DEFAULT_BRAND> = T & Record<Brand, never>
 
 /**
+ * Merge an intersection type of objects into a single object type.
  * @example
  * MergeIntersection<{ name: string } & { age: number }> equals { name: string; age: number }
  * MergeIntersection<{ a: 1 } | ({ b: 2 } & { c: 3 })> equals { a: 1 } | { b: 2; c: 3 }
@@ -90,6 +92,7 @@ export type MergeIntersection<T> = T extends T
   : never
 
 /**
+ * Convert a union type of certain types into an intersection type of the same types.
  * @example
  * UnionToIntersection<{ name: string } | { age: number }> equals { name: string } & { age: number }
  * UnionToIntersection<string[] | { 0: string }> equals string[] & { 0: string }
@@ -99,6 +102,7 @@ export type MergeIntersection<T> = T extends T
 export type UnionToIntersection<T> = (T extends T ? (arg: T) => any : never) extends (arg: infer U) => any ? U : never
 
 /**
+ * Determine if the given type is a union type.
  * @example
  * IsUnion<true | false> equals true
  * IsUnion<boolean> equals true
@@ -112,6 +116,7 @@ export type UnionToIntersection<T> = (T extends T ? (arg: T) => any : never) ext
 export type IsUnion<T, Then = true, Else = false> = Equals<T, UnionToIntersection<T>, Else, Then>
 
 /**
+ * Convert a literal type to its corresponding primitive type.
  * @example
  * ToBasePrimitiveType<'a'> equals string
  * ToBasePrimitiveType<1> equals number
@@ -167,6 +172,7 @@ type ReduceLazy<T> = T extends { [lazyKey]: never }
   ? U
   : T
 
+/** Data types represented in JSON. */
 export type JsonValue = null | boolean | number | string | JsonValueArray | JsonValueObject
 interface JsonValueArray extends ReadonlyArray<JsonValue> {}
 interface JsonValueObject {

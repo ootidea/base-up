@@ -119,6 +119,13 @@ type _NaturalNumbersFrom0Until<DigitArray extends readonly Digit[]> = DigitArray
  */
 export type NaturalNumbersFrom0Through<N extends number> = NaturalNumbersFrom0Until<N> | N
 
+/**
+ * Determine if the given value is in the given range.
+ * @example
+ * isInIntegerRangeUntil(50, 0, 100) returns true
+ * isInIntegerRangeUntil(101, 0, 100) returns false
+ * @example
+ */
 export function isInIntegerRangeUntil<N extends number, M extends number>(
   value: number,
   n: N,

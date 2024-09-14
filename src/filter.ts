@@ -328,6 +328,10 @@ export function lastOf<const T extends Tuple>(self: T): LastOf<T> {
   return self[self.length - 1] as any
 }
 
+/**
+ * Improved version of {@link Array.prototype.indexOf}.
+ * Returns undefined instead of -1 if not found.
+ */
 export function indexOf<T>(self: readonly [], value: T, fromIndex?: number): undefined
 export function indexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined
 export function indexOf<T>(self: readonly T[], value: T, fromIndex?: number): number | undefined {
