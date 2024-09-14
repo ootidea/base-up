@@ -173,25 +173,10 @@ type ReduceLazy<T> = T extends { [lazyKey]: never }
   : T
 
 /** Data types represented in JSON. */
-export type JsonValue = null | boolean | number | string | JsonValueArray | JsonValueObject
-interface JsonValueArray extends ReadonlyArray<JsonValue> {}
-interface JsonValueObject {
-  [key: string]: JsonValue
-}
+export type JsonValue = null | boolean | number | string | JsonValue[] | { [key: keyof any]: JsonValue }
 
-/**
- * A superset of {@link JsonValue} type. The differences from JsonValue are as follows:
- * (1) It includes the undefined, bigint, and symbol types.
- * (2) It allows number and symbol as keys for objects.
- * @example
- * const v1: PlainValue = 123
- * const v2: PlainValue = ['abc']
- * const v3: PlainValue = { [Symbol.iterator]: 123 }
- * const v4: PlainValue = new Date() // Type error!
- * const v5: PlainValue = () => {} // Type error!
- * const v6: PlainValue = { blob: new Blob() } // Type error!
- */
-export type PlainValue =
+/** A type that is neither a class nor an object or array containing a class. */
+export type NeitherClassNorContainsClass =
   | null
   | undefined
   | boolean
@@ -199,33 +184,9 @@ export type PlainValue =
   | bigint
   | string
   | symbol
-  | PlainValueArray
-  | PlainValueObject
-interface PlainValueArray extends ReadonlyArray<PlainValue> {}
-interface PlainValueObject {
-  [key: keyof any]: PlainValue
-}
-
-/**
- * A superset of {@link PlainValue} type, which includes function types.
- * It is a type that does not include classes.
- * You can customize additional types with a type parameter.
- */
-export type ExtendedPlainValue<T = (..._: any) => any> =
-  | T
-  | null
-  | undefined
-  | boolean
-  | number
-  | bigint
-  | string
-  | symbol
-  | ExtendedPlainValueArray<T>
-  | ExtendedPlainValueObject<T>
-interface ExtendedPlainValueArray<T> extends ReadonlyArray<ExtendedPlainValue<T>> {}
-interface ExtendedPlainValueObject<T> {
-  [key: keyof any]: ExtendedPlainValue<T>
-}
+  | ((..._: readonly unknown[]) => unknown)
+  | readonly NeitherClassNorContainsClass[]
+  | { readonly [key: keyof any]: NeitherClassNorContainsClass }
 
 declare const OMITTED: unique symbol
 /** The default type of the type parameters */
