@@ -1,6 +1,6 @@
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { MinLengthArray, NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
-import { DestructTuple, Tuple } from './Array/other'
+import { DestructTuple } from './Array/other'
 import { createComparatorFromIsLessThan } from './comparison'
 import { Take } from './filter'
 import { identity } from './Function'
@@ -131,7 +131,7 @@ export namespace flatten {
  * Join<[1, 2, 3], ' + '> equals '1 + 2 + 3'
  * Join<[Date, RegExp]> equals string
  */
-export type Join<T extends Tuple, Separator extends string = ','> = Equals<T, any> extends true
+export type Join<T extends readonly unknown[], Separator extends string = ','> = Equals<T, any> extends true
   ? string
   : T extends readonly Interpolable[]
   ? _Join<T, Separator>
@@ -152,14 +152,17 @@ export type _Join<T extends readonly Interpolable[], Separator extends string> =
  * join(['a', 'b', 'c'], '') returns 'abc'
  * join([1, 2, 3], ' + ') returns '1 + 2 + 3'
  */
-export function join<const T extends Tuple, Separator extends string = ','>(
+export function join<const T extends readonly unknown[], Separator extends string = ','>(
   self: T,
   separator: Separator = ',' as any,
 ): Join<T, Separator> {
   return self.join(separator) as any
 }
 export namespace join {
-  export function Array<T, const U extends Tuple>(self: readonly (readonly T[])[], ...values: U): (T | U[number])[] {
+  export function Array<T, const U extends readonly unknown[]>(
+    self: readonly (readonly T[])[],
+    ...values: U
+  ): (T | U[number])[] {
     const result: (T | U[number])[] = []
     for (let i = 0; i < self.length; i++) {
       if (i > 0) {
@@ -248,11 +251,11 @@ export namespace padEnd {
   }
 }
 
-export function sort<const T extends Tuple>(self: T): FixedLengthArray<T['length'], T[number]> {
+export function sort<const T extends readonly unknown[]>(self: T): FixedLengthArray<T['length'], T[number]> {
   return sortBy(self, identity)
 }
 
-export function sortBy<const T extends Tuple, U>(
+export function sortBy<const T extends readonly unknown[], U>(
   self: T,
   by: (_: T[number]) => U,
 ): FixedLengthArray<T['length'], T[number]> {
@@ -276,14 +279,14 @@ export namespace sortBy {
  * Reverse<[0, 1] | [0, 1, 2]> equals [1, 0] | [2, 1, 0]
  * Reverse<[0, 1, ...number[], 9]> equals [9, ...number[], 1, 0]
  */
-export type Reverse<T extends Tuple> = [
+export type Reverse<T extends readonly unknown[]> = [
   ..._Reverse<DestructTuple<T>['trailing']>,
   ...DestructTuple<T>['rest'],
   ..._Reverse<Take<DestructTuple<T>['optional'], IntegerRangeThrough<DestructTuple<T>['optional']['length']>>>,
   ..._Reverse<DestructTuple<T>['leading']>,
 ]
 // Implementation of Reverse excluding edge case (optional elements)
-type _Reverse<T extends Tuple> = T extends readonly [infer First, ...infer R, infer Last]
+type _Reverse<T extends readonly unknown[]> = T extends readonly [infer First, ...infer R, infer Last]
   ? [Last, ..._Reverse<R>, First]
   : T extends readonly [infer First, ...infer R]
   ? [..._Reverse<R>, First]
@@ -293,7 +296,7 @@ type _Reverse<T extends Tuple> = T extends readonly [infer First, ...infer R, in
   ? []
   : T
 
-export function reverse<const T extends Tuple>(self: T): Reverse<T> {
+export function reverse<const T extends readonly unknown[]>(self: T): Reverse<T> {
   return [...self].reverse() as Reverse<T>
 }
 export namespace reverse {

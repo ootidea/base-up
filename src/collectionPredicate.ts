@@ -1,5 +1,4 @@
 import { NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
-import { Tuple } from './Array/other'
 import { NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
 import { NonEmptySet, ReadonlyNonEmptySet } from './Set'
 
@@ -77,12 +76,12 @@ export namespace everyValues {
 }
 
 export function includes(self: readonly [], value: unknown, fromIndex?: number | undefined): false
-export function includes<const T extends Tuple>(
+export function includes<const T extends readonly unknown[]>(
   self: T,
   value: unknown,
   fromIndex?: number | undefined,
 ): value is T[number]
-export function includes<const T extends Tuple>(
+export function includes<const T extends readonly unknown[]>(
   self: T,
   value: unknown,
   fromIndex?: number | undefined,
@@ -92,8 +91,8 @@ export function includes<const T extends Tuple>(
 export namespace includes {
   export function defer(value: unknown, fromIndex?: number | undefined) {
     function result(self: readonly []): false
-    function result<T extends Tuple>(self: T): boolean
-    function result<T extends Tuple>(self: T) {
+    function result<T extends readonly unknown[]>(self: T): boolean
+    function result<T extends readonly unknown[]>(self: T) {
       return includes(self, value, fromIndex)
     }
     return result

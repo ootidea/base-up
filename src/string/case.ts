@@ -1,4 +1,3 @@
-import { Tuple } from '../Array/other'
 import { Join } from '../transform'
 import { Equals, IsOneOf } from '../typePredicate'
 
@@ -299,15 +298,15 @@ export type ToSnakeCasedPropertiesDeeply<T> = Equals<T, any> extends true
   ? T
   : T extends Function
   ? T
-  : T extends Tuple
+  : T extends readonly unknown[]
   ? ToSnakeCasedPropertiesDeeplyTuple<T>
   : {
       [K in keyof T as K extends string ? ToSnakeCase<K> : K]: ToSnakeCasedPropertiesDeeply<T[K]>
     }
-type ToSnakeCasedPropertiesDeeplyTuple<T extends Tuple> = T extends any[]
+type ToSnakeCasedPropertiesDeeplyTuple<T extends readonly unknown[]> = T extends any[]
   ? _ToSnakeCasedPropertiesDeeplyTuple<T>
   : Readonly<_ToSnakeCasedPropertiesDeeplyTuple<T>>
-type _ToSnakeCasedPropertiesDeeplyTuple<T extends Tuple> = T extends readonly [infer H, ...infer L]
+type _ToSnakeCasedPropertiesDeeplyTuple<T extends readonly unknown[]> = T extends readonly [infer H, ...infer L]
   ? [ToSnakeCasedPropertiesDeeply<H>, ..._ToSnakeCasedPropertiesDeeplyTuple<L>]
   : T extends readonly [...infer L, infer H]
   ? [..._ToSnakeCasedPropertiesDeeplyTuple<L>, ToSnakeCasedPropertiesDeeply<H>]
@@ -367,15 +366,15 @@ export type ToCamelCasedPropertiesDeeply<T> = Equals<T, any> extends true
   ? T
   : T extends Function
   ? T
-  : T extends Tuple
+  : T extends readonly unknown[]
   ? ToCamelCasedPropertiesDeeplyTuple<T>
   : {
       [K in keyof T as K extends string ? ToCamelCase<K> : K]: ToCamelCasedPropertiesDeeply<T[K]>
     }
-type ToCamelCasedPropertiesDeeplyTuple<T extends Tuple> = T extends any[]
+type ToCamelCasedPropertiesDeeplyTuple<T extends readonly unknown[]> = T extends any[]
   ? _ToCamelCasedPropertiesDeeplyTuple<T>
   : Readonly<_ToCamelCasedPropertiesDeeplyTuple<T>>
-type _ToCamelCasedPropertiesDeeplyTuple<T extends Tuple> = T extends readonly [infer H, ...infer L]
+type _ToCamelCasedPropertiesDeeplyTuple<T extends readonly unknown[]> = T extends readonly [infer H, ...infer L]
   ? [ToCamelCasedPropertiesDeeply<H>, ..._ToCamelCasedPropertiesDeeplyTuple<L>]
   : T extends readonly [...infer L, infer H]
   ? [..._ToCamelCasedPropertiesDeeplyTuple<L>, ToCamelCasedPropertiesDeeply<H>]

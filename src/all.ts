@@ -124,7 +124,7 @@ export {
   Equals,
   equals,
 } from './typePredicate'
-export { Tuple, shuffle, UnionToTuple, IsTuple, MinLengthOf } from './Array/other'
+export { shuffle, UnionToTuple, IsTuple, MinLengthOf } from './Array/other'
 export { ReadonlyFixedLengthArray, FixedLengthArray, isFixedLengthArray } from './Array/FixedLengthArray'
 export {
   NonEmptyArray,

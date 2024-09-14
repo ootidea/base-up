@@ -1,24 +1,35 @@
 import { isInIntegerRangeThrough, isInIntegerRangeUntil } from './all'
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { NonEmptyArray } from './Array/MinLengthArray'
-import { Tuple } from './Array/other'
 import { Equals } from './typePredicate'
 
-export function push<const T extends Tuple, const U extends Tuple>(self: T, ...args: U): [...T, ...U] {
+export function push<const T extends readonly unknown[], const U extends readonly unknown[]>(
+  self: T,
+  ...args: U
+): [...T, ...U] {
   return [...self, ...args] as any
 }
 export namespace push {
-  export function* Iterable<T, const U extends Tuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]> {
+  export function* Iterable<T, const U extends readonly unknown[]>(
+    self: Iterable<T>,
+    ...args: U
+  ): Iterable<T | U[number]> {
     yield* self
     yield* args
   }
 }
 
-export function unshift<const T extends Tuple, const U extends Tuple>(self: T, ...args: U): [...U, ...T] {
+export function unshift<const T extends readonly unknown[], const U extends readonly unknown[]>(
+  self: T,
+  ...args: U
+): [...U, ...T] {
   return [...args, ...self] as any
 }
 export namespace unshift {
-  export function* Iterable<T, const U extends Tuple>(self: Iterable<T>, ...args: U): Iterable<T | U[number]> {
+  export function* Iterable<T, const U extends readonly unknown[]>(
+    self: Iterable<T>,
+    ...args: U
+  ): Iterable<T | U[number]> {
     yield* args
     yield* self
   }
@@ -33,7 +44,7 @@ export namespace unshift {
  * insertAt([0, 1, 2], -1, 9) returns [0, 1, 2]
  * insertAt([0, 1, 2], 1, false, null) returns [0, false, null, 1, 2]
  */
-export function insertAt<T, const U extends Tuple>(
+export function insertAt<T, const U extends readonly unknown[]>(
   self: readonly T[],
   at: number,
   ...values: U
@@ -45,7 +56,7 @@ export function insertAt<T, const U extends Tuple>(
   return cloned as any
 }
 export namespace insertAt {
-  export function* Iterable<T, const U extends Tuple>(
+  export function* Iterable<T, const U extends readonly unknown[]>(
     self: Iterable<T>,
     at: number,
     ...values: U
@@ -65,13 +76,14 @@ export namespace insertAt {
   }
 }
 
-export type RemoveAt<T extends Tuple, N extends number> = Equals<T, any> extends true
+export type RemoveAt<T extends readonly unknown[], N extends number> = Equals<T, any> extends true
   ? any[]
   : _RemoveAt<T, FixedLengthArray<N>>
-export type _RemoveAt<T extends Tuple, N extends Tuple, Acc extends Tuple = []> = T extends readonly [
-  infer H,
-  ...infer L,
-]
+export type _RemoveAt<
+  T extends readonly unknown[],
+  N extends readonly unknown[],
+  Acc extends readonly unknown[] = [],
+> = T extends readonly [infer H, ...infer L]
   ? N extends readonly [any, ...infer M]
     ? _RemoveAt<L, M, [...Acc, H]>
     : [...Acc, ...L]
@@ -85,7 +97,7 @@ export type _RemoveAt<T extends Tuple, N extends Tuple, Acc extends Tuple = []> 
  * removeAt([0, 1, 2], 3) returns [0, 1, 2]
  * removeAt([0, 1, 2], -1) returns [0, 1, 2]
  */
-export function removeAt<const T extends Tuple, N extends number>(self: T, i: N): RemoveAt<T, N> {
+export function removeAt<const T extends readonly unknown[], N extends number>(self: T, i: N): RemoveAt<T, N> {
   const cloned = [...self]
   if (isInIntegerRangeUntil(i, 0, self.length)) {
     cloned.splice(i, 1)

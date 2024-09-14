@@ -23,11 +23,13 @@ test('zip', () => {
     ['a', 1],
     ['a', 2],
   ])
-  expect([...zip.Iterable(repeat.Iterable('a'), sequentialNumbersUntil.Iterable(3), repeat.Iterable(0))]).toStrictEqual([
-    ['a', 0, 0],
-    ['a', 1, 0],
-    ['a', 2, 0],
-  ])
+  expect([...zip.Iterable(repeat.Iterable('a'), sequentialNumbersUntil.Iterable(3), repeat.Iterable(0))]).toStrictEqual(
+    [
+      ['a', 0, 0],
+      ['a', 1, 0],
+      ['a', 2, 0],
+    ],
+  )
 })
 
 test('zipWith', () => {

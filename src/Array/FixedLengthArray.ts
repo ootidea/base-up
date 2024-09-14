@@ -1,5 +1,4 @@
 import { Digit, ToDigitArray } from '../number/other'
-import { Tuple } from './other'
 
 /**
  * @example
@@ -37,7 +36,7 @@ export namespace isFixedLengthArray {
 }
 
 /** Create a tuple by repeating the given tuple 10 times. */
-type TenTimes<T extends Tuple> = [...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T]
+type TenTimes<T extends readonly unknown[]> = [...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T]
 type DigitToFixedLengthArray<N extends Digit, T = unknown> = {
   ['0']: []
   ['1']: [T]

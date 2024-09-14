@@ -1,6 +1,6 @@
-import { Tuple } from './Array/other'
-
-export function curry<const H, const L extends Tuple, const R>(f: (h: H, ...l: L) => R): (a: H) => (...bs: L) => R {
+export function curry<const H, const L extends readonly unknown[], const R>(
+  f: (h: H, ...l: L) => R,
+): (a: H) => (...bs: L) => R {
   return (h: H) =>
     (...l: L) =>
       f(h, ...l)

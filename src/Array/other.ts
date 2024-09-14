@@ -3,9 +3,7 @@ import { UnionToIntersection } from '../type'
 import { Equals, IsOneOf } from '../typePredicate'
 import { FixedLengthArray } from './FixedLengthArray'
 
-export type Tuple = readonly unknown[]
-
-export function shuffle<const T extends Tuple>(self: T): FixedLengthArray<T['length'], T[number]> {
+export function shuffle<const T extends readonly unknown[]>(self: T): FixedLengthArray<T['length'], T[number]> {
   const result: T[number][] = []
   for (let i = 0; i < self.length; ++i) {
     const j = randomIntegerThrough(i)
@@ -26,7 +24,7 @@ export function shuffle<const T extends Tuple>(self: T): FixedLengthArray<T['len
  * IsTuple<number[]> equals false
  * IsTuple<readonly any[]> equals false
  */
-export type IsTuple<T extends Tuple> = T extends T
+export type IsTuple<T extends readonly unknown[]> = T extends T
   ? IsOneOf<T, [any, T[number][], readonly T[number][]], false, true>
   : never
 
@@ -47,12 +45,12 @@ export type IsTuple<T extends Tuple> = T extends T
  * MinLengthOf<any> equals 0
  * MinLengthOf<never> equals never
  */
-export type MinLengthOf<T extends Tuple> = Equals<T, any> extends true
+export type MinLengthOf<T extends readonly unknown[]> = Equals<T, any> extends true
   ? 0
   : Equals<T, never> extends true
   ? never
   : RemoveElementsThatMightNotExist<T>['length']
-type RemoveElementsThatMightNotExist<T extends Tuple> = T extends readonly [infer H, ...infer L]
+type RemoveElementsThatMightNotExist<T extends readonly unknown[]> = T extends readonly [infer H, ...infer L]
   ? [H, ...RemoveElementsThatMightNotExist<L>]
   : T extends readonly [...infer L, infer H]
   ? [...RemoveElementsThatMightNotExist<L>, H]
@@ -77,10 +75,10 @@ export type UnionToTuple<T> = UnionToIntersection<T extends T ? (_: T) => T : ne
  * DestructTuple<[]> equals { leading: []; rest: []; trailing: [] }
  */
 export type DestructTuple<
-  T extends Tuple,
-  Leading extends Tuple = [],
-  Optional extends Tuple = [],
-  Trailing extends Tuple = [],
+  T extends readonly unknown[],
+  Leading extends readonly unknown[] = [],
+  Optional extends readonly unknown[] = [],
+  Trailing extends readonly unknown[] = [],
 > = Equals<T, any> extends true
   ? { leading: []; optional: []; rest: any[]; trailing: [] }
   : T extends readonly [infer H, ...infer L]

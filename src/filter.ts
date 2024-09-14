@@ -1,13 +1,13 @@
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { MaxLengthArray } from './Array/MaxLengthArray'
 import { ReadonlyNonEmptyArray } from './Array/MinLengthArray'
-import { DestructTuple, IsTuple, Tuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
 import { PrefixesOf } from './combination'
 import { Subtract } from './number/other'
 import { IntegerRangeThrough } from './number/range'
 import { Writable } from './type'
 import { Equals, IsOneOf } from './typePredicate'
+import { DestructTuple, IsTuple } from './Array/other'
 
 export function filter<T = never>(self: readonly [], f: (_: T) => boolean): []
 export function filter<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
@@ -54,14 +54,18 @@ export namespace filter {
  * Take<[0, 1, 2], 1 | 2> equals [0] | [0, 1]
  * Take<[0, 1, 2], number> equals [] | [0] | [0, 1] | [0, 1, 2]
  */
-export type Take<T extends Tuple, N extends number> = Equals<T, any> extends true
+export type Take<T extends readonly unknown[], N extends number> = Equals<T, any> extends true
   ? MaxLengthArray<N, any>
   : IsOneOf<N, [number, any]> extends true
   ? PrefixesOf<T>[number]
   : N extends N
   ? _Take<T, N>
   : never
-export type _Take<T extends Tuple, N extends number, R extends Tuple = []> = R['length'] extends N
+export type _Take<
+  T extends readonly unknown[],
+  N extends number,
+  R extends readonly unknown[] = [],
+> = R['length'] extends N
   ? R
   : T extends readonly [infer H, ...infer L]
   ? _Take<L, N, [...R, H]>
@@ -81,7 +85,7 @@ export type _Take<T extends Tuple, N extends number, R extends Tuple = []> = R['
     : never
   : never
 
-export function take<const T extends Tuple, const N extends number>(self: T, n: N): Take<T, N>
+export function take<const T extends readonly unknown[], const N extends number>(self: T, n: N): Take<T, N>
 export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArray<N, T>
 export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArray<N, T> {
   const result: T[] = []
@@ -95,7 +99,7 @@ export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArr
 export namespace take {
   export function defer<N extends number>(
     n: N,
-  ): { <const T extends Tuple>(_: T): Take<T, N>; <T>(_: Iterable<T>): MaxLengthArray<N, T> } {
+  ): { <const T extends readonly unknown[]>(_: T): Take<T, N>; <T>(_: Iterable<T>): MaxLengthArray<N, T> } {
     return (self: any) => take(self, n)
   }
 
@@ -134,12 +138,12 @@ export namespace take {
  * Drop<[number, ...string[]], 2> equals string[]
  * Drop<any, 1> equals any
  */
-export type Drop<T extends Tuple, N extends number = 1> = N extends N
+export type Drop<T extends readonly unknown[], N extends number = 1> = N extends N
   ? number extends N
     ? _Drop<T, MaxLengthArray<T['length']>>
     : _Drop<T, FixedLengthArray<N>>
   : never
-type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]
+type _Drop<T extends readonly unknown[], N extends readonly unknown[]> = N extends readonly [any, ...infer NL]
   ? T extends readonly [any, ...infer TL]
     ? _Drop<TL, NL>
     : T extends readonly [...infer TL, infer H]
@@ -164,9 +168,9 @@ type _Drop<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer
  * drop([0, 1, 2], 0) returns [0, 1, 2]
  * drop([0, 1, 2], -1) returns [0, 1, 2]
  */
-export function drop<const T extends Tuple>(self: T): Drop<T>
-export function drop<const T extends Tuple, N extends number>(self: T, n: N): Drop<T, N>
-export function drop<const T extends Tuple>(self: T, n: number = 1) {
+export function drop<const T extends readonly unknown[]>(self: T): Drop<T>
+export function drop<const T extends readonly unknown[], N extends number>(self: T, n: N): Drop<T, N>
+export function drop<const T extends readonly unknown[]>(self: T, n: number = 1) {
   return self.slice(Math.max(n, 0))
 }
 export namespace drop {
@@ -206,12 +210,12 @@ export namespace drop {
  * DropLast<[...number[], boolean], 2> equals number[]
  * DropLast<any, 1> equals any
  */
-export type DropLast<T extends Tuple, N extends number = 1> = N extends N
+export type DropLast<T extends readonly unknown[], N extends number = 1> = N extends N
   ? number extends N
     ? _DropLast<T, MaxLengthArray<T['length']>>
     : _DropLast<T, FixedLengthArray<N>>
   : never
-type _DropLast<T extends Tuple, N extends Tuple> = N extends readonly [any, ...infer NL]
+type _DropLast<T extends readonly unknown[], N extends readonly unknown[]> = N extends readonly [any, ...infer NL]
   ? T extends readonly [...infer TL, any]
     ? _DropLast<TL, NL>
     : T extends readonly []
@@ -232,9 +236,12 @@ type _DropLast<T extends Tuple, N extends Tuple> = N extends readonly [any, ...i
  * dropLast([0, 1, 2], 0) returns [0, 1, 2]
  * dropLast([0, 1, 2], -1) returns [0, 1, 2]
  */
-export function dropLast<const T extends Tuple>(self: T): Writable<DropLast<T, 1>>
-export function dropLast<const T extends Tuple, const N extends number>(self: T, n: N): Writable<DropLast<T, N>>
-export function dropLast<const T extends Tuple>(self: T, n: number = 1) {
+export function dropLast<const T extends readonly unknown[]>(self: T): Writable<DropLast<T, 1>>
+export function dropLast<const T extends readonly unknown[], const N extends number>(
+  self: T,
+  n: N,
+): Writable<DropLast<T, N>>
+export function dropLast<const T extends readonly unknown[]>(self: T, n: number = 1) {
   return self.slice(0, Math.max(self.length - n, 0))
 }
 
@@ -272,7 +279,7 @@ export namespace takeWhile {
  * FirstOf<[Date] | [Date, boolean]> equals Date
  * FirstOf<[Date?, boolean?]> equals Date | boolean | undefined
  */
-export type FirstOf<T extends Tuple> = T extends readonly [infer First, ...any]
+export type FirstOf<T extends readonly unknown[]> = T extends readonly [infer First, ...any]
   ? First
   : T extends readonly [...infer U, infer Last]
   ? _FirstOf<U, Last>
@@ -283,12 +290,12 @@ export type FirstOf<T extends Tuple> = T extends readonly [infer First, ...any]
   : T extends readonly [(infer H)?, ...infer L]
   ? H | FirstOf<L>
   : never
-type _FirstOf<T extends Tuple, L> = T extends readonly []
+type _FirstOf<T extends readonly unknown[], L> = T extends readonly []
   ? L
   : T extends readonly [...infer T2, infer L2]
   ? _FirstOf<T2, L2>
   : T[0] | L
-export function firstOf<const T extends Tuple>(self: T): FirstOf<T> {
+export function firstOf<const T extends readonly unknown[]>(self: T): FirstOf<T> {
   return self[0] as any
 }
 
@@ -304,7 +311,7 @@ export function firstOf<const T extends Tuple>(self: T): FirstOf<T> {
  * LastOf<[Date] | [Date, boolean]> equals Date | boolean
  * LastOf<[Date?, boolean?]> equals Date | boolean | undefined
  */
-export type LastOf<T extends Tuple> = T extends readonly [...any, infer Last]
+export type LastOf<T extends readonly unknown[]> = T extends readonly [...any, infer Last]
   ? Last
   : T extends readonly []
   ? undefined
@@ -315,7 +322,7 @@ export type LastOf<T extends Tuple> = T extends readonly [...any, infer Last]
   : T extends readonly [(infer H)?, ...infer L]
   ? H | LastOf<L>
   : T[0] | undefined
-type _LastOf<H, L extends Tuple> = L extends readonly []
+type _LastOf<H, L extends readonly unknown[]> = L extends readonly []
   ? H
   : L extends readonly [infer H2, ...infer L2]
   ? _LastOf<H2, L2>
@@ -324,7 +331,7 @@ type _LastOf<H, L extends Tuple> = L extends readonly []
   : L extends readonly [(infer H2)?, ...infer L2]
   ? _LastOf<H | H2, L2>
   : H | L[0]
-export function lastOf<const T extends Tuple>(self: T): LastOf<T> {
+export function lastOf<const T extends readonly unknown[]>(self: T): LastOf<T> {
   return self[self.length - 1] as any
 }
 

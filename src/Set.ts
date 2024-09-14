@@ -1,4 +1,3 @@
-import { Tuple } from './Array/other'
 import { every } from './collectionPredicate'
 import { sortBy } from './transform'
 import { Branded } from './type'
@@ -18,8 +17,8 @@ export type ReadonlyNonEmptySet<T> = Branded<ReadonlySet<T>, typeof NON_EMPTY_SE
  * setOf() is typed as Set<never>
  */
 export function setOf(): Set<never>
-export function setOf<T extends Tuple>(...args: T): Set<T[number]>
-export function setOf<T extends Tuple>(...args: T): Set<T[number]> {
+export function setOf<T extends readonly unknown[]>(...args: T): Set<T[number]>
+export function setOf<T extends readonly unknown[]>(...args: T): Set<T[number]> {
   return new Set(args)
 }
 

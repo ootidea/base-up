@@ -1,5 +1,4 @@
 import { FixedLengthArray } from '../Array/FixedLengthArray'
-import { Tuple } from '../Array/other'
 import { IsUnion } from '../type'
 import { IsOneOf } from '../typePredicate'
 import { IntegerRangeUntil } from './range'
@@ -143,7 +142,10 @@ export type Subtract<N extends number, M extends number> = _SubtractNaturalNumbe
   FixedLengthArray<N>,
   FixedLengthArray<M>
 >
-type _SubtractNaturalNumber<N extends Tuple, M extends Tuple> = N extends readonly [any, ...infer NL]
+type _SubtractNaturalNumber<N extends readonly unknown[], M extends readonly unknown[]> = N extends readonly [
+  any,
+  ...infer NL,
+]
   ? M extends readonly [any, ...infer ML]
     ? _SubtractNaturalNumber<NL, ML>
     : N['length']

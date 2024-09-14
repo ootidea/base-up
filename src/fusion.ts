@@ -1,11 +1,10 @@
-import { Tuple } from './Array/other'
 import { IntegerRangeUntil } from './number/range'
 
-type UnwrapArrayAll<T extends Tuple> = T extends readonly [infer H, ...infer L]
+type UnwrapArrayAll<T extends readonly unknown[]> = T extends readonly [infer H, ...infer L]
   ? [H extends readonly (infer U)[] ? U : H, ...UnwrapArrayAll<L>]
   : []
 
-type UnwrapIterableAll<T extends Tuple> = T extends readonly [infer H, ...infer L]
+type UnwrapIterableAll<T extends readonly unknown[]> = T extends readonly [infer H, ...infer L]
   ? [H extends Iterable<infer U> ? U : H, ...UnwrapIterableAll<L>]
   : []
 
@@ -53,10 +52,11 @@ export function zipWith<T extends readonly (readonly any[])[], U>(
   return result
 }
 
-type AtLeastOneIsNonUndefined<T extends Tuple, N extends number = IntegerRangeUntil<T['length']>> = N extends N
-  ? SetUndefinedableAllBut<T, N>
-  : never
-type SetUndefinedableAllBut<T extends Tuple, N extends number> = T extends readonly [infer H, ...infer L]
+type AtLeastOneIsNonUndefined<
+  T extends readonly unknown[],
+  N extends number = IntegerRangeUntil<T['length']>,
+> = N extends N ? SetUndefinedableAllBut<T, N> : never
+type SetUndefinedableAllBut<T extends readonly unknown[], N extends number> = T extends readonly [infer H, ...infer L]
   ? N extends L['length']
     ? [H, ...SetUndefinedableAllBut<L, N>]
     : [H | undefined, ...SetUndefinedableAllBut<L, N>]

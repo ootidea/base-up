@@ -1,10 +1,10 @@
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { NonEmptyArray } from './Array/MinLengthArray'
-import { shuffle, Tuple } from './Array/other'
 import { Drop, take } from './filter'
 import { IntegerRangeUntil, randomIntegerUntil } from './number/range'
 import { Reverse } from './transform'
 import { Lazy, OMITTED, Unlazy } from './type'
+import { shuffle } from './Array/other'
 
 /**
  * @example
@@ -96,7 +96,7 @@ type NaturalNumbersUntil<N extends number> = number extends N
   : N extends N
   ? Unlazy<_NaturalNumbersUntil<N, []>>
   : never
-type _NaturalNumbersUntil<N extends number, Acc extends Tuple> = Acc['length'] extends N
+type _NaturalNumbersUntil<N extends number, Acc extends readonly unknown[]> = Acc['length'] extends N
   ? Acc
   : Lazy<_NaturalNumbersUntil<N, [...Acc, Acc['length']]>>
 
@@ -112,10 +112,10 @@ type NaturalNumbersThrough<N extends number> = number extends N
   : N extends N
   ? Unlazy<_NaturalNumbersThrough<FixedLengthArray<N>>>
   : never
-type _NaturalNumbersThrough<Size extends Tuple, R extends Tuple = []> = Size extends readonly [
-  any,
-  ...infer L extends Tuple,
-]
+type _NaturalNumbersThrough<
+  Size extends readonly unknown[],
+  R extends readonly unknown[] = [],
+> = Size extends readonly [any, ...infer L extends readonly unknown[]]
   ? Lazy<_NaturalNumbersThrough<L, [Size['length'], ...R]>>
   : [0, ...R]
 
@@ -131,7 +131,7 @@ type PositiveIntegersUntil<N extends number> = number extends N
   : N extends N
   ? _PositiveIntegersUntil<Drop<FixedLengthArray<N>, 1>, []>
   : never
-type _PositiveIntegersUntil<Size extends Tuple, Acc extends Tuple> = Acc extends Size
+type _PositiveIntegersUntil<Size extends readonly unknown[], Acc extends readonly unknown[]> = Acc extends Size
   ? Acc
   : _PositiveIntegersUntil<Size, [...Acc, [1, ...Acc]['length']]>
 
@@ -149,9 +149,10 @@ type PositiveIntegersThrough<N extends number> = number extends N
   : N extends N
   ? _PositiveIntegersThrough<FixedLengthArray<N>>
   : never
-type _PositiveIntegersThrough<Size extends Tuple, R extends Tuple = []> = Size extends readonly [any, ...infer L]
-  ? _PositiveIntegersThrough<L, [Size['length'], ...R]>
-  : R
+type _PositiveIntegersThrough<
+  Size extends readonly unknown[],
+  R extends readonly unknown[] = [],
+> = Size extends readonly [any, ...infer L] ? _PositiveIntegersThrough<L, [Size['length'], ...R]> : R
 
 /**
  * @example
@@ -182,7 +183,10 @@ type ToNegativeNumbers<T extends readonly number[]> = T extends readonly [
  * sequentialNumbersUntil(4 as number) is typed as number[]
  */
 export function sequentialNumbersUntil<To extends number>(to: To): SequentialNumbersUntil<To>
-export function sequentialNumbersUntil<From extends number, To extends number>(from: From, to: To): SequentialNumbersUntil<From, To>
+export function sequentialNumbersUntil<From extends number, To extends number>(
+  from: From,
+  to: To,
+): SequentialNumbersUntil<From, To>
 export function sequentialNumbersUntil<N extends number, M extends number>(n: N, m?: M): number[] {
   const [from, to] = m === undefined ? [0, n] : [n, m]
 
@@ -218,7 +222,10 @@ export namespace sequentialNumbersUntil {
  * sequentialNumbersThrough(4 as number) is typed as number[]
  */
 export function sequentialNumbersThrough<To extends number>(to: To): SequentialNumbersThrough<To>
-export function sequentialNumbersThrough<From extends number, To extends number>(from: From, to: To): SequentialNumbersThrough<From, To>
+export function sequentialNumbersThrough<From extends number, To extends number>(
+  from: From,
+  to: To,
+): SequentialNumbersThrough<From, To>
 export function sequentialNumbersThrough<N extends number, M extends number>(n: N, m?: M): number[] {
   const [from, to] = m === undefined ? [0, n] : [n, m]
 
@@ -285,16 +292,16 @@ function retryWhile<const N extends number, const M extends number>(
  * Repeat<0 | 1, ['a', 'b']> is typed as [] | ['a', 'b']
  * Repeat<number, ['a', 'b']> is typed as ('a' | 'b')[]
  */
-export type Repeat<N extends number, A extends Tuple> = number extends N
+export type Repeat<N extends number, A extends readonly unknown[]> = number extends N
   ? A[number][]
   : N extends N
   ? _Repeat<N, A>
   : never
 type _Repeat<
   N extends number,
-  A extends Tuple,
-  Size extends Tuple = [],
-  R extends Tuple = [],
+  A extends readonly unknown[],
+  Size extends readonly unknown[] = [],
+  R extends readonly unknown[] = [],
 > = Size['length'] extends N ? R : _Repeat<N, A, [1, ...Size], [...R, ...A]>
 export namespace Repeat {
   /**
@@ -313,7 +320,9 @@ export namespace Repeat {
     : number extends N
     ? string
     : _String<S, FixedLengthArray<N>>
-  type _String<S extends string, Size extends Tuple> = Size extends [any, ...infer L] ? `${S}${_String<S, L>}` : ''
+  type _String<S extends string, Size extends readonly unknown[]> = Size extends [any, ...infer L]
+    ? `${S}${_String<S, L>}`
+    : ''
 }
 
 /**
@@ -321,7 +330,7 @@ export namespace Repeat {
  * repeat(3, 'a') returns ['a', 'a', 'a']
  * repeat(2, true, false) returns [true, false, true, false]
  */
-export function repeat<N extends number, const T extends Tuple>(count: N, ...values: T): Repeat<N, T> {
+export function repeat<N extends number, const T extends readonly unknown[]>(count: N, ...values: T): Repeat<N, T> {
   return Array.from({ length: count * values.length }, (_, i) => values[i % values.length]) as any
 }
 export namespace repeat {
@@ -330,7 +339,7 @@ export namespace repeat {
    * repeat.Iterable('a') yields 'a', 'a', 'a', ...
    * repeat.Iterable(1, 2) yields 1, 2, 1, 2, ...
    */
-  export function* Iterable<const T extends Tuple>(...values: T): Iterable<T[number]> {
+  export function* Iterable<const T extends readonly unknown[]>(...values: T): Iterable<T[number]> {
     while (true) yield* values
   }
 }

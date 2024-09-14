@@ -1,4 +1,3 @@
-import { Tuple } from './Array/other'
 import { nullish } from './type'
 
 /**
@@ -68,7 +67,10 @@ export namespace equals {
  * IsOneOf<'text', [string]> equals false
  * IsOneOf<any, []> equals false
  */
-export type IsOneOf<T, U extends Tuple, Then = true, Else = false> = U extends readonly [infer H, ...infer L]
+export type IsOneOf<T, U extends readonly unknown[], Then = true, Else = false> = U extends readonly [
+  infer H,
+  ...infer L,
+]
   ? Equals<T, H> extends true
     ? Then
     : IsOneOf<T, L, Then, Else>
@@ -86,7 +88,7 @@ export type IsOneOf<T, U extends Tuple, Then = true, Else = false> = U extends r
  *   // Here, the value is of type 0 | 1.
  * }
  */
-export function isOneOf<const T extends Tuple>(self: unknown, ...values: T): self is T[number] {
+export function isOneOf<const T extends readonly unknown[]>(self: unknown, ...values: T): self is T[number] {
   return new Set(values).has(self)
 }
 export namespace isOneOf {
@@ -98,16 +100,16 @@ export namespace isOneOf {
    *   // Here, the value is of type 0 | 1.
    * }
    */
-  export function defer<const T extends Tuple>(...values: T): (self: unknown) => self is T[number] {
+  export function defer<const T extends readonly unknown[]>(...values: T): (self: unknown) => self is T[number] {
     return (self: unknown): self is T[number] => new Set(values).has(self)
   }
 }
 
-export function isNotOneOf(self: unknown, ...values: Tuple): boolean {
+export function isNotOneOf(self: unknown, ...values: readonly unknown[]): boolean {
   return !new Set(values).has(self)
 }
 export namespace isNotOneOf {
-  export function defer(...values: Tuple): (self: unknown) => boolean {
+  export function defer(...values: readonly unknown[]): (self: unknown) => boolean {
     return (self: unknown) => !new Set(values).has(self)
   }
 }
