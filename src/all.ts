@@ -2,9 +2,7 @@ export {
   map,
   flatMap,
   flatten,
-  Join,
   join,
-  Split,
   split,
   sortBy,
   sort,
@@ -12,7 +10,6 @@ export {
   padEnd,
   padStart,
   reverse,
-  Reverse,
   removeDuplicates,
   removeDuplicatesBy,
 } from './transform'
@@ -20,7 +17,6 @@ export {
   push,
   unshift,
   insertAt,
-  RemoveAt,
   removeAt,
   remove,
   removeAll,
@@ -29,7 +25,7 @@ export {
   moveTo,
 } from './collectionUpdate'
 export { isEmpty, includes, every, isNotEmpty, isUnique } from './collectionPredicate'
-export { createNGrams, cartesianProductOf, permutationOf, PrefixesOf, prefixesOf } from './combination'
+export { createNGrams, cartesianProductOf, permutationOf, prefixesOf } from './combination'
 export {
   isLexicographicLessThan,
   isLexicographicAtMost,
@@ -38,16 +34,11 @@ export {
 } from './comparison'
 export {
   filter,
-  Take,
   take,
-  Drop,
   drop,
-  DropLast,
   dropLast,
   takeWhile,
-  FirstOf,
   firstOf,
-  LastOf,
   lastOf,
   elementAt,
   modeOf,
@@ -67,29 +58,16 @@ export {
   repeat,
   repeatApply,
   fromEntries,
-  SequentialNumbersUntil,
-  SequentialNumbersThrough,
-  Repeat,
   uniqueRandomIntegersUntil,
 } from './generate'
 export { sumOf, groupBy, toMultiset } from './other'
-export { AllKeysOf, allKeysOf } from './projection'
+export { allKeysOf } from './projection'
 export {
   assert,
   assertEqual,
   assertInstanceOf,
   assertNeverType,
   assertTypeEquality,
-  Writable,
-  UnionToIntersection,
-  IsUnion,
-  ToBasePrimitiveType,
-  nullish,
-  TypedArray,
-  Branded,
-  MergeIntersection,
-  DiscriminatedUnion,
-  JsonValue,
 } from './type'
 export {
   isNull,
@@ -116,22 +94,14 @@ export {
   isFalsy,
   isInstanceOf,
   isNotInstanceOf,
-  IsOneOf,
   isOneOf,
   isNotOneOf,
-  Equals,
   equals,
 } from './typePredicate'
-export { shuffle, UnionToTuple, IsTuple, MinLengthOf } from './Array/other'
-export { ReadonlyFixedLengthArray, FixedLengthArray, isFixedLengthArray } from './Array/FixedLengthArray'
-export {
-  NonEmptyArray,
-  ReadonlyNonEmptyArray,
-  MinLengthArray,
-  ReadonlyMinLengthArray,
-  isMinLengthArray,
-} from './Array/MinLengthArray'
-export { MaxLengthArray, ReadonlyMaxLengthArray, isMaxLengthArray } from './Array/MaxLengthArray'
+export { shuffle } from './Array/other'
+export { isFixedLengthArray } from './Array/FixedLengthArray'
+export { isMinLengthArray } from './Array/MinLengthArray'
+export { isMaxLengthArray } from './Array/MaxLengthArray'
 export {
   setOf,
   has,
@@ -142,74 +112,37 @@ export {
   intersectionOf,
   differenceOf,
   isDisjoint,
-  NonEmptySet,
-  ReadonlyNonEmptySet,
 } from './Set'
-export { mapOf, NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
-export {
-  RequiredKeysOf,
-  OptionalKeysOf,
-  AtLeastOneProperty,
-  getNestedProperty,
-  NestedProperty,
-  PartialRecord,
-} from './object'
+export { mapOf } from './Map'
+export { getNestedProperty } from './object'
 export {
   modOf,
   factorialOf,
-  MaxNumber,
-  Infinity,
-  NegativeInfinity,
-  IsNumberLiteral,
-  Trunc,
-  IsInteger,
-  Negate,
 } from './number/other'
 export {
-  IntegerRangeUntil,
-  IntegerRangeThrough,
   isInIntegerRangeUntil,
   isInIntegerRangeThrough,
   randomIntegerUntil,
   randomIntegerThrough,
 } from './number/range'
-export { clamp, Min, Max } from './number/compare'
+export { clamp } from './number/compare'
 export {
-  ToNumber,
   toNumber,
-  ToString,
   toString,
-  LiteralAutoComplete,
-  IsStringLiteral,
-  IsTemplateLiteral,
-  Interpolable,
-  TrimStart,
   trimStart,
-  TrimEnd,
   trimEnd,
-  Trim,
   trim,
 } from './string/other'
 export {
-  UppercaseLetter,
-  LowercaseLetter,
   isUppercaseLetter,
   isLowercaseLetter,
   capitalize,
-  SplitIntoWords,
   splitIntoWords,
-  ToSnakeCase,
   toSnakeCase,
-  ToKebabCase,
   toKebabCase,
-  ToCamelCase,
   toCamelCase,
-  ToSnakeCasedPropertiesDeeply,
   toSnakeCasedPropertiesDeeply,
-  ToCamelCasedPropertiesDeeply,
   toCamelCasedPropertiesDeeply,
 } from './string/case'
-export { IsBigintLiteral } from './bigint'
-export { IsBooleanLiteral } from './boolean'
-export { pipe, call, identity, curry, Predicate, PredicateResult } from './Function'
-export { forever, Promisable } from './Promise'
+export { pipe, call, identity, curry } from './Function'
+export { forever } from './Promise'
