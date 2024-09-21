@@ -35,6 +35,22 @@ export function filterSet<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T>
   return new globalThis.Set(filterIterable(self, f))
 }
 
+export function partition<T>(self: readonly [], f: (_: T) => boolean): [[], []]
+export function partition<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): [U[], Exclude<T, U>[]]
+export function partition<T>(self: readonly T[], f: (_: T) => boolean): [T[], T[]]
+export function partition<T>(self: readonly T[], f: (_: T) => boolean): [T[], T[]] {
+  const matched: T[] = []
+  const unmatched: T[] = []
+  for (const value of self) {
+    if (f(value)) {
+      matched.push(value)
+    } else {
+      unmatched.push(value)
+    }
+  }
+  return [matched, unmatched]
+}
+
 /**
  * @example
  * Take<[0, 1, 2], 0> equals []

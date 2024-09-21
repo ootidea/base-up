@@ -20,6 +20,7 @@ import {
   lastOf,
   modeBy,
   modeOf,
+  partition,
   take,
   takeDefer,
   takeString,
@@ -47,6 +48,13 @@ test('filterIterable', () => {
 test('filterSet', () => {
   expect(filterSet(setOf(0, 1, 2), (x) => x > 0)).toStrictEqual(setOf(1, 2))
   expect(filterSet(setOf(null, 1, 2), isNotNull)).toStrictEqual(setOf(1, 2))
+})
+
+test('partition', () => {
+  expect(partition([0, 1, 2, 3], (n) => n % 2 === 0)).toStrictEqual([
+    [0, 2],
+    [1, 3],
+  ])
 })
 
 test('firstOf', () => {

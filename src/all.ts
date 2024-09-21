@@ -34,6 +34,7 @@ export {
 } from './comparison'
 export {
   filter,
+  partition,
   take,
   drop,
   dropLast,
