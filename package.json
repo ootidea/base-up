@@ -84,8 +84,8 @@
     "check:type": "tsc --noEmit",
     "check:biome": "biome check",
     "check:test": "vitest run --silent=false",
-    "postversion": "git push && git push --tags && npm publish ./",
-    "prepublishOnly": "npm run build"
+    "preversion": "pnpm check && pnpm build",
+    "postversion": "npm publish ./ && git push --follow-tags"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.2",
