@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { assertTypeEquality } from '../type'
-import { FixedLengthArray, isFixedLengthArray, isFixedLengthArrayDefer } from './FixedLengthArray'
+import { type FixedLengthArray, isFixedLengthArray, isFixedLengthArrayDefer } from './FixedLengthArray'
 
 test('FixedLengthArray', () => {
   assertTypeEquality<FixedLengthArray<1>, [unknown]>()

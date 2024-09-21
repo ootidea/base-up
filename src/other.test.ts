@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
-import { sequentialNumbersUntil } from './generate'
 import { mapOf } from './Map'
+import { sequentialNumbersUntil } from './generate'
 import { groupBy, groupByRecord, sumOf, toMultiset } from './other'
 
 test('groupBy', () => {

@@ -1,4 +1,4 @@
-import { Equals, IsOneOf } from './typePredicate'
+import type { Equals, IsOneOf } from './typePredicate'
 
 /**
  * @example
@@ -11,10 +11,10 @@ import { Equals, IsOneOf } from './typePredicate'
 export type Not<T extends boolean> = Equals<T, never> extends true
   ? never
   : Equals<T, true> extends true
-  ? false
-  : Equals<T, false> extends true
-  ? true
-  : boolean
+    ? false
+    : Equals<T, false> extends true
+      ? true
+      : boolean
 
 /**
  * @example

@@ -1,13 +1,13 @@
-import { FixedLengthArray } from '../Array/FixedLengthArray'
-import { IsUnion } from '../type'
-import { IsOneOf } from '../typePredicate'
-import { IntegerRangeUntil } from './range'
+import type { FixedLengthArray } from '../Array/FixedLengthArray'
+import type { IsUnion } from '../type'
+import type { IsOneOf } from '../typePredicate'
+import type { IntegerRangeUntil } from './range'
 
 export type MaxNumber = 1.7976931348623157e308
 export type Infinity = 1e999
 export type NegativeInfinity = -1e999
-export const Infinity: Infinity = globalThis.Infinity as Infinity
-export const NegativeInfinity: NegativeInfinity = -globalThis.Infinity as NegativeInfinity
+export const Infinity: Infinity = globalThis.Number.POSITIVE_INFINITY as Infinity
+export const NegativeInfinity: NegativeInfinity = globalThis.Number.NEGATIVE_INFINITY as NegativeInfinity
 
 /**
  * @example
@@ -22,8 +22,8 @@ export const NegativeInfinity: NegativeInfinity = -globalThis.Infinity as Negati
 export type IsNumberLiteral<T extends number> = IsUnion<T> extends true
   ? false
   : IsOneOf<T, [number, never, any]> extends true
-  ? false
-  : true
+    ? false
+    : true
 
 /**
  * @example
@@ -41,10 +41,10 @@ export type IsInteger<N extends number, Then = true, Else = false> = N extends N
   ? IsOneOf<N, [number, any]> extends true
     ? boolean
     : `${N}` extends `${string}e+${string}`
-    ? Then
-    : `${N}` extends `${string}.${string}` | `${string}e-${string}` | 'Infinity' | '-Infinity'
-    ? Else
-    : Then
+      ? Then
+      : `${N}` extends `${string}.${string}` | `${string}e-${string}` | 'Infinity' | '-Infinity'
+        ? Else
+        : Then
   : never
 
 /**
@@ -72,14 +72,14 @@ export type Abs<N extends number> = N extends N ? (`${N}` extends `-${infer P ex
 export type Negate<N extends number> = N extends 0
   ? 0
   : number extends N
-  ? number
-  : N extends N
-  ? `${N}` extends `-${infer P extends number}`
-    ? P
-    : `-${N}` extends `${infer M extends number}`
-    ? M
-    : never
-  : never
+    ? number
+    : N extends N
+      ? `${N}` extends `-${infer P extends number}`
+        ? P
+        : `-${N}` extends `${infer M extends number}`
+          ? M
+          : never
+      : never
 
 /**
  * @example
@@ -94,16 +94,16 @@ export type Negate<N extends number> = N extends 0
 export type Trunc<N extends number> = number extends N
   ? number
   : N extends N
-  ? `${N}` extends `${string}e-${string}`
-    ? 0
-    : `${N}` extends `${string}e+${string}`
-    ? N
-    : `${N}` extends `-0.${string}`
-    ? 0
-    : `${N}` extends `${infer I extends number}.${string}`
-    ? I
-    : N
-  : never
+    ? `${N}` extends `${string}e-${string}`
+      ? 0
+      : `${N}` extends `${string}e+${string}`
+        ? N
+        : `${N}` extends `-0.${string}`
+          ? 0
+          : `${N}` extends `${infer I extends number}.${string}`
+            ? I
+            : N
+    : never
 
 /**
  * Convert a natural number type into an array type of its digits.
@@ -127,16 +127,16 @@ export type Increment<N extends number> = `${N}` extends `-${infer PN extends nu
     ? Negate<L['length']>
     : never
   : [1, ...FixedLengthArray<N>]['length'] extends infer R extends number
-  ? R
-  : never
+    ? R
+    : never
 
 export type Decrement<N extends number> = `${N}` extends `-${infer PN extends number}`
   ? [1, ...FixedLengthArray<PN>]['length'] extends infer R extends number
     ? Negate<R>
     : never
   : FixedLengthArray<N> extends [any, ...infer L]
-  ? L['length']
-  : -1
+    ? L['length']
+    : -1
 
 export type Subtract<N extends number, M extends number> = _SubtractNaturalNumber<
   FixedLengthArray<N>,
@@ -168,22 +168,22 @@ export type NumberRankOf<T extends number> = T extends T
   ? IsOneOf<T, [number, any]> extends true
     ? never
     : T extends NegativeInfinity
-    ? '1'
-    : `${T}` extends `-${string}e+${string}`
-    ? '2'
-    : `${T}` extends `-${string}e-${string}`
-    ? '4'
-    : `${T}` extends `-${string}`
-    ? '3'
-    : T extends 0
-    ? '5'
-    : T extends Infinity
-    ? '9'
-    : `${T}` extends `${string}e+${string}`
-    ? '8'
-    : `${T}` extends `${string}e-${string}`
-    ? '6'
-    : '7'
+      ? '1'
+      : `${T}` extends `-${string}e+${string}`
+        ? '2'
+        : `${T}` extends `-${string}e-${string}`
+          ? '4'
+          : `${T}` extends `-${string}`
+            ? '3'
+            : T extends 0
+              ? '5'
+              : T extends Infinity
+                ? '9'
+                : `${T}` extends `${string}e+${string}`
+                  ? '8'
+                  : `${T}` extends `${string}e-${string}`
+                    ? '6'
+                    : '7'
   : never
 
 /**
@@ -225,8 +225,8 @@ export function modOf<const N extends number, const M extends number>(
 }
 
 export function factorialOf(n: number): number {
-  if (!Number.isInteger(n)) return NaN
-  if (n < 0) return NaN
+  if (!Number.isInteger(n)) return Number.NaN
+  if (n < 0) return Number.NaN
 
   let result = 1
   for (let i = 2; i <= n; i++) {

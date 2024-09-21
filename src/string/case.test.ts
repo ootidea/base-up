@@ -1,20 +1,20 @@
 import { expect, test } from 'vitest'
 import { assertTypeEquality } from '../type'
 import {
+  type SplitIntoWords,
+  type ToCamelCase,
+  type ToCamelCasedPropertiesDeeply,
+  type ToKebabCase,
+  type ToSnakeCase,
+  type ToSnakeCasedPropertiesDeeply,
   capitalize,
   isLowercaseLetter,
   isUppercaseLetter,
-  SplitIntoWords,
   splitIntoWords,
   toCamelCase,
-  ToCamelCase,
   toCamelCasedPropertiesDeeply,
-  ToCamelCasedPropertiesDeeply,
   toKebabCase,
-  ToKebabCase,
   toSnakeCase,
-  ToSnakeCase,
-  ToSnakeCasedPropertiesDeeply,
   toSnakeCasedPropertiesDeeply,
 } from './case'
 
@@ -214,7 +214,7 @@ test('toSnakeCasedPropertiesDeeply', () => {
   expect(toSnakeCasedPropertiesDeeply(null)).toStrictEqual(null)
   expect(toSnakeCasedPropertiesDeeply(undefined)).toStrictEqual(undefined)
   expect(toSnakeCasedPropertiesDeeply(123)).toStrictEqual(123)
-  expect(toSnakeCasedPropertiesDeeply(parseInt)).toStrictEqual(parseInt)
+  expect(toSnakeCasedPropertiesDeeply(Number.parseInt)).toStrictEqual(Number.parseInt)
 })
 
 test('ToCamelCasedPropertiesDeeply', () => {
@@ -259,5 +259,5 @@ test('toCamelCasedPropertiesDeeply', () => {
   expect(toCamelCasedPropertiesDeeply(null)).toStrictEqual(null)
   expect(toCamelCasedPropertiesDeeply(undefined)).toStrictEqual(undefined)
   expect(toCamelCasedPropertiesDeeply(123)).toStrictEqual(123)
-  expect(toCamelCasedPropertiesDeeply(parseInt)).toStrictEqual(parseInt)
+  expect(toCamelCasedPropertiesDeeply(Number.parseInt)).toStrictEqual(Number.parseInt)
 })

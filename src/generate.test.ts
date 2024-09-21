@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { assertTypeEquality, Repeat, take } from './all'
+import { type Repeat, assertTypeEquality, take } from './all'
 import { every, isUnique } from './collectionPredicate'
 import {
   fromEntries,

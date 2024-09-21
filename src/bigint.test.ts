@@ -1,5 +1,5 @@
 import { test } from 'vitest'
-import { IsBigintLiteral } from './bigint'
+import type { IsBigintLiteral } from './bigint'
 import { assertTypeEquality } from './type'
 
 test('isBigintLiteral', () => {

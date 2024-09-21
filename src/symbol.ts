@@ -1,5 +1,5 @@
-import { IsUnion } from './type'
-import { IsOneOf } from './typePredicate'
+import type { IsUnion } from './type'
+import type { IsOneOf } from './typePredicate'
 
 /**
  * @example
@@ -17,5 +17,5 @@ import { IsOneOf } from './typePredicate'
 export type IsSymbolLiteral<T extends symbol> = IsUnion<T> extends true
   ? false
   : IsOneOf<T, [symbol, never, any]> extends true
-  ? false
-  : true
+    ? false
+    : true

@@ -1,5 +1,5 @@
 import { test } from 'vitest'
-import { IsBooleanLiteral, Not } from './boolean'
+import type { IsBooleanLiteral, Not } from './boolean'
 import { assertTypeEquality } from './type'
 
 test('Not', () => {

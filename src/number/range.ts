@@ -1,9 +1,9 @@
-import { FixedLengthArray } from '../Array/FixedLengthArray'
-import { RepeatString } from '../generate'
-import { ToNumber } from '../string/other'
-import { OMITTED } from '../type'
-import { IsOneOf } from '../typePredicate'
-import { Digit, Infinity, Negate, NegativeInfinity, ToDigitArray } from './other'
+import type { FixedLengthArray } from '../Array/FixedLengthArray'
+import type { RepeatString } from '../generate'
+import type { ToNumber } from '../string/other'
+import type { OMITTED } from '../type'
+import type { IsOneOf } from '../typePredicate'
+import type { Digit, Infinity, Negate, NegativeInfinity, ToDigitArray } from './other'
 
 /**
  * @example
@@ -26,18 +26,18 @@ export type IntegerRangeUntil<N extends number, M extends number | OMITTED = OMI
     ? IsOneOf<N, [number, any, Infinity, NegativeInfinity]> extends true
       ? number
       : M extends number
-      ? `${N}` extends `-${infer PN extends number}`
-        ? `${M}` extends `-${infer PM extends number}`
-          ? [...FixedLengthArray<PN>, ...any] extends [...FixedLengthArray<PM>, ...any]
-            ? Negate<Exclude<NaturalNumbersFrom0Through<PN>, NaturalNumbersFrom0Through<PM>>>
-            : Negate<Exclude<NaturalNumbersFrom0Until<PM>, NaturalNumbersFrom0Until<PN>>>
-          : Negate<NaturalNumbersFrom0Through<PN>> | NaturalNumbersFrom0Until<M>
-        : `${M}` extends `-${infer PM extends number}`
-        ? NaturalNumbersFrom0Through<N> | Negate<NaturalNumbersFrom0Until<PM>>
-        : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
-        ? Exclude<NaturalNumbersFrom0Through<N>, NaturalNumbersFrom0Through<M>>
-        : Exclude<NaturalNumbersFrom0Until<M>, NaturalNumbersFrom0Until<N>>
-      : IntegerRangeUntil<0, N>
+        ? `${N}` extends `-${infer PN extends number}`
+          ? `${M}` extends `-${infer PM extends number}`
+            ? [...FixedLengthArray<PN>, ...any] extends [...FixedLengthArray<PM>, ...any]
+              ? Negate<Exclude<NaturalNumbersFrom0Through<PN>, NaturalNumbersFrom0Through<PM>>>
+              : Negate<Exclude<NaturalNumbersFrom0Until<PM>, NaturalNumbersFrom0Until<PN>>>
+            : Negate<NaturalNumbersFrom0Through<PN>> | NaturalNumbersFrom0Until<M>
+          : `${M}` extends `-${infer PM extends number}`
+            ? NaturalNumbersFrom0Through<N> | Negate<NaturalNumbersFrom0Until<PM>>
+            : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
+              ? Exclude<NaturalNumbersFrom0Through<N>, NaturalNumbersFrom0Through<M>>
+              : Exclude<NaturalNumbersFrom0Until<M>, NaturalNumbersFrom0Until<N>>
+        : IntegerRangeUntil<0, N>
     : never
   : never
 
@@ -62,18 +62,18 @@ export type IntegerRangeThrough<N extends number, M extends number | OMITTED = O
     ? IsOneOf<N, [number, any, Infinity, NegativeInfinity]> extends true
       ? number
       : M extends number
-      ? `${N}` extends `-${infer PN extends number}`
-        ? `${M}` extends `-${infer PM extends number}`
-          ? [...FixedLengthArray<PN>, ...any] extends [...FixedLengthArray<PM>, ...any]
-            ? Negate<Exclude<NaturalNumbersFrom0Through<PN>, NaturalNumbersFrom0Until<PM>>>
-            : Negate<Exclude<NaturalNumbersFrom0Through<PM>, NaturalNumbersFrom0Until<PN>>>
-          : Negate<NaturalNumbersFrom0Through<PN>> | NaturalNumbersFrom0Through<M>
-        : `${M}` extends `-${infer PM extends number}`
-        ? NaturalNumbersFrom0Through<N> | Negate<NaturalNumbersFrom0Through<PM>>
-        : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
-        ? Exclude<NaturalNumbersFrom0Through<N>, NaturalNumbersFrom0Until<M>>
-        : Exclude<NaturalNumbersFrom0Through<M>, NaturalNumbersFrom0Until<N>>
-      : IntegerRangeThrough<0, N>
+        ? `${N}` extends `-${infer PN extends number}`
+          ? `${M}` extends `-${infer PM extends number}`
+            ? [...FixedLengthArray<PN>, ...any] extends [...FixedLengthArray<PM>, ...any]
+              ? Negate<Exclude<NaturalNumbersFrom0Through<PN>, NaturalNumbersFrom0Until<PM>>>
+              : Negate<Exclude<NaturalNumbersFrom0Through<PM>, NaturalNumbersFrom0Until<PN>>>
+            : Negate<NaturalNumbersFrom0Through<PN>> | NaturalNumbersFrom0Through<M>
+          : `${M}` extends `-${infer PM extends number}`
+            ? NaturalNumbersFrom0Through<N> | Negate<NaturalNumbersFrom0Through<PM>>
+            : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
+              ? Exclude<NaturalNumbersFrom0Through<N>, NaturalNumbersFrom0Until<M>>
+              : Exclude<NaturalNumbersFrom0Through<M>, NaturalNumbersFrom0Until<N>>
+        : IntegerRangeThrough<0, N>
     : never
   : never
 
@@ -104,10 +104,10 @@ type _NaturalNumbersFrom0Until<DigitArray extends readonly Digit[]> = DigitArray
 ]
   ? `${DigitToRangeUntil[D]}`
   : DigitArray extends readonly [infer H extends Digit, ...infer L extends readonly Digit[]]
-  ?
-      | `${DigitToRangeUntil[H]}${RepeatString<Digit, L['length']> extends infer S extends string ? S : never}`
-      | `${H}${_NaturalNumbersFrom0Until<L>}`
-  : ''
+    ?
+        | `${DigitToRangeUntil[H]}${RepeatString<Digit, L['length']> extends infer S extends string ? S : never}`
+        | `${H}${_NaturalNumbersFrom0Until<L>}`
+    : ''
 
 /**
  * Generate a union type from 0 to the given number. It's orders of magnitude faster compared to a naive implementation.

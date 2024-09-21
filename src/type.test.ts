@@ -1,13 +1,13 @@
 import { expectTypeOf, test } from 'vitest'
 import {
+  type Branded,
+  type DiscriminatedUnion,
+  type MergeIntersection,
+  type ToBasePrimitiveType,
+  type Writable,
   assertTypeEquality,
-  Branded,
-  DiscriminatedUnion,
-  MergeIntersection,
-  ToBasePrimitiveType,
-  Writable,
 } from './type'
-import { Equals } from './typePredicate'
+import type { Equals } from './typePredicate'
 
 test('Writable', () => {
   assertTypeEquality<Writable<{ readonly a: string }>, { a: string }>()

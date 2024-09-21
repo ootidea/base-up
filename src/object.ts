@@ -1,9 +1,9 @@
-import { UnionToTuple } from './Array/other'
+import type { UnionToTuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
 import { drop } from './filter'
-import { IntegerRangeThrough } from './number/range'
-import { IsTemplateLiteral } from './string/other'
-import { MergeIntersection } from './type'
+import type { IntegerRangeThrough } from './number/range'
+import type { IsTemplateLiteral } from './string/other'
+import type { MergeIntersection } from './type'
 
 /**
  * @example
@@ -71,23 +71,23 @@ export type CountProperties<T> = T extends T
     ? string extends K
       ? number
       : number extends K
-      ? number
-      : symbol extends K
-      ? number
-      : IsTemplateLiteral<K> extends true
-      ? number
-      : IntegerRangeThrough<
-          UnionToTuple<RequiredKeysOf<T>>['length'] extends infer U extends number ? U : never,
-          UnionToTuple<keyof T>['length'] extends infer U extends number ? U : never
-        >
+        ? number
+        : symbol extends K
+          ? number
+          : IsTemplateLiteral<K> extends true
+            ? number
+            : IntegerRangeThrough<
+                UnionToTuple<RequiredKeysOf<T>>['length'] extends infer U extends number ? U : never,
+                UnionToTuple<keyof T>['length'] extends infer U extends number ? U : never
+              >
     : never
   : never
 
 export type NestedProperty<T, Ks extends readonly (keyof any)[]> = Ks extends readonly []
   ? T
   : Ks extends readonly [infer H extends keyof T, ...infer R extends readonly (keyof any)[]]
-  ? NestedProperty<T[H], R>
-  : undefined
+    ? NestedProperty<T[H], R>
+    : undefined
 
 /**
  * @example

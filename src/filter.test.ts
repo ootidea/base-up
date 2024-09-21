@@ -1,7 +1,11 @@
 import { expect, expectTypeOf, test } from 'vitest'
-import { MinLengthArray, NonEmptyArray } from './Array/MinLengthArray'
+import type { MinLengthArray, NonEmptyArray } from './Array/MinLengthArray'
+import { setOf } from './Set'
 import {
-  Drop,
+  type Drop,
+  type FirstOf,
+  type LastOf,
+  type Take,
   drop,
   dropIterable,
   dropLast,
@@ -11,20 +15,16 @@ import {
   filterDefer,
   filterIterable,
   filterSet,
-  FirstOf,
   firstOf,
   indexesOf,
-  LastOf,
   lastOf,
   modeBy,
   modeOf,
-  Take,
   take,
   takeDefer,
   takeString,
 } from './filter'
 import { repeatIterable, sequentialNumbersUntilIterable } from './generate'
-import { setOf } from './Set'
 import { assertTypeEquality } from './type'
 import { isNotNull } from './typePredicate'
 

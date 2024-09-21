@@ -1,5 +1,11 @@
 import { expect, test } from 'vitest'
-import { AtLeastOneProperty, CountProperties, getNestedProperty, OptionalKeysOf, RequiredKeysOf } from './object'
+import {
+  type AtLeastOneProperty,
+  type CountProperties,
+  type OptionalKeysOf,
+  type RequiredKeysOf,
+  getNestedProperty,
+} from './object'
 import { assertTypeEquality } from './type'
 
 test('RequiredKeysOf', () => {

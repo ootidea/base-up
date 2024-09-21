@@ -1,4 +1,4 @@
-import { nullish } from './type'
+import type { nullish } from './type'
 
 /**
  * Determines whether the types are strictly the same or not.

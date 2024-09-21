@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { assertTypeEquality } from './all'
-import { AllKeysOf, allKeysOf, allValuesOf, AllValuesOf } from './projection'
+import { type AllKeysOf, type AllValuesOf, allKeysOf, allValuesOf } from './projection'
 
 test('AllKeysOf', () => {
   assertTypeEquality<AllKeysOf<{ name: string; age: number }>, ('name' | 'age')[]>()

@@ -1,7 +1,7 @@
 import { randomIntegerThrough } from '../number/range'
-import { UnionToIntersection } from '../type'
-import { Equals, IsOneOf } from '../typePredicate'
-import { FixedLengthArray } from './FixedLengthArray'
+import type { UnionToIntersection } from '../type'
+import type { Equals, IsOneOf } from '../typePredicate'
+import type { FixedLengthArray } from './FixedLengthArray'
 
 export function shuffle<const T extends readonly unknown[]>(self: T): FixedLengthArray<T['length'], T[number]> {
   const result: T[number][] = []
@@ -48,13 +48,13 @@ export type IsTuple<T extends readonly unknown[]> = T extends T
 export type MinLengthOf<T extends readonly unknown[]> = Equals<T, any> extends true
   ? 0
   : Equals<T, never> extends true
-  ? never
-  : RemoveElementsThatMightNotExist<T>['length']
+    ? never
+    : RemoveElementsThatMightNotExist<T>['length']
 type RemoveElementsThatMightNotExist<T extends readonly unknown[]> = T extends readonly [infer H, ...infer L]
   ? [H, ...RemoveElementsThatMightNotExist<L>]
   : T extends readonly [...infer L, infer H]
-  ? [...RemoveElementsThatMightNotExist<L>, H]
-  : []
+    ? [...RemoveElementsThatMightNotExist<L>, H]
+    : []
 
 /**
  * @example
@@ -82,13 +82,13 @@ export type DestructTuple<
 > = Equals<T, any> extends true
   ? { leading: []; optional: []; rest: any[]; trailing: [] }
   : T extends readonly [infer H, ...infer L]
-  ? DestructTuple<L, [...Leading, H], Optional, Trailing>
-  : T extends readonly [...infer L, infer H]
-  ? DestructTuple<L, Leading, Optional, [H, ...Trailing]>
-  : IsTuple<T> extends false
-  ? { leading: Leading; optional: Optional; rest: T; trailing: Trailing }
-  : T extends readonly []
-  ? { leading: Leading; optional: Optional; rest: T; trailing: Trailing }
-  : T extends readonly [(infer H)?, ...infer L]
-  ? DestructTuple<L, Leading, [...Optional, H], Trailing>
-  : never
+    ? DestructTuple<L, [...Leading, H], Optional, Trailing>
+    : T extends readonly [...infer L, infer H]
+      ? DestructTuple<L, Leading, Optional, [H, ...Trailing]>
+      : IsTuple<T> extends false
+        ? { leading: Leading; optional: Optional; rest: T; trailing: Trailing }
+        : T extends readonly []
+          ? { leading: Leading; optional: Optional; rest: T; trailing: Trailing }
+          : T extends readonly [(infer H)?, ...infer L]
+            ? DestructTuple<L, Leading, [...Optional, H], Trailing>
+            : never

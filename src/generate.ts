@@ -1,10 +1,10 @@
-import { FixedLengthArray } from './Array/FixedLengthArray'
-import { NonEmptyArray } from './Array/MinLengthArray'
-import { Drop, take } from './filter'
-import { IntegerRangeUntil, randomIntegerUntil } from './number/range'
-import { Reverse } from './transform'
-import { Lazy, OMITTED, Unlazy } from './type'
+import type { FixedLengthArray } from './Array/FixedLengthArray'
+import type { NonEmptyArray } from './Array/MinLengthArray'
 import { shuffle } from './Array/other'
+import { type Drop, take } from './filter'
+import { type IntegerRangeUntil, randomIntegerUntil } from './number/range'
+import type { Reverse } from './transform'
+import type { Lazy, OMITTED, Unlazy } from './type'
 
 /**
  * @example
@@ -27,22 +27,22 @@ export type SequentialNumbersUntil<From extends number, To extends number | OMIT
   ? number extends From
     ? number[]
     : number extends To
-    ? number[]
-    : From extends From
-    ? To extends To
-      ? `${From}` extends `-${infer PN extends number}`
-        ? `${To}` extends `-${infer PM extends number}`
-          ? [...FixedLengthArray<PM>, ...any] extends [...FixedLengthArray<PN>, ...any]
-            ? ToNegativeNumbers<Drop<NaturalNumbersUntil<PM>, PN>>
-            : ToNegativeNumbers<Reverse<Drop<NaturalNumbersThrough<PN>, NaturalNumbersThrough<PM>['length']>>>
-          : [...ToNegativeNumbers<Reverse<PositiveIntegersThrough<PN>>>, ...NaturalNumbersUntil<To>]
-        : `${To}` extends `-${infer PM extends number}`
-        ? [...Reverse<PositiveIntegersThrough<From>>, ...ToNegativeNumbers<NaturalNumbersUntil<PM>>]
-        : [...FixedLengthArray<To>, ...any] extends [...FixedLengthArray<From>, ...any]
-        ? Drop<NaturalNumbersUntil<To>, From>
-        : Reverse<Drop<NaturalNumbersThrough<From>, NaturalNumbersThrough<To>['length']>>
-      : never
-    : never
+      ? number[]
+      : From extends From
+        ? To extends To
+          ? `${From}` extends `-${infer PN extends number}`
+            ? `${To}` extends `-${infer PM extends number}`
+              ? [...FixedLengthArray<PM>, ...any] extends [...FixedLengthArray<PN>, ...any]
+                ? ToNegativeNumbers<Drop<NaturalNumbersUntil<PM>, PN>>
+                : ToNegativeNumbers<Reverse<Drop<NaturalNumbersThrough<PN>, NaturalNumbersThrough<PM>['length']>>>
+              : [...ToNegativeNumbers<Reverse<PositiveIntegersThrough<PN>>>, ...NaturalNumbersUntil<To>]
+            : `${To}` extends `-${infer PM extends number}`
+              ? [...Reverse<PositiveIntegersThrough<From>>, ...ToNegativeNumbers<NaturalNumbersUntil<PM>>]
+              : [...FixedLengthArray<To>, ...any] extends [...FixedLengthArray<From>, ...any]
+                ? Drop<NaturalNumbersUntil<To>, From>
+                : Reverse<Drop<NaturalNumbersThrough<From>, NaturalNumbersThrough<To>['length']>>
+          : never
+        : never
   : SequentialNumbersUntil<0, From>
 
 /**
@@ -66,22 +66,22 @@ export type SequentialNumbersThrough<From extends number, To extends number | OM
   ? number extends From
     ? NonEmptyArray<number>
     : number extends To
-    ? NonEmptyArray<number>
-    : From extends From
-    ? To extends To
-      ? `${From}` extends `-${infer PN extends number}`
-        ? `${To}` extends `-${infer PM extends number}`
-          ? [...FixedLengthArray<PM>, ...any] extends [...FixedLengthArray<PN>, ...any]
-            ? ToNegativeNumbers<Drop<NaturalNumbersThrough<PM>, PN>>
-            : ToNegativeNumbers<Reverse<Drop<NaturalNumbersThrough<PN>, PM>>>
-          : [...ToNegativeNumbers<Reverse<PositiveIntegersThrough<PN>>>, ...NaturalNumbersThrough<To>]
-        : `${To}` extends `-${infer PM extends number}`
-        ? [...Reverse<PositiveIntegersThrough<From>>, ...ToNegativeNumbers<NaturalNumbersThrough<PM>>]
-        : [...FixedLengthArray<To>, ...any] extends [...FixedLengthArray<From>, ...any]
-        ? Drop<NaturalNumbersThrough<To>, From>
-        : Reverse<Drop<NaturalNumbersThrough<From>, To>>
-      : never
-    : never
+      ? NonEmptyArray<number>
+      : From extends From
+        ? To extends To
+          ? `${From}` extends `-${infer PN extends number}`
+            ? `${To}` extends `-${infer PM extends number}`
+              ? [...FixedLengthArray<PM>, ...any] extends [...FixedLengthArray<PN>, ...any]
+                ? ToNegativeNumbers<Drop<NaturalNumbersThrough<PM>, PN>>
+                : ToNegativeNumbers<Reverse<Drop<NaturalNumbersThrough<PN>, PM>>>
+              : [...ToNegativeNumbers<Reverse<PositiveIntegersThrough<PN>>>, ...NaturalNumbersThrough<To>]
+            : `${To}` extends `-${infer PM extends number}`
+              ? [...Reverse<PositiveIntegersThrough<From>>, ...ToNegativeNumbers<NaturalNumbersThrough<PM>>]
+              : [...FixedLengthArray<To>, ...any] extends [...FixedLengthArray<From>, ...any]
+                ? Drop<NaturalNumbersThrough<To>, From>
+                : Reverse<Drop<NaturalNumbersThrough<From>, To>>
+          : never
+        : never
   : SequentialNumbersThrough<0, From>
 
 /**
@@ -94,8 +94,8 @@ export type SequentialNumbersThrough<From extends number, To extends number | OM
 type NaturalNumbersUntil<N extends number> = number extends N
   ? number[]
   : N extends N
-  ? Unlazy<_NaturalNumbersUntil<N, []>>
-  : never
+    ? Unlazy<_NaturalNumbersUntil<N, []>>
+    : never
 type _NaturalNumbersUntil<N extends number, Acc extends readonly unknown[]> = Acc['length'] extends N
   ? Acc
   : Lazy<_NaturalNumbersUntil<N, [...Acc, Acc['length']]>>
@@ -110,8 +110,8 @@ type _NaturalNumbersUntil<N extends number, Acc extends readonly unknown[]> = Ac
 type NaturalNumbersThrough<N extends number> = number extends N
   ? number[]
   : N extends N
-  ? Unlazy<_NaturalNumbersThrough<FixedLengthArray<N>>>
-  : never
+    ? Unlazy<_NaturalNumbersThrough<FixedLengthArray<N>>>
+    : never
 type _NaturalNumbersThrough<
   Size extends readonly unknown[],
   R extends readonly unknown[] = [],
@@ -129,8 +129,8 @@ type _NaturalNumbersThrough<
 type PositiveIntegersUntil<N extends number> = number extends N
   ? number[]
   : N extends N
-  ? _PositiveIntegersUntil<Drop<FixedLengthArray<N>, 1>, []>
-  : never
+    ? _PositiveIntegersUntil<Drop<FixedLengthArray<N>, 1>, []>
+    : never
 type _PositiveIntegersUntil<Size extends readonly unknown[], Acc extends readonly unknown[]> = Acc extends Size
   ? Acc
   : _PositiveIntegersUntil<Size, [...Acc, [1, ...Acc]['length']]>
@@ -145,10 +145,10 @@ type _PositiveIntegersUntil<Size extends readonly unknown[], Acc extends readonl
 type PositiveIntegersThrough<N extends number> = number extends N
   ? number[]
   : N extends 0
-  ? []
-  : N extends N
-  ? _PositiveIntegersThrough<FixedLengthArray<N>>
-  : never
+    ? []
+    : N extends N
+      ? _PositiveIntegersThrough<FixedLengthArray<N>>
+      : never
 type _PositiveIntegersThrough<
   Size extends readonly unknown[],
   R extends readonly unknown[] = [],
@@ -167,8 +167,8 @@ type ToNegativeNumbers<T extends readonly number[]> = T extends readonly [
   ? H extends 0
     ? [0, ...ToNegativeNumbers<L>]
     : `-${H}` extends `${infer N extends number}`
-    ? [N, ...ToNegativeNumbers<L>]
-    : [H, ...ToNegativeNumbers<L>]
+      ? [N, ...ToNegativeNumbers<L>]
+      : [H, ...ToNegativeNumbers<L>]
   : []
 
 /**
@@ -293,8 +293,8 @@ function retryWhile<const N extends number, const M extends number>(
 export type Repeat<N extends number, A extends readonly unknown[]> = number extends N
   ? A[number][]
   : N extends N
-  ? _Repeat<N, A>
-  : never
+    ? _Repeat<N, A>
+    : never
 type _Repeat<
   N extends number,
   A extends readonly unknown[],
@@ -315,8 +315,8 @@ type _Repeat<
 export type RepeatString<S extends string, N extends number> = string extends S
   ? string
   : number extends N
-  ? string
-  : _RepeatString<S, FixedLengthArray<N>>
+    ? string
+    : _RepeatString<S, FixedLengthArray<N>>
 type _RepeatString<S extends string, Size extends readonly unknown[]> = Size extends [any, ...infer L]
   ? `${S}${_RepeatString<S, L>}`
   : ''

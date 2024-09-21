@@ -1,6 +1,6 @@
 import { everyIterable } from './collectionPredicate'
 import { sortBy } from './transform'
-import { Branded } from './type'
+import type { Branded } from './type'
 
 declare const NON_EMPTY_SET_TAG: unique symbol
 export type NonEmptySet<T> = Branded<Set<T>, typeof NON_EMPTY_SET_TAG>

@@ -1,4 +1,4 @@
-import { Digit, ToDigitArray } from '../number/other'
+import type { Digit, ToDigitArray } from '../number/other'
 
 /**
  * @example

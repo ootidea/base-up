@@ -1,4 +1,4 @@
-import { Branded } from './type'
+import type { Branded } from './type'
 
 declare const NON_EMPTY_MAP_TAG: unique symbol
 export type NonEmptyMap<K, T> = Branded<Map<K, T>, typeof NON_EMPTY_MAP_TAG>

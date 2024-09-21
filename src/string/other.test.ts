@@ -1,18 +1,18 @@
 import { expect, test } from 'vitest'
-import { Infinity, NegativeInfinity } from '../number/other'
+import { Infinity, type NegativeInfinity } from '../number/other'
 import { assertTypeEquality } from '../type'
 import {
-  IsStringLiteral,
-  IsTemplateLiteral,
-  ToNumber,
+  type IsStringLiteral,
+  type IsTemplateLiteral,
+  type ToNumber,
+  type Trim,
+  type TrimEnd,
+  type TrimStart,
   toNumber,
   toString,
   trim,
-  Trim,
   trimEnd,
-  TrimEnd,
   trimStart,
-  TrimStart,
 } from './other'
 
 test('toNumber', () => {
@@ -67,7 +67,7 @@ test('toString', () => {
   expect(toString(123)).toBe('123')
   expect(toString(123n)).toBe('123')
   expect(toString(1.0)).toBe('1')
-  expect(toString(NaN)).toBe('NaN')
+  expect(toString(Number.NaN)).toBe('NaN')
   expect(toString(Infinity)).toBe('Infinity')
   expect(toString(true)).toBe('true')
   expect(toString(null)).toBe('null')

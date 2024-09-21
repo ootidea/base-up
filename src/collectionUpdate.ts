@@ -1,7 +1,7 @@
+import type { FixedLengthArray } from './Array/FixedLengthArray'
+import type { NonEmptyArray } from './Array/MinLengthArray'
 import { isInIntegerRangeThrough, isInIntegerRangeUntil } from './all'
-import { FixedLengthArray } from './Array/FixedLengthArray'
-import { NonEmptyArray } from './Array/MinLengthArray'
-import { Equals } from './typePredicate'
+import type { Equals } from './typePredicate'
 
 export function push<const T extends readonly unknown[], const U extends readonly unknown[]>(
   self: T,

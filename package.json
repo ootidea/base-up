@@ -77,20 +77,21 @@
   ],
   "scripts": {
     "build": "tsup",
-    "format": "run-p format:*",
-    "format:prettier": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,scss}\"",
-    "format:package-json": "sort-package-json",
+    "fix": "run-p \"fix:*\"",
+    "fix:biome": "biome check --write",
+    "fix:package-json": "sort-package-json",
+    "check": "run-p \"check:*\"",
+    "check:type": "tsc --noEmit",
+    "check:biome": "biome check",
+    "check:test": "vitest run --silent=false",
     "postversion": "git push && git push --tags && npm publish ./",
-    "prepublishOnly": "npm run build",
-    "test": "vitest run --silent=false",
-    "test:watch": "vitest --silent=false",
-    "typecheck": "tsc --noEmit"
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.2",
     "@tsconfig/strictest": "^2.0.1",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^3.0.0",
-    "sort-package-json": "^2.5.1",
+    "npm-run-all2": "^6.2.3",
+    "sort-package-json": "^2.10.1",
     "tsup": "^7.1.0",
     "typescript": "^5.1.6",
     "vitest": "^0.33.0"

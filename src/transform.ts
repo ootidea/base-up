@@ -1,15 +1,15 @@
-import { FixedLengthArray } from './Array/FixedLengthArray'
-import { MinLengthArray, NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
-import { DestructTuple } from './Array/other'
-import { createComparatorFromIsLessThan } from './comparison'
-import { Take } from './filter'
+import type { FixedLengthArray } from './Array/FixedLengthArray'
+import type { MinLengthArray, NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
+import type { DestructTuple } from './Array/other'
 import { identity } from './Function'
+import type { NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
+import type { NonEmptySet, ReadonlyNonEmptySet } from './Set'
+import { createComparatorFromIsLessThan } from './comparison'
+import type { Take } from './filter'
 import { repeat } from './generate'
-import { NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
-import { IntegerRangeThrough } from './number/range'
-import { NonEmptySet, ReadonlyNonEmptySet } from './Set'
-import { Interpolable } from './string/other'
-import { Equals } from './typePredicate'
+import type { IntegerRangeThrough } from './number/range'
+import type { Interpolable } from './string/other'
+import type { Equals } from './typePredicate'
 
 export function map<T, U>(self: ReadonlyNonEmptyArray<T>, f: (_: T) => U): NonEmptyArray<U>
 export function map<T, U>(self: readonly T[], f: (_: T) => U): U[]
@@ -87,7 +87,7 @@ export function flatMapSet<T, U>(self: Iterable<T>, f: (_: T) => Iterable<U>): S
 }
 
 export function flatten<T>(self: readonly (readonly T[])[]): T[] {
-  return self.flatMap((x) => x)
+  return self.flat()
 }
 export function* flattenIterable<T>(self: Iterable<Iterable<T>>): Iterable<T> {
   for (const iterable of self) {
@@ -117,17 +117,17 @@ export function flattenSet<T>(self: ReadonlySet<ReadonlySet<T>>): Set<T> {
 export type Join<T extends readonly unknown[], Separator extends string = ','> = Equals<T, any> extends true
   ? string
   : T extends readonly Interpolable[]
-  ? _Join<T, Separator>
-  : string
+    ? _Join<T, Separator>
+    : string
 export type _Join<T extends readonly Interpolable[], Separator extends string> = T extends readonly [
   infer U extends Interpolable,
 ]
   ? `${U}`
   : T extends readonly [infer H extends Interpolable, ...infer L extends readonly Interpolable[]]
-  ? `${H}${Separator}${_Join<L, Separator>}`
-  : T extends readonly []
-  ? ''
-  : string
+    ? `${H}${Separator}${_Join<L, Separator>}`
+    : T extends readonly []
+      ? ''
+      : string
 
 /**
  * @example
@@ -167,12 +167,12 @@ export function joinArray<T, const U extends readonly unknown[]>(
 export type Split<T extends string, Separator extends string> = string extends Separator
   ? string[]
   : Separator extends Separator
-  ? T extends `${infer H}${Separator}${infer L}`
-    ? `${Separator}${L}` extends ''
-      ? [H]
-      : [H, ...Split<L, Separator>]
-    : [T]
-  : never
+    ? T extends `${infer H}${Separator}${infer L}`
+      ? `${Separator}${L}` extends ''
+        ? [H]
+        : [H, ...Split<L, Separator>]
+      : [T]
+    : never
 
 /**
  * Note that when both arguments are empty strings, the return value differs from the standard split method.
@@ -263,12 +263,12 @@ export type Reverse<T extends readonly unknown[]> = [
 type _Reverse<T extends readonly unknown[]> = T extends readonly [infer First, ...infer R, infer Last]
   ? [Last, ..._Reverse<R>, First]
   : T extends readonly [infer First, ...infer R]
-  ? [..._Reverse<R>, First]
-  : T extends readonly [...infer R, infer Last]
-  ? [Last, ..._Reverse<R>]
-  : T extends readonly []
-  ? []
-  : T
+    ? [..._Reverse<R>, First]
+    : T extends readonly [...infer R, infer Last]
+      ? [Last, ..._Reverse<R>]
+      : T extends readonly []
+        ? []
+        : T
 
 export function reverse<const T extends readonly unknown[]>(self: T): Reverse<T> {
   return [...self].reverse() as Reverse<T>

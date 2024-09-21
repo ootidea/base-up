@@ -1,6 +1,6 @@
-import { Digit, Infinity, Negate, NegativeInfinity } from '../number/other'
-import { IsUnion, ToBasePrimitiveType } from '../type'
-import { Equals, IsOneOf } from '../typePredicate'
+import type { Digit, Infinity, Negate, NegativeInfinity } from '../number/other'
+import type { IsUnion, ToBasePrimitiveType } from '../type'
+import type { Equals, IsOneOf } from '../typePredicate'
 
 /**
  * @example
@@ -27,14 +27,14 @@ import { Equals, IsOneOf } from '../typePredicate'
 export type ToNumber<S extends string> = S extends 'Infinity'
   ? Infinity
   : S extends '-Infinity'
-  ? NegativeInfinity
-  : S extends `-${infer U}`
-  ? RemoveLeadingExtraZeros<U> extends `${infer N extends number}`
-    ? Negate<N>
-    : number
-  : RemoveLeadingExtraZeros<S> extends `${infer N extends number}`
-  ? N
-  : number
+    ? NegativeInfinity
+    : S extends `-${infer U}`
+      ? RemoveLeadingExtraZeros<U> extends `${infer N extends number}`
+        ? Negate<N>
+        : number
+      : RemoveLeadingExtraZeros<S> extends `${infer N extends number}`
+        ? N
+        : number
 type RemoveLeadingExtraZeros<T extends string> = T extends `0${infer U extends Digit}${infer L}`
   ? RemoveLeadingExtraZeros<`${U}${L}`>
   : T
@@ -94,14 +94,14 @@ export type Interpolable = string | number | bigint | boolean | null | undefined
 export type IsTemplateLiteral<T, Then = true, Else = false> = IsUnion<T> extends true
   ? Else
   : Equals<T, never> extends true
-  ? Else
-  : T extends `${infer H}${infer L}`
-  ? IsOneOf<H, [string, `${number}`, `${bigint}`]> extends true
-    ? Then
-    : Equals<L, string> extends true
-    ? Then
-    : IsTemplateLiteral<L, Then, Else>
-  : Else
+    ? Else
+    : T extends `${infer H}${infer L}`
+      ? IsOneOf<H, [string, `${number}`, `${bigint}`]> extends true
+        ? Then
+        : Equals<L, string> extends true
+          ? Then
+          : IsTemplateLiteral<L, Then, Else>
+      : Else
 
 /**
  * @example
@@ -120,8 +120,8 @@ export type IsTemplateLiteral<T, Then = true, Else = false> = IsUnion<T> extends
 export type IsStringLiteral<T extends string> = IsUnion<T> extends true
   ? false
   : IsOneOf<T, [string, never, any]> extends true
-  ? false
-  : IsTemplateLiteral<T, false, true>
+    ? false
+    : IsTemplateLiteral<T, false, true>
 
 type CharactersSubjectToRemoveByTrim = ' ' | '\t' | '\n' | '\r' | '\f' | '\v' | '\uFEFF' | '\xA0'
 
@@ -133,8 +133,8 @@ type CharactersSubjectToRemoveByTrim = ' ' | '\t' | '\n' | '\r' | '\f' | '\v' | 
 export type TrimStart<T extends string> = Equals<T, any> extends true
   ? string
   : T extends `${CharactersSubjectToRemoveByTrim}${infer L}`
-  ? TrimStart<L>
-  : T
+    ? TrimStart<L>
+    : T
 
 /**
  * @example
@@ -153,8 +153,8 @@ export function trimStart<const T extends string>(self: T): TrimStart<T> {
 export type TrimEnd<T extends string> = Equals<T, any> extends true
   ? string
   : T extends `${infer L}${CharactersSubjectToRemoveByTrim}`
-  ? TrimEnd<L>
-  : T
+    ? TrimEnd<L>
+    : T
 
 /**
  * @example

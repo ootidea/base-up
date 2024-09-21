@@ -1,5 +1,5 @@
-import { NonEmptyArray } from './Array/MinLengthArray'
-import { IsTuple } from './Array/other'
+import type { NonEmptyArray } from './Array/MinLengthArray'
+import type { IsTuple } from './Array/other'
 import { removeAt } from './collectionUpdate'
 import { sequentialNumbersUntil } from './generate'
 
@@ -59,8 +59,8 @@ export type PrefixesOfForTuple<T extends readonly unknown[], R extends readonly 
 ]
   ? [R, ...PrefixesOfForTuple<L, [...R, H]>]
   : IsTuple<T> extends false
-  ? [R, [...R, ...T]]
-  : [R]
+    ? [R, [...R, ...T]]
+    : [R]
 
 /**
  * @example

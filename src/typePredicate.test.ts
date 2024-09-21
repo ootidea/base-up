@@ -1,15 +1,15 @@
 import { expect, expectTypeOf, test } from 'vitest'
 import { assertTypeEquality } from './type'
 import {
+  type Equals,
+  type IsOneOf,
   equals,
-  Equals,
   isFalsy,
   isInstanceOf,
   isInstanceOfDefer,
   isNotOneOf,
   isNotOneOfDefer,
   isOneOf,
-  IsOneOf,
   isOneOfDefer,
   isTruthy,
 } from './typePredicate'
@@ -80,7 +80,7 @@ test('isTruthy', () => {
   expect(isTruthy(0)).toBe(false)
   expect(isTruthy(0n)).toBe(false)
   expect(isTruthy('')).toBe(false)
-  expect(isTruthy(NaN)).toBe(false)
+  expect(isTruthy(Number.NaN)).toBe(false)
 
   expect(isTruthy(1)).toBe(true)
   expect(isTruthy(1n)).toBe(true)
@@ -97,7 +97,7 @@ test('isTruthy', () => {
   expectTypeOf(isTruthy('')).toEqualTypeOf<false>()
 
   expectTypeOf(isTruthy(1)).toEqualTypeOf<boolean>()
-  expectTypeOf(isTruthy(NaN)).toEqualTypeOf<boolean>()
+  expectTypeOf(isTruthy(Number.NaN)).toEqualTypeOf<boolean>()
   expectTypeOf(isTruthy({})).toEqualTypeOf<boolean>()
   expectTypeOf(isTruthy([])).toEqualTypeOf<boolean>()
 })
@@ -109,7 +109,7 @@ test('isFalsy', () => {
   expect(isFalsy(0)).toBe(true)
   expect(isFalsy(0n)).toBe(true)
   expect(isFalsy('')).toBe(true)
-  expect(isFalsy(NaN)).toBe(true)
+  expect(isFalsy(Number.NaN)).toBe(true)
 
   expect(isFalsy(1)).toBe(false)
   expect(isFalsy(1n)).toBe(false)

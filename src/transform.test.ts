@@ -1,8 +1,11 @@
 import { expect, test } from 'vitest'
 import { identity } from './Function'
-import { repeat } from './generate'
 import { setOf } from './Set'
+import { repeat } from './generate'
 import {
+  type Join,
+  type Reverse,
+  type Split,
   chunk,
   flatMap,
   flatMapDefer,
@@ -12,7 +15,6 @@ import {
   flatten,
   flattenIterable,
   flattenSet,
-  Join,
   join,
   joinArray,
   map,
@@ -24,14 +26,12 @@ import {
   padEndArray,
   padStartArray,
   removeDuplicates,
-  Reverse,
   reverse,
   reverseIterable,
   sort,
   sortBy,
   sortByDefer,
   split,
-  Split,
 } from './transform'
 import { assertTypeEquality } from './type'
 

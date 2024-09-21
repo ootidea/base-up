@@ -1,4 +1,4 @@
-import { Equals, IsOneOf } from './typePredicate'
+import type { Equals, IsOneOf } from './typePredicate'
 
 /**
  * @example
@@ -130,16 +130,16 @@ export type ToBasePrimitiveType<T> = T extends T
   ? IsOneOf<T, [any, never, boolean]> extends true
     ? T
     : T extends string
-    ? string
-    : T extends number
-    ? number
-    : T extends bigint
-    ? bigint
-    : T extends boolean
-    ? boolean
-    : T extends symbol
-    ? symbol
-    : T
+      ? string
+      : T extends number
+        ? number
+        : T extends bigint
+          ? bigint
+          : T extends boolean
+            ? boolean
+            : T extends symbol
+              ? symbol
+              : T
   : never
 
 /**
@@ -163,14 +163,14 @@ export type Unlazy<T> = T extends { [lazyKey]: unknown } ? Unlazy<ReduceLazy<T>>
 type ReduceLazy<T> = T extends { [lazyKey]: never }
   ? never
   : T extends { [lazyKey]: { [lazyKey]: { [lazyKey]: { [lazyKey]: infer U } } } }
-  ? { [lazyKey]: ReduceLazy<U> }
-  : T extends { [lazyKey]: { [lazyKey]: { [lazyKey]: infer U } } }
-  ? U
-  : T extends { [lazyKey]: { [lazyKey]: infer U } }
-  ? U
-  : T extends { [lazyKey]: infer U }
-  ? U
-  : T
+    ? { [lazyKey]: ReduceLazy<U> }
+    : T extends { [lazyKey]: { [lazyKey]: { [lazyKey]: infer U } } }
+      ? U
+      : T extends { [lazyKey]: { [lazyKey]: infer U } }
+        ? U
+        : T extends { [lazyKey]: infer U }
+          ? U
+          : T
 
 /** Data types represented in JSON. */
 export type JsonValue = null | boolean | number | string | JsonValue[] | { [key: keyof any]: JsonValue }

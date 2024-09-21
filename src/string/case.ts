@@ -1,5 +1,5 @@
-import { Join } from '../transform'
-import { Equals, IsOneOf } from '../typePredicate'
+import type { Join } from '../transform'
+import type { Equals, IsOneOf } from '../typePredicate'
 
 export type UppercaseLetter =
   | 'A'
@@ -110,14 +110,14 @@ type _SplitIntoWords<
 > = T extends `${infer H1 extends LowercaseLetter}${infer H2 extends UppercaseLetter}${infer L}`
   ? _SplitIntoWords<`${H2}${L}`, D, '', [...Result, `${Acc}${H1}`]>
   : T extends `${infer H1 extends UppercaseLetter}${infer H2 extends LowercaseLetter}${infer L}`
-  ? _SplitIntoWords<`${H2}${L}`, D, H1, Acc extends '' ? Result : [...Result, Acc]>
-  : T extends `${D}${infer L}`
-  ? _SplitIntoWords<L, D, '', Acc extends '' ? Result : [...Result, Acc]>
-  : T extends `${infer H1}${infer L}`
-  ? _SplitIntoWords<L, D, `${Acc}${H1}`, Result>
-  : Acc extends ''
-  ? Result
-  : [...Result, Acc]
+    ? _SplitIntoWords<`${H2}${L}`, D, H1, Acc extends '' ? Result : [...Result, Acc]>
+    : T extends `${D}${infer L}`
+      ? _SplitIntoWords<L, D, '', Acc extends '' ? Result : [...Result, Acc]>
+      : T extends `${infer H1}${infer L}`
+        ? _SplitIntoWords<L, D, `${Acc}${H1}`, Result>
+        : Acc extends ''
+          ? Result
+          : [...Result, Acc]
 
 /**
  * @example
@@ -252,8 +252,8 @@ export function toKebabCase<const T extends string>(self: T): ToKebabCase<T> {
 export type ToCamelCase<T extends string> = IsOneOf<T, [string, any]> extends true
   ? string
   : SplitIntoWords<T> extends readonly [infer H extends string, ...infer L extends readonly string[]]
-  ? Join<[Lowercase<H>, ...PascalizeAll<L>], ''>
-  : ''
+    ? Join<[Lowercase<H>, ...PascalizeAll<L>], ''>
+    : ''
 type PascalizeAll<T extends readonly string[]> = T extends readonly [
   infer H extends string,
   ...infer L extends readonly string[],
@@ -297,26 +297,26 @@ export function toCamelCase<const T extends string>(self: T): ToCamelCase<T> {
 export type ToSnakeCasedPropertiesDeeply<T> = Equals<T, any> extends true
   ? T
   : T extends Function
-  ? T
-  : T extends readonly unknown[]
-  ? ToSnakeCasedPropertiesDeeplyTuple<T>
-  : {
-      [K in keyof T as K extends string ? ToSnakeCase<K> : K]: ToSnakeCasedPropertiesDeeply<T[K]>
-    }
+    ? T
+    : T extends readonly unknown[]
+      ? ToSnakeCasedPropertiesDeeplyTuple<T>
+      : {
+          [K in keyof T as K extends string ? ToSnakeCase<K> : K]: ToSnakeCasedPropertiesDeeply<T[K]>
+        }
 type ToSnakeCasedPropertiesDeeplyTuple<T extends readonly unknown[]> = T extends any[]
   ? _ToSnakeCasedPropertiesDeeplyTuple<T>
   : Readonly<_ToSnakeCasedPropertiesDeeplyTuple<T>>
 type _ToSnakeCasedPropertiesDeeplyTuple<T extends readonly unknown[]> = T extends readonly [infer H, ...infer L]
   ? [ToSnakeCasedPropertiesDeeply<H>, ..._ToSnakeCasedPropertiesDeeplyTuple<L>]
   : T extends readonly [...infer L, infer H]
-  ? [..._ToSnakeCasedPropertiesDeeplyTuple<L>, ToSnakeCasedPropertiesDeeply<H>]
-  : T extends readonly []
-  ? []
-  : T[number][] extends T
-  ? ToSnakeCasedPropertiesDeeply<T[number]>[]
-  : T extends readonly [(infer H)?, ...infer L]
-  ? [ToSnakeCasedPropertiesDeeply<H>?, ..._ToSnakeCasedPropertiesDeeplyTuple<L>]
-  : never
+    ? [..._ToSnakeCasedPropertiesDeeplyTuple<L>, ToSnakeCasedPropertiesDeeply<H>]
+    : T extends readonly []
+      ? []
+      : T[number][] extends T
+        ? ToSnakeCasedPropertiesDeeply<T[number]>[]
+        : T extends readonly [(infer H)?, ...infer L]
+          ? [ToSnakeCasedPropertiesDeeply<H>?, ..._ToSnakeCasedPropertiesDeeplyTuple<L>]
+          : never
 
 /**
  * Converts all property names in a given object to snake case.
@@ -365,26 +365,26 @@ export function toSnakeCasedPropertiesDeeply<const T>(self: T): ToSnakeCasedProp
 export type ToCamelCasedPropertiesDeeply<T> = Equals<T, any> extends true
   ? T
   : T extends Function
-  ? T
-  : T extends readonly unknown[]
-  ? ToCamelCasedPropertiesDeeplyTuple<T>
-  : {
-      [K in keyof T as K extends string ? ToCamelCase<K> : K]: ToCamelCasedPropertiesDeeply<T[K]>
-    }
+    ? T
+    : T extends readonly unknown[]
+      ? ToCamelCasedPropertiesDeeplyTuple<T>
+      : {
+          [K in keyof T as K extends string ? ToCamelCase<K> : K]: ToCamelCasedPropertiesDeeply<T[K]>
+        }
 type ToCamelCasedPropertiesDeeplyTuple<T extends readonly unknown[]> = T extends any[]
   ? _ToCamelCasedPropertiesDeeplyTuple<T>
   : Readonly<_ToCamelCasedPropertiesDeeplyTuple<T>>
 type _ToCamelCasedPropertiesDeeplyTuple<T extends readonly unknown[]> = T extends readonly [infer H, ...infer L]
   ? [ToCamelCasedPropertiesDeeply<H>, ..._ToCamelCasedPropertiesDeeplyTuple<L>]
   : T extends readonly [...infer L, infer H]
-  ? [..._ToCamelCasedPropertiesDeeplyTuple<L>, ToCamelCasedPropertiesDeeply<H>]
-  : T extends readonly []
-  ? []
-  : T[number][] extends T
-  ? ToCamelCasedPropertiesDeeply<T[number]>[]
-  : T extends readonly [(infer H)?, ...infer L]
-  ? [ToCamelCasedPropertiesDeeply<H>?, ..._ToCamelCasedPropertiesDeeplyTuple<L>]
-  : never
+    ? [..._ToCamelCasedPropertiesDeeplyTuple<L>, ToCamelCasedPropertiesDeeply<H>]
+    : T extends readonly []
+      ? []
+      : T[number][] extends T
+        ? ToCamelCasedPropertiesDeeply<T[number]>[]
+        : T extends readonly [(infer H)?, ...infer L]
+          ? [ToCamelCasedPropertiesDeeply<H>?, ..._ToCamelCasedPropertiesDeeplyTuple<L>]
+          : never
 
 /**
  * Converts all property names in a given object to camel case.

@@ -1,4 +1,4 @@
-import { NonEmptyArray } from './Array/MinLengthArray'
+import type { NonEmptyArray } from './Array/MinLengthArray'
 
 export function groupBy<T, U>(self: readonly T[], by: (_: T) => U): Map<U, NonEmptyArray<T>> {
   const result = new globalThis.Map<U, NonEmptyArray<T>>()

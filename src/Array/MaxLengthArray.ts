@@ -1,5 +1,5 @@
-import { IntegerRangeThrough } from '../number/range'
-import { FixedLengthArray } from './FixedLengthArray'
+import type { IntegerRangeThrough } from '../number/range'
+import type { FixedLengthArray } from './FixedLengthArray'
 
 /**
  * @example

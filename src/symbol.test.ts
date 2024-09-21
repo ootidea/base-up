@@ -1,5 +1,5 @@
 import { test } from 'vitest'
-import { IsSymbolLiteral } from './symbol'
+import type { IsSymbolLiteral } from './symbol'
 import { assertTypeEquality } from './type'
 
 test('IsSymbolLiteral', () => {

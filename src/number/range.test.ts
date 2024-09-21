@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
 import { assertTypeEquality } from '../type'
-import { Infinity, NegativeInfinity } from './other'
-import { IntegerRangeThrough, IntegerRangeUntil, randomIntegerThrough, randomIntegerUntil } from './range'
+import type { Infinity, NegativeInfinity } from './other'
+import { type IntegerRangeThrough, type IntegerRangeUntil, randomIntegerThrough, randomIntegerUntil } from './range'
 
 test('IntegerRangeUntil', () => {
   assertTypeEquality<IntegerRangeUntil<3>, 0 | 1 | 2>()

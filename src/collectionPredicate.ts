@@ -1,6 +1,6 @@
-import { NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
-import { NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
-import { NonEmptySet, ReadonlyNonEmptySet } from './Set'
+import type { NonEmptyArray, ReadonlyNonEmptyArray } from './Array/MinLengthArray'
+import type { NonEmptyMap, ReadonlyNonEmptyMap } from './Map'
+import type { NonEmptySet, ReadonlyNonEmptySet } from './Set'
 
 export function isEmpty(self: readonly []): true
 export function isEmpty(self: readonly never[]): true

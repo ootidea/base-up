@@ -1,4 +1,4 @@
-import { IntegerRangeUntil } from './number/range'
+import type { IntegerRangeUntil } from './number/range'
 
 type UnwrapArrayAll<T extends readonly unknown[]> = T extends readonly [infer H, ...infer L]
   ? [H extends readonly (infer U)[] ? U : H, ...UnwrapArrayAll<L>]

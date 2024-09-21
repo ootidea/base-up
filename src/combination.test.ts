@@ -1,11 +1,11 @@
 import { expect, test } from 'vitest'
 import {
+  type PrefixesOf,
   cartesianProductOf,
   createNGrams,
   permutationOf,
   permutationOfNumber,
   prefixesOf,
-  PrefixesOf,
 } from './combination'
 import { assertTypeEquality } from './type'
 

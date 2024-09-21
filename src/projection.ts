@@ -1,13 +1,13 @@
-import { NeitherClassNorContainsClass } from './type'
-import { Equals, IsOneOf } from './typePredicate'
+import type { NeitherClassNorContainsClass } from './type'
+import type { Equals, IsOneOf } from './typePredicate'
 
 export type AllKeysOf<T> = IsOneOf<T, [undefined, null, {}]> extends true
   ? []
   : Equals<T, any> extends true
-  ? (string | symbol)[]
-  : T extends Record<keyof any, NeitherClassNorContainsClass>
-  ? ToStringKey<keyof T>[]
-  : (string | symbol)[]
+    ? (string | symbol)[]
+    : T extends Record<keyof any, NeitherClassNorContainsClass>
+      ? ToStringKey<keyof T>[]
+      : (string | symbol)[]
 type ToStringKey<K extends keyof any> = K extends number ? `${K}` : K
 
 /**
@@ -50,10 +50,10 @@ export function allKeysOf<const T>(objectLike: T): AllKeysOf<T> {
 export type AllValuesOf<T> = IsOneOf<T, [undefined, null]> extends true
   ? []
   : Equals<T, any> extends true
-  ? any[]
-  : T extends Record<keyof any, NeitherClassNorContainsClass>
-  ? T[keyof T][]
-  : unknown[]
+    ? any[]
+    : T extends Record<keyof any, NeitherClassNorContainsClass>
+      ? T[keyof T][]
+      : unknown[]
 
 export function allValuesOf<T>(objectLike: T): AllValuesOf<T> {
   return allKeysOf(objectLike).map((key) => (objectLike as any)[key]) as any

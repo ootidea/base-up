@@ -1,6 +1,6 @@
-import { Drop } from '../filter'
-import { IntegerRangeThrough } from '../number/range'
-import { FixedLengthArray } from './FixedLengthArray'
+import type { Drop } from '../filter'
+import type { IntegerRangeThrough } from '../number/range'
+import type { FixedLengthArray } from './FixedLengthArray'
 
 export type NonEmptyArray<T = unknown> = [T, ...T[]] | [...T[], T]
 
@@ -18,9 +18,11 @@ type _MinLengthArray<N extends number, M extends number, T> = M extends M
   ? [...Drop<FixedLengthArray<N, T>, M>, ...T[], ...FixedLengthArray<M, T>]
   : never
 
-export type ReadonlyMinLengthArray<N extends number, T = unknown> =
-  // For some reason, defining it as Readonly<MinLengthArray<N, T>> caused a type error, so I defined it using a different way.
-  _ReadonlyMinLengthArray<N, IntegerRangeThrough<N>, T>
+export type ReadonlyMinLengthArray<
+  N extends number,
+  T = unknown,
+> = // For some reason, defining it as Readonly<MinLengthArray<N, T>> caused a type error, so I defined it using a different way.
+_ReadonlyMinLengthArray<N, IntegerRangeThrough<N>, T>
 type _ReadonlyMinLengthArray<N extends number, M extends number, T> = M extends M
   ? readonly [...Drop<FixedLengthArray<N, T>, M>, ...T[], ...FixedLengthArray<M, T>]
   : never

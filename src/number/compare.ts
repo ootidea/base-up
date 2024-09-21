@@ -1,7 +1,7 @@
-import { FixedLengthArray } from '../Array/FixedLengthArray'
-import { Equals } from '../typePredicate'
-import { Digit } from './other'
-import { DigitToRangeUntil } from './range'
+import type { FixedLengthArray } from '../Array/FixedLengthArray'
+import type { Equals } from '../typePredicate'
+import type { Digit } from './other'
+import type { DigitToRangeUntil } from './range'
 
 /**
  * Type-level function of N <= M.
@@ -31,8 +31,8 @@ type _IsAtMostNaturalNumber<
     ? _IsAtMostNaturalNumber<LL, RL, [LH, ...LA], [RH, ...RA]>
     : false
   : Rhs extends `${infer RH extends Digit}${infer RL}`
-  ? true
-  : _IsAtMostNaturalNumberLexicographic<LA, RA>
+    ? true
+    : _IsAtMostNaturalNumberLexicographic<LA, RA>
 /**
  * @example
  * _IsAtMostNaturalNumberLexicographic<['4'], ['4']> equals true
@@ -67,10 +67,10 @@ export type Min<N extends number, M extends number> = `${N}` extends `-${infer P
       : M
     : N
   : `${M}` extends `-${infer PM extends number}`
-  ? M
-  : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
-  ? M
-  : N
+    ? M
+    : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
+      ? M
+      : N
 
 /**
  * @example
@@ -86,10 +86,10 @@ export type Max<N extends number, M extends number> = `${N}` extends `-${infer P
       : N
     : M
   : `${M}` extends `-${infer PM extends number}`
-  ? N
-  : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
-  ? N
-  : M
+    ? N
+    : [...FixedLengthArray<N>, ...any] extends [...FixedLengthArray<M>, ...any]
+      ? N
+      : M
 
 /**
  * The clamp function restricts a given input value to a specified range or interval, by constraining it to a minimum and maximum value.

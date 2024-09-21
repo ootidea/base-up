@@ -53,8 +53,8 @@ export type Predicate<T = unknown> = ((value: T) => value is any) | ((value: T) 
 export type PredicateResult<T> = T extends (value: any) => value is infer R
   ? R
   : T extends (value: infer V) => boolean
-  ? V
-  : never
+    ? V
+    : never
 
 /**
  * Passes a value through a pipeline (a sequence of functions).
