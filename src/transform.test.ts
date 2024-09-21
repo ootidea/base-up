@@ -5,17 +5,31 @@ import { setOf } from './Set'
 import {
   chunk,
   flatMap,
+  flatMapDefer,
+  flatMapIterable,
+  flatMapIterableDefer,
+  flatMapSet,
   flatten,
+  flattenIterable,
+  flattenSet,
   Join,
   join,
+  joinArray,
   map,
-  padEnd,
-  padStart,
+  mapDefer,
+  mapIterable,
+  mapIterableDefer,
+  mapPromise,
+  mapSet,
+  padEndArray,
+  padStartArray,
   removeDuplicates,
   Reverse,
   reverse,
+  reverseIterable,
   sort,
   sortBy,
+  sortByDefer,
   split,
   Split,
 } from './transform'
@@ -25,24 +39,24 @@ test('map', () => {
   expect(map([1, 2, 3], (x) => x * 2)).toStrictEqual([2, 4, 6])
   expect(map([], (x) => x * 2)).toStrictEqual([])
 })
-test('map.defer', async () => {
-  expect(map.defer((x: number) => x * 2)([1, 2, 3])).toStrictEqual([2, 4, 6])
-  expect(map.defer((x: number) => x * 2)([])).toStrictEqual([])
+test('mapDefer', async () => {
+  expect(mapDefer((x: number) => x * 2)([1, 2, 3])).toStrictEqual([2, 4, 6])
+  expect(mapDefer((x: number) => x * 2)([])).toStrictEqual([])
 })
-test('map.Iterable', () => {
-  expect([...map.Iterable([1, 2, 3], (x) => x * 2)]).toStrictEqual([2, 4, 6])
-  expect([...map.Iterable([], (x) => x * 2)]).toStrictEqual([])
+test('mapIterable', () => {
+  expect([...mapIterable([1, 2, 3], (x) => x * 2)]).toStrictEqual([2, 4, 6])
+  expect([...mapIterable([], (x) => x * 2)]).toStrictEqual([])
 })
-test('map.Iterable.defer', () => {
-  expect([...map.Iterable.defer((x: number) => x * 2)([1, 2, 3])]).toStrictEqual([2, 4, 6])
-  expect([...map.Iterable.defer((x: number) => x * 2)([])]).toStrictEqual([])
+test('mapIterableDefer', () => {
+  expect([...mapIterableDefer((x: number) => x * 2)([1, 2, 3])]).toStrictEqual([2, 4, 6])
+  expect([...mapIterableDefer((x: number) => x * 2)([])]).toStrictEqual([])
 })
-test('map.Set', () => {
-  expect(map.Set(setOf(1, 2, 3), (x) => x * 2)).toStrictEqual(setOf(2, 4, 6))
-  expect(map.Set(setOf(), (x) => x * 2)).toStrictEqual(setOf())
+test('mapSet', () => {
+  expect(mapSet(setOf(1, 2, 3), (x) => x * 2)).toStrictEqual(setOf(2, 4, 6))
+  expect(mapSet(setOf(), (x) => x * 2)).toStrictEqual(setOf())
 })
-test('map.Promise', () => {
-  expect(map.Promise(Promise.resolve({ a: 123 }), ({ a }) => a)).resolves.toBe(123)
+test('mapPromise', () => {
+  expect(mapPromise(Promise.resolve({ a: 123 }), ({ a }) => a)).resolves.toBe(123)
 })
 
 test('flatMap', () => {
@@ -50,25 +64,25 @@ test('flatMap', () => {
   expect(flatMap([0, 1, 2], (x) => [])).toStrictEqual([])
   expect(flatMap([], (x) => [x, x + 0.5])).toStrictEqual([])
 })
-test('flatMap.defer', () => {
-  expect(flatMap.defer((x: number) => [x, x + 0.5])([0, 1, 2])).toStrictEqual([0, 0.5, 1, 1.5, 2, 2.5])
-  expect(flatMap.defer((x) => [])([0, 1, 2])).toStrictEqual([])
-  expect(flatMap.defer((x: number) => [x, x + 0.5])([])).toStrictEqual([])
+test('flatMapDefer', () => {
+  expect(flatMapDefer((x: number) => [x, x + 0.5])([0, 1, 2])).toStrictEqual([0, 0.5, 1, 1.5, 2, 2.5])
+  expect(flatMapDefer((x) => [])([0, 1, 2])).toStrictEqual([])
+  expect(flatMapDefer((x: number) => [x, x + 0.5])([])).toStrictEqual([])
 })
-test('flatMap.Iterable', () => {
-  expect([...flatMap.Iterable([0, 1, 2], (x) => [x, x + 0.5])]).toStrictEqual([0, 0.5, 1, 1.5, 2, 2.5])
-  expect([...flatMap.Iterable([0, 1, 2], (x) => [])]).toStrictEqual([])
-  expect([...flatMap.Iterable([], (x) => [x, x + 0.5])]).toStrictEqual([])
+test('flatMapIterable', () => {
+  expect([...flatMapIterable([0, 1, 2], (x) => [x, x + 0.5])]).toStrictEqual([0, 0.5, 1, 1.5, 2, 2.5])
+  expect([...flatMapIterable([0, 1, 2], (x) => [])]).toStrictEqual([])
+  expect([...flatMapIterable([], (x) => [x, x + 0.5])]).toStrictEqual([])
 })
-test('flatMap.Iterable.defer', () => {
-  expect([...flatMap.Iterable.defer((x: number) => [x, x + 0.5])([0, 1, 2])]).toStrictEqual([0, 0.5, 1, 1.5, 2, 2.5])
-  expect([...flatMap.Iterable.defer((x) => [])([0, 1, 2])]).toStrictEqual([])
-  expect([...flatMap.Iterable.defer((x: number) => [x, x + 0.5])([])]).toStrictEqual([])
+test('flatMapIterableDefer', () => {
+  expect([...flatMapIterableDefer((x: number) => [x, x + 0.5])([0, 1, 2])]).toStrictEqual([0, 0.5, 1, 1.5, 2, 2.5])
+  expect([...flatMapIterableDefer((x) => [])([0, 1, 2])]).toStrictEqual([])
+  expect([...flatMapIterableDefer((x: number) => [x, x + 0.5])([])]).toStrictEqual([])
 })
-test('flatMap.Set', () => {
-  expect(flatMap.Set(new Set([0, 1, 2]), (x) => [x, x + 0.5])).toStrictEqual(new Set([0, 0.5, 1, 1.5, 2, 2.5]))
-  expect(flatMap.Set(new Set([0, 1, 2]), (x) => [])).toStrictEqual(new Set())
-  expect(flatMap.Set([], (x) => [x, x + 0.5])).toStrictEqual(new Set())
+test('flatMapSet', () => {
+  expect(flatMapSet(new Set([0, 1, 2]), (x) => [x, x + 0.5])).toStrictEqual(new Set([0, 0.5, 1, 1.5, 2, 2.5]))
+  expect(flatMapSet(new Set([0, 1, 2]), (x) => [])).toStrictEqual(new Set())
+  expect(flatMapSet([], (x) => [x, x + 0.5])).toStrictEqual(new Set())
 })
 
 test('flatten', () => {
@@ -82,20 +96,20 @@ test('flatten', () => {
   expect(flatten([[1, 2], [], [3]])).toStrictEqual([1, 2, 3])
   expect(flatten([])).toStrictEqual([])
 })
-test('flatten.Iterable', () => {
+test('flattenIterable', () => {
   expect([
-    ...flatten.Iterable([
+    ...flattenIterable([
       [1, 2, 3],
       [1, 2],
     ]),
   ]).toStrictEqual([1, 2, 3, 1, 2])
-  expect([...flatten.Iterable([[], [1, 2]])]).toStrictEqual([1, 2])
-  expect([...flatten.Iterable([])]).toStrictEqual([])
+  expect([...flattenIterable([[], [1, 2]])]).toStrictEqual([1, 2])
+  expect([...flattenIterable([])]).toStrictEqual([])
 })
-test('flatten.Set', () => {
-  expect(flatten.Set(setOf(setOf(1, 2, 3), setOf(3, 4), setOf(4, 5, 6)))).toStrictEqual(setOf(1, 2, 3, 4, 5, 6))
-  expect(flatten.Set(setOf(setOf(1, 2, 3), setOf(), setOf(4)))).toStrictEqual(setOf(1, 2, 3, 4))
-  expect(flatten.Set(setOf())).toStrictEqual(setOf())
+test('flattenSet', () => {
+  expect(flattenSet(setOf(setOf(1, 2, 3), setOf(3, 4), setOf(4, 5, 6)))).toStrictEqual(setOf(1, 2, 3, 4, 5, 6))
+  expect(flattenSet(setOf(setOf(1, 2, 3), setOf(), setOf(4)))).toStrictEqual(setOf(1, 2, 3, 4))
+  expect(flattenSet(setOf())).toStrictEqual(setOf())
 })
 
 test('Join', () => {
@@ -123,9 +137,9 @@ test('join', () => {
   expect(join(['a'])).toStrictEqual('a')
   expect(join([])).toStrictEqual('')
 })
-test('join.Array', () => {
+test('joinArray', () => {
   expect(
-    join.Array(
+    joinArray(
       [
         [1, 2],
         [4, 5, 6],
@@ -134,8 +148,8 @@ test('join.Array', () => {
       0,
     ),
   ).toStrictEqual([1, 2, 0, 4, 5, 6, 0, 7, 8])
-  expect(join.Array([['a', 'b'], ['c']], true, 1)).toStrictEqual(['a', 'b', true, 1, 'c'])
-  expect(join.Array([], '-')).toStrictEqual([])
+  expect(joinArray([['a', 'b'], ['c']], true, 1)).toStrictEqual(['a', 'b', true, 1, 'c'])
+  expect(joinArray([], '-')).toStrictEqual([])
 })
 
 test('Split', () => {
@@ -181,16 +195,16 @@ test('chunk', () => {
   expect(() => chunk([1, 2, 3], 0)).toThrowError()
 })
 
-test('padStart.Array', () => {
-  expect(padStart.Array([1, 2, 3], 6, 0)).toStrictEqual([0, 0, 0, 1, 2, 3])
-  expect(padStart.Array([1, 2, 3], 2, 0)).toStrictEqual([1, 2, 3])
-  expect(padStart.Array([], 4, 9)).toStrictEqual([9, 9, 9, 9])
+test('padStartArray', () => {
+  expect(padStartArray([1, 2, 3], 6, 0)).toStrictEqual([0, 0, 0, 1, 2, 3])
+  expect(padStartArray([1, 2, 3], 2, 0)).toStrictEqual([1, 2, 3])
+  expect(padStartArray([], 4, 9)).toStrictEqual([9, 9, 9, 9])
 })
 
-test('padEnd.Array', () => {
-  expect(padEnd.Array([1, 2, 3], 6, 0)).toStrictEqual([1, 2, 3, 0, 0, 0])
-  expect(padEnd.Array([1, 2, 3], 2, 0)).toStrictEqual([1, 2, 3])
-  expect(padEnd.Array([], 4, 9)).toStrictEqual([9, 9, 9, 9])
+test('padEndArray', () => {
+  expect(padEndArray([1, 2, 3], 6, 0)).toStrictEqual([1, 2, 3, 0, 0, 0])
+  expect(padEndArray([1, 2, 3], 2, 0)).toStrictEqual([1, 2, 3])
+  expect(padEndArray([], 4, 9)).toStrictEqual([9, 9, 9, 9])
 })
 
 test('sort', () => {
@@ -205,10 +219,10 @@ test('sortBy', () => {
   expect(sortBy([], identity)).toStrictEqual([])
 })
 
-test('sortBy.defer', () => {
-  expect(sortBy.defer((x: number) => -x)([1, 2, 3])).toStrictEqual([3, 2, 1])
-  expect(sortBy.defer((x: string) => x.length)(['alice', 'bob', 'charlie'])).toStrictEqual(['bob', 'alice', 'charlie'])
-  expect(sortBy.defer(identity)([])).toStrictEqual([])
+test('sortByDefer', () => {
+  expect(sortByDefer((x: number) => -x)([1, 2, 3])).toStrictEqual([3, 2, 1])
+  expect(sortByDefer((x: string) => x.length)(['alice', 'bob', 'charlie'])).toStrictEqual(['bob', 'alice', 'charlie'])
+  expect(sortByDefer(identity)([])).toStrictEqual([])
 })
 
 test('reverse', () => {
@@ -216,7 +230,7 @@ test('reverse', () => {
   expect(reverse([1])).toStrictEqual([1])
   expect(reverse([])).toStrictEqual([])
 
-  expect([...reverse.Iterable([1, 2, 3])]).toStrictEqual([3, 2, 1])
+  expect([...reverseIterable([1, 2, 3])]).toStrictEqual([3, 2, 1])
 })
 
 test('Reverse', () => {

@@ -1,4 +1,4 @@
-import { zipAll } from './fusion'
+import { zipAllIterable } from './fusion'
 
 /** Convert Less-Than function (< symbol) to comparator. */
 export function createComparatorFromIsLessThan<T>(isLessThan: (lhs: T, rhs: T) => boolean): (lhs: T, rhs: T) => number {
@@ -36,7 +36,7 @@ export function createComparatorFromIsAtMost<T>(isAtMost: (lhs: T, rhs: T) => bo
  * isLexicographicLessThan([1, 2, 3], [1, 2]) returns false
  */
 export function isLexicographicLessThan<T>(lhs: Iterable<T>, rhs: Iterable<T>): boolean {
-  for (const [lhsElement, rhsElement] of zipAll.Iterable(lhs, rhs)) {
+  for (const [lhsElement, rhsElement] of zipAllIterable(lhs, rhs)) {
     if (lhsElement === undefined) return true
 
     if (rhsElement === undefined) return false
@@ -51,7 +51,7 @@ export function isLexicographicLessThan<T>(lhs: Iterable<T>, rhs: Iterable<T>): 
 }
 
 export function isLexicographicAtMost<T>(lhs: Iterable<T>, rhs: Iterable<T>): boolean {
-  for (const [lhsElement, rhsElement] of zipAll.Iterable(lhs, rhs)) {
+  for (const [lhsElement, rhsElement] of zipAllIterable(lhs, rhs)) {
     if (lhsElement === undefined) return true
 
     if (rhsElement === undefined) return false

@@ -1,13 +1,13 @@
 import { FixedLengthArray } from './Array/FixedLengthArray'
 import { MaxLengthArray } from './Array/MaxLengthArray'
 import { ReadonlyNonEmptyArray } from './Array/MinLengthArray'
+import { DestructTuple, IsTuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
 import { PrefixesOf } from './combination'
 import { Subtract } from './number/other'
 import { IntegerRangeThrough } from './number/range'
 import { Writable } from './type'
 import { Equals, IsOneOf } from './typePredicate'
-import { DestructTuple, IsTuple } from './Array/other'
 
 export function filter<T = never>(self: readonly [], f: (_: T) => boolean): []
 export function filter<T, U extends T>(self: readonly T[], f: (_: T) => _ is U): U[]
@@ -15,28 +15,24 @@ export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[]
 export function filter<T>(self: readonly T[], f: (_: T) => boolean): T[] {
   return self.filter(f) as any
 }
-export namespace filter {
-  export function defer<T, U extends T>(f: (_: T) => _ is U): { (self: readonly []): []; (self: readonly T[]): U[] }
-  export function defer<T>(f: (_: T) => boolean): { (self: readonly []): []; (self: readonly T[]): T[] }
-  export function defer<T>(f: (_: T) => boolean) {
-    return (self: readonly T[]) => self.filter(f)
-  }
-
-  export function Iterable<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): Iterable<U>
-  export function Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T>
-  export function* Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T> {
-    for (const value of self) {
-      if (f(value)) {
-        yield value
-      }
+export function filterDefer<T, U extends T>(f: (_: T) => _ is U): { (self: readonly []): []; (self: readonly T[]): U[] }
+export function filterDefer<T>(f: (_: T) => boolean): { (self: readonly []): []; (self: readonly T[]): T[] }
+export function filterDefer<T>(f: (_: T) => boolean) {
+  return (self: readonly T[]) => self.filter(f)
+}
+export function filterIterable<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): Iterable<U>
+export function filterIterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T>
+export function* filterIterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T> {
+  for (const value of self) {
+    if (f(value)) {
+      yield value
     }
   }
-
-  export function Set<T, U extends T>(self: ReadonlySet<T>, f: (_: T) => _ is U): Set<U>
-  export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T>
-  export function Set<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T> {
-    return new globalThis.Set(filter.Iterable(self, f))
-  }
+}
+export function filterSet<T, U extends T>(self: ReadonlySet<T>, f: (_: T) => _ is U): Set<U>
+export function filterSet<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T>
+export function filterSet<T>(self: ReadonlySet<T>, f: (_: T) => boolean): Set<T> {
+  return new globalThis.Set(filterIterable(self, f))
 }
 
 /**
@@ -96,32 +92,28 @@ export function take<T, N extends number>(self: Iterable<T>, n: N): MaxLengthArr
   iterator.return?.()
   return result as any
 }
-export namespace take {
-  export function defer<N extends number>(
-    n: N,
-  ): { <const T extends readonly unknown[]>(_: T): Take<T, N>; <T>(_: Iterable<T>): MaxLengthArray<N, T> } {
-    return (self: any) => take(self, n)
-  }
+export function takeDefer<N extends number>(
+  n: N,
+): { <const T extends readonly unknown[]>(_: T): Take<T, N>; <T>(_: Iterable<T>): MaxLengthArray<N, T> } {
+  return (self: any) => take(self, n)
+}
+export function* takeIterable<T>(self: Iterable<T>, n: number): Iterable<T> {
+  let i = 0
+  for (const value of self) {
+    if (i === n) return
 
-  export function* Iterable<T>(self: Iterable<T>, n: number): Iterable<T> {
-    let i = 0
-    for (const value of self) {
-      if (i === n) return
-
-      yield value
-      i++
-    }
+    yield value
+    i++
   }
-
-  /**
-   * @example
-   * take.string('abc', 2) returns 'ab'
-   * take.string('abc', 0) returns ''
-   * take.string('abc', 4) returns 'abc'
-   */
-  export function string(self: string, n: number): string {
-    return self.slice(0, n)
-  }
+}
+/**
+ * @example
+ * takeString('abc', 2) returns 'ab'
+ * takeString('abc', 0) returns ''
+ * takeString('abc', 4) returns 'abc'
+ */
+export function takeString(self: string, n: number): string {
+  return self.slice(0, n)
 }
 
 /**
@@ -173,27 +165,24 @@ export function drop<const T extends readonly unknown[], N extends number>(self:
 export function drop<const T extends readonly unknown[]>(self: T, n: number = 1) {
   return self.slice(Math.max(n, 0))
 }
-export namespace drop {
-  /**
-   * @example
-   * drop.string('abc', 2) returns 'c'
-   * drop.string('abc', 0) returns 'abc'
-   * drop.string('abc', 4) returns ''
-   */
-  export function string(self: string, n: number = 1): string {
-    return self.slice(Math.max(n, 0))
+/**
+ * @example
+ * dropString('abc', 2) returns 'c'
+ * dropString('abc', 0) returns 'abc'
+ * dropString('abc', 4) returns ''
+ */
+export function dropString(self: string, n: number = 1): string {
+  return self.slice(Math.max(n, 0))
+}
+export function* dropIterable<T>(self: Iterable<T>, n: number = 1): Iterable<T> {
+  const iterator = self[Symbol.iterator]()
+  for (let i = 0; i < n; i++) {
+    iterator.next()
   }
-
-  export function* Iterable<T>(self: Iterable<T>, n: number = 1): Iterable<T> {
-    const iterator = self[Symbol.iterator]()
-    for (let i = 0; i < n; i++) {
-      iterator.next()
-    }
-    for (let element = iterator.next(); !element.done; element = iterator.next()) {
-      yield element.value
-    }
-    iterator.return?.()
+  for (let element = iterator.next(); !element.done; element = iterator.next()) {
+    yield element.value
   }
+  iterator.return?.()
 }
 
 /**
@@ -256,15 +245,13 @@ export function takeWhile<const T>(self: readonly T[], f: (_: T) => boolean): T[
   }
   return result
 }
-export namespace takeWhile {
-  export function Iterable<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): Iterable<U>
-  export function Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T>
-  export function* Iterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T> {
-    for (const value of self) {
-      if (!f(value)) return
+export function takeWhileIterable<T, U extends T>(self: Iterable<T>, f: (_: T) => _ is U): Iterable<U>
+export function takeWhileIterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T>
+export function* takeWhileIterable<T>(self: Iterable<T>, f: (_: T) => boolean): Iterable<T> {
+  for (const value of self) {
+    if (!f(value)) return
 
-      yield value
-    }
+    yield value
   }
 }
 

@@ -1,6 +1,18 @@
 import { expect, expectTypeOf, test } from 'vitest'
 import { assertTypeEquality } from './type'
-import { equals, Equals, isFalsy, isInstanceOf, isNotOneOf, isOneOf, IsOneOf, isTruthy } from './typePredicate'
+import {
+  equals,
+  Equals,
+  isFalsy,
+  isInstanceOf,
+  isInstanceOfDefer,
+  isNotOneOf,
+  isNotOneOfDefer,
+  isOneOf,
+  IsOneOf,
+  isOneOfDefer,
+  isTruthy,
+} from './typePredicate'
 
 test('Equals', () => {
   assertTypeEquality<Equals<'abc', 'abc'>, true>()
@@ -46,9 +58,9 @@ test('isOneOf', () => {
   expect(isOneOf('Z', 'a', 0, true)).toBe(false)
 })
 
-test('isOneOf.defer', () => {
-  expect(isOneOf.defer('a', 0, true)('a')).toBe(true)
-  expect(isOneOf.defer('a', 0, true)('Z')).toBe(false)
+test('isOneOfDefer', () => {
+  expect(isOneOfDefer('a', 0, true)('a')).toBe(true)
+  expect(isOneOfDefer('a', 0, true)('Z')).toBe(false)
 })
 
 test('isNotOneOf', () => {
@@ -56,9 +68,9 @@ test('isNotOneOf', () => {
   expect(isNotOneOf('Z', 'a', 0, true)).toBe(true)
 })
 
-test('isNotOneOf.defer', () => {
-  expect(isNotOneOf.defer('a', 0, true)('a')).toBe(false)
-  expect(isNotOneOf.defer('a', 0, true)('Z')).toBe(true)
+test('isNotOneOfDefer', () => {
+  expect(isNotOneOfDefer('a', 0, true)('a')).toBe(false)
+  expect(isNotOneOfDefer('a', 0, true)('Z')).toBe(true)
 })
 
 test('isTruthy', () => {
@@ -114,9 +126,9 @@ test('isInstanceOf', () => {
   expect(isInstanceOf({}, Object)).toBe(true)
 })
 
-test('isInstanceOf.defer', () => {
-  expect(isInstanceOf.defer(Array)([])).toBe(true)
-  expect(isInstanceOf.defer(RegExp)(/a/)).toBe(true)
-  expect(isInstanceOf.defer(Date)('2021-09-27T15:08:10.78')).toBe(false)
-  expect(isInstanceOf.defer(Object)({})).toBe(true)
+test('isInstanceOfDefer', () => {
+  expect(isInstanceOfDefer(Array)([])).toBe(true)
+  expect(isInstanceOfDefer(RegExp)(/a/)).toBe(true)
+  expect(isInstanceOfDefer(Date)('2021-09-27T15:08:10.78')).toBe(false)
+  expect(isInstanceOfDefer(Object)({})).toBe(true)
 })

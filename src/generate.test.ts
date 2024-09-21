@@ -5,8 +5,11 @@ import {
   fromEntries,
   repeat,
   repeatApply,
+  repeatApplyIterable,
+  repeatIterable,
   sequentialNumbersThrough,
   sequentialNumbersUntil,
+  sequentialNumbersUntilIterable,
   uniqueRandomIntegersUntil,
 } from './generate'
 
@@ -20,7 +23,7 @@ test('sequentialNumbersUntil', () => {
   expect(sequentialNumbersUntil(-2, -5)).toStrictEqual([-2, -3, -4])
   expect(sequentialNumbersUntil(3, 3)).toStrictEqual([])
 
-  expect([...sequentialNumbersUntil.Iterable(5)]).toStrictEqual([0, 1, 2, 3, 4])
+  expect([...sequentialNumbersUntilIterable(5)]).toStrictEqual([0, 1, 2, 3, 4])
 })
 
 test('sequentialNumbersThrough', () => {
@@ -59,9 +62,9 @@ test('repeat', () => {
   expect(repeat(0, 123)).toStrictEqual([])
 })
 
-test('repeat.Iterable', () => {
-  expect(take(repeat.Iterable(true), 5)).toStrictEqual([true, true, true, true, true])
-  expect(take(repeat.Iterable(0, 9), 4)).toStrictEqual([0, 9, 0, 9])
+test('repeatIterable', () => {
+  expect(take(repeatIterable(true), 5)).toStrictEqual([true, true, true, true, true])
+  expect(take(repeatIterable(0, 9), 4)).toStrictEqual([0, 9, 0, 9])
 })
 
 test('repeatApply', () => {
@@ -70,10 +73,10 @@ test('repeatApply', () => {
   expect(repeatApply(0, '123', (x) => x + 1)).toStrictEqual([])
 })
 
-test('repeatApply.Iterable', () => {
+test('repeatApplyIterable', () => {
   expect(
     take(
-      repeatApply.Iterable(0, (x) => x + 3),
+      repeatApplyIterable(0, (x) => x + 3),
       5,
     ),
   ).toStrictEqual([0, 3, 6, 9, 12])

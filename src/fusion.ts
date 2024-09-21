@@ -25,19 +25,17 @@ export function zip<T extends readonly (readonly any[])[]>(...source: T): ZipArr
   }
   return result as any
 }
-export namespace zip {
-  type ZipIterable<T extends readonly Iterable<any>[]> = Iterable<UnwrapIterableAll<T>>
-  export function* Iterable<T extends readonly Iterable<any>[]>(...source: T): ZipIterable<T> {
-    const iterators = source.map((iterable) => iterable[Symbol.iterator]())
-    for (
-      let elements = iterators.map((iterator) => iterator.next());
-      elements.every((element) => !element.done);
-      elements = iterators.map((iterator) => iterator.next())
-    ) {
-      yield elements.map((element) => element.value) as any
-    }
-    iterators.map((iterator) => iterator.return?.())
+type ZipIterable<T extends readonly Iterable<any>[]> = Iterable<UnwrapIterableAll<T>>
+export function* zipIterable<T extends readonly Iterable<any>[]>(...source: T): ZipIterable<T> {
+  const iterators = source.map((iterable) => iterable[Symbol.iterator]())
+  for (
+    let elements = iterators.map((iterator) => iterator.next());
+    elements.every((element) => !element.done);
+    elements = iterators.map((iterator) => iterator.next())
+  ) {
+    yield elements.map((element) => element.value) as any
   }
+  iterators.map((iterator) => iterator.return?.())
 }
 
 export function zipWith<T extends readonly (readonly any[])[], U>(
@@ -71,19 +69,17 @@ export function zipAll<T extends readonly (readonly any[])[]>(...source: T): Zip
   }
   return result as any
 }
-export namespace zipAll {
-  type ZipAllIterable<T extends readonly Iterable<any>[]> = Iterable<AtLeastOneIsNonUndefined<UnwrapIterableAll<T>>>
-  export function* Iterable<T extends readonly Iterable<any>[]>(...source: T): ZipAllIterable<T> {
-    const iterators = source.map((iterable) => iterable[Symbol.iterator]())
-    for (
-      let elements = iterators.map((iterator) => iterator.next());
-      elements.some((element) => !element.done);
-      elements = iterators.map((iterator) => iterator.next())
-    ) {
-      yield elements.map((element) => element.value) as any
-    }
-    iterators.map((iterator) => iterator.return?.())
+type ZipAllIterable<T extends readonly Iterable<any>[]> = Iterable<AtLeastOneIsNonUndefined<UnwrapIterableAll<T>>>
+export function* zipAllIterable<T extends readonly Iterable<any>[]>(...source: T): ZipAllIterable<T> {
+  const iterators = source.map((iterable) => iterable[Symbol.iterator]())
+  for (
+    let elements = iterators.map((iterator) => iterator.next());
+    elements.some((element) => !element.done);
+    elements = iterators.map((iterator) => iterator.next())
+  ) {
+    yield elements.map((element) => element.value) as any
   }
+  iterators.map((iterator) => iterator.return?.())
 }
 
 /**

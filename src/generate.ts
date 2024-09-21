@@ -202,11 +202,9 @@ export function sequentialNumbersUntil<N extends number, M extends number>(n: N,
   }
   return result as any
 }
-export namespace sequentialNumbersUntil {
-  export function* Iterable(n: number): Iterable<number> {
-    for (let i = 0; i < n; i++) {
-      yield i
-    }
+export function* sequentialNumbersUntilIterable(n: number): Iterable<number> {
+  for (let i = 0; i < n; i++) {
+    yield i
   }
 }
 
@@ -303,27 +301,25 @@ type _Repeat<
   Size extends readonly unknown[] = [],
   R extends readonly unknown[] = [],
 > = Size['length'] extends N ? R : _Repeat<N, A, [1, ...Size], [...R, ...A]>
-export namespace Repeat {
-  /**
-   * @example
-   * Repeat.String<'Abc', 2> equals 'AbcAbc'
-   * Repeat.String<'A', 0> equals ''
-   * @example
-   * Repeat.String<'A' | 'B', 2> equals 'AA' | 'AB' | 'BA' | 'BB'
-   * Repeat.String<'A', 1 | 3> equals 'A' | 'AAA'
-   * @example
-   * Repeat.String<string, 2> equals string
-   * Repeat.String<'A', number> equals string
-   */
-  export type String<S extends string, N extends number> = string extends S
-    ? string
-    : number extends N
-    ? string
-    : _String<S, FixedLengthArray<N>>
-  type _String<S extends string, Size extends readonly unknown[]> = Size extends [any, ...infer L]
-    ? `${S}${_String<S, L>}`
-    : ''
-}
+/**
+ * @example
+ * RepeatString<'Abc', 2> equals 'AbcAbc'
+ * RepeatString<'A', 0> equals ''
+ * @example
+ * RepeatString<'A' | 'B', 2> equals 'AA' | 'AB' | 'BA' | 'BB'
+ * RepeatString<'A', 1 | 3> equals 'A' | 'AAA'
+ * @example
+ * RepeatString<string, 2> equals string
+ * RepeatString<'A', number> equals string
+ */
+export type RepeatString<S extends string, N extends number> = string extends S
+  ? string
+  : number extends N
+  ? string
+  : _RepeatString<S, FixedLengthArray<N>>
+type _RepeatString<S extends string, Size extends readonly unknown[]> = Size extends [any, ...infer L]
+  ? `${S}${_RepeatString<S, L>}`
+  : ''
 
 /**
  * @example
@@ -333,15 +329,13 @@ export namespace Repeat {
 export function repeat<N extends number, const T extends readonly unknown[]>(count: N, ...values: T): Repeat<N, T> {
   return Array.from({ length: count * values.length }, (_, i) => values[i % values.length]) as any
 }
-export namespace repeat {
-  /**
-   * @example
-   * repeat.Iterable('a') yields 'a', 'a', 'a', ...
-   * repeat.Iterable(1, 2) yields 1, 2, 1, 2, ...
-   */
-  export function* Iterable<const T extends readonly unknown[]>(...values: T): Iterable<T[number]> {
-    while (true) yield* values
-  }
+/**
+ * @example
+ * repeatIterable('a') yields 'a', 'a', 'a', ...
+ * repeatIterable(1, 2) yields 1, 2, 1, 2, ...
+ */
+export function* repeatIterable<const T extends readonly unknown[]>(...values: T): Iterable<T[number]> {
+  while (true) yield* values
 }
 
 export function repeatApply<N extends number, T>(length: N, first: T, f: (_: T) => T): FixedLengthArray<N, T> {
@@ -355,13 +349,11 @@ export function repeatApply<N extends number, T>(length: N, first: T, f: (_: T) 
   }
   return result as any
 }
-export namespace repeatApply {
-  export function* Iterable<T>(first: T, f: (_: T) => T): Iterable<T> {
-    let value = first
-    while (true) {
-      yield value
-      value = f(value)
-    }
+export function* repeatApplyIterable<T>(first: T, f: (_: T) => T): Iterable<T> {
+  let value = first
+  while (true) {
+    yield value
+    value = f(value)
   }
 }
 

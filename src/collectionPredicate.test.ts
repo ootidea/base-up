@@ -1,6 +1,17 @@
 import { expect, expectTypeOf, test } from 'vitest'
 import { mapOf, setOf } from './all'
-import { every, includes, isEmpty, isNotEmpty, isUnique } from './collectionPredicate'
+import {
+  every,
+  includes,
+  includesDefer,
+  includesIterable,
+  includesIterableDefer,
+  includesString,
+  includesStringDefer,
+  isEmpty,
+  isNotEmpty,
+  isUnique,
+} from './collectionPredicate'
 
 test('isEmpty', () => {
   expect(isEmpty([1, 2, 3])).toBe(false)
@@ -44,49 +55,49 @@ test('includes', () => {
   expectTypeOf(includes([], 0n)).toEqualTypeOf<false>()
 })
 
-test('includes.defer', () => {
-  expect(includes.defer(1)([1, 2, 3])).toBe(true)
-  expect(includes.defer('a')([1, 2, 3])).toBe(false)
-  expect(includes.defer(1, 4)([1, 2, 3])).toBe(false)
+test('includesDefer', () => {
+  expect(includesDefer(1)([1, 2, 3])).toBe(true)
+  expect(includesDefer('a')([1, 2, 3])).toBe(false)
+  expect(includesDefer(1, 4)([1, 2, 3])).toBe(false)
 
-  expect(includes.defer(0n)([])).toBe(false)
-  expectTypeOf(includes.defer(0n)([])).toEqualTypeOf<false>()
+  expect(includesDefer(0n)([])).toBe(false)
+  expectTypeOf(includesDefer(0n)([])).toEqualTypeOf<false>()
 })
 
-test('includes.Iterable', () => {
-  expect(includes.Iterable([1, 2, 3], 1)).toBe(true)
-  expect(includes.Iterable([1, 2, 3], 'a')).toBe(false)
-  expect(includes.Iterable('abc', 'a')).toBe(true)
+test('includesIterable', () => {
+  expect(includesIterable([1, 2, 3], 1)).toBe(true)
+  expect(includesIterable([1, 2, 3], 'a')).toBe(false)
+  expect(includesIterable('abc', 'a')).toBe(true)
 })
 
-test('includes.Iterable.defer', () => {
-  expect(includes.Iterable.defer(1)([1, 2, 3])).toBe(true)
-  expect(includes.Iterable.defer('a')([1, 2, 3])).toBe(false)
-  expect(includes.Iterable.defer('a')('abc')).toBe(true)
+test('includesIterableDefer', () => {
+  expect(includesIterableDefer(1)([1, 2, 3])).toBe(true)
+  expect(includesIterableDefer('a')([1, 2, 3])).toBe(false)
+  expect(includesIterableDefer('a')('abc')).toBe(true)
 })
 
-test('includes.string', () => {
-  expect(includes.string('abc', 'a')).toBe(true)
-  expect(includes.string('abc', 'A')).toBe(false)
+test('includesString', () => {
+  expect(includesString('abc', 'a')).toBe(true)
+  expect(includesString('abc', 'A')).toBe(false)
 
-  expect(includes.string('a', '')).toBe(true)
-  expectTypeOf(includes.string('a', '')).toEqualTypeOf<true>()
-  expect(includes.string('', '')).toBe(true)
-  expectTypeOf(includes.string('', '')).toEqualTypeOf<true>()
-  expect(includes.string('', 'a')).toBe(false)
-  expectTypeOf(includes.string('', 'a')).toEqualTypeOf<false>()
+  expect(includesString('a', '')).toBe(true)
+  expectTypeOf(includesString('a', '')).toEqualTypeOf<true>()
+  expect(includesString('', '')).toBe(true)
+  expectTypeOf(includesString('', '')).toEqualTypeOf<true>()
+  expect(includesString('', 'a')).toBe(false)
+  expectTypeOf(includesString('', 'a')).toEqualTypeOf<false>()
 })
 
-test('includes.string.defer', () => {
-  expect(includes.string.defer('a')('abc')).toBe(true)
-  expect(includes.string.defer('A')('abc')).toBe(false)
+test('includesStringDefer', () => {
+  expect(includesStringDefer('a')('abc')).toBe(true)
+  expect(includesStringDefer('A')('abc')).toBe(false)
 
-  expect(includes.string.defer('')('a')).toBe(true)
-  expectTypeOf(includes.string.defer('')('a')).toEqualTypeOf<true>()
-  expect(includes.string.defer('')('')).toBe(true)
-  expectTypeOf(includes.string.defer('')('')).toEqualTypeOf<true>()
-  expect(includes.string.defer('a')('')).toBe(false)
-  expectTypeOf(includes.string.defer('a')('')).toEqualTypeOf<false>()
+  expect(includesStringDefer('')('a')).toBe(true)
+  expectTypeOf(includesStringDefer('')('a')).toEqualTypeOf<true>()
+  expect(includesStringDefer('')('')).toBe(true)
+  expectTypeOf(includesStringDefer('')('')).toEqualTypeOf<true>()
+  expect(includesStringDefer('a')('')).toBe(false)
+  expectTypeOf(includesStringDefer('a')('')).toEqualTypeOf<false>()
 })
 
 test('isUnique', () => {

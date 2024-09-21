@@ -9,14 +9,12 @@ export function push<const T extends readonly unknown[], const U extends readonl
 ): [...T, ...U] {
   return [...self, ...args] as any
 }
-export namespace push {
-  export function* Iterable<T, const U extends readonly unknown[]>(
-    self: Iterable<T>,
-    ...args: U
-  ): Iterable<T | U[number]> {
-    yield* self
-    yield* args
-  }
+export function* pushIterable<T, const U extends readonly unknown[]>(
+  self: Iterable<T>,
+  ...args: U
+): Iterable<T | U[number]> {
+  yield* self
+  yield* args
 }
 
 export function unshift<const T extends readonly unknown[], const U extends readonly unknown[]>(
@@ -25,14 +23,12 @@ export function unshift<const T extends readonly unknown[], const U extends read
 ): [...U, ...T] {
   return [...args, ...self] as any
 }
-export namespace unshift {
-  export function* Iterable<T, const U extends readonly unknown[]>(
-    self: Iterable<T>,
-    ...args: U
-  ): Iterable<T | U[number]> {
-    yield* args
-    yield* self
-  }
+export function* unshiftIterable<T, const U extends readonly unknown[]>(
+  self: Iterable<T>,
+  ...args: U
+): Iterable<T | U[number]> {
+  yield* args
+  yield* self
 }
 
 /**
@@ -55,24 +51,22 @@ export function insertAt<T, const U extends readonly unknown[]>(
   }
   return cloned as any
 }
-export namespace insertAt {
-  export function* Iterable<T, const U extends readonly unknown[]>(
-    self: Iterable<T>,
-    at: number,
-    ...values: U
-  ): Iterable<T | U[number]> {
-    if (at === 0) {
+export function* insertAtIterable<T, const U extends readonly unknown[]>(
+  self: Iterable<T>,
+  at: number,
+  ...values: U
+): Iterable<T | U[number]> {
+  if (at === 0) {
+    yield* values
+  }
+
+  let i = 1
+  for (const value of self) {
+    yield value
+    if (i === at) {
       yield* values
     }
-
-    let i = 1
-    for (const value of self) {
-      yield value
-      if (i === at) {
-        yield* values
-      }
-      i++
-    }
+    i++
   }
 }
 
@@ -104,15 +98,13 @@ export function removeAt<const T extends readonly unknown[], N extends number>(s
   }
   return cloned as any
 }
-export namespace removeAt {
-  export function* Iterable<T>(self: Iterable<T>, at: number): Iterable<T> {
-    let i = 0
-    for (const value of self) {
-      if (i !== at) {
-        yield value
-      }
-      ++i
+export function* removeAtIterable<T>(self: Iterable<T>, at: number): Iterable<T> {
+  let i = 0
+  for (const value of self) {
+    if (i !== at) {
+      yield value
     }
+    ++i
   }
 }
 
@@ -120,12 +112,10 @@ export namespace removeAt {
 export function removeAll<T>(self: readonly T[], value: T): T[] {
   return self.filter((x) => x !== value)
 }
-export namespace removeAll {
-  export function* Iterable<T>(self: Iterable<T>, value: T): Iterable<T> {
-    for (const x of self) {
-      if (x !== value) {
-        yield value
-      }
+export function* removeAllIterable<T>(self: Iterable<T>, value: T): Iterable<T> {
+  for (const x of self) {
+    if (x !== value) {
+      yield value
     }
   }
 }
@@ -138,25 +128,23 @@ export function remove<T>(self: readonly T[], value: T): T[] {
   cloned.splice(index, 1)
   return cloned
 }
-export namespace remove {
-  export function* Iterable<T>(self: Iterable<T>, value: T): Iterable<T> {
-    const iterator = self[Symbol.iterator]()
-    let element = iterator.next()
-    // Yields until the given value is found.
-    while (!element.done && element.value !== value) {
-      yield element.value
-      element = iterator.next()
-    }
-
-    // Yields all subsequent values.
+export function* removeIterable<T>(self: Iterable<T>, value: T): Iterable<T> {
+  const iterator = self[Symbol.iterator]()
+  let element = iterator.next()
+  // Yields until the given value is found.
+  while (!element.done && element.value !== value) {
+    yield element.value
     element = iterator.next()
-    while (!element.done) {
-      yield element.value
-      element = iterator.next()
-    }
-
-    iterator.return?.()
   }
+
+  // Yields all subsequent values.
+  element = iterator.next()
+  while (!element.done) {
+    yield element.value
+    element = iterator.next()
+  }
+
+  iterator.return?.()
 }
 
 /**

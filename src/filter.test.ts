@@ -3,9 +3,14 @@ import { MinLengthArray, NonEmptyArray } from './Array/MinLengthArray'
 import {
   Drop,
   drop,
+  dropIterable,
   dropLast,
+  dropString,
   elementAt,
   filter,
+  filterDefer,
+  filterIterable,
+  filterSet,
   FirstOf,
   firstOf,
   indexesOf,
@@ -15,8 +20,10 @@ import {
   modeOf,
   Take,
   take,
+  takeDefer,
+  takeString,
 } from './filter'
-import { sequentialNumbersUntil, repeat } from './generate'
+import { repeatIterable, sequentialNumbersUntilIterable } from './generate'
 import { setOf } from './Set'
 import { assertTypeEquality } from './type'
 import { isNotNull } from './typePredicate'
@@ -28,18 +35,18 @@ test('filter', () => {
   expect(filter([1, null, 3], isNotNull)).toStrictEqual([1, 3])
   expectTypeOf(filter([1, null, 3], isNotNull)).toEqualTypeOf<number[]>()
 })
-test('filter.defer', () => {
-  expect(filter.defer(isNotNull)([1, null, 3])).toStrictEqual([1, 3])
-  expectTypeOf(filter.defer(isNotNull<number>)([1, null, 3])).toEqualTypeOf<number[]>()
-  expect(filter.defer(isNotNull)([])).toStrictEqual([])
-  expectTypeOf(filter.defer(isNotNull)([])).toEqualTypeOf<[]>()
+test('filterDefer', () => {
+  expect(filterDefer(isNotNull)([1, null, 3])).toStrictEqual([1, 3])
+  expectTypeOf(filterDefer(isNotNull<number>)([1, null, 3])).toEqualTypeOf<number[]>()
+  expect(filterDefer(isNotNull)([])).toStrictEqual([])
+  expectTypeOf(filterDefer(isNotNull)([])).toEqualTypeOf<[]>()
 })
-test('filter.Iterable', () => {
-  expect([...filter.Iterable([1, 2, 3], (n) => n % 2 === 0)]).toStrictEqual([2])
+test('filterIterable', () => {
+  expect([...filterIterable([1, 2, 3], (n) => n % 2 === 0)]).toStrictEqual([2])
 })
-test('filter.Set', () => {
-  expect(filter.Set(setOf(0, 1, 2), (x) => x > 0)).toStrictEqual(setOf(1, 2))
-  expect(filter.Set(setOf(null, 1, 2), isNotNull)).toStrictEqual(setOf(1, 2))
+test('filterSet', () => {
+  expect(filterSet(setOf(0, 1, 2), (x) => x > 0)).toStrictEqual(setOf(1, 2))
+  expect(filterSet(setOf(null, 1, 2), isNotNull)).toStrictEqual(setOf(1, 2))
 })
 
 test('firstOf', () => {
@@ -115,15 +122,15 @@ test('take', () => {
   expect(take([1, 2, 3], 2)).toStrictEqual([1, 2])
   expect(take([1, 2, 3], 4)).toStrictEqual([1, 2, 3])
   expect(take('abc', 2)).toStrictEqual(['a', 'b'])
-  expect(take(repeat.Iterable(true), 3)).toStrictEqual([true, true, true])
-  expect(take(repeat.Iterable(true), 0)).toStrictEqual([])
+  expect(take(repeatIterable(true), 3)).toStrictEqual([true, true, true])
+  expect(take(repeatIterable(true), 0)).toStrictEqual([])
 })
 
-test('take.defer', () => {
-  expect(take.defer(0)([1, 2, 3])).toStrictEqual([])
-  expect(take.defer(2)([1, 2, 3])).toStrictEqual([1, 2])
-  expect(take.defer(4)([1, 2, 3])).toStrictEqual([1, 2, 3])
-  expect(take.defer(2)('abc')).toStrictEqual(['a', 'b'])
+test('takeDefer', () => {
+  expect(takeDefer(0)([1, 2, 3])).toStrictEqual([])
+  expect(takeDefer(2)([1, 2, 3])).toStrictEqual([1, 2])
+  expect(takeDefer(4)([1, 2, 3])).toStrictEqual([1, 2, 3])
+  expect(takeDefer(2)('abc')).toStrictEqual(['a', 'b'])
 })
 
 test('Drop', () => {
@@ -148,10 +155,10 @@ test('Drop', () => {
   assertTypeEquality<Drop<readonly string[], 3>, readonly string[]>()
 })
 
-test('take.string', () => {
-  expect(take.string('abc', 2)).toStrictEqual('ab')
-  expect(take.string('abc', 0)).toStrictEqual('')
-  expect(take.string('abc', 4)).toStrictEqual('abc')
+test('takeString', () => {
+  expect(takeString('abc', 2)).toStrictEqual('ab')
+  expect(takeString('abc', 0)).toStrictEqual('')
+  expect(takeString('abc', 4)).toStrictEqual('abc')
 })
 
 test('drop', () => {
@@ -164,16 +171,16 @@ test('drop', () => {
   expect(drop([1, 2, 3], 4)).toStrictEqual([])
 })
 
-test('drop.string', () => {
-  expect(drop.string('abc', 2)).toStrictEqual('c')
-  expect(drop.string('abc', 0)).toStrictEqual('abc')
-  expect(drop.string('abc', 4)).toStrictEqual('')
+test('dropString', () => {
+  expect(dropString('abc', 2)).toStrictEqual('c')
+  expect(dropString('abc', 0)).toStrictEqual('abc')
+  expect(dropString('abc', 4)).toStrictEqual('')
 })
 
-test('drop.Iterable', () => {
-  expect([...drop.Iterable([0, 1, 2], 2)]).toStrictEqual([2])
-  expect([...drop.Iterable([0, 1, 2], 0)]).toStrictEqual([0, 1, 2])
-  expect([...drop.Iterable([0, 1, 2], 4)]).toStrictEqual([])
+test('dropIterable', () => {
+  expect([...dropIterable([0, 1, 2], 2)]).toStrictEqual([2])
+  expect([...dropIterable([0, 1, 2], 0)]).toStrictEqual([0, 1, 2])
+  expect([...dropIterable([0, 1, 2], 4)]).toStrictEqual([])
 })
 
 test('dropLast', () => {
@@ -197,9 +204,9 @@ test('indexesOf', () => {
 })
 
 test('elementAt', () => {
-  expect(elementAt(sequentialNumbersUntil.Iterable(5), 0)).toBe(0)
-  expect(elementAt(sequentialNumbersUntil.Iterable(5), 3)).toBe(3)
-  expect(elementAt(sequentialNumbersUntil.Iterable(5), 5)).toBe(undefined)
+  expect(elementAt(sequentialNumbersUntilIterable(5), 0)).toBe(0)
+  expect(elementAt(sequentialNumbersUntilIterable(5), 3)).toBe(3)
+  expect(elementAt(sequentialNumbersUntilIterable(5), 5)).toBe(undefined)
 })
 
 test('modeOf', () => {

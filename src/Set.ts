@@ -1,4 +1,4 @@
-import { every } from './collectionPredicate'
+import { everyIterable } from './collectionPredicate'
 import { sortBy } from './transform'
 import { Branded } from './type'
 
@@ -38,21 +38,19 @@ export function toggleMembership<T, U>(self: ReadonlySet<T>, value: U): Set<T> |
   }
   return cloned
 }
-export namespace toggleMembership {
-  /**
-   * @example
-   * const set = new Set([1, 2, 3])
-   * toggleMembership.mutable(set, 2) // set is now equivalent to Set([1, 3])
-   * toggleMembership.mutable(set, 4) // set is now equivalent to Set([1, 3, 4])
-   */
-  export function mutable<T>(self: Set<T>, value: T): Set<T> {
-    if (self.has(value)) {
-      self.delete(value)
-    } else {
-      self.add(value)
-    }
-    return self
+/**
+ * @example
+ * const set = new Set([1, 2, 3])
+ * toggleMembershipMutable(set, 2) // set is now equivalent to Set([1, 3])
+ * toggleMembershipMutable(set, 4) // set is now equivalent to Set([1, 3, 4])
+ */
+export function toggleMembershipMutable<T>(self: Set<T>, value: T): Set<T> {
+  if (self.has(value)) {
+    self.delete(value)
+  } else {
+    self.add(value)
   }
+  return self
 }
 
 export function setMembership<T, U>(self: ReadonlySet<T>, value: U, has: boolean): Set<T | U> {
@@ -64,15 +62,13 @@ export function setMembership<T, U>(self: ReadonlySet<T>, value: U, has: boolean
   }
   return cloned
 }
-export namespace setMembership {
-  export function mutable<T>(self: Set<T>, value: T, has: boolean): Set<T> {
-    if (has) {
-      self.add(value)
-    } else {
-      self.delete(value)
-    }
-    return self
+export function setMembershipMutable<T>(self: Set<T>, value: T, has: boolean): Set<T> {
+  if (has) {
+    self.add(value)
+  } else {
+    self.delete(value)
   }
+  return self
 }
 
 export function has<T, U extends T>(self: ReadonlySet<U>, value: T): value is U
@@ -144,5 +140,5 @@ export function isDisjoint<T, U>(lhs: ReadonlySet<T>, rhs: ReadonlySet<U>): bool
 
 /** isSubsetOf(a, b) means a ⊆ b. */
 export function isSubsetOf<T>(lhs: ReadonlySet<T>, rhs: ReadonlySet<T>): boolean {
-  return every.Iterable(lhs, (element) => rhs.has(element))
+  return everyIterable(lhs, (element) => rhs.has(element))
 }

@@ -28,7 +28,7 @@ export {
   removeSuffix,
   moveTo,
 } from './collectionUpdate'
-export { isEmpty, includes, every, everyValues, isNotEmpty, isUnique } from './collectionPredicate'
+export { isEmpty, includes, every, isNotEmpty, isUnique } from './collectionPredicate'
 export { createNGrams, cartesianProductOf, permutationOf, PrefixesOf, prefixesOf } from './combination'
 export {
   isLexicographicLessThan,

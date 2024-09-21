@@ -5,8 +5,10 @@ import {
   isDisjoint,
   isSubsetOf,
   setMembership,
+  setMembershipMutable,
   setOf,
   toggleMembership,
+  toggleMembershipMutable,
   unionOf,
 } from './Set'
 
@@ -23,11 +25,11 @@ test('toggleMembership', () => {
   expect(toggleMembership(setOf(1, 2, 3), 9)).toStrictEqual(setOf(1, 2, 3, 9))
   expect(toggleMembership(setOf(1, 2, 3), null)).toStrictEqual(setOf(1, 2, 3, null))
 })
-test('toggleMembership.mutable', () => {
+test('toggleMembershipMutable', () => {
   const set = setOf(1, 2, 3)
-  toggleMembership.mutable(set, 2)
+  toggleMembershipMutable(set, 2)
   expect(set).toStrictEqual(setOf(1, 3))
-  toggleMembership.mutable(set, 4)
+  toggleMembershipMutable(set, 4)
   expect(set).toStrictEqual(setOf(1, 3, 4))
 })
 
@@ -37,15 +39,15 @@ test('setMembership', () => {
   expect(setMembership(setOf(1, 2, 3), null, false)).toStrictEqual(setOf(1, 2, 3))
   expect(setMembership(setOf(1, 2, 3), null, true)).toStrictEqual(setOf(1, 2, 3, null))
 })
-test('setMembership.mutable', () => {
+test('setMembershipMutable', () => {
   const set = new Set([1, 2, 3])
-  setMembership.mutable(set, 2, false)
+  setMembershipMutable(set, 2, false)
   expect(set).toStrictEqual(setOf(1, 3))
-  setMembership.mutable(set, null, true)
+  setMembershipMutable(set, null, true)
   expect(set).toStrictEqual(setOf(1, 3, null))
-  setMembership.mutable(set, null, true)
+  setMembershipMutable(set, null, true)
   expect(set).toStrictEqual(setOf(1, 3, null))
-  setMembership.mutable(set, 9, false)
+  setMembershipMutable(set, 9, false)
   expect(set).toStrictEqual(setOf(1, 3, null))
 })
 

@@ -22,14 +22,12 @@ export function isMaxLengthArray<N extends number>(self: unknown, length: N): se
 export function isMaxLengthArray<N extends number>(self: unknown, length: N) {
   return self instanceof Array && self.length <= length
 }
-export namespace isMaxLengthArray {
-  export function defer<N extends number>(
-    length: N,
-  ): {
-    <T>(self: T[]): self is MaxLengthArray<N, T>
-    <T>(self: readonly T[]): self is ReadonlyMaxLengthArray<N, T>
-    (self: unknown): self is MaxLengthArray<N>
-  } {
-    return ((self: unknown) => self instanceof Array && self.length === length) as any
-  }
+export function isMaxLengthArrayDefer<N extends number>(
+  length: N,
+): {
+  <T>(self: T[]): self is MaxLengthArray<N, T>
+  <T>(self: readonly T[]): self is ReadonlyMaxLengthArray<N, T>
+  (self: unknown): self is MaxLengthArray<N>
+} {
+  return ((self: unknown) => self instanceof Array && self.length === length) as any
 }

@@ -42,18 +42,16 @@ export function equals<const T, const U>(self: T, other: U): false
 export function equals(self: unknown, other: unknown) {
   return self === other
 }
-export namespace equals {
-  /**
-   * @example
-   * let value = Date.now() % 2
-   * const isZero = equals.defer(0)
-   * if (isZero(value)) {
-   *   // Here, the value is of type 0.
-   * }
-   */
-  export function defer<const T>(other: T): (self: unknown) => self is T {
-    return (self: unknown): self is T => self === other
-  }
+/**
+ * @example
+ * let value = Date.now() % 2
+ * const isZero = equals.defer(0)
+ * if (isZero(value)) {
+ *   // Here, the value is of type 0.
+ * }
+ */
+export function equalsDefer<const T>(other: T): (self: unknown) => self is T {
+  return (self: unknown): self is T => self === other
 }
 
 /**
@@ -91,27 +89,23 @@ export type IsOneOf<T, U extends readonly unknown[], Then = true, Else = false> 
 export function isOneOf<const T extends readonly unknown[]>(self: unknown, ...values: T): self is T[number] {
   return new Set(values).has(self)
 }
-export namespace isOneOf {
-  /**
-   * @example
-   * let value = Date.now() % 5
-   * const isZeroOrOne = isOneOf.defer(0, 1)
-   * if (isZeroOrOne(value)) {
-   *   // Here, the value is of type 0 | 1.
-   * }
-   */
-  export function defer<const T extends readonly unknown[]>(...values: T): (self: unknown) => self is T[number] {
-    return (self: unknown): self is T[number] => new Set(values).has(self)
-  }
+/**
+ * @example
+ * let value = Date.now() % 5
+ * const isZeroOrOne = isOneOfDefer(0, 1)
+ * if (isZeroOrOne(value)) {
+ *   // Here, the value is of type 0 | 1.
+ * }
+ */
+export function isOneOfDefer<const T extends readonly unknown[]>(...values: T): (self: unknown) => self is T[number] {
+  return (self: unknown): self is T[number] => new Set(values).has(self)
 }
 
 export function isNotOneOf(self: unknown, ...values: readonly unknown[]): boolean {
   return !new Set(values).has(self)
 }
-export namespace isNotOneOf {
-  export function defer(...values: readonly unknown[]): (self: unknown) => boolean {
-    return (self: unknown) => !new Set(values).has(self)
-  }
+export function isNotOneOfDefer(...values: readonly unknown[]): (self: unknown) => boolean {
+  return (self: unknown) => !new Set(values).has(self)
 }
 
 export const isNull = (value: unknown): value is null => value === null
@@ -189,15 +183,13 @@ export function isInstanceOf<T extends abstract new (..._: any) => any>(
 ): value is InstanceType<T> {
   return value instanceof ctor
 }
-export namespace isInstanceOf {
-  /**
-   * isInstanceOf.defer(Class)(value) equals isInstanceOf(value, Class).
-   * @example
-   * isInstanceOf.defer(RegExp)(/a/) returns true
-   */
-  export function defer<T extends abstract new (..._: any) => any>(ctor: T) {
-    return (value: unknown): value is InstanceType<T> => value instanceof ctor
-  }
+/**
+ * isInstanceOfDefer(Class)(value) equals isInstanceOf(value, Class).
+ * @example
+ * isInstanceOfDefer(RegExp)(/a/) returns true
+ */
+export function isInstanceOfDefer<T extends abstract new (..._: any) => any>(ctor: T) {
+  return (value: unknown): value is InstanceType<T> => value instanceof ctor
 }
 
 export function isNotInstanceOf<T extends abstract new (..._: any) => any, U>(

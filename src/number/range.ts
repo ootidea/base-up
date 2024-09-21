@@ -1,5 +1,5 @@
 import { FixedLengthArray } from '../Array/FixedLengthArray'
-import { Repeat } from '../generate'
+import { RepeatString } from '../generate'
 import { ToNumber } from '../string/other'
 import { OMITTED } from '../type'
 import { IsOneOf } from '../typePredicate'
@@ -105,7 +105,7 @@ type _NaturalNumbersFrom0Until<DigitArray extends readonly Digit[]> = DigitArray
   ? `${DigitToRangeUntil[D]}`
   : DigitArray extends readonly [infer H extends Digit, ...infer L extends readonly Digit[]]
   ?
-      | `${DigitToRangeUntil[H]}${Repeat.String<Digit, L['length']> extends infer S extends string ? S : never}`
+      | `${DigitToRangeUntil[H]}${RepeatString<Digit, L['length']> extends infer S extends string ? S : never}`
       | `${H}${_NaturalNumbersFrom0Until<L>}`
   : ''
 
@@ -136,16 +136,14 @@ export function isInIntegerRangeUntil<N extends number, M extends number>(
 
   return Number.isInteger(value) && Math.min(n, m) <= value && value < Math.max(n, m)
 }
-export namespace isInIntegerRangeUntil {
-  /**
-   * filter(someNumbers, isInIntegerRangeUntil.defer(0, 5))
-   */
-  export function defer<N extends number, M extends number>(
-    n: N,
-    m: M,
-  ): (value: number) => value is IntegerRangeUntil<N, M> {
-    return (value): value is IntegerRangeUntil<N, M> => isInIntegerRangeUntil(value, n, m)
-  }
+/**
+ * filter(someNumbers, isInIntegerRangeUntil.defer(0, 5))
+ */
+export function isInIntegerRangeUntilDefer<N extends number, M extends number>(
+  n: N,
+  m: M,
+): (value: number) => value is IntegerRangeUntil<N, M> {
+  return (value): value is IntegerRangeUntil<N, M> => isInIntegerRangeUntil(value, n, m)
 }
 
 export function isInIntegerRangeThrough<N extends number, M extends number>(
@@ -158,13 +156,11 @@ export function isInIntegerRangeThrough<N extends number, M extends number>(
 
   return Number.isInteger(value) && Math.min(n, m) <= value && value <= Math.max(n, m)
 }
-export namespace isInIntegerRangeThrough {
-  export function defer<N extends number, M extends number>(
-    n: N,
-    m: M,
-  ): (value: number) => value is IntegerRangeThrough<N, M> {
-    return (value): value is IntegerRangeThrough<N, M> => isInIntegerRangeThrough(value, n, m)
-  }
+export function isInIntegerRangeThroughDefer<N extends number, M extends number>(
+  n: N,
+  m: M,
+): (value: number) => value is IntegerRangeThrough<N, M> {
+  return (value): value is IntegerRangeThrough<N, M> => isInIntegerRangeThrough(value, n, m)
 }
 
 /**

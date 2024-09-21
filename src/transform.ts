@@ -16,41 +16,33 @@ export function map<T, U>(self: readonly T[], f: (_: T) => U): U[]
 export function map<T, U>(self: readonly T[], f: (_: T) => U): U[] {
   return self.map(f)
 }
-export namespace map {
-  export function defer<const T, const U>(
-    f: (_: T) => U,
-  ): { (_: ReadonlyNonEmptyArray<T>): NonEmptyArray<U>; (_: readonly T[]): U[] } {
-    return (self: any) => map(self, f)
+export function mapDefer<const T, const U>(
+  f: (_: T) => U,
+): { (_: ReadonlyNonEmptyArray<T>): NonEmptyArray<U>; (_: readonly T[]): U[] } {
+  return (self: any) => map(self, f)
+}
+export function* mapIterable<T, U>(self: Iterable<T>, f: (_: T) => U): Iterable<U> {
+  for (const value of self) {
+    yield f(value)
   }
-
-  export function* Iterable<T, U>(self: Iterable<T>, f: (_: T) => U): Iterable<U> {
-    for (const value of self) {
-      yield f(value)
-    }
-  }
-  export namespace Iterable {
-    export function defer<T, U>(f: (_: T) => U): (self: Iterable<T>) => Iterable<U> {
-      return (self: Iterable<T>) => map.Iterable(self, f)
-    }
-  }
-
-  export function Set<T, U>(self: ReadonlyNonEmptySet<T>, f: (_: T) => U): NonEmptySet<U>
-  export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): Set<U>
-  export function Set<T, U>(self: ReadonlySet<T>, f: (_: T) => U): Set<U> {
-    return new globalThis.Set(map.Iterable(self, f))
-  }
-
-  export function Map<K, T, U>(self: ReadonlyNonEmptyMap<K, T>, f: (_: T) => U): NonEmptyMap<K, U>
-  export function Map<K, T, U>(self: ReadonlyMap<K, T>, f: (_: T) => U): Map<K, U>
-  export function Map<K, T, U>(self: ReadonlyMap<K, T>, f: (_: T) => U): Map<K, U> {
-    return new globalThis.Map(map.Iterable(self.entries(), ([key, value]) => [key, f(value)]))
-  }
-
-  export function Promise<T, U>(self: PromiseLike<T>, f: (_: T) => U): Promise<U> {
-    return new globalThis.Promise<U>((resolve, reject) => {
-      self.then((value) => resolve(f(value)), reject)
-    })
-  }
+}
+export function mapIterableDefer<T, U>(f: (_: T) => U): (self: Iterable<T>) => Iterable<U> {
+  return (self: Iterable<T>) => mapIterable(self, f)
+}
+export function mapSet<T, U>(self: ReadonlyNonEmptySet<T>, f: (_: T) => U): NonEmptySet<U>
+export function mapSet<T, U>(self: ReadonlySet<T>, f: (_: T) => U): Set<U>
+export function mapSet<T, U>(self: ReadonlySet<T>, f: (_: T) => U): Set<U> {
+  return new globalThis.Set(mapIterable(self, f))
+}
+export function mapMap<K, T, U>(self: ReadonlyNonEmptyMap<K, T>, f: (_: T) => U): NonEmptyMap<K, U>
+export function mapMap<K, T, U>(self: ReadonlyMap<K, T>, f: (_: T) => U): Map<K, U>
+export function mapMap<K, T, U>(self: ReadonlyMap<K, T>, f: (_: T) => U): Map<K, U> {
+  return new globalThis.Map(mapIterable(self.entries(), ([key, value]) => [key, f(value)]))
+}
+export function mapPromise<T, U>(self: PromiseLike<T>, f: (_: T) => U): Promise<U> {
+  return new globalThis.Promise<U>((resolve, reject) => {
+    self.then((value) => resolve(f(value)), reject)
+  })
 }
 
 /**
@@ -63,62 +55,53 @@ export function flatMap<T, U>(self: readonly T[], f: (_: T) => readonly U[]): U[
 export function flatMap<T, U>(self: readonly T[], f: (_: T) => readonly U[]): U[] {
   return self.flatMap(f)
 }
-export namespace flatMap {
-  /**
-   * @example
-   * flatMap.defer((x: number) => [x, x + 0.5])([0, 1, 2]) returns [0, 0.5, 1, 1.5, 2, 2.5]
-   */
-  export function defer<T, U>(f: (_: T) => readonly U[]): (self: readonly T[]) => U[] {
-    return (self: readonly T[]) => self.flatMap(f)
+/**
+ * @example
+ * flatMap.defer((x: number) => [x, x + 0.5])([0, 1, 2]) returns [0, 0.5, 1, 1.5, 2, 2.5]
+ */
+export function flatMapDefer<T, U>(f: (_: T) => readonly U[]): (self: readonly T[]) => U[] {
+  return (self: readonly T[]) => self.flatMap(f)
+}
+/**
+ * @example
+ * flatMapIterable([0, 1, 2], (x) => [x, x + 0.5]) yields 0, 0.5, 1, 1.5, 2, 2.5
+ */
+export function* flatMapIterable<T, U>(self: Iterable<T>, f: (_: T) => Iterable<U>): Iterable<U> {
+  for (const value of self) {
+    yield* f(value)
   }
-
-  /**
-   * @example
-   * flatMap.Iterable([0, 1, 2], (x) => [x, x + 0.5]) yields 0, 0.5, 1, 1.5, 2, 2.5
-   */
-  export function* Iterable<T, U>(self: Iterable<T>, f: (_: T) => Iterable<U>): Iterable<U> {
-    for (const value of self) {
-      yield* f(value)
-    }
-  }
-  export namespace Iterable {
-    /**
-     * @example
-     * flatMap.Iterable.defer((x: number) => [x, x + 0.5])([0, 1, 2]) yields 0, 0.5, 1, 1.5, 2, 2.5
-     */
-    export function defer<T, U>(f: (_: T) => Iterable<U>): (self: Iterable<T>) => Iterable<U> {
-      return (self: Iterable<T>) => flatMap.Iterable(self, f)
-    }
-  }
-
-  /**
-   * @example
-   * flatMap.Set([0, 1, 2], (x) => [x, x + 0.5]) returns new Set([0, 0.5, 1, 1.5, 2, 2.5])
-   */
-  export function Set<T, U>(self: Iterable<T>, f: (_: T) => Iterable<U>): Set<U> {
-    return new globalThis.Set(flatMap.Iterable(self, f))
-  }
+}
+/**
+ * @example
+ * flatMapIterableDefer((x: number) => [x, x + 0.5])([0, 1, 2]) yields 0, 0.5, 1, 1.5, 2, 2.5
+ */
+export function flatMapIterableDefer<T, U>(f: (_: T) => Iterable<U>): (self: Iterable<T>) => Iterable<U> {
+  return (self: Iterable<T>) => flatMapIterable(self, f)
+}
+/**
+ * @example
+ * flatMapSet([0, 1, 2], (x) => [x, x + 0.5]) returns new Set([0, 0.5, 1, 1.5, 2, 2.5])
+ */
+export function flatMapSet<T, U>(self: Iterable<T>, f: (_: T) => Iterable<U>): Set<U> {
+  return new globalThis.Set(flatMapIterable(self, f))
 }
 
 export function flatten<T>(self: readonly (readonly T[])[]): T[] {
   return self.flatMap((x) => x)
 }
-export namespace flatten {
-  export function* Iterable<T>(self: Iterable<Iterable<T>>): Iterable<T> {
-    for (const iterable of self) {
-      yield* iterable
+export function* flattenIterable<T>(self: Iterable<Iterable<T>>): Iterable<T> {
+  for (const iterable of self) {
+    yield* iterable
+  }
+}
+export function flattenSet<T>(self: ReadonlySet<ReadonlySet<T>>): Set<T> {
+  const result = new globalThis.Set<T>()
+  for (const set of self) {
+    for (const value of set) {
+      result.add(value)
     }
   }
-
-  export function Set<T>(self: ReadonlySet<ReadonlySet<T>>): Set<T> {
-    const result = new globalThis.Set<T>()
-    for (const set of self) {
-      for (const value of set) {
-        result.add(value)
-      }
-    }
-    return result
-  }
+  return result
 }
 
 /**
@@ -158,20 +141,18 @@ export function join<const T extends readonly unknown[], Separator extends strin
 ): Join<T, Separator> {
   return self.join(separator) as any
 }
-export namespace join {
-  export function Array<T, const U extends readonly unknown[]>(
-    self: readonly (readonly T[])[],
-    ...values: U
-  ): (T | U[number])[] {
-    const result: (T | U[number])[] = []
-    for (let i = 0; i < self.length; i++) {
-      if (i > 0) {
-        result.push(...values)
-      }
-      result.push(...self[i]!)
+export function joinArray<T, const U extends readonly unknown[]>(
+  self: readonly (readonly T[])[],
+  ...values: U
+): (T | U[number])[] {
+  const result: (T | U[number])[] = []
+  for (let i = 0; i < self.length; i++) {
+    if (i > 0) {
+      result.push(...values)
     }
-    return result
+    result.push(...self[i]!)
   }
+  return result
 }
 
 /**
@@ -234,21 +215,17 @@ export function chunk<T, N extends number>(
 export function padStart<T extends string>(self: T, length: number, value: string): string {
   return self.padStart(length, value)
 }
-export namespace padStart {
-  export function Array<T, N extends number>(self: readonly T[], length: N, value: T): MinLengthArray<N, T> {
-    const paddingSize = Math.max(length - self.length, 0)
-    return [...repeat(paddingSize, value), ...self] as any
-  }
+export function padStartArray<T, N extends number>(self: readonly T[], length: N, value: T): MinLengthArray<N, T> {
+  const paddingSize = Math.max(length - self.length, 0)
+  return [...repeat(paddingSize, value), ...self] as any
 }
 
 export function padEnd<T extends string>(self: T, length: number, value: string): string {
   return self.padEnd(length, value)
 }
-export namespace padEnd {
-  export function Array<T, N extends number>(self: readonly T[], length: N, value: T): MinLengthArray<N, T> {
-    const paddingSize = Math.max(length - self.length, 0)
-    return [...self, ...repeat(paddingSize, value)] as any
-  }
+export function padEndArray<T, N extends number>(self: readonly T[], length: N, value: T): MinLengthArray<N, T> {
+  const paddingSize = Math.max(length - self.length, 0)
+  return [...self, ...repeat(paddingSize, value)] as any
 }
 
 export function sort<const T extends readonly unknown[]>(self: T): FixedLengthArray<T['length'], T[number]> {
@@ -261,13 +238,10 @@ export function sortBy<const T extends readonly unknown[], U>(
 ): FixedLengthArray<T['length'], T[number]> {
   return [...self].sort(createComparatorFromIsLessThan((lhs, rhs) => by(lhs) < by(rhs))) as any
 }
-export namespace sortBy {
-  export function defer<E, U>(
-    by: (_: E) => U,
-  ): <const T extends readonly E[]>(self: T) => FixedLengthArray<T['length'], E> {
-    return (self: readonly E[]) =>
-      [...self].sort(createComparatorFromIsLessThan((lhs, rhs) => by(lhs) < by(rhs))) as any
-  }
+export function sortByDefer<E, U>(
+  by: (_: E) => U,
+): <const T extends readonly E[]>(self: T) => FixedLengthArray<T['length'], E> {
+  return (self: readonly E[]) => [...self].sort(createComparatorFromIsLessThan((lhs, rhs) => by(lhs) < by(rhs))) as any
 }
 
 /**
@@ -299,11 +273,9 @@ type _Reverse<T extends readonly unknown[]> = T extends readonly [infer First, .
 export function reverse<const T extends readonly unknown[]>(self: T): Reverse<T> {
   return [...self].reverse() as Reverse<T>
 }
-export namespace reverse {
-  export function* Iterable<T>(self: readonly T[]): Iterable<T> {
-    for (let i = self.length - 1; i >= 0; i--) {
-      yield self[i]!
-    }
+export function* reverseIterable<T>(self: readonly T[]): Iterable<T> {
+  for (let i = self.length - 1; i >= 0; i--) {
+    yield self[i]!
   }
 }
 
@@ -324,14 +296,12 @@ export function removeDuplicates<T>(self: readonly T[]): T[] {
   }
   return result
 }
-export namespace removeDuplicates {
-  export function* Iterable<T>(self: Iterable<T>): Iterable<T> {
-    const set = new Set<T>()
-    for (const value of self) {
-      if (!set.has(value)) {
-        set.add(value)
-        yield value
-      }
+export function* removeDuplicatesIterable<T>(self: Iterable<T>): Iterable<T> {
+  const set = new Set<T>()
+  for (const value of self) {
+    if (!set.has(value)) {
+      set.add(value)
+      yield value
     }
   }
 }
@@ -348,15 +318,13 @@ export function removeDuplicatesBy<T, U>(self: readonly T[], by: (_: T) => U): T
   }
   return result
 }
-export namespace removeDuplicatesBy {
-  export function* Iterable<T, U>(self: Iterable<T>, by: (_: T) => U): Iterable<T> {
-    const set = new Set<U>()
-    for (const value of self) {
-      const temp = by(value)
-      if (!set.has(temp)) {
-        set.add(temp)
-        yield value
-      }
+export function* removeDuplicatesByIterable<T, U>(self: Iterable<T>, by: (_: T) => U): Iterable<T> {
+  const set = new Set<U>()
+  for (const value of self) {
+    const temp = by(value)
+    if (!set.has(temp)) {
+      set.add(temp)
+      yield value
     }
   }
 }

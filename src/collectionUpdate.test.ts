@@ -1,12 +1,22 @@
 import { expect, test } from 'vitest'
-import { insertAt, moveTo, push, RemoveAt, removeAt, removePrefix, removeSuffix, unshift } from './collectionUpdate'
+import {
+  insertAt,
+  insertAtIterable,
+  moveTo,
+  pushIterable,
+  RemoveAt,
+  removeAt,
+  removePrefix,
+  removeSuffix,
+  unshift,
+} from './collectionUpdate'
 import { take } from './filter'
-import { repeat } from './generate'
+import { repeatIterable } from './generate'
 import { assertTypeEquality } from './type'
 
 test('push', () => {
-  expect([...push.Iterable([3, 2, 1], 0)]).toStrictEqual([3, 2, 1, 0])
-  expect([...push.Iterable([3, 2, 1], 0, -1)]).toStrictEqual([3, 2, 1, 0, -1])
+  expect([...pushIterable([3, 2, 1], 0)]).toStrictEqual([3, 2, 1, 0])
+  expect([...pushIterable([3, 2, 1], 0, -1)]).toStrictEqual([3, 2, 1, 0, -1])
 })
 
 test('unshift', () => {
@@ -23,13 +33,13 @@ test('insertAt', () => {
   expect(insertAt([0, 1, 2], 4, 9)).toStrictEqual([0, 1, 2])
   expect(insertAt([0, 1, 2], -1, 9)).toStrictEqual([0, 1, 2])
 })
-test('insertAt.Iterable', () => {
-  expect([...insertAt.Iterable([0, 1, 2], 0, 9)]).toStrictEqual([9, 0, 1, 2])
-  expect([...insertAt.Iterable([0, 1, 2], 3, 9)]).toStrictEqual([0, 1, 2, 9])
-  expect([...insertAt.Iterable([0, 1, 2], 1, 9, 8)]).toStrictEqual([0, 9, 8, 1, 2])
-  expect(take(insertAt.Iterable(repeat.Iterable(true), 2, false), 4)).toStrictEqual([true, true, false, true])
-  expect(take(insertAt.Iterable(repeat.Iterable(true), 6, false), 4)).toStrictEqual([true, true, true, true])
-  expect(take(insertAt.Iterable(repeat.Iterable(true), -1, false), 4)).toStrictEqual([true, true, true, true])
+test('insertAtIterable', () => {
+  expect([...insertAtIterable([0, 1, 2], 0, 9)]).toStrictEqual([9, 0, 1, 2])
+  expect([...insertAtIterable([0, 1, 2], 3, 9)]).toStrictEqual([0, 1, 2, 9])
+  expect([...insertAtIterable([0, 1, 2], 1, 9, 8)]).toStrictEqual([0, 9, 8, 1, 2])
+  expect(take(insertAtIterable(repeatIterable(true), 2, false), 4)).toStrictEqual([true, true, false, true])
+  expect(take(insertAtIterable(repeatIterable(true), 6, false), 4)).toStrictEqual([true, true, true, true])
+  expect(take(insertAtIterable(repeatIterable(true), -1, false), 4)).toStrictEqual([true, true, true, true])
 })
 
 test('removeAt', () => {

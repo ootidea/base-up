@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { assertTypeEquality } from '../type'
-import { FixedLengthArray, isFixedLengthArray } from './FixedLengthArray'
+import { FixedLengthArray, isFixedLengthArray, isFixedLengthArrayDefer } from './FixedLengthArray'
 
 test('FixedLengthArray', () => {
   assertTypeEquality<FixedLengthArray<1>, [unknown]>()
@@ -18,8 +18,8 @@ test('isFixedLengthArray', () => {
   expect(isFixedLengthArray(['a'], 1)).toBe(true)
   expect(isFixedLengthArray(['a'], 2)).toBe(false)
 })
-test('isFixedLengthArray.defer', () => {
-  expect(isFixedLengthArray.defer(0)([])).toBe(true)
-  expect(isFixedLengthArray.defer(1)(['a'])).toBe(true)
-  expect(isFixedLengthArray.defer(2)(['a'])).toBe(false)
+test('isFixedLengthArrayDefer', () => {
+  expect(isFixedLengthArrayDefer(0)([])).toBe(true)
+  expect(isFixedLengthArrayDefer(1)(['a'])).toBe(true)
+  expect(isFixedLengthArrayDefer(2)(['a'])).toBe(false)
 })

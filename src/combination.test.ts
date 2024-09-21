@@ -1,5 +1,12 @@
 import { expect, test } from 'vitest'
-import { cartesianProductOf, createNGrams, permutationOf, prefixesOf, PrefixesOf } from './combination'
+import {
+  cartesianProductOf,
+  createNGrams,
+  permutationOf,
+  permutationOfNumber,
+  prefixesOf,
+  PrefixesOf,
+} from './combination'
 import { assertTypeEquality } from './type'
 
 test('cartesianProductOf', () => {
@@ -43,9 +50,9 @@ test('permutationOf', () => {
   expect(permutationOf([1], 5)).toStrictEqual([[1]])
   expect(permutationOf([1, 2], -5)).toStrictEqual([[]])
 
-  expect(permutationOf.number(3, 1)).toBe(3)
-  expect(permutationOf.number(3, 3)).toBe(6)
-  expect(permutationOf.number(5, 2)).toBe(20)
+  expect(permutationOfNumber(3, 1)).toBe(3)
+  expect(permutationOfNumber(3, 3)).toBe(6)
+  expect(permutationOfNumber(5, 2)).toBe(20)
 })
 
 test('createNGrams', () => {

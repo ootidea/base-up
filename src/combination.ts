@@ -26,10 +26,8 @@ export function permutationOf<T>(self: readonly T[], n: number = self.length): (
     return permutationOf(removeAt(self, i), n - 1).map((rest) => [value, ...rest])
   })
 }
-export namespace permutationOf {
-  export function number(lhs: number, rhs: number): number {
-    return sequentialNumbersUntil(lhs, lhs - rhs).reduce((a, b) => a * b)
-  }
+export function permutationOfNumber(lhs: number, rhs: number): number {
+  return sequentialNumbersUntil(lhs, lhs - rhs).reduce((a, b) => a * b)
 }
 
 /**
