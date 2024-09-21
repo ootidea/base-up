@@ -16,8 +16,9 @@
   "linter": {
     "rules": {
       "correctness": { "noUnusedImports": "error" },
-      "suspicious": { "noExplicitAny": "off" },
-      "complexity": { "noBannedTypes": "off" }
+      "suspicious": { "noExplicitAny": "off", "noShadowRestrictedNames": "off" },
+      "complexity": { "noBannedTypes": "off" },
+      "style": { "noNonNullAssertion": "off" }
     }
   }
 }

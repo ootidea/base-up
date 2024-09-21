@@ -18,11 +18,12 @@ type _MinLengthArray<N extends number, M extends number, T> = M extends M
   ? [...Drop<FixedLengthArray<N, T>, M>, ...T[], ...FixedLengthArray<M, T>]
   : never
 
-export type ReadonlyMinLengthArray<
-  N extends number,
-  T = unknown,
-> = // For some reason, defining it as Readonly<MinLengthArray<N, T>> caused a type error, so I defined it using a different way.
-_ReadonlyMinLengthArray<N, IntegerRangeThrough<N>, T>
+// For some reason, defining it as Readonly<MinLengthArray<N, T>> caused a type error, so I defined it using a different way.
+export type ReadonlyMinLengthArray<N extends number, T = unknown> = _ReadonlyMinLengthArray<
+  N,
+  IntegerRangeThrough<N>,
+  T
+>
 type _ReadonlyMinLengthArray<N extends number, M extends number, T> = M extends M
   ? readonly [...Drop<FixedLengthArray<N, T>, M>, ...T[], ...FixedLengthArray<M, T>]
   : never
@@ -34,7 +35,7 @@ export function isMinLengthArray<T, N extends number>(
 ): self is ReadonlyMinLengthArray<N, T>
 export function isMinLengthArray<N extends number>(self: unknown, length: N): self is MinLengthArray<N>
 export function isMinLengthArray<N extends number>(self: unknown, length: N) {
-  return self instanceof Array && self.length >= length
+  return Array.isArray(self) && self.length >= length
 }
 export function isMinLengthArrayDefer<N extends number>(
   length: N,
@@ -43,5 +44,5 @@ export function isMinLengthArrayDefer<N extends number>(
   <T>(self: readonly T[]): self is ReadonlyMinLengthArray<N, T>
   (self: unknown): self is MinLengthArray<N>
 } {
-  return ((self: unknown) => self instanceof Array && self.length === length) as any
+  return ((self: unknown) => Array.isArray(self) && self.length === length) as any
 }

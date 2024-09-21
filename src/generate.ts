@@ -254,11 +254,7 @@ export function uniqueRandomIntegersUntil<const N extends number, const M extend
   upperBound: N,
   length: M,
 ): FixedLengthArray<M, IntegerRangeUntil<N>> {
-  if (length / upperBound < 0.4) {
-    return retryWhile(upperBound, length)
-  } else {
-    return takeShuffle(upperBound, length)
-  }
+  return length / upperBound < 0.4 ? retryWhile(upperBound, length) : takeShuffle(upperBound, length)
 }
 function takeShuffle<const N extends number, const M extends number>(
   upperBound: N,

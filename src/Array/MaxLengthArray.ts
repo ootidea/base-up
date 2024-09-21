@@ -20,7 +20,7 @@ export function isMaxLengthArray<T, N extends number>(
 ): self is ReadonlyMaxLengthArray<N, T>
 export function isMaxLengthArray<N extends number>(self: unknown, length: N): self is MaxLengthArray<N>
 export function isMaxLengthArray<N extends number>(self: unknown, length: N) {
-  return self instanceof Array && self.length <= length
+  return Array.isArray(self) && self.length <= length
 }
 export function isMaxLengthArrayDefer<N extends number>(
   length: N,
@@ -29,5 +29,5 @@ export function isMaxLengthArrayDefer<N extends number>(
   <T>(self: readonly T[]): self is ReadonlyMaxLengthArray<N, T>
   (self: unknown): self is MaxLengthArray<N>
 } {
-  return ((self: unknown) => self instanceof Array && self.length === length) as any
+  return ((self: unknown) => Array.isArray(self) && self.length === length) as any
 }

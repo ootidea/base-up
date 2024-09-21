@@ -331,7 +331,7 @@ type _ToSnakeCasedPropertiesDeeplyTuple<T extends readonly unknown[]> = T extend
  * toSnakeCasedPropertiesDeeply('kebab-case-text') returns 'kebab-case-text'
  */
 export function toSnakeCasedPropertiesDeeply<const T>(self: T): ToSnakeCasedPropertiesDeeply<T> {
-  if (self instanceof Array) {
+  if (Array.isArray(self)) {
     return self.map(toSnakeCasedPropertiesDeeply) as any
   }
 
@@ -399,7 +399,7 @@ type _ToCamelCasedPropertiesDeeplyTuple<T extends readonly unknown[]> = T extend
  * toCamelCasedPropertiesDeeply('kebab-case-text') returns 'kebab-case-text'
  */
 export function toCamelCasedPropertiesDeeply<const T>(self: T): ToCamelCasedPropertiesDeeply<T> {
-  if (self instanceof Array) {
+  if (Array.isArray(self)) {
     return self.map(toCamelCasedPropertiesDeeply) as any
   }
 

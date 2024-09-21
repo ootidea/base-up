@@ -21,7 +21,7 @@ export function isFixedLengthArray<T, N extends number>(
 ): self is ReadonlyFixedLengthArray<N, T>
 export function isFixedLengthArray<N extends number>(self: unknown, length: N): self is FixedLengthArray<N>
 export function isFixedLengthArray<N extends number>(self: unknown, length: N) {
-  return self instanceof Array && self.length === length
+  return Array.isArray(self) && self.length === length
 }
 export function isFixedLengthArrayDefer<N extends number>(
   length: N,
@@ -30,22 +30,22 @@ export function isFixedLengthArrayDefer<N extends number>(
   <T>(self: readonly T[]): self is ReadonlyFixedLengthArray<N, T>
   (self: unknown): self is FixedLengthArray<N>
 } {
-  return ((self: unknown) => self instanceof Array && self.length === length) as any
+  return ((self: unknown) => Array.isArray(self) && self.length === length) as any
 }
 
 /** Create a tuple by repeating the given tuple 10 times. */
 type TenTimes<T extends readonly unknown[]> = [...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T, ...T]
 type DigitToFixedLengthArray<N extends Digit, T = unknown> = {
-  ['0']: []
-  ['1']: [T]
-  ['2']: [T, T]
-  ['3']: [T, T, T]
-  ['4']: [T, T, T, T]
-  ['5']: [T, T, T, T, T]
-  ['6']: [T, T, T, T, T, T]
-  ['7']: [T, T, T, T, T, T, T]
-  ['8']: [T, T, T, T, T, T, T, T]
-  ['9']: [T, T, T, T, T, T, T, T, T]
+  '0': []
+  '1': [T]
+  '2': [T, T]
+  '3': [T, T, T]
+  '4': [T, T, T, T]
+  '5': [T, T, T, T, T]
+  '6': [T, T, T, T, T, T]
+  '7': [T, T, T, T, T, T, T]
+  '8': [T, T, T, T, T, T, T, T]
+  '9': [T, T, T, T, T, T, T, T, T]
 }[N]
 
 /**

@@ -69,7 +69,7 @@ test('repeatIterable', () => {
 
 test('repeatApply', () => {
   expect(repeatApply(4, -5, (x) => x * -2)).toStrictEqual([-5, 10, -20, 40])
-  expect(repeatApply(3, 'title', (text) => 're: ' + text)).toStrictEqual(['title', 're: title', 're: re: title'])
+  expect(repeatApply(3, 'title', (text) => `re: ${text}`)).toStrictEqual(['title', 're: title', 're: re: title'])
   expect(repeatApply(0, '123', (x) => x + 1)).toStrictEqual([])
 })
 
