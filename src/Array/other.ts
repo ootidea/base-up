@@ -69,10 +69,10 @@ export type UnionToTuple<T> = UnionToIntersection<T extends T ? (_: T) => T : ne
 
 /**
  * @example
- * DestructTuple<[1, 2, ...3[], 4, 5]> equals { leading: [1, 2]; rest: 3[]; trailing: [4, 5] }
+ * DestructTuple<[1, 2, ...3[], 4, 5]> equals { leading: [1, 2]; optional: []; rest: 3[]; trailing: [4, 5] }
  * DestructTuple<[1, 2?, ...3[]]> equals { leading: [1]; optional: [2]; rest: 3[]; trailing: [] }
- * DestructTuple<Date[]> equals { leading: []; rest: Date[]; trailing: [] }
- * DestructTuple<[]> equals { leading: []; rest: []; trailing: [] }
+ * DestructTuple<Date[]> equals { leading: []; optional: []; rest: Date[]; trailing: [] }
+ * DestructTuple<[]> equals { leading: []; optional: []; rest: []; trailing: [] }
  */
 export type DestructTuple<
   T extends readonly unknown[],
