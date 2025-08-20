@@ -1,10 +1,10 @@
 import { expect, test } from 'vitest'
 import {
-  type RemoveAt,
   insertAt,
   insertAtIterable,
   moveTo,
   pushIterable,
+  type RemoveAt,
   removeAt,
   removePrefix,
   removeSuffix,

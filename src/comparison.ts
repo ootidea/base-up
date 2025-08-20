@@ -41,10 +41,10 @@ export function isLexicographicLessThan<T>(lhs: Iterable<T>, rhs: Iterable<T>): 
 
     if (rhsElement === undefined) return false
 
-    // @ts-ignore maybe TypeScript bug. error message: Object is possibly 'null'.
+    // @ts-expect-error maybe TypeScript bug. error message: Object is possibly 'null'.
     if (lhsElement < rhsElement) return true
 
-    // @ts-ignore maybe TypeScript bug. error message: Object is possibly 'null'.
+    // @ts-expect-error maybe TypeScript bug. error message: Object is possibly 'null'.
     if (rhsElement < lhsElement) return false
   }
   return false
@@ -56,10 +56,10 @@ export function isLexicographicAtMost<T>(lhs: Iterable<T>, rhs: Iterable<T>): bo
 
     if (rhsElement === undefined) return false
 
-    // @ts-ignore maybe TypeScript bug. error message: Object is possibly 'null'.
+    // @ts-expect-error maybe TypeScript bug. error message: Object is possibly 'null'.
     if (lhsElement < rhsElement) return true
 
-    // @ts-ignore maybe TypeScript bug. error message: Object is possibly 'null'.
+    // @ts-expect-error maybe TypeScript bug. error message: Object is possibly 'null'.
     if (rhsElement < lhsElement) return false
   }
   return true

@@ -1,11 +1,11 @@
 import { expectTypeOf, test } from 'vitest'
 import {
+  assertTypeEquality,
   type Branded,
   type DiscriminatedUnion,
   type MergeIntersection,
   type ToBasePrimitiveType,
   type Writable,
-  assertTypeEquality,
 } from './type'
 import type { Equals } from './typePredicate'
 

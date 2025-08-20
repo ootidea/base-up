@@ -1,8 +1,8 @@
 import { expect, test } from 'vitest'
 import {
-  type PrefixesOf,
   cartesianProductOf,
   createNGrams,
+  type PrefixesOf,
   permutationOf,
   permutationOfNumber,
   prefixesOf,

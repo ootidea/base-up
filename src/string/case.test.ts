@@ -1,16 +1,16 @@
 import { expect, test } from 'vitest'
 import { assertTypeEquality } from '../type'
 import {
+  capitalize,
+  isLowercaseLetter,
+  isUppercaseLetter,
   type SplitIntoWords,
+  splitIntoWords,
   type ToCamelCase,
   type ToCamelCasedPropertiesDeeply,
   type ToKebabCase,
   type ToSnakeCase,
   type ToSnakeCasedPropertiesDeeply,
-  capitalize,
-  isLowercaseLetter,
-  isUppercaseLetter,
-  splitIntoWords,
   toCamelCase,
   toCamelCasedPropertiesDeeply,
   toKebabCase,

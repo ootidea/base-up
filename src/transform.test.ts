@@ -1,11 +1,8 @@
 import { expect, test } from 'vitest'
 import { identity } from './Function'
-import { setOf } from './Set'
 import { repeat } from './generate'
+import { setOf } from './Set'
 import {
-  type Join,
-  type Reverse,
-  type Split,
   chunk,
   flatMap,
   flatMapDefer,
@@ -15,6 +12,7 @@ import {
   flatten,
   flattenIterable,
   flattenSet,
+  type Join,
   join,
   joinArray,
   map,
@@ -25,9 +23,11 @@ import {
   mapSet,
   padEndArray,
   padStartArray,
+  type Reverse,
   removeDuplicates,
   reverse,
   reverseIterable,
+  type Split,
   sort,
   sortBy,
   sortByDefer,

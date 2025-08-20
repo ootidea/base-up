@@ -2,8 +2,8 @@ import { expect, test } from 'vitest'
 import { assertTypeEquality, take } from './all'
 import { every, isUnique } from './collectionPredicate'
 import {
-  type Repeat,
   fromEntries,
+  type Repeat,
   repeat,
   repeatApply,
   repeatApplyIterable,

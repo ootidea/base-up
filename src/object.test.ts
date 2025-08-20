@@ -2,9 +2,9 @@ import { expect, test } from 'vitest'
 import {
   type AtLeastOneProperty,
   type CountProperties,
+  getNestedProperty,
   type OptionalKeysOf,
   type RequiredKeysOf,
-  getNestedProperty,
 } from './object'
 import { assertTypeEquality } from './type'
 

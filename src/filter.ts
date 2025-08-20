@@ -452,7 +452,7 @@ export function modeOf<const T>(self: readonly T[]): T | undefined
 export function modeOf<const T>(self: readonly T[]): T | undefined {
   const map = new Map<T, number>()
   let maxCount = 0
-  let candidateValue: T | undefined = undefined
+  let candidateValue: T | undefined
   for (const value of self) {
     const nextCount = (map.get(value) ?? 0) + 1
     if (maxCount < nextCount) {
@@ -469,7 +469,7 @@ export function modeBy<T, U>(self: readonly T[], by: (_: T) => U): T | undefined
 export function modeBy<T, U>(self: readonly T[], by: (_: T) => U): T | undefined {
   const map = new Map<U, number>()
   let maxCount = 0
-  let candidateValue: T | undefined = undefined
+  let candidateValue: T | undefined
   for (const value of self) {
     const key = by(value)
     const nextCount = (map.get(key) ?? 0) + 1

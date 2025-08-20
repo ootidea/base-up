@@ -1,77 +1,125 @@
+export { isFixedLengthArray } from './Array/FixedLengthArray'
+export { isMaxLengthArray } from './Array/MaxLengthArray'
+export { isMinLengthArray } from './Array/MinLengthArray'
+export { shuffle } from './Array/other'
 export {
-  map,
+  every,
+  everyIterable,
+  includes,
+  isEmpty,
+  isNotEmpty,
+  isUnique,
+  some,
+  someIterable,
+} from './collectionPredicate'
+export {
+  insertAt,
+  moveTo,
+  push,
+  remove,
+  removeAll,
+  removeAt,
+  removePrefix,
+  removeSuffix,
+  unshift,
+} from './collectionUpdate'
+export { cartesianProductOf, createNGrams, permutationOf, prefixesOf } from './combination'
+export {
+  createComparatorFromIsAtMost,
+  createComparatorFromIsLessThan,
+  isLexicographicAtMost,
+  isLexicographicLessThan,
+} from './comparison'
+export { call, curry, identity, pipe } from './Function'
+export {
+  drop,
+  dropLast,
+  elementAt,
+  filter,
+  firstOf,
+  indexesOf,
+  indexOf,
+  lastIndexOf,
+  lastOf,
+  maxBy,
+  maxOf,
+  minBy,
+  minOf,
+  modeBy,
+  modeOf,
+  partition,
+  take,
+  takeWhile,
+} from './filter'
+export { merge, zip, zipAll, zipWith } from './fusion'
+export {
+  fromEntries,
+  repeat,
+  repeatApply,
+  sequentialNumbersThrough,
+  sequentialNumbersUntil,
+  uniqueRandomIntegersUntil,
+} from './generate'
+export { mapOf } from './Map'
+export { clamp } from './number/compare'
+export {
+  factorialOf,
+  modOf,
+} from './number/other'
+export {
+  isInIntegerRangeThrough,
+  isInIntegerRangeUntil,
+  randomIntegerThrough,
+  randomIntegerUntil,
+} from './number/range'
+export { getNestedProperty } from './object'
+export { groupBy, sumOf, toMultiset } from './other'
+export { forever } from './Promise'
+export { allKeysOf } from './projection'
+export {
+  differenceOf,
+  has,
+  intersectionOf,
+  isDisjoint,
+  isSubsetOf,
+  setMembership,
+  setOf,
+  toggleMembership,
+  unionOf,
+} from './Set'
+export {
+  capitalize,
+  isLowercaseLetter,
+  isUppercaseLetter,
+  splitIntoWords,
+  toCamelCase,
+  toCamelCasedPropertiesDeeply,
+  toKebabCase,
+  toSnakeCase,
+  toSnakeCasedPropertiesDeeply,
+} from './string/case'
+export {
+  toNumber,
+  toString,
+  trim,
+  trimEnd,
+  trimStart,
+} from './string/other'
+export {
+  chunk,
   flatMap,
   flatten,
   join,
-  split,
-  sortBy,
-  sort,
-  chunk,
+  map,
   padEnd,
   padStart,
-  reverse,
   removeDuplicates,
   removeDuplicatesBy,
+  reverse,
+  sort,
+  sortBy,
+  split,
 } from './transform'
-export {
-  push,
-  unshift,
-  insertAt,
-  removeAt,
-  remove,
-  removeAll,
-  removePrefix,
-  removeSuffix,
-  moveTo,
-} from './collectionUpdate'
-export {
-  isEmpty,
-  includes,
-  every,
-  everyIterable,
-  some,
-  someIterable,
-  isNotEmpty,
-  isUnique,
-} from './collectionPredicate'
-export { createNGrams, cartesianProductOf, permutationOf, prefixesOf } from './combination'
-export {
-  isLexicographicLessThan,
-  isLexicographicAtMost,
-  createComparatorFromIsAtMost,
-  createComparatorFromIsLessThan,
-} from './comparison'
-export {
-  filter,
-  partition,
-  take,
-  drop,
-  dropLast,
-  takeWhile,
-  firstOf,
-  lastOf,
-  elementAt,
-  modeOf,
-  modeBy,
-  lastIndexOf,
-  indexesOf,
-  indexOf,
-  minBy,
-  minOf,
-  maxBy,
-  maxOf,
-} from './filter'
-export { zipWith, zip, zipAll, merge } from './fusion'
-export {
-  sequentialNumbersUntil,
-  sequentialNumbersThrough,
-  repeat,
-  repeatApply,
-  fromEntries,
-  uniqueRandomIntegersUntil,
-} from './generate'
-export { sumOf, groupBy, toMultiset } from './other'
-export { allKeysOf } from './projection'
 export {
   assert,
   assertEqual,
@@ -80,79 +128,31 @@ export {
   assertTypeEquality,
 } from './type'
 export {
-  isNull,
-  isUndefined,
-  isNullish,
-  isBoolean,
-  isNumber,
+  equals,
   isBigint,
-  isString,
-  isSymbol,
-  isObject,
+  isBoolean,
+  isFalsy,
   isFunction,
-  isNotNull,
-  isNotUndefined,
-  isNotNullish,
-  isNotBoolean,
-  isNotNumber,
+  isInstanceOf,
   isNotBigint,
+  isNotBoolean,
+  isNotFunction,
+  isNotInstanceOf,
+  isNotNull,
+  isNotNullish,
+  isNotNumber,
+  isNotObject,
+  isNotOneOf,
   isNotString,
   isNotSymbol,
-  isNotObject,
-  isNotFunction,
-  isTruthy,
-  isFalsy,
-  isInstanceOf,
-  isNotInstanceOf,
+  isNotUndefined,
+  isNull,
+  isNullish,
+  isNumber,
+  isObject,
   isOneOf,
-  isNotOneOf,
-  equals,
+  isString,
+  isSymbol,
+  isTruthy,
+  isUndefined,
 } from './typePredicate'
-export { shuffle } from './Array/other'
-export { isFixedLengthArray } from './Array/FixedLengthArray'
-export { isMinLengthArray } from './Array/MinLengthArray'
-export { isMaxLengthArray } from './Array/MaxLengthArray'
-export {
-  setOf,
-  has,
-  toggleMembership,
-  setMembership,
-  isSubsetOf,
-  unionOf,
-  intersectionOf,
-  differenceOf,
-  isDisjoint,
-} from './Set'
-export { mapOf } from './Map'
-export { getNestedProperty } from './object'
-export {
-  modOf,
-  factorialOf,
-} from './number/other'
-export {
-  isInIntegerRangeUntil,
-  isInIntegerRangeThrough,
-  randomIntegerUntil,
-  randomIntegerThrough,
-} from './number/range'
-export { clamp } from './number/compare'
-export {
-  toNumber,
-  toString,
-  trimStart,
-  trimEnd,
-  trim,
-} from './string/other'
-export {
-  isUppercaseLetter,
-  isLowercaseLetter,
-  capitalize,
-  splitIntoWords,
-  toSnakeCase,
-  toKebabCase,
-  toCamelCase,
-  toSnakeCasedPropertiesDeeply,
-  toCamelCasedPropertiesDeeply,
-} from './string/case'
-export { pipe, call, identity, curry } from './Function'
-export { forever } from './Promise'

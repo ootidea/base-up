@@ -2,8 +2,8 @@ import { expect, expectTypeOf, test } from 'vitest'
 import { assertTypeEquality } from './type'
 import {
   type Equals,
-  type IsOneOf,
   equals,
+  type IsOneOf,
   isFalsy,
   isInstanceOf,
   isInstanceOfDefer,

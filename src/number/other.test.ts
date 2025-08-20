@@ -1,13 +1,13 @@
 import { expect, test } from 'vitest'
 import { assertTypeEquality } from '../type'
 import {
+  factorialOf,
   Infinity,
   type IsInteger,
   type IsNumberLiteral,
+  modOf,
   type NegativeInfinity,
   type Trunc,
-  factorialOf,
-  modOf,
 } from './other'
 
 test('IsNumberLiteral', () => {
