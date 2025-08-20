@@ -61,27 +61,27 @@ test('mapPromise', () => {
 
 test('flatMap', () => {
   expect(flatMap([0, 1, 2], (x) => [x, x + 0.5])).toStrictEqual([0, 0.5, 1, 1.5, 2, 2.5])
-  expect(flatMap([0, 1, 2], (x) => [])).toStrictEqual([])
+  expect(flatMap([0, 1, 2], () => [])).toStrictEqual([])
   expect(flatMap([], (x) => [x, x + 0.5])).toStrictEqual([])
 })
 test('flatMapDefer', () => {
   expect(flatMapDefer((x: number) => [x, x + 0.5])([0, 1, 2])).toStrictEqual([0, 0.5, 1, 1.5, 2, 2.5])
-  expect(flatMapDefer((x) => [])([0, 1, 2])).toStrictEqual([])
+  expect(flatMapDefer(() => [])([0, 1, 2])).toStrictEqual([])
   expect(flatMapDefer((x: number) => [x, x + 0.5])([])).toStrictEqual([])
 })
 test('flatMapIterable', () => {
   expect([...flatMapIterable([0, 1, 2], (x) => [x, x + 0.5])]).toStrictEqual([0, 0.5, 1, 1.5, 2, 2.5])
-  expect([...flatMapIterable([0, 1, 2], (x) => [])]).toStrictEqual([])
+  expect([...flatMapIterable([0, 1, 2], () => [])]).toStrictEqual([])
   expect([...flatMapIterable([], (x) => [x, x + 0.5])]).toStrictEqual([])
 })
 test('flatMapIterableDefer', () => {
   expect([...flatMapIterableDefer((x: number) => [x, x + 0.5])([0, 1, 2])]).toStrictEqual([0, 0.5, 1, 1.5, 2, 2.5])
-  expect([...flatMapIterableDefer((x) => [])([0, 1, 2])]).toStrictEqual([])
+  expect([...flatMapIterableDefer(() => [])([0, 1, 2])]).toStrictEqual([])
   expect([...flatMapIterableDefer((x: number) => [x, x + 0.5])([])]).toStrictEqual([])
 })
 test('flatMapSet', () => {
   expect(flatMapSet(new Set([0, 1, 2]), (x) => [x, x + 0.5])).toStrictEqual(new Set([0, 0.5, 1, 1.5, 2, 2.5]))
-  expect(flatMapSet(new Set([0, 1, 2]), (x) => [])).toStrictEqual(new Set())
+  expect(flatMapSet(new Set([0, 1, 2]), () => [])).toStrictEqual(new Set())
   expect(flatMapSet([], (x) => [x, x + 0.5])).toStrictEqual(new Set())
 })
 

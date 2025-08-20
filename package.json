@@ -82,7 +82,7 @@
     "check:test": "vitest run --silent=false",
     "check:type": "tsc --noEmit",
     "fix": "run-p \"fix:*\"",
-    "fix:biome": "biome check --write",
+    "fix:biome": "biome check --write --unsafe",
     "fix:package-json": "sort-package-json",
     "preversion": "pnpm check && pnpm build",
     "postversion": "npm publish ./ && git push --follow-tags"
