@@ -2,6 +2,7 @@ import { expect, expectTypeOf, test } from 'vitest'
 import { mapOf, setOf } from './all'
 import {
   every,
+  everyIterable,
   includes,
   includesDefer,
   includesIterable,
@@ -12,6 +13,7 @@ import {
   isNotEmpty,
   isUnique,
   some,
+  someIterable,
 } from './collectionPredicate'
 
 test('isEmpty', () => {
@@ -51,6 +53,18 @@ test('some', () => {
   expect(some([1, 2, 3], (x) => x > 2)).toBe(true)
   expect(some([1, 2, 3], (x) => x > 3)).toBe(false)
   expect(some([], () => false)).toBe(false)
+})
+
+test('everyIterable', () => {
+  expect(everyIterable([1, 2, 3], (x) => x > 0)).toBe(true)
+  expect(everyIterable([1, 2, 3], (x) => x > 2)).toBe(false)
+  expect(everyIterable([], () => false)).toBe(true)
+})
+
+test('someIterable', () => {
+  expect(someIterable([1, 2, 3], (x) => x > 2)).toBe(true)
+  expect(someIterable([1, 2, 3], (x) => x > 3)).toBe(false)
+  expect(someIterable([], () => false)).toBe(false)
 })
 
 test('includes', () => {

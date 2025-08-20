@@ -24,7 +24,16 @@ export {
   removeSuffix,
   moveTo,
 } from './collectionUpdate'
-export { isEmpty, includes, every, everyIterable, isNotEmpty, isUnique } from './collectionPredicate'
+export {
+  isEmpty,
+  includes,
+  every,
+  everyIterable,
+  some,
+  someIterable,
+  isNotEmpty,
+  isUnique,
+} from './collectionPredicate'
 export { createNGrams, cartesianProductOf, permutationOf, prefixesOf } from './combination'
 export {
   isLexicographicLessThan,

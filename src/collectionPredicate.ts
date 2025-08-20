@@ -52,8 +52,8 @@ export function every<T>(self: readonly T[], f: (value: T) => boolean): boolean 
 }
 
 export function some<T>(self: readonly [], f: (value: T) => boolean): false
-export function some<T>(self: readonly T[], f: (value: T) => boolean): boolean
-export function some<T>(self: readonly T[], f: (value: T) => boolean): boolean {
+export function some<T>(self: readonly T[], f: (value: T) => boolean): self is ReadonlyNonEmptyArray<T>
+export function some<T>(self: readonly T[], f: (value: T) => boolean): self is ReadonlyNonEmptyArray<T> {
   return self.some(f)
 }
 
@@ -66,6 +66,13 @@ export function everyIterable<T>(self: Iterable<T>, f: (value: T) => boolean): b
     if (!f(value)) return false
   }
   return true
+}
+
+export function someIterable<T>(self: Iterable<T>, f: (value: T) => boolean): boolean {
+  for (const value of self) {
+    if (f(value)) return true
+  }
+  return false
 }
 
 export function everyValuesMap<K, T, U extends T>(self: Map<K, T>, f: (value: T) => value is U): self is Map<K, U>
