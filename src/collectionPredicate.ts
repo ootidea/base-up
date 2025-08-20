@@ -50,6 +50,13 @@ export function every<T>(self: readonly T[], f: (value: T) => boolean): boolean
 export function every<T>(self: readonly T[], f: (value: T) => boolean): boolean {
   return self.every(f)
 }
+
+export function some<T>(self: readonly [], f: (value: T) => boolean): false
+export function some<T>(self: readonly T[], f: (value: T) => boolean): boolean
+export function some<T>(self: readonly T[], f: (value: T) => boolean): boolean {
+  return self.some(f)
+}
+
 export function everyIterable<T, U extends T>(self: Set<T>, f: (value: T) => value is U): self is Set<U>
 export function everyIterable<T, U extends T>(self: ReadonlySet<T>, f: (value: T) => value is U): self is ReadonlySet<U>
 export function everyIterable<T, U extends T>(self: Iterable<T>, f: (value: T) => value is U): self is Iterable<U>

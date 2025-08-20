@@ -11,6 +11,7 @@ import {
   isEmpty,
   isNotEmpty,
   isUnique,
+  some,
 } from './collectionPredicate'
 
 test('isEmpty', () => {
@@ -44,6 +45,12 @@ test('every', () => {
   expect(every([1, 2, 3], (x) => x > 0)).toBe(true)
   expect(every([1, 2, 3], (x) => x > 2)).toBe(false)
   expect(every([], () => false)).toBe(true)
+})
+
+test('some', () => {
+  expect(some([1, 2, 3], (x) => x > 2)).toBe(true)
+  expect(some([1, 2, 3], (x) => x > 3)).toBe(false)
+  expect(some([], () => false)).toBe(false)
 })
 
 test('includes', () => {
