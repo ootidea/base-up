@@ -7,6 +7,16 @@ import type { Reverse } from './transform'
 import type { Lazy, OMITTED, Unlazy } from './type'
 
 /**
+ * Generate the next sequential number starting from 0.
+ * @example
+ * [getNextSequentialNumber(), getNextSequentialNumber()] equals [0, 1]
+ */
+export function getNextSequentialNumber(): number {
+  return nextSequentialNumber++
+}
+let nextSequentialNumber: number = 0
+
+/**
  * @example
  * SequentialNumbersUntil<3> equals [0, 1, 2]
  * SequentialNumbersUntil<2, 5> equals [2, 3, 4]

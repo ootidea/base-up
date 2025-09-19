@@ -54,6 +54,7 @@ export {
 export { merge, zip, zipAll, zipWith } from './fusion'
 export {
   fromEntries,
+  getNextSequentialNumber,
   repeat,
   repeatApply,
   sequentialNumbersThrough,
