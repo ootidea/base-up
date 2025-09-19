@@ -92,8 +92,9 @@ export type NestedProperty<T, Ks extends readonly (keyof any)[]> = Ks extends re
 /**
  * The value level function of Omit<T, K>.
  * @example
- * omit({a: 1}, 'a') equals {}
- * omit({a: 1}, 'b') equals {a: 1}
+ * omit({ a: 1 }, 'a') equals {}
+ * omit({ a: 1, b: 2 }, 'a', 'b') equals {}
+ * omit({ a: 1 }, 'b') equals { a: 1 }
  */
 export function omit<T, Keys extends readonly LiteralAutoComplete<keyof T>[]>(self: T, ...keys: Keys): Partial<T> {
   const result: any = {}
