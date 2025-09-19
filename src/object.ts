@@ -2,7 +2,7 @@ import type { UnionToTuple } from './Array/other'
 import { isNotEmpty } from './collectionPredicate'
 import { drop } from './filter'
 import type { IntegerRangeThrough } from './number/range'
-import type { IsTemplateLiteral } from './string/other'
+import type { IsTemplateLiteral, LiteralAutoComplete } from './string/other'
 import type { MergeIntersection } from './type'
 
 /**
@@ -88,6 +88,22 @@ export type NestedProperty<T, Ks extends readonly (keyof any)[]> = Ks extends re
   : Ks extends readonly [infer H extends keyof T, ...infer R extends readonly (keyof any)[]]
     ? NestedProperty<T[H], R>
     : undefined
+
+/**
+ * The value level function of Omit<T, K>.
+ * @example
+ * omit({a: 1}, 'a') equals {}
+ * omit({a: 1}, 'b') equals {a: 1}
+ */
+export function omit<T, Keys extends readonly LiteralAutoComplete<keyof T>[]>(self: T, ...keys: Keys): Partial<T> {
+  const result: any = {}
+  for (const key in self) {
+    if (!keys.includes(key)) {
+      result[key] = self[key]
+    }
+  }
+  return result
+}
 
 /**
  * @example

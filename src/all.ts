@@ -72,7 +72,7 @@ export {
   randomIntegerThrough,
   randomIntegerUntil,
 } from './number/range'
-export { getNestedProperty } from './object'
+export { getNestedProperty, omit } from './object'
 export { groupBy, sumOf, toMultiset } from './other'
 export { forever } from './Promise'
 export { allKeysOf } from './projection'

@@ -4,6 +4,7 @@ import {
   type CountProperties,
   getNestedProperty,
   type OptionalKeysOf,
+  omit,
   type RequiredKeysOf,
 } from './object'
 import { assertTypeEquality } from './type'
@@ -64,6 +65,12 @@ test('CountProperties', () => {
   assertTypeEquality<CountProperties<Record<string | 0, any>>, number>()
   assertTypeEquality<CountProperties<any>, number>()
   assertTypeEquality<CountProperties<never>, never>()
+})
+
+test('omit', () => {
+  expect(omit({ a: 1, b: 2 }, 'a')).toStrictEqual({ b: 2 })
+  expect(omit({ a: 1, b: 2 }, 'a', 'b')).toStrictEqual({})
+  expect(omit({ a: 1, b: 2 }, 'c')).toStrictEqual({ a: 1, b: 2 })
 })
 
 test('getProperty', () => {
