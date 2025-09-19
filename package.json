@@ -88,6 +88,7 @@
     "postversion": "npm publish ./ && git push --follow-tags"
   },
   "devDependencies": {
+    "@anthropic-ai/claude-code": "^1.0.119",
     "@biomejs/biome": "^2.2.0",
     "@tsconfig/strictest": "^2.0.5",
     "npm-run-all2": "^8.0.4",
